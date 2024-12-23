@@ -6,6 +6,7 @@ import {
   InputAdornment,
   InputLabel,
   styled,
+  TextField,
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { DefaultFilters } from "./filters";
@@ -101,20 +102,22 @@ export const DefaultActionsRow: React.FC<Props> = ({
             Create
           </Button>
         )}
-        <FormControl variant="standard">
-          <InputLabel htmlFor="search-input">Quick Search</InputLabel>
-          <Input
-            value={inputValue}
-            id="search-input"
-            placeholder={itemName}
-            onChange={handleInputChange}
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchOutlinedIcon />
-              </InputAdornment>
-            }
-          />
-        </FormControl>
+        <TextField
+          variant="standard"
+          value={inputValue}
+          id="search-input"
+          placeholder={itemName}
+          onChange={handleInputChange}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchOutlinedIcon />
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
       </ElWrapper>
       <ElWrapper>
         <DefaultFilters

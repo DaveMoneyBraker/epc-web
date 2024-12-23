@@ -9,6 +9,9 @@ src/
 │   └── (suppressions/dsnbl/esp etc.)/ # Files with components with are responsible for building app pages
 ├── constants/        # Application constants
 │   └── AppContants.ts  # Centralized export for constants
+├── core/             # Important App Building elements
+│   ├── mui/          # Folder with all files related to creating mui theme
+│   └── router/       # Folder with all files related to creating router
 ├── hooks/            # Custom hooks
 │   ├── 0_AppHooks.ts # Centralized export for hooks
 │   └── useApiLoader.ts # Example of a api-route fetching hook
@@ -36,5 +39,7 @@ src/
 ├── utils/            # Helper functions and utilities
 │   ├── formatDate.ts # Example: date formatting utility
 │   └── storage.ts    # Example: localStorage/sessionStorage helpers
+├── validators/       # Custom validators for inputs
+│   └── 0_AppValidators.ts # Centralized export for validators
 ├── App.tsx           # Main application entry
 └── index.tsx         # ReactDOM entry

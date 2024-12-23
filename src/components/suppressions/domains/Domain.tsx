@@ -8,6 +8,7 @@ import {
 import { SuppressionTypeOptions } from "../../../types/suppressions";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
+import AppValidators from "../../../validators/0_AppValidators";
 
 export const SuppressionsDomain: React.FC = () => {
   const cols = React.useMemo(
@@ -30,15 +31,21 @@ export const SuppressionsDomain: React.FC = () => {
   );
 
   const validators = React.useMemo<ValidatorConfigWithNoError[]>(() => {
-    const vf = (value: unknown) => {
-      if (typeof value === "string") {
-        return value.includes(".");
-      } else {
-        return false;
-      }
-    };
-    const errorMessage = "Should be proper domain name (domain.com)";
-    return [{ validatorFn: vf, errorMessage, forItemName: "domain" }];
+    const values: ValidatorConfigWithNoError[] = [];
+    // SIMPLE DOMAIN (E.G. domain.com) Validator
+    values.push({
+      forItemName: "domain",
+      validatorFn: AppValidators.simpleDomainValidator,
+      errorMessage: "Should be proper domain name (domain.com)",
+    });
+    // CHECK FOR DEFAULT ISP DOMAIN
+    values.push({
+      forItemName: "domain",
+      validatorFn: AppValidators.defaultISPDomainValidator,
+      errorMessage: "Could not be default isp (e.g. gmail, yahoo etc.)",
+    });
+
+    return values;
   }, []);
 
   const itemConfigs = AppHooks.useFilteredItemConfigs(

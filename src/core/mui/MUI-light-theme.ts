@@ -14,6 +14,24 @@ export const useAppLightTheme = (): Theme => {
       },
     },
     typography: { ...typography },
-    components: { ...components },
+    components: {
+      ...components,
+      // DISABLING AUTOCOMPLETE
+      MuiTextField: {
+        defaultProps: {
+          autoComplete: "off",
+        },
+        styleOverrides: {
+          root: {
+            input: {
+              "&:-webkit-autofill": {
+                WebkitBoxShadow: "0 0 0 100px white inset",
+                WebkitTextFillColor: "#000000",
+              },
+            },
+          },
+        },
+      },
+    },
   });
 };

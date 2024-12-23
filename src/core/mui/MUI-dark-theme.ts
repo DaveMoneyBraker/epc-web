@@ -19,6 +19,25 @@ export const useAppDarkTheme = (): Theme => {
       },
     },
     typography: { ...typography },
-    components: { ...components },
+    components: {
+      ...components,
+      // DISABLING AUTOCOMPLETE
+      MuiTextField: {
+        defaultProps: {
+          autoComplete: "off",
+        },
+        styleOverrides: {
+          root: {
+            input: {
+              "&:-webkit-autofill, &:-webkit-autofill:focus": {
+                // WebkitBoxShadow: "0 0 0 100px #121212 inset",
+                // WebkitTextFillColor: "#fff",
+                transition: "background-color 600000s 0s, color 600000s 0s",
+              },
+            },
+          },
+        },
+      },
+    },
   });
 };

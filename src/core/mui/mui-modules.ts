@@ -1,4 +1,3 @@
-import { colors } from "@mui/material";
 import {
   Components,
   CssVarsTheme,
@@ -100,22 +99,6 @@ export const useAppMuiComponents = (): Components<
       styleOverrides: {
         root: {
           height: "70px",
-        },
-      },
-    },
-    // DISABLING AUTOCOMPLETE
-    MuiTextField: {
-      defaultProps: {
-        autoComplete: "off",
-      },
-      styleOverrides: {
-        root: {
-          input: {
-            "&:-webkit-autofill": {
-              WebkitBoxShadow: "0 0 0 100px #121212 inset",
-              WebkitTextFillColor: "#fff",
-            },
-          },
         },
       },
     },

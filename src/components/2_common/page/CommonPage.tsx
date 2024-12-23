@@ -2,8 +2,8 @@ import React from "react";
 import { Box, styled } from "@mui/material";
 import { DialogWrapper } from "../dialogs";
 import AppHooks from "../../../hooks/0_AppHooks";
-import { DefaultActionsRow } from "./page/DefaultActionsRow";
-import { DefaultGridTable } from "./page/DefaultGridTable";
+import { DefaultActionsRow } from "./items/DefaultActionsRow";
+import { DefaultGridTable } from "./items/DefaultGridTable";
 import {
   DefaultDialogItemProps,
   DefaultPageActions,

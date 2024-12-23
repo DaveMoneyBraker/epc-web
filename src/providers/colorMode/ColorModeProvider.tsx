@@ -11,6 +11,7 @@ type Mode = "light" | "dark";
 
 export const ColorModeProvider: React.FC<ChildrenProps> = ({ children }) => {
   const lightTheme = useAppLightTheme();
+  const darkTheme = useAppDarkTheme();
   const [getItem, setItem] = AppHooks.useLocalStorage<Mode>();
   const [mode, setMode] = React.useState<Mode>("light");
 
@@ -49,7 +50,7 @@ export const ColorModeProvider: React.FC<ChildrenProps> = ({ children }) => {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={mode === "light" ? lightTheme : useAppDarkTheme}>
+      <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
         {/* RESET DEFAULT CSS STYLES */}
         <CssBaseline />
         {children}

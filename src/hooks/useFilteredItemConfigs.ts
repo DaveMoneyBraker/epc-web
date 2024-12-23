@@ -3,12 +3,12 @@ import { FilterConfig, ItemConfig, ValidatorConfig } from "../types";
 
 export const useFilteredItemConfigs = (
   configs: FilterConfig[],
-  itemNames: string[] = [],
+  restrictedItemNames: string[] = [],
   validatorConfigs?: Omit<ValidatorConfig, "error">[]
 ) => {
   const itemNamesToSkip = React.useMemo(
-    () => [...itemNames, "createdAt", "updatedAt", "deletedAt"],
-    [itemNames]
+    () => [...restrictedItemNames, "createdAt", "updatedAt", "deletedAt"],
+    [restrictedItemNames]
   );
 
   return React.useMemo<ItemConfig[]>(() => {
@@ -16,16 +16,21 @@ export const useFilteredItemConfigs = (
       ({ itemName }) =>
         !itemNamesToSkip.some((itemNameToSkip) => itemNameToSkip === itemName)
     );
+    // ADD ERROR FIELD TO VALIDATORS IN THIS HOOK
+    // SINCE PARENT COMPONENTS DOESN'T CARE ON THIS FIELD AT ALL
     const validatorConfigsWithError: ValidatorConfig[] = [];
     if (validatorConfigs) {
       validatorConfigs.forEach((validator) =>
         validatorConfigsWithError.push({ ...validator, error: false })
       );
     }
+
     return v.map((config) => ({
       ...config,
       required: true,
-      validators: validatorConfigsWithError,
+      validators: validatorConfigsWithError.filter(
+        (vCWE) => vCWE.forItemName === config.itemName
+      ),
     }));
   }, [configs, itemNamesToSkip, validatorConfigs]);
 };
