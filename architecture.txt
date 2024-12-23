@@ -1,0 +1,49 @@
+src/
+├── assets/           # Static files like images, fonts, etc.
+│   ├── images/       # Images and icons
+│   └── fonts/        # Custom fonts
+├── components/       # Reusable components
+│   ├── common/       # Generic components (e.g., buttons, modals, inputs)
+│   ├── layout/       # Layout components (e.g., header, footer, sidebar)
+│   └── tables/       # Components specific to tables
+├── constants/        # Application constants
+│   ├── apiRoutes.ts  # API endpoints
+│   ├── appRoutes.ts  # Frontend route definitions
+│   └── enums.ts      # Enum definitions
+├── hooks/            # Custom hooks
+│   └── useFetchData.ts # Example of a data-fetching hook
+├── pages/            # Pages (each corresponds to a route)
+│   ├── Dashboard/
+│   ├── Profile/
+│   └── Settings/
+├── providers/        # Context providers for state management
+│   └── ThemeProvider.tsx # Provider for managing theming
+├── queries/          # Queries and mutations for React Query
+│   ├── userQueries.ts # Example: user-related queries
+│   ├── authMutations.ts # Example: authentication mutations
+│   └── index.ts       # Centralized export for queries/mutations
+├── services/         # API calls and related utilities
+│   ├── api.ts        # Centralized Axios instance
+│   └── userService.ts # Example: user-related API functions
+├── styles/           # Global styles and theming
+│   ├── global.css    # Global CSS styles
+│   ├── theme/        # MUI theming setup
+│   │   ├── lightTheme.ts # Light theme configuration
+│   │   ├── darkTheme.ts  # Dark theme configuration
+│   │   └── index.ts      # Theme switcher or export file
+├── typeGuards/       # TypeScript type guards
+│   ├── isUser.ts     # Example: Type guard for user object
+│   └── index.ts      # Centralized export for type guards
+├── types/            # TypeScript type definitions
+│   ├── userTypes.ts  # Example: user-related types
+│   ├── apiTypes.ts   # Example: API response/request types
+│   └── index.d.ts    # Global types
+├── utils/            # Helper functions and utilities
+│   ├── formatDate.ts # Example: date formatting utility
+│   └── storage.ts    # Example: localStorage/sessionStorage helpers
+├── App.tsx           # Main application entry
+├── index.tsx         # ReactDOM entry
+└── tests/            # Test files
+    ├── unit/         # Unit tests
+    ├── integration/  # Integration tests
+    └── mocks/        # Mock data and handlers

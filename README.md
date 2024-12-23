@@ -26,12 +26,11 @@ cd repository
 
     Folder Structure
 
-Refer to the folder structure provided above.
+    Described in architecture.txt file
 
 Scripts
-• npm start: Start the development server.
+• npm rund start: Start the development server.
 • npm run build: Build the application for production.
-• npm test: Run unit tests.
 
 API Configuration
 • API requests are handled using Axios.
