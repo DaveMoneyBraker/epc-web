@@ -1,38 +1,33 @@
 src/
 ├── assets/           # Static files like images, fonts, etc.
-│   ├── images/       # Images and icons
-│   └── fonts/        # Custom fonts
+│   ├── icons/       # icons
 ├── components/       # Reusable components
-│   ├── common/       # Generic components (e.g., buttons, modals, inputs)
-│   ├── layout/       # Layout components (e.g., header, footer, sidebar)
-│   └── tables/       # Components specific to tables
+│   ├── 0_layout/     # Layout components (e.g., header, footer, sidebar)
+│   ├── 1_enhcanced/  # Common components with additional functionality (required inputs, autocomplits etc.)
+│   ├── 2_common/     # Generic components (e.g., buttons, modals, inputs)
+│   ├── 3_shared/     # Shared thru all app components (e.g. fileMapper)
+│   └── (suppressions/dsnbl/esp etc.)/ # Files with components with are responsible for building app pages
 ├── constants/        # Application constants
-│   ├── apiRoutes.ts  # API endpoints
-│   ├── appRoutes.ts  # Frontend route definitions
-│   └── enums.ts      # Enum definitions
+│   └── AppContants.ts  # Centralized export for constants
 ├── hooks/            # Custom hooks
-│   └── useFetchData.ts # Example of a data-fetching hook
+│   ├── 0_AppHooks.ts # Centralized export for hooks
+│   └── useApiLoader.ts # Example of a api-route fetching hook
 ├── pages/            # Pages (each corresponds to a route)
-│   ├── Dashboard/
-│   ├── Profile/
-│   └── Settings/
+│   ├── Suppressions/
+│   │   ├── Domains/
+│   │   ├── Emails/
+│   │   └── etc.
+│   └── etc.
 ├── providers/        # Context providers for state management
-│   └── ThemeProvider.tsx # Provider for managing theming
-├── queries/          # Queries and mutations for React Query
-│   ├── userQueries.ts # Example: user-related queries
-│   ├── authMutations.ts # Example: authentication mutations
-│   └── index.ts       # Centralized export for queries/mutations
+│   ├── ConfigureProviders.tsx # Provider wich responsible for managing all providers in on place
+│   └──  (account/axios etc.)/ # Folders with corresponding providers inside
 ├── services/         # API calls and related utilities
-│   ├── api.ts        # Centralized Axios instance
-│   └── userService.ts # Example: user-related API functions
-├── styles/           # Global styles and theming
-│   ├── global.css    # Global CSS styles
-│   ├── theme/        # MUI theming setup
-│   │   ├── lightTheme.ts # Light theme configuration
-│   │   ├── darkTheme.ts  # Dark theme configuration
-│   │   └── index.ts      # Theme switcher or export file
+│   ├── queries/     # App Queries
+│   │   └── AppQueries.ts # Centralized export for queries
+│   └── mutations/ 
+│       └── AppMutations.ts # Centralized export for queries
 ├── typeGuards/       # TypeScript type guards
-│   ├── isUser.ts     # Example: Type guard for user object
+│   ├── isSyntheticEvent.ts     # Example: Type guard for synthetic event
 │   └── index.ts      # Centralized export for type guards
 ├── types/            # TypeScript type definitions
 │   ├── userTypes.ts  # Example: user-related types
@@ -42,8 +37,4 @@ src/
 │   ├── formatDate.ts # Example: date formatting utility
 │   └── storage.ts    # Example: localStorage/sessionStorage helpers
 ├── App.tsx           # Main application entry
-├── index.tsx         # ReactDOM entry
-└── tests/            # Test files
-    ├── unit/         # Unit tests
-    ├── integration/  # Integration tests
-    └── mocks/        # Mock data and handlers
+└── index.tsx         # ReactDOM entry
