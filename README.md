@@ -1,6 +1,6 @@
-Project Title
+EPC WEB REACT
 
-Custom React Table & File Mapper
+EPC marketing platfor app for contacts transfer and validation.
 
 Description
 
