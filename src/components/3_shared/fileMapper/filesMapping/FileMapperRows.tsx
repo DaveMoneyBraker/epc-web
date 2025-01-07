@@ -1,7 +1,6 @@
 import React from "react";
 import { FileMapperRow } from "./FileMapperRow";
 import { FileMapperPreview } from "../../../../types";
-import FileMapperUtils from "../utils/0_utils";
 import { Box, Divider, styled } from "@mui/material";
 import { AppBackdrop } from "../../../0_layout/Backdrop";
 
@@ -25,16 +24,6 @@ export const FileMapperRows: React.FC<Props> = ({
   requiredHeaders,
   onPreviewsChange,
 }) => {
-  const [state, setState] = React.useState<FileMapperPreview[]>([]);
-
-  // CHANGE FILE HEADERS
-  // IF DUPLICATED OR NOT EXISTING IN AVAILABLE_HEADERS HEADERS - REMOVE IT
-  React.useEffect(() => {
-    setState(
-      FileMapperUtils.proceedPreviewsHeaders(previews, availableHeaders)
-    );
-  }, [previews, availableHeaders]);
-
   const handleHeaderChange = React.useCallback(
     (value: string, columnIndex: number, rowIndex: number) => {
       const newValue = previews.map((preview, previewIndex) => ({
@@ -109,7 +98,7 @@ export const FileMapperRows: React.FC<Props> = ({
   return (
     <Wrapper>
       <AppBackdrop loading={parsing} />
-      {state.map((preview, i) => (
+      {previews.map((preview, i) => (
         <div key={i}>
           <FileMapperRow
             preview={preview}
