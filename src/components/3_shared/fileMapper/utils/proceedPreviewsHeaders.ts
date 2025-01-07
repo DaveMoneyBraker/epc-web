@@ -15,9 +15,12 @@ export const proceedPreviewsHeaders = (
       let newHeader = "";
       if (
         !proceededHeaders.some((v) => v === header) &&
-        availableHeaders.some((v) => v === header)
+        availableHeaders.some(
+          (v) => v.toLocaleLowerCase() === header.toLocaleLowerCase()
+        )
       ) {
-        newHeader = header;
+        newHeader = header.toLocaleLowerCase();
+        console.log({ newHeader });
       }
 
       proceededHeaders.push(header);
@@ -26,5 +29,6 @@ export const proceedPreviewsHeaders = (
     return {
       ...preview,
       columns: newColumns,
+      containHeaders: newColumns.every(({ header }) => header),
     };
   });

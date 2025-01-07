@@ -11,3 +11,4 @@ export * from "./fileMapper";
 export * from "./defaultDialogItemProps";
 export * from "./userPermissions";
 export * from "./account";
+export * from "./fileMapperInputValue";

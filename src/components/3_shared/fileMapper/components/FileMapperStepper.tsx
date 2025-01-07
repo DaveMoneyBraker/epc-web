@@ -29,6 +29,7 @@ export const FileMapperStepper: React.FC<Props> = ({
   SecondStep,
   secondStepCompleted,
   onFirstStepCompleted,
+  onSecondStepCompleted,
 }) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -36,8 +37,11 @@ export const FileMapperStepper: React.FC<Props> = ({
     if (activeStep === 0) {
       onFirstStepCompleted();
     }
+    if (activeStep === 1) {
+      onSecondStepCompleted();
+    }
     setActiveStep((prev) => prev + 1);
-  }, [activeStep, setActiveStep, onFirstStepCompleted]);
+  }, [activeStep, setActiveStep, onFirstStepCompleted, onSecondStepCompleted]);
 
   const handleBack = React.useCallback(
     () => setActiveStep((prev) => prev - 1),

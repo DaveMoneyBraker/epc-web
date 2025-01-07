@@ -1,16 +1,15 @@
 import React from "react";
 import { FileMapperPreview, FileMapperProps } from "../../../types";
-import { FileMapperStepper } from "./FileMapperStepper";
-import { FileMapperDragNDrop } from "./FileMapperDragNDrop";
+import { FileMapperStepper } from "./components/FileMapperStepper";
+import { FileMapperDragNDrop } from "./components/FileMapperDragNDrop";
 import { useFileParser } from "./hooks";
-import { FilesMapping } from "./filesMapping";
+import { FilesMapping } from "./components/filesMapping";
 import FileMapperUtils from "./utils/0_utils";
 
 export const FileMapper: React.FC<FileMapperProps> = ({
   fileSize = 15,
   availableHeaders,
   requiredHeaders,
-  apiUrl,
   AdditionalInputs,
 }) => {
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
@@ -63,9 +62,15 @@ export const FileMapper: React.FC<FileMapperProps> = ({
     [setNewFileName]
   );
 
-  const handleSecondStepCompleted = React.useCallback(() => {}, []);
+  const handleSecondStepCompleted = React.useCallback(() => {
+    FileMapperUtils.getMappedFilesString(previews, selectedFiles);
+  }, [previews, selectedFiles]);
 
   const filesMapped = React.useMemo(() => {
+    // NEW FILE NAME IS REQUIRED
+    if (!newFileName) {
+      return false;
+    }
     // IF THERE IS NO STATE
     // OR NO ELEMENTS IN STATE
     // OR EACH FILE IN STATE SKIPPED
@@ -82,7 +87,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
       FileMapperUtils.isFileMapped(preview, requiredHeaders)
     );
     return isStateMapped;
-  }, [previews, requiredHeaders]);
+  }, [newFileName, previews, requiredHeaders]);
 
   return (
     <FileMapperStepper

@@ -2,11 +2,11 @@ import React from "react";
 import { IconButton } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ClearIcon from "@mui/icons-material/Clear";
-import APP_CONSTANTS from "../../../constants/AppConstants";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_CONSTANTS from "../../../../constants/AppConstants";
+import AppHooks from "../../../../hooks/0_AppHooks";
 // STYLES
-import "./styles/drag-drop.scss";
-import "./styles/dark-drag-drop.scss";
+import "../styles/drag-drop.scss";
+import "../styles/dark-drag-drop.scss";
 
 interface Props {
   fileSizeLimit: number;

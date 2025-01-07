@@ -23,6 +23,7 @@ export const getFilesPreview = (
       skip: false,
       columns: [],
       filename,
+      containHeaders: false,
     };
     for (let i = 0; i < length; i++) {
       const col = cols[i];

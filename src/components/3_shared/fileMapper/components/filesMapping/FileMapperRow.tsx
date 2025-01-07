@@ -1,9 +1,9 @@
 import React from "react";
-import { FileMapperPreview } from "../../../../types";
+import { FileMapperPreview } from "../../../../../types";
 import { FileMapperColumn } from "./FileMapperColumn";
 import { Box, Button, styled, Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
-import { EnhancedCheckbox } from "../../../1_enhanced";
+import { EnhancedCheckbox } from "../../../../1_enhanced";
 
 interface Props {
   preview: FileMapperPreview;
@@ -21,6 +21,7 @@ interface Props {
     rowIndex: number
   ) => void;
   onSkipFileChange: (value: boolean, rowIndex: number) => void;
+  onContainHeadersChange: (value: boolean, rowIndex: number) => void;
 }
 
 const Wrapper = styled(Box)(() => ({
@@ -59,6 +60,7 @@ export const FileMapperRow: React.FC<Props> = ({
   onColumnHeaderChange,
   onSkipColumnChange,
   onSkipFileChange,
+  onContainHeadersChange,
 }) => {
   const unmappedItemsCount = React.useMemo(
     () =>
@@ -76,6 +78,7 @@ export const FileMapperRow: React.FC<Props> = ({
       onColumnHeaderChange(value, columnIndex, index),
     [index, onColumnHeaderChange]
   );
+
   const handleSkipColumnChange = React.useCallback(
     (value: boolean, columnIndex: number) =>
       onSkipColumnChange(value, columnIndex, index),
@@ -87,6 +90,11 @@ export const FileMapperRow: React.FC<Props> = ({
     [index, onSkipFileChange]
   );
 
+  const handleContainHeadersChange = React.useCallback(
+    (value: boolean) => onContainHeadersChange(value, index),
+    [index, onContainHeadersChange]
+  );
+
   return (
     <Wrapper>
       {preview && preview.filename && (
@@ -95,6 +103,12 @@ export const FileMapperRow: React.FC<Props> = ({
             <Typography variant="h6">
               {index + 1}. {preview.filename}
             </Typography>
+            <EnhancedCheckbox
+              fullWidth={false}
+              value={preview.containHeaders}
+              label="Contain headers"
+              onChange={handleContainHeadersChange}
+            />
             <EnhancedCheckbox
               fullWidth={false}
               value={preview.skip}
@@ -123,6 +137,7 @@ export const FileMapperRow: React.FC<Props> = ({
           preview.columns.map((column, i) => (
             <FileMapperColumn
               fileSkip={preview.skip}
+              containHeaders={preview.containHeaders}
               index={i}
               column={column}
               availableHeaders={availableHeaders}

@@ -1,7 +1,7 @@
 import React from "react";
-import { FileMapperPreview } from "../../../../types";
+import { FileMapperPreview } from "../../../../../types";
 import { FileMapperRows } from "./FileMapperRows";
-import { EnhancedTextField } from "../../../1_enhanced";
+import { EnhancedTextField } from "../../../../1_enhanced";
 import { Box, styled } from "@mui/material";
 
 interface Props {
@@ -50,7 +50,17 @@ export const FilesMapping: React.FC<Props> = ({
 
   const handleNewFileNameChange = React.useCallback(
     (value: string) => {
-      onNewFileNameChange(value);
+      const clearedValue = value
+        .replaceAll(".", "")
+        .replaceAll(",", "")
+        .replaceAll("+", "")
+        .replaceAll('"', "")
+        .replaceAll("/", "")
+        .replaceAll("'", "")
+        .replaceAll("`", "")
+        .replaceAll("\\", "")
+        .replaceAll(" ", "");
+      onNewFileNameChange(clearedValue);
     },
     [onNewFileNameChange]
   );
@@ -58,6 +68,7 @@ export const FilesMapping: React.FC<Props> = ({
     <Wrapper>
       <InputsWrapper>
         <EnhancedTextField
+          helperText={`not allowed: . , + / \\  ' \` " whitespace`}
           fullWidth={false}
           value={newFileName}
           onChange={handleNewFileNameChange}

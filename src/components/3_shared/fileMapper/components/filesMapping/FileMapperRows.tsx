@@ -1,8 +1,8 @@
 import React from "react";
 import { FileMapperRow } from "./FileMapperRow";
-import { FileMapperPreview } from "../../../../types";
+import { FileMapperPreview } from "../../../../../types";
 import { Box, Divider, styled } from "@mui/material";
-import { AppBackdrop } from "../../../0_layout/Backdrop";
+import { AppBackdrop } from "../../../../0_layout/Backdrop";
 
 interface Props {
   previews: FileMapperPreview[];
@@ -102,6 +102,19 @@ export const FileMapperRows: React.FC<Props> = ({
     [previews, onPreviewsChange]
   );
 
+  const handleContainHeadersChange = React.useCallback(
+    (containHeaders: boolean, rowIndex: number) => {
+      const newValue = previews.map((preview, i) => {
+        if (i === rowIndex) {
+          return { ...preview, containHeaders };
+        }
+        return preview;
+      });
+      onPreviewsChange(newValue);
+    },
+    [previews, onPreviewsChange]
+  );
+
   return (
     <Wrapper>
       <AppBackdrop loading={parsing} />
@@ -115,6 +128,7 @@ export const FileMapperRows: React.FC<Props> = ({
             onColumnHeaderChange={handleHeaderChange}
             onSkipColumnChange={handleSkipColumnChange}
             onSkipFileChange={handleSkipFileChange}
+            onContainHeadersChange={handleContainHeadersChange}
           />
           <Divider />
         </div>

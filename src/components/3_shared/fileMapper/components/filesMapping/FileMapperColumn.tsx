@@ -1,5 +1,8 @@
 import React from "react";
-import { FileMapperPreviewColumn, TitleValueObject } from "../../../../types";
+import {
+  FileMapperPreviewColumn,
+  TitleValueObject,
+} from "../../../../../types";
 import {
   Box,
   List,
@@ -8,13 +11,14 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { EnhancedCheckbox, EnhancedSelect } from "../../../1_enhanced";
+import { EnhancedCheckbox, EnhancedSelect } from "../../../../1_enhanced";
 
 interface Props {
   index: number;
   column: FileMapperPreviewColumn;
   fileSkip: boolean;
   availableHeaders: string[];
+  containHeaders: boolean;
   onColumnHeaderChange: (value: string, index: number) => void;
   onSkipColumnChange: (value: boolean, index: number) => void;
 }
@@ -42,6 +46,7 @@ export const FileMapperColumn: React.FC<Props> = ({
   index,
   fileSkip,
   column: { header, data, skip },
+  containHeaders,
   availableHeaders,
   onColumnHeaderChange,
   onSkipColumnChange,
@@ -75,6 +80,35 @@ export const FileMapperColumn: React.FC<Props> = ({
     [header, skip]
   );
 
+  const listItems = React.useMemo(() => {
+    const items: React.ReactNode[] = [];
+    data.forEach((row, i) => {
+      if (i === 0 && containHeaders) {
+        return;
+      }
+      items.push(
+        <ListItem key={i} dense>
+          <ListItemText
+            disableTypography={true}
+            primary={
+              <Typography
+                variant="body2"
+                sx={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {row}
+              </Typography>
+            }
+          />
+        </ListItem>
+      );
+      return items;
+    });
+  }, [data, containHeaders]);
+
   return (
     <Wrapper>
       <DataContainer mapped={mapped}>
@@ -93,7 +127,13 @@ export const FileMapperColumn: React.FC<Props> = ({
         >
           {data &&
             data.map((row, i) => (
-              <ListItem key={i} dense>
+              <ListItem
+                key={i}
+                dense
+                sx={{
+                  display: i === 0 && containHeaders ? "none" : "inline-block",
+                }}
+              >
                 <ListItemText
                   disableTypography={true}
                   primary={
