@@ -13,7 +13,6 @@ export const FileMapper: React.FC<FileMapperProps> = ({
   apiUrl,
 }) => {
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
-  const [isMapped, setIsMapped] = React.useState(false);
   const [previews, setPreviews] = React.useState<FileMapperPreview[]>([]);
   const { parsing, parse } = useFileParser();
 
@@ -30,9 +29,18 @@ export const FileMapper: React.FC<FileMapperProps> = ({
 
   const proceedPreviewData = React.useCallback(
     (v: string[][][], filename: string) => {
-      const newPreviews = FileMapperUtils.getFilesPreview(v, filename);
+      const newPreviews = FileMapperUtils.getFilesPreview(
+        v,
+        filename,
+        availableHeaders
+      );
       setPreviews((prev) => [...prev, ...newPreviews]);
     },
+    [availableHeaders, setPreviews]
+  );
+
+  const handlePreviewsChange = React.useCallback(
+    (value: FileMapperPreview[]) => setPreviews(value),
     [setPreviews]
   );
 
@@ -41,15 +49,31 @@ export const FileMapper: React.FC<FileMapperProps> = ({
     [selectedFiles, parse, proceedPreviewData]
   );
 
-  const firstStepCompleted = React.useMemo(
+  const filesSelected = React.useMemo(
     () => selectedFiles && selectedFiles.length > 0,
     [selectedFiles]
   );
 
-  const handleIsMappedChange = React.useCallback(
-    (v: boolean) => setIsMapped(v),
-    [setIsMapped]
-  );
+  const handleSecondStepCompleted = React.useCallback(() => {}, []);
+
+  const mapped = React.useMemo(() => {
+    // IF THERE IS NO STATE
+    // OR NO ELEMENTS IN STATE
+    // OR EACH FILE IN STATE SKIPPED
+    // FALSE (SINCE WE CAN'T SUBMIT 0 FILES)
+    if (
+      !previews ||
+      previews.length === 0 ||
+      previews.every((preview) => preview.skip)
+    ) {
+      return false;
+    }
+
+    const isStateMapped = previews.every((preview) =>
+      FileMapperUtils.isFileMapped(preview, requiredHeaders)
+    );
+    return isStateMapped;
+  }, [previews, requiredHeaders]);
 
   return (
     <FileMapperStepper
@@ -61,7 +85,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
           onFileDelete={handleFileDelete}
         />
       }
-      firstStepCompleted={firstStepCompleted}
+      firstStepCompleted={filesSelected}
       onFirstStepCompleted={handleFirstStepCompleted}
       secondStep={
         <FileMapperRows
@@ -69,10 +93,11 @@ export const FileMapper: React.FC<FileMapperProps> = ({
           parsing={parsing}
           availableHeaders={availableHeaders}
           requiredHeaders={requiredHeaders}
-          onIsMappedChange={handleIsMappedChange}
+          onPreviewsChange={handlePreviewsChange}
         />
       }
-      secondStepCompleted={isMapped}
+      secondStepCompleted={mapped}
+      onSecondStepCompleted={handleSecondStepCompleted}
     />
   );
 };

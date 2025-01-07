@@ -1,8 +1,10 @@
 import { FileMapperPreview } from "../../../../types";
+import { proceedPreviewsHeaders } from "./proceedPreviewsHeaders";
 
 export const getFilesPreview = (
   data: string[][][],
-  filename: string
+  filename: string,
+  availableHeaders: string[]
 ): FileMapperPreview[] => {
   if (!data.length) {
     return [];
@@ -32,5 +34,5 @@ export const getFilesPreview = (
     }
     previews.push(preview);
   });
-  return previews;
+  return proceedPreviewsHeaders(previews, availableHeaders);
 };

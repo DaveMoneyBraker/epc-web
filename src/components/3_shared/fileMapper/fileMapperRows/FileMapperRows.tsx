@@ -10,7 +10,7 @@ interface Props {
   parsing: boolean;
   availableHeaders: string[];
   requiredHeaders: string[][];
-  onIsMappedChange: (isMapped: boolean) => void;
+  onPreviewsChange: (previews: FileMapperPreview[]) => void;
 }
 
 const Wrapper = styled(Box)(() => ({
@@ -23,7 +23,7 @@ export const FileMapperRows: React.FC<Props> = ({
   parsing,
   availableHeaders,
   requiredHeaders,
-  onIsMappedChange,
+  onPreviewsChange,
 }) => {
   const [state, setState] = React.useState<FileMapperPreview[]>([]);
 
@@ -37,38 +37,37 @@ export const FileMapperRows: React.FC<Props> = ({
 
   const handleHeaderChange = React.useCallback(
     (value: string, columnIndex: number, rowIndex: number) => {
-      setState((prev) =>
-        prev.map((preview, previewIndex) => ({
-          ...preview,
-          columns: preview.columns.map((col, currentColIndex) => {
-            // MAKE CHANGES ONLY IN REQUESTED FILE/ROW
-            if (previewIndex === rowIndex) {
-              if (columnIndex === currentColIndex) {
-                return {
-                  ...col,
-                  header: value,
-                };
-              }
-              // IF SAME HEADER IS TAKEN - CLEAR IT (NO HEADER DUPLICATES ALLOWED)
-              if (col.header === value && columnIndex !== currentColIndex) {
-                return {
-                  ...col,
-                  header: "",
-                };
-              }
+      const newValue = previews.map((preview, previewIndex) => ({
+        ...preview,
+        columns: preview.columns.map((col, currentColIndex) => {
+          // MAKE CHANGES ONLY IN REQUESTED FILE/ROW
+          if (previewIndex === rowIndex) {
+            if (columnIndex === currentColIndex) {
+              return {
+                ...col,
+                header: value,
+              };
             }
-            return col;
-          }),
-        }))
-      );
+            // IF SAME HEADER IS TAKEN - CLEAR IT (NO HEADER DUPLICATES ALLOWED)
+            if (col.header === value && columnIndex !== currentColIndex) {
+              return {
+                ...col,
+                header: "",
+              };
+            }
+          }
+          return col;
+        }),
+      }));
+      onPreviewsChange(newValue);
     },
-    []
+    [previews, onPreviewsChange]
   );
 
   const handleSkipColumnChange = React.useCallback(
     (value: boolean, columnIndex: number, rowIndex: number) => {
-      setState((prev) => {
-        const newState = prev.map((preview, previewIndex) => ({
+      const newValue = previews
+        .map((preview, previewIndex) => ({
           ...preview,
           columns: preview.columns.map((col, currentColIndex) => {
             // MAKE CHANGES ONLY IN REQUESTED FILE/ROW
@@ -83,55 +82,29 @@ export const FileMapperRows: React.FC<Props> = ({
             }
             return col;
           }),
-        }));
+        }))
         // IF ALL COLUMNS IN FILE SKIPPED - SKIP FILE
-        return newState.map((preview) => {
+        .map((preview) => {
           if (preview.columns.every((col) => col.skip)) {
             return { ...preview, skip: true };
           }
           return preview;
         });
-      });
+      onPreviewsChange(newValue);
     },
-    []
+    [previews, onPreviewsChange]
   );
 
   const handleSkipFileChange = React.useCallback(
-    (value: boolean, rowIndex: number) =>
-      setState((prev) =>
-        prev.map((preview, i) => ({
-          ...preview,
-          skip: i === rowIndex ? value : preview.skip,
-        }))
-      ),
-    []
-  );
-
-  const handleStateChanges = React.useCallback(
-    (changedState: FileMapperPreview[]) => {
-      // IF THERE IS NO STATE
-      // OR NO ELEMENTS IN STATE
-      // OR EACH FILE IN STATE SKIPPED
-      // FALSE (SINCE WE CAN'T SUBMIT 0 FILES)
-      if (
-        !changedState ||
-        changedState.length === 0 ||
-        changedState.every((preview) => preview.skip)
-      ) {
-        return onIsMappedChange(false);
-      }
-
-      const isStateMapped = changedState.every((preview) =>
-        FileMapperUtils.isFileMapped(preview, requiredHeaders)
-      );
-      onIsMappedChange(isStateMapped);
+    (value: boolean, rowIndex: number) => {
+      const newValue = previews.map((preview, i) => ({
+        ...preview,
+        skip: i === rowIndex ? value : preview.skip,
+      }));
+      onPreviewsChange(newValue);
     },
-    [requiredHeaders, onIsMappedChange]
+    [previews, onPreviewsChange]
   );
-
-  React.useEffect(() => {
-    handleStateChanges(state);
-  }, [state, handleStateChanges]);
 
   return (
     <Wrapper>

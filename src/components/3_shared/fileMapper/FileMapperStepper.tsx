@@ -10,6 +10,7 @@ interface Props {
   //   thirdStep: React.FC;
   //   thirdStepDisabled: boolean;
   onFirstStepCompleted: () => void;
+  onSecondStepCompleted: () => void;
 }
 
 const Wrapper = styled(Box)({
