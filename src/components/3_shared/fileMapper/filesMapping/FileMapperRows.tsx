@@ -89,6 +89,13 @@ export const FileMapperRows: React.FC<Props> = ({
       const newValue = previews.map((preview, i) => ({
         ...preview,
         skip: i === rowIndex ? value : preview.skip,
+        // IF FILE UNSKIPPED - UNSKIP COLUMNS
+        columns:
+          i === rowIndex
+            ? value
+              ? preview.columns
+              : preview.columns.map((col) => ({ ...col, skip: false }))
+            : preview.columns,
       }));
       onPreviewsChange(newValue);
     },
