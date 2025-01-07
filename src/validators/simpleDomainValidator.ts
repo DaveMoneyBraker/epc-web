@@ -1,5 +1,7 @@
+import { isString } from "../typeGuards/isString";
+
 export const simpleDomainValidator = (value: unknown): boolean => {
-  if (typeof value === "string") {
+  if (isString(value)) {
     return value.includes(".") && !value.includes("http");
   }
   return false;
