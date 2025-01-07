@@ -11,6 +11,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
   availableHeaders,
   requiredHeaders,
   apiUrl,
+  AdditionalInputs,
 }) => {
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   const [previews, setPreviews] = React.useState<FileMapperPreview[]>([]);
@@ -85,7 +86,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
 
   return (
     <FileMapperStepper
-      firstStep={
+      FirstStep={
         <FileMapperDragNDrop
           fileSizeLimit={fileSize}
           selectedFiles={selectedFiles}
@@ -95,7 +96,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
       }
       firstStepCompleted={filesSelected}
       onFirstStepCompleted={handleFirstStepCompleted}
-      secondStep={
+      SecondStep={
         <FilesMapping
           newFileName={newFileName}
           previews={previews}
@@ -104,6 +105,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
           requiredHeaders={requiredHeaders}
           onPreviewsChange={handlePreviewsChange}
           onNewFileNameChange={handleNewFileNameChange}
+          AdditionalInputs={AdditionalInputs}
         />
       }
       secondStepCompleted={filesMapped}

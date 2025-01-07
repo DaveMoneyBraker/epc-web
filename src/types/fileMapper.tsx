@@ -3,6 +3,7 @@ export interface FileMapperProps {
   availableHeaders: string[];
   requiredHeaders: string[][];
   fileSize?: number;
+  AdditionalInputs?: React.ReactNode;
 }
 
 export interface FileMapperPreview {

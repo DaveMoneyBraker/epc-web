@@ -1,11 +1,10 @@
-import styled from "@emotion/styled";
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material";
 import React from "react";
+import { Box, Button, Step, StepLabel, Stepper, styled } from "@mui/material";
 
 interface Props {
-  firstStep: React.ReactNode;
+  FirstStep: React.ReactNode;
   firstStepCompleted: boolean;
-  secondStep: React.ReactNode;
+  SecondStep: React.ReactNode;
   secondStepCompleted: boolean;
   //   thirdStep: React.FC;
   //   thirdStepDisabled: boolean;
@@ -13,7 +12,7 @@ interface Props {
   onSecondStepCompleted: () => void;
 }
 
-const Wrapper = styled(Box)({
+const Wrapper = styled(Box)(() => ({
   width: "100%",
   height: "calc(100vh - 70px)",
   maxHeight: "calc(100vh - 70px)",
@@ -22,12 +21,12 @@ const Wrapper = styled(Box)({
   display: "flex",
   flexDirection: "column",
   overflow: "hidden",
-});
+}));
 
 export const FileMapperStepper: React.FC<Props> = ({
-  firstStep,
+  FirstStep,
   firstStepCompleted,
-  secondStep,
+  SecondStep,
   secondStepCompleted,
   onFirstStepCompleted,
 }) => {
@@ -92,8 +91,8 @@ export const FileMapperStepper: React.FC<Props> = ({
             overflowY: "scroll",
           }}
         >
-          {activeStep === 0 && firstStep}
-          {activeStep === 1 && secondStep}
+          {activeStep === 0 && FirstStep}
+          {activeStep === 1 && SecondStep}
           {/* {activeStep === 0 && thirdStep} */}
         </Box>
         <Box
