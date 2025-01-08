@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiRoutes } from "../../../core/router";
 import { FILTER_ITEM_TYPE, FilterConfig } from "../../../types";
-import { SuppressionTypeOptions } from "../../../types/suppressions";
+import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { SuppressionMaskItemDialog } from "./item/MaskItemDialog";
 import { CommonPage } from "../../2_common/page";

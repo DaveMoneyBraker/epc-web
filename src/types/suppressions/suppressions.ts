@@ -1,4 +1,4 @@
-import { TitleValueObject } from "./default";
+import { TitleValueObject } from "../default/default";
 
 export const SUPPRESSION_TYPES = {
   MANUAL: "MANUAL",

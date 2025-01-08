@@ -40,7 +40,7 @@ const CustomTabPanel: React.FC<TabPanelProps> = (props) => {
 
 export const SuppressionMaskItemDialog: React.FC<
   Omit<DefaultDialogItemProps, "configs">
-> = ({ open, onClose }) => {
+> = ({ open, onClose, selectedItem }) => {
   const Dialog = React.useMemo(() => dialogFunction(true), []);
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));

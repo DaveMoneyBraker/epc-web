@@ -1,4 +1,4 @@
-import { DefaultAppItem } from "./defaultAppItem";
+import { DefaultAppItem } from "../default";
 
 export interface User extends DefaultAppItem {
   email: string;

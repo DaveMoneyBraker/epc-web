@@ -1,10 +1,10 @@
 import { ObjectLiteral } from "./default";
-import { ItemConfig } from "./itemConfig";
+import { ItemConfig } from "../items/itemConfig";
 
-export interface DefaultDialogItemProps {
+export interface DefaultDialogItemProps<T = ObjectLiteral> {
   open: boolean;
   title: string;
-  selectedItem: ObjectLiteral;
+  selectedItem: T;
   configs: ItemConfig[];
   onClose: (value: unknown | null) => void;
 }

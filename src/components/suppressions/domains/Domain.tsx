@@ -5,7 +5,7 @@ import {
   FilterConfig,
   ValidatorConfigWithNoError,
 } from "../../../types";
-import { SuppressionTypeOptions } from "../../../types/suppressions";
+import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import AppValidators from "../../../validators/0_AppValidators";
