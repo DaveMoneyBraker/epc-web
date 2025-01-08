@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Button,
-  FormControl,
-  Input,
-  InputAdornment,
-  InputLabel,
-  styled,
-  TextField,
-} from "@mui/material";
+import { Button, InputAdornment, styled, TextField } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { DefaultFilters } from "./filters";
 import {
@@ -22,9 +14,11 @@ const Wrapper = styled("div")(() => ({
   width: "100%",
   minWidth: "100%",
   display: "flex",
+  flexWrap: "wrap",
   flexDirection: "row",
   justifyContent: "space-between",
   padding: "5px 0",
+  gap: "15px",
 }));
 
 const ElWrapper = styled("div")(() => ({

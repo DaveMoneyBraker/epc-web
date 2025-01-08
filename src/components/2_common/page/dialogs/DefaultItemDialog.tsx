@@ -6,7 +6,7 @@ import {
 } from "../../../../types";
 import { DialogWrapper } from "../../dialogs";
 
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { EnhancedSelect, EnhancedTextField } from "../../../1_enhanced";
 
 interface DialogState extends ItemConfig {
@@ -149,53 +149,69 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
       onClose={handleDialogClose}
       disabled={disabled}
     >
-      {state &&
-        state.map(
-          (
-            { itemName, itemType, value, selectOptions, required, validators },
-            i
-          ) => {
-            if (itemType === "string" || itemType === "number") {
-              return (
-                <div key={i}>
-                  <EnhancedTextField
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: "15px",
+        }}
+      >
+        {state &&
+          state.map(
+            (
+              {
+                itemName,
+                itemType,
+                value,
+                selectOptions,
+                required,
+                validators,
+              },
+              i
+            ) => {
+              if (itemType === "string" || itemType === "number") {
+                return (
+                  <div key={i}>
+                    <EnhancedTextField
+                      label={itemName}
+                      value={value as string}
+                      onChange={(v) => handleInputChanges(v, i)}
+                      fullWidth
+                      type={itemType}
+                      required={required}
+                    />
+                    {validators &&
+                      validators.map(
+                        ({ error, errorMessage }, errorI) =>
+                          error && (
+                            <Typography variant="inputError" key={errorI}>
+                              {errorMessage}
+                            </Typography>
+                          )
+                      )}
+                  </div>
+                );
+              }
+              // FOR ENUM TYPE WE USE SELECT_INPUT ELEMENT
+              // SO THERE IS NO POSSIBILITY FOR USER TO MAKE ERROR
+              if (itemType === "enum" && selectOptions) {
+                return (
+                  <EnhancedSelect
                     label={itemName}
                     value={value as string}
+                    options={selectOptions}
                     onChange={(v) => handleInputChanges(v, i)}
                     fullWidth
-                    type={itemType}
                     required={required}
+                    key={i}
                   />
-                  {validators &&
-                    validators.map(
-                      ({ error, errorMessage }, errorI) =>
-                        error && (
-                          <Typography variant="inputError" key={errorI}>
-                            {errorMessage}
-                          </Typography>
-                        )
-                    )}
-                </div>
-              );
+                );
+              }
+              return <></>;
             }
-            // FOR ENUM TYPE WE USE SELECT_INPUT ELEMENT
-            // SO THERE IS NO POSSIBILITY FOR USER TO MAKE ERROR
-            if (itemType === "enum" && selectOptions) {
-              return (
-                <EnhancedSelect
-                  label={itemName}
-                  value={value as string}
-                  options={selectOptions}
-                  onChange={(v) => handleInputChanges(v, i)}
-                  fullWidth
-                  required={required}
-                  key={i}
-                />
-              );
-            }
-            return <></>;
-          }
-        )}
+          )}
+      </Box>
     </DialogWrapper>
   );
 };

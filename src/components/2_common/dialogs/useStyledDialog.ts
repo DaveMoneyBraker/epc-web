@@ -16,14 +16,11 @@ export const useStyledDialog = (disablePadding = false) =>
         align-items: center;
         border-bottom: 1px solid lightgrey;
         padding: 12px 20px;
+        position: relative;
       }
   
       & .MuiDialogContent-root {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 15px;
-        padding: ${disablePadding ? 0 : "24px 20px;"}
+        padding: ${disablePadding ? 0 : "24px 20px;"};
       }
   
   

@@ -28,8 +28,19 @@ export const EnhancedTextField: React.FC<Props> = ({
   helperText = "",
   onChange,
 }) => {
-  const handleInputChange = AppHooks.useInputChangeHandler(onChange);
-  const error = React.useMemo(() => required && !value, [required, value]);
+  const [firstOpen, setFirstOpen] = React.useState(true);
+  const handler = AppHooks.useInputChangeHandler(onChange);
+  const handleInputChange = React.useCallback(
+    (v: any) => {
+      setFirstOpen(false);
+      handler(v);
+    },
+    [handler]
+  );
+  const error = React.useMemo(
+    () => !firstOpen && required && !value,
+    [firstOpen, required, value]
+  );
 
   return (
     <FormControl fullWidth={fullWidth} required={required}>

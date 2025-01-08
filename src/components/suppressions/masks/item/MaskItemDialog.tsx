@@ -9,6 +9,7 @@ import {
   DialogTitle,
   Tab,
   Tabs,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { MaskItem } from "./MaskItem";
@@ -39,16 +40,17 @@ const CustomTabPanel: React.FC<TabPanelProps> = (props) => {
 
 export const SuppressionMaskItemDialog: React.FC<
   Omit<DefaultDialogItemProps, "configs">
-> = ({ title, open, onClose }) => {
+> = ({ open, onClose }) => {
   const Dialog = React.useMemo(() => dialogFunction(true), []);
   const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleClose = React.useCallback(
     (confirm: boolean) => {
       confirm ? onClose({ name: "test" }) : onClose(null);
     },
     [onClose]
   );
-  const [tabIndex, setTabIndex] = React.useState(0);
+  const [tabIndex, setTabIndex] = React.useState(2);
 
   const handleTabChange = React.useCallback(
     (event: React.SyntheticEvent, newValue: number) => setTabIndex(newValue),
@@ -69,9 +71,30 @@ export const SuppressionMaskItemDialog: React.FC<
   }, []);
 
   return (
-    <Dialog open={open} maxWidth="md" fullWidth scroll="paper">
+    <Dialog
+      open={open}
+      maxWidth="md"
+      scroll="paper"
+      fullWidth={true}
+      PaperProps={{
+        sx: {
+          m: smallScreen ? 1 : 3,
+          height: smallScreen ? "100%" : "auto",
+          maxHeight: smallScreen ? "calc(100% - 16px)" : "95vh",
+          position: "relative",
+          pt: smallScreen ? 2 : 0,
+        },
+      }}
+    >
       <DialogTitle>
-        <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+        <Box
+          role="toolbar"
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+            width: "100%",
+          }}
+        >
           <Tabs value={tabIndex} onChange={handleTabChange} variant="fullWidth">
             <Tab label="Create Mask" {...a11yProps(0)} />
             <Tab label="Info" {...a11yProps(1)} />
@@ -80,17 +103,15 @@ export const SuppressionMaskItemDialog: React.FC<
         </Box>
       </DialogTitle>
       <DialogContent>
-        <Box sx={{ width: "100%", padding: "0 20px" }}>
-          <CustomTabPanel tabIndex={tabIndex} index={0}>
-            <MaskItem />
-          </CustomTabPanel>
-          <CustomTabPanel tabIndex={tabIndex} index={1}>
-            <MaskItemInfo />
-          </CustomTabPanel>
-          <CustomTabPanel tabIndex={tabIndex} index={2}>
-            <MaskItemExamples />
-          </CustomTabPanel>
-        </Box>
+        <CustomTabPanel tabIndex={tabIndex} index={0}>
+          <MaskItem />
+        </CustomTabPanel>
+        <CustomTabPanel tabIndex={tabIndex} index={1}>
+          <MaskItemInfo />
+        </CustomTabPanel>
+        <CustomTabPanel tabIndex={tabIndex} index={2}>
+          <MaskItemExamples />
+        </CustomTabPanel>
       </DialogContent>
       <DialogActions>
         <Button
