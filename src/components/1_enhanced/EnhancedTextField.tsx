@@ -1,7 +1,6 @@
 import React from "react";
-import { FormControl, SxProps, TextField, Theme } from "@mui/material";
+import { FormControl, TextField } from "@mui/material";
 import AppHooks from "../../hooks/0_AppHooks";
-import { error } from "console";
 
 interface Props {
   value: string;
@@ -9,10 +8,11 @@ interface Props {
   label?: string;
   type?: "string" | "number";
   fullWidth?: boolean;
+  error?: boolean;
   width?: string;
   required?: boolean;
   disabled?: boolean;
-  helperText?: string;
+  helperText?: string | null;
   onChange: (v: string) => void;
 }
 
@@ -25,6 +25,7 @@ export const EnhancedTextField: React.FC<Props> = ({
   width = fullWidth ? "auto" : "250px",
   required = true,
   disabled = false,
+  error = false,
   helperText = "",
   onChange,
 }) => {
@@ -37,7 +38,7 @@ export const EnhancedTextField: React.FC<Props> = ({
     },
     [handler]
   );
-  const error = React.useMemo(
+  const requiredError = React.useMemo(
     () => !firstOpen && required && !value,
     [firstOpen, required, value]
   );
@@ -46,7 +47,7 @@ export const EnhancedTextField: React.FC<Props> = ({
     <FormControl fullWidth={fullWidth} required={required}>
       {/* <InputLabel id={`select-input-id-${label.trim()}`}>{label}</InputLabel> */}
       <TextField
-        error={error}
+        error={error || requiredError}
         required={required}
         helperText={helperText}
         sx={{ width }}

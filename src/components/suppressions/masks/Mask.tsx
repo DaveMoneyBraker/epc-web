@@ -8,7 +8,7 @@ import { CommonPage } from "../../2_common/page";
 
 export const SuppressionsMask: React.FC = () => {
   const cols = React.useMemo(
-    () => ["mask", "type", "updatedAt", "createdAt", "actions"],
+    () => ["name", "mask", "type", "updatedAt", "createdAt", "actions"],
     []
   );
   const queryKey = React.useMemo(() => "SuppressionsDomains", []);

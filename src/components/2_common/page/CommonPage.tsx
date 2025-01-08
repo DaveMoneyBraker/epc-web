@@ -22,7 +22,9 @@ interface Props {
   itemConfigs: ItemConfig[];
   actions?: DefaultPageActions[];
   onEvent?: (event: DefaultPageActions, body: unknown) => void;
-  ItemDialog?: React.ComponentType<Omit<DefaultDialogItemProps, "configs">>;
+  ItemDialog?: React.ComponentType<
+    Omit<DefaultDialogItemProps<any>, "configs">
+  >;
 }
 
 const Wrapper = styled("div")(() => ({

@@ -1,6 +1,11 @@
 import React from "react";
 import { useStyledDialog as dialogFunction } from "../../../2_common/dialogs";
-import { DefaultDialogItemProps } from "../../../../types";
+import {
+  DefaultDialogItemProps,
+  SUPPRESSION_TYPES,
+  SuppressionMask,
+  SuppressionType,
+} from "../../../../types";
 import {
   Box,
   Button,
@@ -39,18 +44,38 @@ const CustomTabPanel: React.FC<TabPanelProps> = (props) => {
 };
 
 export const SuppressionMaskItemDialog: React.FC<
-  Omit<DefaultDialogItemProps, "configs">
+  Omit<DefaultDialogItemProps<SuppressionMask>, "configs">
 > = ({ open, onClose, selectedItem }) => {
+  // ITEM
+  const [name, setName] = React.useState("");
+  const [mask, setMask] = React.useState("");
+  const [valid, setValid] = React.useState(true);
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [type, setType] = React.useState<SuppressionType>(
+    SUPPRESSION_TYPES.MANUAL
+  );
+  const [test, setTest] = React.useState("");
+  const [testStatus, setTestStatus] = React.useState<
+    null | "valid" | "invalid"
+  >(null);
+  // DIALOG
   const Dialog = React.useMemo(() => dialogFunction(true), []);
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleClose = React.useCallback(
     (confirm: boolean) => {
-      confirm ? onClose({ name: "test" }) : onClose(null);
+      if (!confirm) {
+        onClose(null);
+      } else {
+        const body = selectedItem
+          ? { ...selectedItem, name, type, mask }
+          : { name, type, mask };
+        onClose(body);
+      }
     },
-    [onClose]
+    [selectedItem, type, mask, name, onClose]
   );
-  const [tabIndex, setTabIndex] = React.useState(2);
+  const [tabIndex, setTabIndex] = React.useState(0);
 
   const handleTabChange = React.useCallback(
     (event: React.SyntheticEvent, newValue: number) => setTabIndex(newValue),
@@ -58,8 +83,33 @@ export const SuppressionMaskItemDialog: React.FC<
   );
 
   React.useEffect(() => {
-    console.log({ Dialog });
-  }, [Dialog]);
+    if (selectedItem && open) {
+      const { name, type, mask } = selectedItem;
+      setName(name);
+      setMask(mask);
+      setType(type);
+    }
+    if (!open) {
+      setName("");
+      setMask("");
+    }
+  }, [selectedItem, open]);
+
+  React.useEffect(() => {
+    setErrorMessage("");
+    setTestStatus(null);
+    setValid(true);
+    try {
+      const regExp = new RegExp(mask);
+      const v = regExp.test(test);
+      setTestStatus(v ? "valid" : "invalid");
+      setValid(true);
+    } catch (error: any) {
+      setErrorMessage(error.message || "Unhandled Error :(");
+      setTestStatus("invalid");
+      setValid(false);
+    }
+  }, [test, mask]);
 
   // I DON'T NOW WHAT IS FOR
   // JUST COPY THE EXAMPLE FROM MUI
@@ -69,6 +119,24 @@ export const SuppressionMaskItemDialog: React.FC<
       "aria-controls": `simple-tabpanel-${index}`,
     };
   }, []);
+
+  const handleItemChange = React.useCallback(
+    (key: string, value: any) => {
+      if (key === "name") {
+        setName(value);
+      }
+      if (key === "mask") {
+        setMask(value);
+      }
+      if (key === "type") {
+        setType(value);
+      }
+      if (key === "test") {
+        setTest(value);
+      }
+    },
+    [setName, setMask, setType]
+  );
 
   return (
     <Dialog
@@ -104,7 +172,16 @@ export const SuppressionMaskItemDialog: React.FC<
       </DialogTitle>
       <DialogContent>
         <CustomTabPanel tabIndex={tabIndex} index={0}>
-          <MaskItem />
+          <MaskItem
+            name={name}
+            mask={mask}
+            valid={valid}
+            errorMessage={errorMessage}
+            type={type}
+            test={test}
+            testStatus={testStatus}
+            onChange={handleItemChange}
+          />
         </CustomTabPanel>
         <CustomTabPanel tabIndex={tabIndex} index={1}>
           <MaskItemInfo />
@@ -123,7 +200,7 @@ export const SuppressionMaskItemDialog: React.FC<
         <Button
           variant="contained"
           onClick={() => handleClose(true)}
-          disabled={false}
+          disabled={!name || !mask || !type || !valid}
         >
           Submit
         </Button>
