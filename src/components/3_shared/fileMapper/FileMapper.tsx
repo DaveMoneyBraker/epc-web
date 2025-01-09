@@ -65,9 +65,17 @@ export const FileMapper: React.FC<FileMapperProps> = ({
     [setNewFileName]
   );
 
+  const onMappedFileStringComplete = React.useCallback((value: string) => {
+    console.log({ value });
+  }, []);
+
   const handleSecondStepCompleted = React.useCallback(() => {
-    FileMapperUtils.getMappedFilesString(previews, selectedFiles);
-  }, [previews, selectedFiles]);
+    FileMapperUtils.getMappedFilesString(
+      previews,
+      selectedFiles,
+      onMappedFileStringComplete
+    );
+  }, [previews, selectedFiles, onMappedFileStringComplete]);
 
   const filesMapped = React.useMemo(() => {
     // NEW FILE NAME IS REQUIRED
