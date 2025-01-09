@@ -5,21 +5,20 @@ export const getMappedFilesString = (
   previews: FileMapperPreview[],
   files: File[]
 ): string => {
-  const columns: FileMapperPreviewColumn[] = [];
-  const mappedFiles: File[] = [];
-  previews.forEach(({ skip, columns: previewColumns }, i) => {
-    if (!skip) {
-      mappedFiles.push(files[i]);
-      previewColumns.forEach((column) => !column.skip && columns.push(column));
-    }
+  const unskippedPreviews = previews.filter((preview) => !preview.skip);
+  previews.forEach(({ skip, columns, filename }, i) => {
+    console.log({ files });
+    console.log({ filename });
+    const fileIndex = files.findIndex((f) => f.name === filename);
+    console.log({ fileIndex });
   });
-  mappedFiles.forEach((file) =>
-    Papa.parse<any, File>(file, {
-      header: false,
-      complete: (result) => {
-        console.log({ result });
-      },
-    })
-  );
+  // mappedFiles.forEach((file) =>
+  //   Papa.parse<any, File>(file, {
+  //     header: false,
+  //     complete: (result) => {
+  //       console.log({ result });
+  //     },
+  //   })
+  // );
   return "";
 };

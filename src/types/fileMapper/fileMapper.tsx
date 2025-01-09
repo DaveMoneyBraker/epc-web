@@ -20,3 +20,8 @@ export interface FileMapperPreviewColumn {
   header: string;
   skip: boolean;
 }
+
+export interface PapaparseRawData {
+  data: string[][];
+  filename: string;
+}

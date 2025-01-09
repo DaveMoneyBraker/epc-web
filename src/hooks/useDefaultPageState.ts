@@ -124,10 +124,10 @@ export const useDefaultPageState = <T = any>(
     (confirm: boolean) => {
       setDeleteDialogOpen(false);
       if (confirm) {
-        mutationQuery.mutate({ method: "delete" });
+        mutationQuery.mutate({ method: "delete", body: selectedItem });
       }
     },
-    [mutationQuery, setDeleteDialogOpen]
+    [mutationQuery, selectedItem, setDeleteDialogOpen]
   );
 
   // RESET PAGINATION ON SORT, SEARCH OR FILTER

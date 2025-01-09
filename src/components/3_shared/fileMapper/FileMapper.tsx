@@ -1,5 +1,9 @@
 import React from "react";
-import { FileMapperPreview, FileMapperProps } from "../../../types";
+import {
+  FileMapperPreview,
+  FileMapperProps,
+  PapaparseRawData,
+} from "../../../types";
 import { FileMapperStepper } from "./components/FileMapperStepper";
 import { FileMapperDragNDrop } from "./components/FileMapperDragNDrop";
 import { useFileParser } from "./hooks";
@@ -30,10 +34,9 @@ export const FileMapper: React.FC<FileMapperProps> = ({
   );
 
   const proceedPreviewData = React.useCallback(
-    (v: string[][][], filename: string) => {
+    (data: PapaparseRawData[]) => {
       const newPreviews = FileMapperUtils.getFilesPreview(
-        v,
-        filename,
+        data,
         availableHeaders
       );
       setPreviews((prev) => [...prev, ...newPreviews]);

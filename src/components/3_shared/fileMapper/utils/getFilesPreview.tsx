@@ -1,21 +1,21 @@
-import { FileMapperPreview } from "../../../../types";
+import { FileMapperPreview, PapaparseRawData } from "../../../../types";
 import { proceedPreviewsHeaders } from "./proceedPreviewsHeaders";
 
 export const getFilesPreview = (
-  data: string[][][],
-  filename: string,
+  rawData: PapaparseRawData[],
   availableHeaders: string[]
 ): FileMapperPreview[] => {
-  if (!data.length) {
+  if (!rawData.length) {
     return [];
   }
   const previews: FileMapperPreview[] = [];
-  data.forEach((v) => {
-    const length = v[0].length;
+  rawData.forEach((v) => {
+    const { data, filename } = v;
+    const length = data[0].length;
     const cols: string[][] = [];
     for (let i = 0; i < length; i++) {
       cols.push([]);
-      v.forEach((row) => {
+      data.forEach((row) => {
         cols[i].push(row[i]);
       });
     }

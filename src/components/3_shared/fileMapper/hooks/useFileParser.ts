@@ -1,29 +1,26 @@
 import React from "react";
 import * as Papa from "papaparse";
+import { PapaparseRawData } from "../../../../types";
 
 export const useFileParser = (): {
   parsing: boolean;
-  parse: (
-    files: File[],
-    setter: (v: string[][][], filename: string) => void
-  ) => void;
+  parse: (files: File[], setter: (data: PapaparseRawData[]) => void) => void;
 } => {
   const [parsing, setParsing] = React.useState(false);
 
   const parse = React.useCallback(
-    (files: File[], setter: (v: string[][][], filename: string) => void) => {
+    (files: File[], setter: (data: PapaparseRawData[]) => void) => {
       setParsing(true);
-      const data: string[][][] = [];
+      const data: PapaparseRawData[] = [];
       files.forEach((file, i) =>
         Papa.parse<any, File>(file, {
           preview: 4,
           skipEmptyLines: true,
           complete: (result) => {
-            setTimeout(() => data.push(result.data), 0);
+            data.push({ data: result.data, filename: file.name });
             if (i + 1 === files.length) {
-              const name = file.name;
               setParsing(false);
-              setTimeout(() => setter(data, name), 0);
+              setTimeout(() => setter(data), 0);
             }
             return data;
           },

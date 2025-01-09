@@ -20,7 +20,6 @@ export const proceedPreviewsHeaders = (
         )
       ) {
         newHeader = header.toLocaleLowerCase();
-        console.log({ newHeader });
       }
 
       proceededHeaders.push(header);
