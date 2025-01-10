@@ -26,4 +26,8 @@ export const PermissionRoutes: { [key: string]: PermissionRoute } = {
     default: "domain-lookup:blacklist-domain",
     file: "domain-lookup:blacklist-domain:file",
   },
+  // QUEUE
+  QUEUE: {
+    default: "queue:get-queues",
+  },
 } as const;

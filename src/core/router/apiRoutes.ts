@@ -12,6 +12,8 @@ export const ApiRoutes = {
   SUPPRESSION_DOMAIN: "suppression/domain",
   SUPPRESSION_MX: "suppression/mx",
   SUPPRESSION_MASK: "suppression/mask",
+  // QUEUES
+  QUEUE: "queue/job",
 
   // DNSBL
   BLACKLIST_DOMAINS: "blacklist-domain",

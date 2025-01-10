@@ -14,6 +14,9 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   const { permissions } = useAccountContext();
 
   const nav = React.useMemo(() => {
+    if (permissions && permissions.some((p) => p[0] === "admin")) {
+      return appNav;
+    }
     if (permissions && permissions.length) {
       const cleanedNav: AppNav[] = [];
       appNav.forEach((nav) => {
@@ -25,7 +28,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
             permissions.some(
               ([, r, a]) =>
                 r === permissionsRoute.default &&
-                a === APP_CONSTANTS.PERMISSION_ACTIONS.CREATE
+                a === APP_CONSTANTS.PERMISSION_ACTIONS.READ
             )
           );
           if (cleanedChildren && cleanedChildren.length) {

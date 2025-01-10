@@ -112,7 +112,9 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
             >
               {filteredActions.map((action) => (
                 <MenuItem
-                  sx={{ minWidth: "100px" }}
+                  sx={{
+                    minWidth: "100px",
+                  }}
                   onClick={() => handleMenuClicked(action, params.row)}
                   key={action}
                 >
@@ -207,11 +209,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
           </Stack>
         ),
         pagination: () => (
-          <StyledGridPagination
-            sx={{ padding: 0 }}
-            showFirstButton={true}
-            showLastButton={true}
-          />
+          <StyledGridPagination showFirstButton={true} showLastButton={true} />
         ),
       }}
     />

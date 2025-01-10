@@ -7,4 +7,6 @@ export const PAGE_TITLES = {
   SUPPRESSION_MASK: "Suppression Mask",
   // DNSBL
   BLACKLIST_DOMAINS: "Black List Domains",
+  // QUEUES
+  QUEUES: "Queues",
 } as const;

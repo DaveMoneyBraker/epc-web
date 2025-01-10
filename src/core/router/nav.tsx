@@ -2,9 +2,12 @@ import React from "react";
 import { PermissionRoutes, PermissionRoute } from "./permissionRoutes";
 import { ApiRoutes } from "./apiRoutes";
 import { AppRoutes } from "./appRoutes";
-import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
-import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import APP_CONSTANTS from "../../constants/AppConstants";
+import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
+import QueueIcon from "@mui/icons-material/Queue";
+import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
+import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
+import { QUEUES } from "../../components/queues";
 
 export const useAppNav = (): AppNav[] => {
   // SUPPRESSIONS
@@ -28,7 +31,62 @@ export const useAppNav = (): AppNav[] => {
   const BlacklistDomainsPage = React.lazy(
     () => import("../../pages/dnsbl/BlackListDomainsPage")
   );
+
+  // QUEUES
+  const QueuesPage = React.lazy(() => import("../../pages/queues/QueuesPage"));
+  const WorkersQueuesNav: AppNav = React.useMemo(() => {
+    const categories: AppNavCategory[] = QUEUES.WORKER.map(
+      ({ title: categoryTitle, routes }) => ({
+        title: categoryTitle,
+        children: routes.map(({ title, value }) => ({
+          title,
+          pageTitle: title,
+          apiRoute: ApiRoutes.QUEUE,
+          appRoute: `${AppRoutes.QUEUE}${value}`,
+          permissionsRoute: PermissionRoutes.QUEUE,
+          element: (
+            <React.Suspense>
+              <QueuesPage />
+            </React.Suspense>
+          ),
+        })),
+      })
+    );
+    return {
+      title: "Workers Queues",
+      icon: <QueueIcon />,
+      path: "queue",
+      categories,
+    };
+  }, [QueuesPage]);
+  const ConsumerQueuesNav: AppNav = React.useMemo(() => {
+    const categories: AppNavCategory[] = QUEUES.CONSUMER.map(
+      ({ title: categoryTitle, routes }) => ({
+        title: categoryTitle,
+        children: routes.map(({ title, value }) => ({
+          title,
+          pageTitle: title,
+          apiRoute: `${ApiRoutes.QUEUE}?queueName=${value}`,
+          appRoute: `${AppRoutes.QUEUE}${value}`,
+          permissionsRoute: PermissionRoutes.QUEUE,
+          element: (
+            <React.Suspense>
+              <QueuesPage />
+            </React.Suspense>
+          ),
+        })),
+      })
+    );
+    return {
+      title: "Consumer Queues",
+      icon: <QueueOutlinedIcon />,
+      path: "queue",
+      categories,
+    };
+  }, [QueuesPage]);
+
   return [
+    // SUPPRESSIONS
     {
       title: "SUPPRESSION",
       icon: <MarkEmailReadOutlinedIcon />,
@@ -101,6 +159,7 @@ export const useAppNav = (): AppNav[] => {
         },
       ],
     },
+    // DNSBL
     {
       title: "DOMAIN LOOKUP",
       icon: <ChecklistRtlIcon />,
@@ -125,6 +184,9 @@ export const useAppNav = (): AppNav[] => {
         },
       ],
     },
+    // QUEUES
+    { ...WorkersQueuesNav },
+    { ...ConsumerQueuesNav },
   ];
 };
 

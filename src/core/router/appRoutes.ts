@@ -10,6 +10,9 @@ export const AppRoutes = {
   // DNSBL
   BLACKLIST_DOMAINS: "/pages/dnsbl/blacklist-domains",
 
+  // QUEUE
+  QUEUE: "/pages/queue/",
+
   // NOT FOUND
   NOT_FOUND: "/pages/suppressions/email",
 } as const;
