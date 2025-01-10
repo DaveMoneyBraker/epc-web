@@ -1,3 +1,5 @@
+import { QueueStatus } from "../types";
+
 export const QUEUES: QueueConst = {
   WORKER: [
     {
@@ -69,3 +71,13 @@ interface QueueConst {
   WORKER: QueueNavCategory[];
   CONSUMER: QueueNavCategory[];
 }
+
+export const QUEUE_STATUS: { [key: string]: QueueStatus } = {
+  LATEST: "latest",
+  ACTIVE: "active",
+  WAITING: "waiting",
+  COMPLETED: "completed",
+  FAILED: "failed",
+  DELAYED: "delayed",
+  paused: "paused",
+};

@@ -14,6 +14,7 @@ declare module "@mui/material/styles" {
     category?: React.CSSProperties;
     body3?: React.CSSProperties;
     warning?: React.CSSProperties;
+    queueStats?: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
@@ -22,6 +23,7 @@ declare module "@mui/material/styles" {
     category?: React.CSSProperties;
     body3?: React.CSSProperties;
     warning?: React.CSSProperties;
+    queueStats?: React.CSSProperties;
   }
 }
 
@@ -32,6 +34,7 @@ declare module "@mui/material/Typography" {
     category: true;
     body3: true;
     warning: true;
+    queueStats: true;
   }
 }
 
@@ -87,6 +90,12 @@ export const useAppMuiTypography = (): TypographyOptions => {
       lineHeight: "17px",
       letterSpacing: "0rem",
       color: "#000000",
+    },
+    queueStats: {
+      fontSize: "14px",
+      fontWeight: "bold",
+      lineHeight: "12px",
+      color: "#757575",
     },
   };
 };

@@ -5,6 +5,7 @@ import { isSyntheticEvent } from "../typeGuards";
 import { useAxiosContext } from "../providers/axios";
 import { FilterValue } from "../types";
 import AppQueries from "../services/queries/AppQueries";
+import AppMutations from "../services/mutations/AppMutations";
 
 interface ReturnedValue<T = any> {
   input: {
@@ -76,7 +77,7 @@ export const useDefaultPageState = <T = any>(
     apiUrl,
     query,
   });
-  const mutationQuery = AppQueries.useMutationQuery(apiUrl, queryKey);
+  const mutationQuery = AppMutations.useMutationQuery(apiUrl, queryKey);
   // THIS PART WITH COLS LOOK REDUNDANT, BUT IS'S HERE JUST TO NOT
   // INITIALIZE TABLE COLS VIA USE_MEMO IN PARENT COMPONENT EACH TIME
   const cols = React.useMemo(() => [...tableCols], [tableCols]);

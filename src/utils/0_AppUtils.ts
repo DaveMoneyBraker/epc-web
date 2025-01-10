@@ -6,6 +6,7 @@ import { camelToTitleCase } from "./camelToTitleCase";
 import { camelCaseToString } from "./camelCaseToString";
 import { setDayjsHours } from "./setDayjsHours";
 import { toTitleCase } from "./toTitleCase";
+import { getFileSize } from "./getFileSize";
 
 const AppUtils = {
   getInputValue,
@@ -16,6 +17,7 @@ const AppUtils = {
   camelCaseToString,
   setDayjsHours,
   toTitleCase,
+  getFileSize,
 } as const;
 
 export default AppUtils;
