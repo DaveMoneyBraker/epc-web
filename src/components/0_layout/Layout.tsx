@@ -30,6 +30,10 @@ export const Layout: React.FC = () => {
   );
   const { user } = useAccountContext();
   const { mutation: logoutMutation } = AppMutations.useLogoutMutation();
+  const isSubmittingFile = React.useMemo(
+    () => currentNavNode?.appRoute.includes("-submit"),
+    [currentNavNode]
+  );
 
   const [open, setOpen] = React.useState(false);
   const displayName = React.useMemo(() => {
@@ -57,7 +61,7 @@ export const Layout: React.FC = () => {
   return (
     <Wrapper>
       {/* LOADING OVERLAY */}
-      <AppBackdrop loading={loading} />
+      {!isSubmittingFile && <AppBackdrop loading={loading} />}
 
       {/* TOP NAVIGATION */}
       <AppBar

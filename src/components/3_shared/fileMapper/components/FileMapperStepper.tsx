@@ -2,14 +2,16 @@ import React from "react";
 import { Box, Button, Step, StepLabel, Stepper, styled } from "@mui/material";
 
 interface Props {
+  activeStep: number;
+  onStepChange: (v: 1 | -1) => void;
   FirstStep: React.ReactNode;
+  firstStepTitle?: string;
   firstStepCompleted: boolean;
   SecondStep: React.ReactNode;
+  secondStepTitle?: string;
   secondStepCompleted: boolean;
-  //   thirdStep: React.FC;
-  //   thirdStepDisabled: boolean;
-  onFirstStepCompleted: () => void;
-  onSecondStepCompleted: () => void;
+  ThirdStep?: React.ReactNode;
+  thirdStepTitle?: string;
 }
 
 const Wrapper = styled(Box)(() => ({
@@ -24,34 +26,20 @@ const Wrapper = styled(Box)(() => ({
 }));
 
 export const FileMapperStepper: React.FC<Props> = ({
+  activeStep,
+  onStepChange,
   FirstStep,
+  firstStepTitle = "Select Files",
   firstStepCompleted,
   SecondStep,
+  secondStepTitle = "Map Files",
   secondStepCompleted,
-  onFirstStepCompleted,
-  onSecondStepCompleted,
+  ThirdStep,
+  thirdStepTitle = "Submit Files",
 }) => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const handleNext = React.useCallback(() => onStepChange(1), [onStepChange]);
 
-  const handleNext = React.useCallback(() => {
-    if (activeStep === 0) {
-      onFirstStepCompleted();
-    }
-    if (activeStep === 1) {
-      onSecondStepCompleted();
-    }
-    setActiveStep((prev) => prev + 1);
-  }, [activeStep, setActiveStep, onFirstStepCompleted, onSecondStepCompleted]);
-
-  const handleBack = React.useCallback(
-    () => setActiveStep((prev) => prev - 1),
-    [setActiveStep]
-  );
-
-  const handleReset = React.useCallback(
-    () => setActiveStep(0),
-    [setActiveStep]
-  );
+  const handleBack = React.useCallback(() => onStepChange(-1), [onStepChange]);
 
   const isCurrentStepCompleted = React.useMemo(() => {
     switch (activeStep) {
@@ -71,13 +59,13 @@ export const FileMapperStepper: React.FC<Props> = ({
     <Wrapper>
       <Stepper activeStep={activeStep}>
         <Step>
-          <StepLabel optional={false}>Select Files</StepLabel>
+          <StepLabel optional={false}>{firstStepTitle}</StepLabel>
         </Step>
         <Step>
-          <StepLabel optional={false}>Map Columns</StepLabel>
+          <StepLabel optional={false}>{secondStepTitle}</StepLabel>
         </Step>
         <Step>
-          <StepLabel optional={false}>Submit Files</StepLabel>
+          <StepLabel optional={false}>{thirdStepTitle}</StepLabel>
         </Step>
       </Stepper>
       <Box
@@ -97,7 +85,7 @@ export const FileMapperStepper: React.FC<Props> = ({
         >
           {activeStep === 0 && FirstStep}
           {activeStep === 1 && SecondStep}
-          {/* {activeStep === 0 && thirdStep} */}
+          {activeStep === 2 && ThirdStep}
         </Box>
         <Box
           sx={{
@@ -115,13 +103,15 @@ export const FileMapperStepper: React.FC<Props> = ({
           >
             back
           </Button>
-          <Button
-            variant="contained"
-            onClick={handleNext}
-            disabled={!isCurrentStepCompleted}
-          >
-            {activeStep === 2 ? "Submit" : "Next"}
-          </Button>
+          {activeStep !== 2 && (
+            <Button
+              variant="contained"
+              onClick={handleNext}
+              disabled={!isCurrentStepCompleted}
+            >
+              next
+            </Button>
+          )}
         </Box>
       </Box>
     </Wrapper>

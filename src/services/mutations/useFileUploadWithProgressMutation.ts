@@ -5,9 +5,9 @@ import { AxiosProgressEvent } from "axios";
 import { useMutation } from "@tanstack/react-query";
 
 interface MutationFnProps {
-  values: FileMapperInputValue[];
-  file: string | File;
+  file: string;
   filename: string;
+  values?: FileMapperInputValue[];
 }
 
 export const useFileUploadWithProgressMutation = (apiUrl: string) => {
@@ -40,14 +40,15 @@ export const useFileUploadWithProgressMutation = (apiUrl: string) => {
       setError(false);
       setProgress(0);
       try {
-        const { values, filename, file } = v;
-        const fileBlob = new Blob([file]);
+        const { values = [], filename, file } = v;
         const formData = new FormData();
+        const fileBlob = new Blob([file]);
         formData.append("file", fileBlob, filename);
         values.forEach((value) => formData.append(value.name, value.value));
         await axios?.post(apiUrl, formData, {
           onUploadProgress,
           onDownloadProgress,
+          headers: { "Content-Type": "multipart/form-data" },
         });
       } catch (err) {
         console.log("FILE SUBMITTING ERROR: ", { err });
@@ -57,7 +58,12 @@ export const useFileUploadWithProgressMutation = (apiUrl: string) => {
     [apiUrl, axios, onDownloadProgress, onUploadProgress]
   );
 
+  const reset = React.useCallback(() => {
+    setError(false);
+    setProgress(0);
+  }, [setError, setProgress]);
+
   const mutation = useMutation({ mutationFn });
 
-  return { loading, progress, submitted, error, mutation };
+  return { loading, progress, submitted, error, mutation, reset };
 };

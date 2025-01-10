@@ -52,7 +52,10 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
       setLoading(false);
 
       // SHOW SUCCESS NOTIFICATION ON NON GET REQUESTS
-      if (config.status === 200 && config.config.method !== "get") {
+      if (
+        (config.status === 200 || config.status === 201) &&
+        config.config.method !== "get"
+      ) {
         showNotification("Success!", APP_CONSTANTS.NOTIFICATION_VARIANTS.INFO);
       }
       return config;

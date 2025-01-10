@@ -1,17 +1,14 @@
 import React from "react";
 import { FileMapperPreview } from "../../../../../types";
 import { FileMapperRows } from "./FileMapperRows";
-import { EnhancedTextField } from "../../../../1_enhanced";
 import { Box, styled } from "@mui/material";
 
 interface Props {
-  newFileName: string;
   previews: FileMapperPreview[];
   parsing: boolean;
   availableHeaders: string[];
   requiredHeaders: string[][];
   onPreviewsChange: (previews: FileMapperPreview[]) => void;
-  onNewFileNameChange: (value: string) => void;
   AdditionalInputs?: React.ReactNode;
 }
 
@@ -34,13 +31,11 @@ const RowsWrapper = styled(Box)(() => ({
 }));
 
 export const FilesMapping: React.FC<Props> = ({
-  newFileName,
   previews,
   parsing,
   availableHeaders,
   requiredHeaders,
   onPreviewsChange,
-  onNewFileNameChange,
   AdditionalInputs,
 }) => {
   const handlePreviewsChange = React.useCallback(
@@ -48,33 +43,9 @@ export const FilesMapping: React.FC<Props> = ({
     [onPreviewsChange]
   );
 
-  const handleNewFileNameChange = React.useCallback(
-    (value: string) => {
-      const clearedValue = value
-        .replaceAll(".", "")
-        .replaceAll(",", "")
-        .replaceAll("+", "")
-        .replaceAll('"', "")
-        .replaceAll("/", "")
-        .replaceAll("'", "")
-        .replaceAll("`", "")
-        .replaceAll("\\", "")
-        .replaceAll(" ", "");
-      onNewFileNameChange(clearedValue);
-    },
-    [onNewFileNameChange]
-  );
   return (
     <Wrapper>
-      <InputsWrapper>
-        <EnhancedTextField
-          helperText={`not allowed: . , + / \\  ' \` " whitespace`}
-          fullWidth={false}
-          value={newFileName}
-          onChange={handleNewFileNameChange}
-        />
-        {AdditionalInputs && AdditionalInputs}
-      </InputsWrapper>
+      <InputsWrapper>{AdditionalInputs && AdditionalInputs}</InputsWrapper>
       <RowsWrapper>
         <FileMapperRows
           previews={previews}

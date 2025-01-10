@@ -3,9 +3,11 @@ export interface FileMapperProps {
   requiredHeaders: string[][];
   fileSize?: number;
   AdditionalInputs?: React.ReactNode;
-  onFileSubmit: (file: string | File, filename: string) => void;
+  onFileSubmit: (file: string, filename: string) => void;
   progress: number;
   submitted: boolean;
+  submitError: boolean;
+  reset?: () => void;
 }
 
 export interface FileMapperPreview {

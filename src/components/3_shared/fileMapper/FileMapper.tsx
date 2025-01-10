@@ -9,17 +9,30 @@ import { FileMapperDragNDrop } from "./components/FileMapperDragNDrop";
 import { useFileParser } from "./hooks";
 import { FilesMapping } from "./components/filesMapping";
 import FileMapperUtils from "./utils/0_utils";
+import { FileMapperSubmitFile } from "./components/FileMapperSubmitFile";
 
 export const FileMapper: React.FC<FileMapperProps> = ({
   fileSize = 15,
   availableHeaders,
   requiredHeaders,
   AdditionalInputs,
+  submitError,
+  progress,
+  submitted,
+  onFileSubmit,
+  reset,
 }) => {
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   const [previews, setPreviews] = React.useState<FileMapperPreview[]>([]);
-  const [newFileName, setNewFileName] = React.useState("newFileName");
+  const [filename, setFilename] = React.useState("NewFilename");
+  const [mappedFileString, setMappedFileString] = React.useState("");
+  const mappingComplete = React.useMemo(
+    () => (mappedFileString ? true : false),
+    [mappedFileString]
+  );
   const { parsing, parse } = useFileParser();
+  // STEPPER
+  const [activeStep, setActiveStep] = React.useState(0);
 
   // FIRST STEP
   const handleFilesSelect = React.useCallback(
@@ -60,14 +73,29 @@ export const FileMapper: React.FC<FileMapperProps> = ({
     [setPreviews]
   );
 
-  const handleNewFileNameChange = React.useCallback(
-    (newValue: string) => setNewFileName(newValue),
-    [setNewFileName]
+  const handleFilenameChange = React.useCallback(
+    (value: string) => {
+      const clearedValue = value
+        .replaceAll(".", "")
+        .replaceAll(",", "")
+        .replaceAll("+", "")
+        .replaceAll('"', "")
+        .replaceAll("/", "")
+        .replaceAll("'", "")
+        .replaceAll("`", "")
+        .replaceAll("\\", "")
+        .replaceAll(" ", "");
+      setFilename(clearedValue);
+    },
+    [setFilename]
   );
 
-  const onMappedFileStringComplete = React.useCallback((value: string) => {
-    console.log({ value });
-  }, []);
+  const onMappedFileStringComplete = React.useCallback(
+    (value: string) => {
+      setMappedFileString(value);
+    },
+    [setMappedFileString]
+  );
 
   const handleSecondStepCompleted = React.useCallback(() => {
     FileMapperUtils.getMappedFilesString(
@@ -79,7 +107,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
 
   const filesMapped = React.useMemo(() => {
     // NEW FILE NAME IS REQUIRED
-    if (!newFileName) {
+    if (!filename) {
       return false;
     }
     // IF THERE IS NO STATE
@@ -98,10 +126,54 @@ export const FileMapper: React.FC<FileMapperProps> = ({
       FileMapperUtils.isFileMapped(preview, requiredHeaders)
     );
     return isStateMapped;
-  }, [newFileName, previews, requiredHeaders]);
+  }, [filename, previews, requiredHeaders]);
+
+  // THIRD STEP
+  const handleSubmit = React.useCallback(() => {
+    onFileSubmit(mappedFileString, filename);
+  }, [mappedFileString, filename, onFileSubmit]);
+
+  // STEPPER
+  const handleStepChange = React.useCallback(
+    (v: 1 | -1) => {
+      if (v === 1) {
+        switch (activeStep) {
+          case 0: {
+            handleFirstStepCompleted();
+            break;
+          }
+          case 1: {
+            reset && reset();
+            handleSecondStepCompleted();
+            break;
+          }
+          default:
+            break;
+        }
+      }
+      setActiveStep((prev) => prev + v);
+    },
+    [activeStep, reset, handleFirstStepCompleted, handleSecondStepCompleted]
+  );
+
+  const handleStepperReset = React.useCallback(() => {
+    setPreviews([]);
+    setSelectedFiles([]);
+    setFilename("NewFilename");
+    setMappedFileString("");
+    setActiveStep(0);
+  }, [
+    setPreviews,
+    setSelectedFiles,
+    setFilename,
+    setMappedFileString,
+    setActiveStep,
+  ]);
 
   return (
     <FileMapperStepper
+      activeStep={activeStep}
+      onStepChange={handleStepChange}
       FirstStep={
         <FileMapperDragNDrop
           fileSizeLimit={fileSize}
@@ -111,21 +183,29 @@ export const FileMapper: React.FC<FileMapperProps> = ({
         />
       }
       firstStepCompleted={filesSelected}
-      onFirstStepCompleted={handleFirstStepCompleted}
       SecondStep={
         <FilesMapping
-          newFileName={newFileName}
           previews={previews}
           parsing={parsing}
           availableHeaders={availableHeaders}
           requiredHeaders={requiredHeaders}
           onPreviewsChange={handlePreviewsChange}
-          onNewFileNameChange={handleNewFileNameChange}
           AdditionalInputs={AdditionalInputs}
         />
       }
       secondStepCompleted={filesMapped}
-      onSecondStepCompleted={handleSecondStepCompleted}
+      ThirdStep={
+        <FileMapperSubmitFile
+          filename={filename}
+          onFilenameChange={handleFilenameChange}
+          mappingComplete={mappingComplete}
+          progress={progress}
+          error={submitError}
+          submitted={submitted}
+          onSubmit={handleSubmit}
+          onReset={handleStepperReset}
+        />
+      }
     />
   );
 };
