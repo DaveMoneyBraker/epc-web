@@ -1,20 +1,19 @@
 import React from "react";
-import { QueueStats as QueueStatsInterface } from "../types";
+import { QueueStats as QueueStatsInterface } from "../../types";
 import { Box, styled, Typography } from "@mui/material";
-import AppUtils from "../../../utils/0_AppUtils";
+import AppUtils from "../../../../utils/0_AppUtils";
 
 interface Props {
   stats: QueueStatsInterface | null;
 }
 
 const Wrapper = styled(Box)({
-  width: "100%",
+  width: "50%",
   display: "flex",
   flexDirection: "row",
-  justifyContent: "flex-end",
+  justifyContent: "space-between",
   alignItems: "flex-start",
   gap: "15px",
-  padding: "8px 16px",
   "& .MuiBox-root": {
     display: "flex",
     flexDirection: "column",

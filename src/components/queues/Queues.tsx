@@ -10,9 +10,11 @@ import {
 import { QUEUE_STATUS } from "./constants";
 import { useQueueQuery } from "./queries";
 import { Box, styled } from "@mui/material";
-import { QueueJobsTable, ServerStats, StatusBar } from "./components";
+import { QueueJobsTable, QueueTopBar, StatusBar } from "./components";
 import { DialogWrapper } from "../2_common/dialogs";
 import { useQueueMutation } from "./mutations";
+
+type Action = "retry" | "delete" | "refresh";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -34,8 +36,13 @@ export const Queues: React.FC = () => {
   const [page, setPage] = React.useState(0);
   const queryKey = React.useMemo(() => "queue", []);
   const [status, setStatus] = React.useState<QueueStatus>(QUEUE_STATUS.LATEST);
-  const { data } = useQueueQuery(apiRoute, status, page, queryKey);
-  const { deleteJobMutation, retryJobMutation } = useQueueMutation(queryKey);
+  const { data, client } = useQueueQuery(apiRoute, status, page, queryKey);
+  const {
+    deleteJobMutation,
+    retryJobMutation,
+    deleteAllJobsMutation,
+    retryAllJobsMutation,
+  } = useQueueMutation(queryKey);
   const [stats, setStats] = React.useState<QueueStatsInterface | null>(null);
   const [queue, setQueue] = React.useState<QueueBody | null>(null);
   const jobs = React.useMemo<QueueJob[]>(
@@ -47,7 +54,9 @@ export const Queues: React.FC = () => {
     [queue]
   );
   const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [deleteAllOpen, setDeleteAllOpen] = React.useState(false);
   const [retryOpen, setRetryOpen] = React.useState(false);
+  const [retryAllOpen, setRetryAllOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [selectedJob, setSelectedJob] = React.useState<QueueJob>();
 
@@ -94,6 +103,39 @@ export const Queues: React.FC = () => {
     [selectedJob, queueName, retryJobMutation, setRetryOpen, setSelectedJob]
   );
 
+  const handleDeleteAllClose = React.useCallback(
+    (confirm: boolean) => {
+      setDeleteAllOpen(false);
+      if (confirm) {
+        deleteAllJobsMutation.mutate({ status, queueName });
+      }
+    },
+    [status, queueName, deleteAllJobsMutation, setDeleteAllOpen]
+  );
+
+  const handleRetryAllClose = React.useCallback(
+    (confirm: boolean) => {
+      setRetryAllOpen(false);
+      if (confirm) {
+        retryAllJobsMutation.mutate({ queueName });
+      }
+    },
+    [queueName, retryAllJobsMutation, setRetryAllOpen]
+  );
+
+  const handleAction = React.useCallback(
+    (action: Action) => {
+      if (action === "delete") {
+        setDeleteAllOpen(true);
+      } else if (action === "retry") {
+        setRetryAllOpen(true);
+      } else {
+        client.invalidateQueries({ queryKey: [queryKey] });
+      }
+    },
+    [client, queryKey]
+  );
+
   React.useEffect(() => {
     if (data) {
       setStats(data.stats);
@@ -107,7 +149,7 @@ export const Queues: React.FC = () => {
   return (
     <>
       <Wrapper>
-        <ServerStats stats={stats} />
+        <QueueTopBar stats={stats} status={status} onAction={handleAction} />
         <StatusBar
           selectedStatus={status}
           counts={counts}
@@ -145,6 +187,24 @@ export const Queues: React.FC = () => {
         disabled={false}
       >
         Retry job #{(selectedJob && selectedJob.id) || "0"}?
+      </DialogWrapper>
+      {/* DELETE STATUS ALL*/}
+      <DialogWrapper
+        title="Delete all jobs by status?"
+        open={deleteAllOpen}
+        onClose={handleDeleteAllClose}
+        disabled={false}
+      >
+        Delete all {status} jobs?
+      </DialogWrapper>
+      {/* RETRY ALL*/}
+      <DialogWrapper
+        title="Retry all job from list?"
+        open={retryAllOpen}
+        onClose={handleRetryAllClose}
+        disabled={false}
+      >
+        Retry all jobs?
       </DialogWrapper>
     </>
   );

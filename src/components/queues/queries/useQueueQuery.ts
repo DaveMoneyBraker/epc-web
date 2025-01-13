@@ -544,5 +544,5 @@ export const useQueueQuery = (
     client.invalidateQueries({ queryKey: [queryKey] });
   }, [apiUrl, status, page, client, queryKey]);
 
-  return { ...data };
+  return { ...data, client };
 };
