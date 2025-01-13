@@ -46,7 +46,15 @@ export const NavCategoryItem: React.FC<Props> = ({ category }) => {
       <List
         component="div"
         subheader={
-          <ListSubheader component="span">
+          <ListSubheader
+            component="div"
+            sx={{
+              fontWeight: "600",
+              borderBottom: 1,
+              borderTop: 1,
+              borderColor: "divider",
+            }}
+          >
             {category.title.toUpperCase()}
           </ListSubheader>
         }
