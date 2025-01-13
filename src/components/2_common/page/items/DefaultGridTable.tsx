@@ -135,7 +135,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       ...defaultColProps,
       field: colName,
       headerName: colName,
-      valueFormatter: (value: string) => new Date(value).toLocaleDateString(),
+      valueFormatter: (value: number) => AppUtils.formatDate(value),
     }),
     [defaultColProps]
   );
