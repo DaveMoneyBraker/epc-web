@@ -508,8 +508,12 @@ const mocked = {
   },
 } as unknown as QueueResponse;
 
-export const useQueueQuery = (apiUrl: string, status: string, page: number) => {
-  const queryKey = React.useMemo(() => "queue", []);
+export const useQueueQuery = (
+  apiUrl: string,
+  status: string,
+  page: number,
+  queryKey: string
+) => {
   const { axios } = useAxiosContext();
   const client = useQueryClient();
 

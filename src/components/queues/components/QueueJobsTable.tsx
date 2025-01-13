@@ -2,7 +2,6 @@ import React from "react";
 import { QueueJob } from "../types";
 import {
   IconButton,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -17,18 +16,13 @@ import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 
 interface Props {
   jobs: QueueJob[];
-  onDelete: (id: string) => void;
-  onShow: (job: QueueJob) => void;
+  onToggleDialog: (job: QueueJob, action: "delete" | "show") => void;
 }
 
-export const QueueJobsTable: React.FC<Props> = ({ jobs, onDelete, onShow }) => {
-  const handleDelete = React.useCallback(
-    (job: QueueJob) => onDelete(job.id),
-    [onDelete]
-  );
-  const handleShow = React.useCallback(
-    (job: QueueJob) => onShow(job),
-    [onShow]
+export const QueueJobsTable: React.FC<Props> = ({ jobs, onToggleDialog }) => {
+  const handleToggleDialog = React.useCallback(
+    (job: QueueJob, action: "delete" | "show") => onToggleDialog(job, action),
+    [onToggleDialog]
   );
   return (
     <TableContainer sx={{ maxHeight: "calc(100vh - 220px)" }}>
@@ -67,12 +61,18 @@ export const QueueJobsTable: React.FC<Props> = ({ jobs, onDelete, onShow }) => {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <IconButton color="error" onClick={() => handleDelete(job)}>
+                  <IconButton
+                    color="error"
+                    onClick={() => handleToggleDialog(job, "delete")}
+                  >
                     <DeleteOutlineOutlinedIcon />
                   </IconButton>
                 </TableCell>
                 <TableCell>
-                  <IconButton color="primary" onClick={() => handleShow(job)}>
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleToggleDialog(job, "show")}
+                  >
                     <OpenInNewOutlinedIcon />
                   </IconButton>
                 </TableCell>

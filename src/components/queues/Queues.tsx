@@ -11,6 +11,8 @@ import { QUEUE_STATUS } from "./constants";
 import { useQueueQuery } from "./queries";
 import { Box, styled } from "@mui/material";
 import { QueueJobsTable, ServerStats, StatusBar } from "./components";
+import { DialogWrapper } from "../2_common/dialogs";
+import { useQueueMutation } from "./mutations";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -21,13 +23,19 @@ const Wrapper = styled(Box)({
 
 export const Queues: React.FC = () => {
   const { currentNavNode } = useCleanedNavigationContext();
+  const queueName = React.useMemo(
+    () => currentNavNode?.apiRoute.split("=")[1] || "",
+    [currentNavNode]
+  );
   const apiRoute = React.useMemo(
     () => currentNavNode?.apiRoute || "",
     [currentNavNode]
   );
   const [page, setPage] = React.useState(0);
+  const queryKey = React.useMemo(() => "queue", []);
   const [status, setStatus] = React.useState<QueueStatus>(QUEUE_STATUS.LATEST);
-  const { data } = useQueueQuery(apiRoute, status, page);
+  const { data } = useQueueQuery(apiRoute, status, page, queryKey);
+  const { deleteJobMutation } = useQueueMutation(queryKey);
   const [stats, setStats] = React.useState<QueueStatsInterface | null>(null);
   const [queue, setQueue] = React.useState<QueueBody | null>(null);
   const jobs = React.useMemo<QueueJob[]>(
@@ -38,6 +46,7 @@ export const Queues: React.FC = () => {
     () => (queue ? queue.counts : null),
     [queue]
   );
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [selectedJob, setSelectedJob] = React.useState<QueueJob>();
 
@@ -46,13 +55,28 @@ export const Queues: React.FC = () => {
     [setStatus]
   );
 
-  const handleDeleteJob = React.useCallback((id: string) => {}, []);
-  const handleShowJobInfo = React.useCallback(
-    (job: QueueJob) => {
+  const handleTriggerDialog = React.useCallback(
+    (job: QueueJob, action: "delete" | "show") => {
       setSelectedJob(job);
-      setOpen(true);
+      if (action === "delete") {
+        setDeleteOpen(true);
+      } else {
+        setOpen(true);
+      }
     },
-    [setSelectedJob, setOpen]
+    [setSelectedJob, setDeleteOpen, setOpen]
+  );
+
+  const handleDeleteClose = React.useCallback(
+    (confirm: boolean) => {
+      setDeleteOpen(false);
+      if (confirm && selectedJob) {
+        const { id } = selectedJob;
+        deleteJobMutation.mutate({ id, queueName });
+      }
+      setSelectedJob(undefined);
+    },
+    [selectedJob, queueName, deleteJobMutation, setDeleteOpen, setSelectedJob]
   );
 
   React.useEffect(() => {
@@ -66,26 +90,33 @@ export const Queues: React.FC = () => {
   }, [data]);
 
   return (
-    <Wrapper>
-      <ServerStats stats={stats} />
-      <StatusBar
-        selectedStatus={status}
-        counts={counts}
-        onStatusChange={handleStatusChange}
-      />
-      <Box
-        sx={{
-          display: "flex",
-          flex: "1",
-        }}
-      >
-        <QueueJobsTable
-          jobs={jobs}
-          onDelete={handleDeleteJob}
-          onShow={handleShowJobInfo}
+    <>
+      <Wrapper>
+        <ServerStats stats={stats} />
+        <StatusBar
+          selectedStatus={status}
+          counts={counts}
+          onStatusChange={handleStatusChange}
         />
-      </Box>
-      <Box>last content</Box>
-    </Wrapper>
+        <Box
+          sx={{
+            display: "flex",
+            flex: "1",
+          }}
+        >
+          <QueueJobsTable jobs={jobs} onToggleDialog={handleTriggerDialog} />
+        </Box>
+        <Box>last content</Box>
+      </Wrapper>
+      {/* DIALOGS */}
+      <DialogWrapper
+        title="Delete this item from list?"
+        open={deleteOpen}
+        onClose={handleDeleteClose}
+        disabled={false}
+      >
+        Delete job #{(selectedJob && selectedJob.id) || "item"}?
+      </DialogWrapper>
+    </>
   );
 };

@@ -41,7 +41,7 @@ export const useAppNav = (): AppNav[] => {
         children: routes.map(({ title, value }) => ({
           title,
           pageTitle: title,
-          apiRoute: `${ApiRoutes.QUEUE}?queueName=${value}`,
+          apiRoute: `${ApiRoutes.QUEUE_JOB}?queueName=${value}`,
           appRoute: `${AppRoutes.QUEUE}${value}`,
           permissionsRoute: PermissionRoutes.QUEUE,
           element: (
@@ -66,7 +66,7 @@ export const useAppNav = (): AppNav[] => {
         children: routes.map(({ title, value }) => ({
           title,
           pageTitle: title,
-          apiRoute: `${ApiRoutes.QUEUE}?queueName=${value}`,
+          apiRoute: `${ApiRoutes.QUEUE_JOB}?queueName=${value}`,
           appRoute: `${AppRoutes.QUEUE}${value}`,
           permissionsRoute: PermissionRoutes.QUEUE,
           element: (
