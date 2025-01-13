@@ -15,15 +15,15 @@ const Wrapper = styled(Box)({
   alignItems: "flex-start",
   gap: "15px",
   padding: "8px 16px",
-  borderBottom: "1px solid lightgray",
   "& .MuiBox-root": {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    gap: "5px",
   },
 });
 
-export const QueueStats: React.FC<Props> = ({ stats }) => {
+export const ServerStats: React.FC<Props> = ({ stats }) => {
   const percents = React.useMemo(
     () =>
       stats
@@ -41,9 +41,7 @@ export const QueueStats: React.FC<Props> = ({ stats }) => {
     () => (stats ? AppUtils.getFileSize(stats.used_memory) : "0mb"),
     [stats]
   );
-  React.useEffect(() => {
-    console.log({ stats });
-  }, [stats]);
+
   return (
     <>
       {stats && (

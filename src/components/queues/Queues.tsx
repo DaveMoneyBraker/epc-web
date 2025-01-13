@@ -2,13 +2,14 @@ import React from "react";
 import { useCleanedNavigationContext } from "../../providers/navigation";
 import {
   QueueBody,
+  QueueCounts,
   QueueStats as QueueStatsInterface,
   QueueStatus,
 } from "./types";
 import { QUEUE_STATUS } from "./constants";
 import { useQueueQuery } from "./queries";
 import { Box, styled } from "@mui/material";
-import { QueueStats } from "./components";
+import { QueueJobsTable, ServerStats, StatusBar } from "./components";
 
 const Wrapper = styled(Box)({
   width: "100%",
@@ -23,34 +24,46 @@ export const Queues: React.FC = () => {
     () => currentNavNode?.apiRoute || "",
     [currentNavNode]
   );
-  const [status, setStatus] = React.useState<QueueStatus>(QUEUE_STATUS.LATEST);
   const [page, setPage] = React.useState(0);
+  const [status, setStatus] = React.useState<QueueStatus>(QUEUE_STATUS.LATEST);
   const { data } = useQueueQuery(apiRoute, status, page);
   const [stats, setStats] = React.useState<QueueStatsInterface | null>(null);
   const [queue, setQueue] = React.useState<QueueBody | null>(null);
+  const counts = React.useMemo<QueueCounts | null>(
+    () => (queue ? queue.counts : null),
+    [queue]
+  );
+
+  const handleStatusChange = React.useCallback(
+    (value: QueueStatus) => setStatus(value),
+    [setStatus]
+  );
 
   React.useEffect(() => {
     if (data) {
       setStats(data.stats);
       setQueue(data.queues);
+    } else {
+      setStats(null);
+      setQueue(null);
     }
   }, [data]);
 
-  // React.useEffect(() => {
-  //   console.log({ stats });
-  //   console.log({ queue });
-  // }, [queue, stats]);
-
   return (
     <Wrapper>
-      <QueueStats stats={stats} />
+      <ServerStats stats={stats} />
+      <StatusBar
+        selectedStatus={status}
+        counts={counts}
+        onStatusChange={handleStatusChange}
+      />
       <Box
         sx={{
           display: "flex",
           flex: "1",
         }}
       >
-        somecontent
+        <QueueJobsTable />
       </Box>
       <Box>last content</Box>
     </Wrapper>

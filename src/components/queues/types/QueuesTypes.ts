@@ -12,7 +12,7 @@ export interface QueueBody {
   isPaused: boolean;
   readOnlyMode: boolean;
   name: string;
-  counts: { [key in QueueStatus]: number };
+  counts: QueueCounts;
   jobs: QueueJob[];
   pagination: {
     pageCount: number;
@@ -22,6 +22,17 @@ export interface QueueBody {
     };
   };
 }
+
+export type QueueStatus =
+  | "latest"
+  | "active"
+  | "waiting"
+  | "completed"
+  | "failed"
+  | "delayed"
+  | "paused";
+
+export type QueueCounts = Record<QueueStatus, number>;
 
 export interface QueueJob {
   data: any;
@@ -40,15 +51,6 @@ export interface QueueJob {
   timestamp: number;
   stacktrace: string[];
 }
-
-export type QueueStatus =
-  | "latest"
-  | "active"
-  | "waiting"
-  | "completed"
-  | "failed"
-  | "delayed"
-  | "paused";
 
 export interface QueueResponse {
   queues: QueueBody;
