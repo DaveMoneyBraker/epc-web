@@ -10,7 +10,12 @@ import {
 import { QUEUE_STATUS } from "./constants";
 import { useQueueQuery } from "./queries";
 import { Box, styled } from "@mui/material";
-import { QueueJobsTable, QueueTopBar, StatusBar } from "./components";
+import {
+  QueueJobInfoDialog,
+  QueueJobsTable,
+  QueueTopBar,
+  StatusBar,
+} from "./components";
 import { DialogWrapper } from "../2_common/dialogs";
 import { useQueueMutation } from "./mutations";
 
@@ -136,6 +141,8 @@ export const Queues: React.FC = () => {
     [client, queryKey]
   );
 
+  const handleInfoClose = React.useCallback(() => setOpen(false), [setOpen]);
+
   React.useEffect(() => {
     if (data) {
       setStats(data.stats);
@@ -206,6 +213,12 @@ export const Queues: React.FC = () => {
       >
         Retry all jobs?
       </DialogWrapper>
+      {/* INFO DIALOG */}
+      <QueueJobInfoDialog
+        open={open}
+        job={selectedJob}
+        onClose={handleInfoClose}
+      />
     </>
   );
 };
