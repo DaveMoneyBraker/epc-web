@@ -32,7 +32,7 @@ export const QueueJobsTable: React.FC<Props> = ({
     [onToggleDialog]
   );
   return (
-    <TableContainer sx={{ maxHeight: "calc(100vh - 220px)" }}>
+    <TableContainer>
       <Table sx={{ minWidth: "100%" }} size="small" stickyHeader>
         <TableHead>
           <TableRow>

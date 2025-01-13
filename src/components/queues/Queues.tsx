@@ -18,6 +18,7 @@ import {
 } from "./components";
 import { DialogWrapper } from "../2_common/dialogs";
 import { useQueueMutation } from "./mutations";
+import { AppPagination } from "../3_shared/pagination";
 
 type Action = "retry" | "delete" | "refresh";
 
@@ -26,6 +27,7 @@ const Wrapper = styled(Box)({
   height: "100%",
   display: "flex",
   flexDirection: "column",
+  overflow: "hidden",
 });
 
 export const Queues: React.FC = () => {
@@ -64,10 +66,19 @@ export const Queues: React.FC = () => {
   const [retryAllOpen, setRetryAllOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [selectedJob, setSelectedJob] = React.useState<QueueJob>();
+  const count = React.useMemo(
+    () => (status === "latest" ? 0 : counts ? counts[status] : 0),
+    [status, counts]
+  );
 
   const handleStatusChange = React.useCallback(
     (value: QueueStatus) => setStatus(value),
     [setStatus]
+  );
+
+  const handlePageChange = React.useCallback(
+    (value: number) => setPage(value),
+    [setPage]
   );
 
   const handleTriggerDialog = React.useCallback(
@@ -156,16 +167,27 @@ export const Queues: React.FC = () => {
   return (
     <>
       <Wrapper>
-        <QueueTopBar stats={stats} status={status} onAction={handleAction} />
-        <StatusBar
-          selectedStatus={status}
-          counts={counts}
-          onStatusChange={handleStatusChange}
-        />
+        <Box
+          sx={{
+            position: "sticky",
+            top: 0,
+            backgroundColor: "background.paper",
+            zIndex: 1100,
+          }}
+        >
+          <QueueTopBar stats={stats} status={status} onAction={handleAction} />
+          <StatusBar
+            selectedStatus={status}
+            counts={counts}
+            onStatusChange={handleStatusChange}
+          />
+        </Box>
         <Box
           sx={{
             display: "flex",
-            flex: "1",
+            flexGrow: 1,
+            overflow: "auto",
+            minHeight: 0,
           }}
         >
           <QueueJobsTable
@@ -174,7 +196,24 @@ export const Queues: React.FC = () => {
             onToggleDialog={handleTriggerDialog}
           />
         </Box>
-        <Box>last content</Box>
+        {count > 0 && (
+          <Box
+            sx={{
+              position: "sticky",
+              bottom: 0,
+              backgroundColor: "background.paper",
+              zIndex: 1100,
+              borderTop: 1,
+              borderColor: "divider",
+            }}
+          >
+            <AppPagination
+              page={page}
+              count={count}
+              onPageChange={handlePageChange}
+            />
+          </Box>
+        )}
       </Wrapper>
       {/* DIALOGS */}
       {/* DELETE */}

@@ -8,7 +8,7 @@ export const ReactQueryProvider: React.FC<ChildrenProps> = ({ children }) => {
   return (
     <QueryClientProvider client={client}>
       {children}
-      <ReactQueryDevtools initialIsOpen />
+      {/* <ReactQueryDevtools initialIsOpen position="top" /> */}
     </QueryClientProvider>
   );
 };
