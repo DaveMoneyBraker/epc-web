@@ -41,7 +41,7 @@ export const useAppNav = (): AppNav[] => {
         children: routes.map(({ title, value }) => ({
           title,
           pageTitle: title,
-          apiRoute: ApiRoutes.QUEUE,
+          apiRoute: `${ApiRoutes.QUEUE}?queueName=${value}`,
           appRoute: `${AppRoutes.QUEUE}${value}`,
           permissionsRoute: PermissionRoutes.QUEUE,
           element: (

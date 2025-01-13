@@ -3,6 +3,7 @@ import { useCleanedNavigationContext } from "../../providers/navigation";
 import {
   QueueBody,
   QueueCounts,
+  QueueJob,
   QueueStats as QueueStatsInterface,
   QueueStatus,
 } from "./types";
@@ -29,14 +30,29 @@ export const Queues: React.FC = () => {
   const { data } = useQueueQuery(apiRoute, status, page);
   const [stats, setStats] = React.useState<QueueStatsInterface | null>(null);
   const [queue, setQueue] = React.useState<QueueBody | null>(null);
+  const jobs = React.useMemo<QueueJob[]>(
+    () => (queue ? queue.jobs : []),
+    [queue]
+  );
   const counts = React.useMemo<QueueCounts | null>(
     () => (queue ? queue.counts : null),
     [queue]
   );
+  const [open, setOpen] = React.useState(false);
+  const [selectedJob, setSelectedJob] = React.useState<QueueJob>();
 
   const handleStatusChange = React.useCallback(
     (value: QueueStatus) => setStatus(value),
     [setStatus]
+  );
+
+  const handleDeleteJob = React.useCallback((id: string) => {}, []);
+  const handleShowJobInfo = React.useCallback(
+    (job: QueueJob) => {
+      setSelectedJob(job);
+      setOpen(true);
+    },
+    [setSelectedJob, setOpen]
   );
 
   React.useEffect(() => {
@@ -63,7 +79,11 @@ export const Queues: React.FC = () => {
           flex: "1",
         }}
       >
-        <QueueJobsTable />
+        <QueueJobsTable
+          jobs={jobs}
+          onDelete={handleDeleteJob}
+          onShow={handleShowJobInfo}
+        />
       </Box>
       <Box>last content</Box>
     </Wrapper>
