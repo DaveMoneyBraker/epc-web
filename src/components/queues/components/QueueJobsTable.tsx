@@ -1,5 +1,5 @@
 import React from "react";
-import { QueueJob } from "../types";
+import { QueueJob, QueueStatus } from "../types";
 import {
   IconButton,
   Table,
@@ -13,15 +13,22 @@ import {
 import AppUtils from "../../../utils/0_AppUtils";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
+import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
 
 interface Props {
+  status: QueueStatus;
   jobs: QueueJob[];
-  onToggleDialog: (job: QueueJob, action: "delete" | "show") => void;
+  onToggleDialog: (job: QueueJob, action: "delete" | "show" | "retry") => void;
 }
 
-export const QueueJobsTable: React.FC<Props> = ({ jobs, onToggleDialog }) => {
+export const QueueJobsTable: React.FC<Props> = ({
+  jobs,
+  status,
+  onToggleDialog,
+}) => {
   const handleToggleDialog = React.useCallback(
-    (job: QueueJob, action: "delete" | "show") => onToggleDialog(job, action),
+    (job: QueueJob, action: "delete" | "show" | "retry") =>
+      onToggleDialog(job, action),
     [onToggleDialog]
   );
   return (
@@ -29,6 +36,7 @@ export const QueueJobsTable: React.FC<Props> = ({ jobs, onToggleDialog }) => {
       <Table sx={{ minWidth: "100%" }} size="small" stickyHeader>
         <TableHead>
           <TableRow>
+            {status === "failed" && <TableCell>Retry</TableCell>}
             <TableCell>Number</TableCell>
             <TableCell>Added At</TableCell>
             <TableCell>Started At</TableCell>
@@ -42,6 +50,16 @@ export const QueueJobsTable: React.FC<Props> = ({ jobs, onToggleDialog }) => {
           {jobs &&
             jobs.map((job, i) => (
               <TableRow key={i}>
+                {status === "failed" && (
+                  <TableCell>
+                    <IconButton
+                      color="primary"
+                      onClick={() => handleToggleDialog(job, "retry")}
+                    >
+                      <ReplayOutlinedIcon />
+                    </IconButton>
+                  </TableCell>
+                )}
                 <TableCell>#{job.id || 0}</TableCell>
                 <TableCell>
                   {job.timestamp && AppUtils.formatDate(job.timestamp)}

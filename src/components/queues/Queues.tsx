@@ -35,7 +35,7 @@ export const Queues: React.FC = () => {
   const queryKey = React.useMemo(() => "queue", []);
   const [status, setStatus] = React.useState<QueueStatus>(QUEUE_STATUS.LATEST);
   const { data } = useQueueQuery(apiRoute, status, page, queryKey);
-  const { deleteJobMutation } = useQueueMutation(queryKey);
+  const { deleteJobMutation, retryJobMutation } = useQueueMutation(queryKey);
   const [stats, setStats] = React.useState<QueueStatsInterface | null>(null);
   const [queue, setQueue] = React.useState<QueueBody | null>(null);
   const jobs = React.useMemo<QueueJob[]>(
@@ -47,6 +47,7 @@ export const Queues: React.FC = () => {
     [queue]
   );
   const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [retryOpen, setRetryOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [selectedJob, setSelectedJob] = React.useState<QueueJob>();
 
@@ -56,12 +57,14 @@ export const Queues: React.FC = () => {
   );
 
   const handleTriggerDialog = React.useCallback(
-    (job: QueueJob, action: "delete" | "show") => {
+    (job: QueueJob, action: "delete" | "show" | "retry") => {
       setSelectedJob(job);
       if (action === "delete") {
         setDeleteOpen(true);
-      } else {
+      } else if (action === "show") {
         setOpen(true);
+      } else {
+        setRetryOpen(true);
       }
     },
     [setSelectedJob, setDeleteOpen, setOpen]
@@ -77,6 +80,18 @@ export const Queues: React.FC = () => {
       setSelectedJob(undefined);
     },
     [selectedJob, queueName, deleteJobMutation, setDeleteOpen, setSelectedJob]
+  );
+
+  const handleRetryClose = React.useCallback(
+    (confirm: boolean) => {
+      setRetryOpen(false);
+      if (confirm && selectedJob) {
+        const { id } = selectedJob;
+        retryJobMutation.mutate({ id, queueName });
+      }
+      setSelectedJob(undefined);
+    },
+    [selectedJob, queueName, retryJobMutation, setRetryOpen, setSelectedJob]
   );
 
   React.useEffect(() => {
@@ -104,18 +119,32 @@ export const Queues: React.FC = () => {
             flex: "1",
           }}
         >
-          <QueueJobsTable jobs={jobs} onToggleDialog={handleTriggerDialog} />
+          <QueueJobsTable
+            jobs={jobs}
+            status={status}
+            onToggleDialog={handleTriggerDialog}
+          />
         </Box>
         <Box>last content</Box>
       </Wrapper>
       {/* DIALOGS */}
+      {/* DELETE */}
       <DialogWrapper
-        title="Delete this item from list?"
+        title="Delete this job from list?"
         open={deleteOpen}
         onClose={handleDeleteClose}
         disabled={false}
       >
-        Delete job #{(selectedJob && selectedJob.id) || "item"}?
+        Delete job #{(selectedJob && selectedJob.id) || "0"}?
+      </DialogWrapper>
+      {/* RETRY */}
+      <DialogWrapper
+        title="Retry this job from list?"
+        open={retryOpen}
+        onClose={handleRetryClose}
+        disabled={false}
+      >
+        Retry job #{(selectedJob && selectedJob.id) || "0"}?
       </DialogWrapper>
     </>
   );
