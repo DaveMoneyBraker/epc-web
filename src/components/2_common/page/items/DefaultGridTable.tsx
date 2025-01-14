@@ -12,6 +12,7 @@ import {
   GridPagination,
   GridPaginationModel,
   GridRenderCellParams,
+  GridRowId,
   GridSortModel,
 } from "@mui/x-data-grid";
 import React from "react";
@@ -48,24 +49,33 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
   const [columns, setColumns] = React.useState<GridColDef[]>([]);
   // FOR ACTIONS TABLE CELL
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const opens = React.useMemo(() => new Map(), []);
 
   const handleClick = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) =>
-      setAnchorEl(event.currentTarget),
-    []
+    (id: GridRowId, event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+      // WITHOUT TIMEOUT setAnchorEl DON'T GET TO SETUP ELEMENT
+      // WHIT PROVIDE ERROR IN CONSOLE
+      setTimeout(() => opens.set(id, true), 0);
+    },
+    [opens, setAnchorEl]
   );
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = React.useCallback(
+    (id: GridRowId) => {
+      opens.set(id, false);
+      setAnchorEl(null);
+    },
+    [opens, setAnchorEl]
+  );
 
   const handleMenuClicked = React.useCallback(
-    (event: DefaultPageActions, body: unknown) => {
-      onEvent(event, body);
-      handleClose();
+    (event: DefaultPageActions, params: GridRenderCellParams) => {
+      const { id, row } = params;
+      onEvent(event, row);
+      handleClose(id);
     },
-    [onEvent]
+    [onEvent, handleClose]
   );
 
   // DEFAULT COL CONFIGS
@@ -79,7 +89,54 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
     []
   );
 
-  const defaultActionsCol = React.useMemo(
+  const renderActionCol = React.useCallback(
+    (params: GridRenderCellParams) => {
+      const filteredActions = actions.filter(
+        (a) => a !== "create" && a !== "submit"
+      );
+      const { id } = params;
+      if (!opens.has(id)) {
+        opens.set(id, false);
+      }
+      const isOpen = opens.get(id);
+      return (
+        <>
+          <IconButton
+            aria-controls={isOpen ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={isOpen ? "true" : undefined}
+            onClick={(e) => handleClick(id, e)}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={isOpen}
+            onClose={() => handleClose(id)}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            {filteredActions.map((action) => (
+              <MenuItem
+                sx={{
+                  minWidth: "100px",
+                }}
+                onClick={() => handleMenuClicked(action, params)}
+                key={`${id}-${action}`}
+              >
+                <ListItemText>{action}</ListItemText>
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
+      );
+    },
+    [actions, anchorEl, opens, handleClick, handleClose, handleMenuClicked]
+  );
+
+  const defaultActionsCol = React.useCallback(
     () => ({
       ...defaultColProps,
       field: "actions",
@@ -87,47 +144,9 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       sortable: false,
       flex: 0.1,
       minWidth: 100,
-      renderCell: (params: GridRenderCellParams) => {
-        const filteredActions = actions.filter(
-          (a) => a !== "create" && a !== "submit"
-        );
-        return (
-          <>
-            <IconButton
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              {filteredActions.map((action) => (
-                <MenuItem
-                  sx={{
-                    minWidth: "100px",
-                  }}
-                  onClick={() => handleMenuClicked(action, params.row)}
-                  key={action}
-                >
-                  <ListItemText>{action}</ListItemText>
-                </MenuItem>
-              ))}
-            </Menu>
-            <div></div>
-          </>
-        );
-      },
+      renderCell: renderActionCol,
     }),
-    [actions, anchorEl, open, defaultColProps, handleClick, handleMenuClicked]
+    [defaultColProps, renderActionCol]
   );
 
   const defaultDateCol = React.useCallback(
@@ -146,7 +165,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       columns.forEach((col) => {
         let newColumn: GridColDef;
         if (col === "actions") {
-          newColumn = defaultActionsCol;
+          newColumn = defaultActionsCol();
         } else if (
           col === "updatedAt" ||
           col === "createdAt" ||
@@ -157,10 +176,13 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
           newColumn = {
             ...defaultColProps,
             field: col,
-            headerName: AppUtils.camelToTitleCase(col),
           };
         }
-        newColumns.push(newColumn);
+
+        newColumns.push({
+          ...newColumn,
+          headerName: AppUtils.camelToTitleCase(col),
+        });
       });
       setColumns(newColumns);
     },

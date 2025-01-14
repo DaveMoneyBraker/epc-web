@@ -22,7 +22,7 @@ export const BlacklistDomain: React.FC = () => {
       { itemType: FILTER_ITEM_TYPE.STRING, itemName: "domain" },
       {
         itemType: FILTER_ITEM_TYPE.ENUM,
-        itemName: "type",
+        itemName: "based",
         selectOptions: BlacklistDomainBasedOptions,
       },
       { itemType: FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },

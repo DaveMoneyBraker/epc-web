@@ -135,7 +135,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
 
   React.useEffect(() => {
     proceedStateChanges(open);
-  }, [open, proceedStateChanges]);
+  }, [open, selectedItem, proceedStateChanges]);
 
   const disabled = React.useMemo(
     () => state.some((v) => v.required && !v.value),

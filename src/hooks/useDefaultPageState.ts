@@ -100,13 +100,13 @@ export const useDefaultPageState = <T = any>(
   // HANDLE CREATE/EDIT DIALOGS CLOSING
   const handleItemDialogClose = React.useCallback(
     (body?: T) => {
-      setSelectedItem(null);
       setItemDialogOpen(false);
       if (body) {
         // IF SELECTED ITEM EXIST -> WE SHOULD MAKE PUT(EDIT) REQUEST, ELSE POST(CREATE)
         const method = selectedItem ? "put" : "post";
         mutationQuery.mutate({ method, body });
       }
+      setSelectedItem(null);
     },
     [selectedItem, mutationQuery]
   );
