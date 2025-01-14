@@ -10,6 +10,7 @@ import { useFileParser } from "./hooks";
 import { FilesMapping } from "./components/filesMapping";
 import FileMapperUtils from "./utils/0_utils";
 import { FileMapperSubmitFile } from "./components/FileMapperSubmitFile";
+import { useNavigate } from "react-router-dom";
 
 export const FileMapper: React.FC<FileMapperProps> = ({
   fileSize = 15,
@@ -22,6 +23,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
   onFileSubmit,
   reset,
 }) => {
+  const navigate = useNavigate();
   const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
   const [previews, setPreviews] = React.useState<FileMapperPreview[]>([]);
   const [filename, setFilename] = React.useState("NewFilename");
@@ -150,10 +152,18 @@ export const FileMapper: React.FC<FileMapperProps> = ({
           default:
             break;
         }
+      } else if (activeStep === 0) {
+        return navigate(v);
       }
       setActiveStep((prev) => prev + v);
     },
-    [activeStep, reset, handleFirstStepCompleted, handleSecondStepCompleted]
+    [
+      activeStep,
+      reset,
+      handleFirstStepCompleted,
+      handleSecondStepCompleted,
+      navigate,
+    ]
   );
 
   const handleStepperReset = React.useCallback(() => {

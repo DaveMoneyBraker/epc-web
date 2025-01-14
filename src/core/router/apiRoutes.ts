@@ -17,5 +17,5 @@ export const ApiRoutes = {
   QUEUE: "queue",
 
   // DNSBL
-  BLACKLIST_DOMAINS: "blacklist-domain",
+  BLACKLIST_DOMAIN: "blacklist-domain",
 } as const;

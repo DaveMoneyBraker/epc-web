@@ -2,7 +2,7 @@ import { Box, Button, LinearProgress, styled, Typography } from "@mui/material";
 import React from "react";
 import { EnhancedTextField } from "../../../1_enhanced";
 import { useNavigate } from "react-router-dom";
-import { AppBackdrop } from "../../../0_layout/Backdrop";
+import { LoadingBackdrop } from "../../../0_layout/Backdrops";
 
 interface Props {
   filename: string;
@@ -70,7 +70,7 @@ export const FileMapperSubmitFile: React.FC<Props> = ({
     <Wrapper>
       {!mappingComplete && (
         <Box>
-          <AppBackdrop loading={!mappingComplete} />
+          <LoadingBackdrop loading={!mappingComplete} />
         </Box>
       )}
       {submit && (

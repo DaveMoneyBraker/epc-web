@@ -1,12 +1,12 @@
 export const PAGE_TITLES = {
   LOGIN: "LOGIN",
   // SUPPRESSIONS
-  SUPPRESSION_EMAIL: "Suppression Email",
-  SUPPRESSION_DOMAIN: "Suppression Domain",
+  SUPPRESSION_EMAIL: "Suppression Emails",
+  SUPPRESSION_DOMAIN: "Suppression Domains",
   SUPPRESSION_MX: "Suppression Mx",
   SUPPRESSION_MASK: "Suppression Mask",
   // DNSBL
-  BLACKLIST_DOMAINS: "Black List Domains",
+  BLACKLIST_DOMAIN: "Black List Domains",
   // QUEUES
   QUEUES: "Queues",
 } as const;

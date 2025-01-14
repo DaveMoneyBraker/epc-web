@@ -2,7 +2,7 @@ import React from "react";
 import { FileMapperRow } from "./FileMapperRow";
 import { FileMapperPreview } from "../../../../../types";
 import { Box, Divider, styled } from "@mui/material";
-import { AppBackdrop } from "../../../../0_layout/Backdrop";
+import { LoadingBackdrop } from "../../../../0_layout/Backdrops";
 
 interface Props {
   previews: FileMapperPreview[];
@@ -117,7 +117,7 @@ export const FileMapperRows: React.FC<Props> = ({
 
   return (
     <Wrapper>
-      <AppBackdrop loading={parsing} />
+      <LoadingBackdrop loading={parsing} />
       {previews.map((preview, i) => (
         <div key={i}>
           <FileMapperRow

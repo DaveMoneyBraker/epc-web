@@ -28,8 +28,8 @@ export const useAppNav = (): AppNav[] => {
   );
 
   // DNSBL
-  const BlacklistDomainsPage = React.lazy(
-    () => import("../../pages/dnsbl/BlackListDomainsPage")
+  const BlacklistDomainPage = React.lazy(
+    () => import("../../pages/dnsbl/BlackListDomainPage")
   );
 
   // QUEUES
@@ -171,12 +171,12 @@ export const useAppNav = (): AppNav[] => {
             {
               title: "Blacklist Domains",
               pageTitle: "Blacklist Domains",
-              apiRoute: ApiRoutes.BLACKLIST_DOMAINS,
-              appRoute: AppRoutes.BLACKLIST_DOMAINS,
-              permissionsRoute: PermissionRoutes.SUPPRESSION_EMAIL,
+              apiRoute: ApiRoutes.BLACKLIST_DOMAIN,
+              appRoute: AppRoutes.BLACKLIST_DOMAIN,
+              permissionsRoute: PermissionRoutes.BLACKLIST_DOMAIN,
               element: (
                 <React.Suspense>
-                  <BlacklistDomainsPage />
+                  <BlacklistDomainPage />
                 </React.Suspense>
               ),
             },

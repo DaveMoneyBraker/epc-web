@@ -8,7 +8,7 @@ export const AppRoutes = {
   SUPPRESSION_MASK: "/pages/suppression/mask",
 
   // DNSBL
-  BLACKLIST_DOMAINS: "/pages/dnsbl/blacklist-domains",
+  BLACKLIST_DOMAIN: "/pages/dnsbl/blacklist-domain",
 
   // QUEUE
   QUEUE: "/pages/queue/",

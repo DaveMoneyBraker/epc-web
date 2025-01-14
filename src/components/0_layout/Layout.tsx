@@ -2,12 +2,13 @@ import React from "react";
 import { AppBar } from "./AppBar/AppBar";
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
-import { AppBackdrop } from "./Backdrop";
+import { LoadingBackdrop, OfflineBackdrop } from "./Backdrops";
 import { AppDrawer } from "./Drawer";
 import AppMutations from "../../services/mutations/AppMutations";
 import { useCleanedNavigationContext } from "../../providers/navigation";
 import { useAxiosContext } from "../../providers/axios";
 import { useAccountContext } from "../../providers/account/useAccountContext";
+import AppHooks from "../../hooks/0_AppHooks";
 
 const Wrapper = styled("div")({
   height: "100vh",
@@ -23,6 +24,7 @@ const Container = styled("div")({
 export const Layout: React.FC = () => {
   const location = useLocation();
   const { loading } = useAxiosContext();
+  const online = AppHooks.useIsOnline();
   const { nav, currentNavNode } = useCleanedNavigationContext();
   const pageTitle = React.useMemo(
     () => currentNavNode?.pageTitle || "Unknown page",
@@ -60,8 +62,10 @@ export const Layout: React.FC = () => {
 
   return (
     <Wrapper>
+      {/* OFFLINE OVERLAY */}
+      {!online && <OfflineBackdrop online={online} />}
       {/* LOADING OVERLAY */}
-      {!isSubmittingFile && <AppBackdrop loading={loading} />}
+      {!isSubmittingFile && online && <LoadingBackdrop loading={loading} />}
 
       {/* TOP NAVIGATION */}
       <AppBar

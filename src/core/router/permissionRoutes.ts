@@ -22,7 +22,7 @@ export const PermissionRoutes: { [key: string]: PermissionRoute } = {
     file: "email-validation:suppression-mask:file",
   },
   // DNSBL
-  BLACKLIST_DOMAINS: {
+  BLACKLIST_DOMAIN: {
     default: "domain-lookup:blacklist-domain",
     file: "domain-lookup:blacklist-domain:file",
   },

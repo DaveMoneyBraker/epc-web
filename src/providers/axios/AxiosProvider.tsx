@@ -13,10 +13,14 @@ interface Props {
 }
 
 export const AxiosProvider: React.FC<Props> = ({ children }) => {
-  const [loading, setLoading] = React.useState(false);
   const getApiUrl = AppHooks.useApiUrlLoader();
   const [get] = AppHooks.useLocalStorage();
   const showNotification = AppHooks.useNotification();
+  const [pendingRequestsCount, setPendingRequestsCount] = React.useState(0);
+  const loading = React.useMemo(
+    () => pendingRequestsCount > 0,
+    [pendingRequestsCount]
+  );
 
   const instance = axios.create({
     headers: {
@@ -30,7 +34,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
 
   // REQUEST INTERCEPTOR
   instance.interceptors.request.use(async (config) => {
-    setLoading(true);
+    setPendingRequestsCount((prev) => prev + 1);
 
     // SETUP BASE URL
     config.baseURL = await getApiUrl();
@@ -49,7 +53,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
   // RESPONSE INTERCEPTOR
   instance.interceptors.response.use(
     (config) => {
-      setLoading(false);
+      setPendingRequestsCount((prev) => prev - 1);
 
       // SHOW SUCCESS NOTIFICATION ON NON GET REQUESTS
       if (
@@ -62,7 +66,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     },
     // ERRORS HANDLING
     (error) => {
-      setLoading(false);
+      setPendingRequestsCount((prev) => prev - 1);
 
       console.log("RESPONSE ERROR: ", { error });
       // DON'T SHOW NOTIFICATION IF REQUEST WAS CANCELED BY OUR SIGNAL
