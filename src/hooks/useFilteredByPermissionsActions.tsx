@@ -16,7 +16,9 @@ export const useFilteredByPermissionsActions = (
     () =>
       permissions?.filter((permission) =>
         permission[1].includes(
-          currentNavNodePermissionRoute?.default || "costyl"
+          currentNavNodePermissionRoute?.default ||
+            currentNavNodePermissionRoute?.file ||
+            "costyl"
         )
       ),
     [permissions, currentNavNodePermissionRoute]
@@ -24,10 +26,7 @@ export const useFilteredByPermissionsActions = (
 
   return React.useMemo(() => {
     const filteredActions: DefaultPageActions[] = [];
-    if (
-      requestedRouteUserPermissions &&
-      requestedRouteUserPermissions[0][0] === "admin"
-    ) {
+    if (requestedRouteUserPermissions?.some((v) => v[0] === "admin")) {
       return [...actions];
     }
     if (
