@@ -106,7 +106,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
         );
       }
       // TIMEOUT IS FOR PREVENTING UI GLITCHES ON DIALOG CLOSE
-      setTimeout(() => setState(defaultState), 0);
+      setTimeout(() => setState(defaultState), 100);
     },
     [configs, selectedItem, defaultConfigMapped, setState]
   );
