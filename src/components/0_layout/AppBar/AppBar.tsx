@@ -4,12 +4,14 @@ import {
   Toolbar,
   IconButton,
   Typography,
+  Link,
 } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { EpcLogoMini } from "../../../assets/icons";
 import { AppBarMenu } from "./AppBarMenu";
 import { AppColorMode } from "./AppColorMode";
+import { EpcLogo } from "../../4_icons/EpcLogo";
 
 interface Props {
   displayName: string;
@@ -45,11 +47,26 @@ export const AppBar: React.FC<Props> = ({
               flexGrow: 1,
               padding: 0,
               display: "flex",
-              alignItems: "center",
+              alignItems: "flex-end",
               gap: "15px",
             }}
           >
-            <EpcLogoMini />
+            <Box
+              sx={{
+                height: "30px",
+                width: "87px",
+              }}
+            >
+              <Link
+                href="https://epcnetwork.io/"
+                target="_blank"
+                rel="noopener"
+                sx={{ height: "30px" }}
+              >
+                <EpcLogo />
+              </Link>
+            </Box>
+            {/* <EpcLogo /> */}
             <Typography variant="h6" sx={{ color: "#fff" }}>
               {pageTitle}
             </Typography>
