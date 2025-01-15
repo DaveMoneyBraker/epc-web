@@ -26,6 +26,9 @@ export const useAppNav = (): AppNav[] => {
   const SuppressionsMxPage = React.lazy(
     () => import("../../pages/suppressions/SuppressionMxPage")
   );
+  const SuppressionsSubmitMxPage = React.lazy(
+    () => import("../../pages/suppressions/SuppressionsSubmitMxPage")
+  );
   const SuppressionMaskPage = React.lazy(
     () => import("../../pages/suppressions/SuppressionMaskPage")
   );
@@ -111,6 +114,18 @@ export const useAppNav = (): AppNav[] => {
               ),
             },
             {
+              title: "Submit Suppressions Email",
+              pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
+              apiRoute: ApiRoutes.SUPPRESSION_EMAIL + "-submit",
+              appRoute: AppRoutes.SUPPRESSION_EMAIL + "-submit",
+              permissionsRoute: PermissionRoutes.SUPPRESSION_EMAIL,
+              element: (
+                <React.Suspense>
+                  <SuppressionsSubmitEmailPage />
+                </React.Suspense>
+              ),
+            },
+            {
               title: "Domain",
               pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_DOMAIN,
               apiRoute: ApiRoutes.SUPPRESSION_DOMAIN,
@@ -135,18 +150,6 @@ export const useAppNav = (): AppNav[] => {
               ),
             },
             {
-              title: "Submit Suppressions Email",
-              pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
-              apiRoute: ApiRoutes.SUPPRESSION_EMAIL + "-submit",
-              appRoute: AppRoutes.SUPPRESSION_EMAIL + "-submit",
-              permissionsRoute: PermissionRoutes.SUPPRESSION_EMAIL,
-              element: (
-                <React.Suspense>
-                  <SuppressionsSubmitEmailPage />
-                </React.Suspense>
-              ),
-            },
-            {
               title: "Mx",
               pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_MX,
               apiRoute: ApiRoutes.SUPPRESSION_MX,
@@ -155,6 +158,18 @@ export const useAppNav = (): AppNav[] => {
               element: (
                 <React.Suspense>
                   <SuppressionsMxPage />
+                </React.Suspense>
+              ),
+            },
+            {
+              title: "Submit Suppressions Mx",
+              pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_MX}`,
+              apiRoute: ApiRoutes.SUPPRESSION_MX + "-submit",
+              appRoute: AppRoutes.SUPPRESSION_MX + "-submit",
+              permissionsRoute: PermissionRoutes.SUPPRESSION_MX,
+              element: (
+                <React.Suspense>
+                  <SuppressionsSubmitMxPage />
                 </React.Suspense>
               ),
             },

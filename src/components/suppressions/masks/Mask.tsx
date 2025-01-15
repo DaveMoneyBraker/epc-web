@@ -1,6 +1,10 @@
 import React from "react";
 import { ApiRoutes } from "../../../core/router";
-import { FILTER_ITEM_TYPE, FilterConfig } from "../../../types";
+import {
+  DefaultPageActions,
+  FILTER_ITEM_TYPE,
+  FilterConfig,
+} from "../../../types";
 import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { SuppressionMaskItemDialog } from "./item/MaskItemDialog";
@@ -27,10 +31,16 @@ export const SuppressionsMask: React.FC = () => {
   );
   const itemConfigs = AppHooks.useFilteredItemConfigs(filterConfigs);
 
+  const actions = React.useMemo<DefaultPageActions[]>(
+    () => ["create", "edit", "delete"],
+    []
+  );
+
   return (
     <CommonPage
       itemName="mask"
       cols={cols}
+      actions={actions}
       queryKey={queryKey}
       apiUrl={apiUrl}
       filterConfigs={filterConfigs}
