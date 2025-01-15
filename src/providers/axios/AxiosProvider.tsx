@@ -22,6 +22,51 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     [pendingRequestsCount]
   );
 
+  const updateRequestsCount = React.useCallback(
+    (v: number) => setPendingRequestsCount((prev) => Math.max(0, prev + v)),
+    [setPendingRequestsCount]
+  );
+
+  const handleAxiosError = React.useCallback(
+    (error: any) => {
+      // DON'T SHOW NOTIFICATION IF REQUEST WAS CANCELED BY OUR SIGNAL
+      if (error.code === "ERR_CANCELED") return;
+      console.log("RESPONSE ERROR: ", { error });
+
+      const errorMessage =
+        error.response?.data?.message ??
+        error.message ??
+        "An unexpected error occurred";
+
+      const statusCode = error.response?.status;
+
+      switch (statusCode) {
+        case 401:
+        case 403:
+          redirect(AppRoutes.LOGIN);
+          break;
+        case 404:
+          showNotification(
+            "Resource not found",
+            APP_CONSTANTS.NOTIFICATION_VARIANTS.WARNING
+          );
+          break;
+        case 500:
+          showNotification(
+            "Server error",
+            APP_CONSTANTS.NOTIFICATION_VARIANTS.ERROR
+          );
+          break;
+        default:
+          showNotification(
+            errorMessage,
+            APP_CONSTANTS.NOTIFICATION_VARIANTS.ERROR
+          );
+      }
+    },
+    [showNotification]
+  );
+
   const instance = axios.create({
     headers: {
       // SET DEFAULT HEDERS
@@ -30,11 +75,12 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
       // DISABLE NGROK CORS ERRORS
       "ngrok-skip-browser-warning": true,
     },
+    timeout: 10000,
   });
 
   // REQUEST INTERCEPTOR
   instance.interceptors.request.use(async (config) => {
-    setPendingRequestsCount((prev) => prev + 1);
+    updateRequestsCount(1);
 
     // SETUP BASE URL
     config.baseURL = await getApiUrl();
@@ -53,7 +99,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
   // RESPONSE INTERCEPTOR
   instance.interceptors.response.use(
     (config) => {
-      setPendingRequestsCount((prev) => prev - 1);
+      updateRequestsCount(-1);
 
       // SHOW SUCCESS NOTIFICATION ON NON GET REQUESTS
       if (
@@ -66,31 +112,22 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     },
     // ERRORS HANDLING
     (error) => {
-      setPendingRequestsCount((prev) => prev - 1);
-
-      console.log("RESPONSE ERROR: ", { error });
-      // DON'T SHOW NOTIFICATION IF REQUEST WAS CANCELED BY OUR SIGNAL
-      if (error.code !== "ERR_CANCELED") {
-        showNotification(
-          error.response?.data?.message || error.message || "Unhandled error",
-          APP_CONSTANTS.NOTIFICATION_VARIANTS.ERROR
-        );
-      }
-      // UNAUTHORIZED LOGOUT
-      if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 403)
-        // TODO
-        // REFRESH TOKEN ON 403
-      ) {
-        redirect(AppRoutes.LOGIN);
-      }
+      updateRequestsCount(-1);
+      handleAxiosError(error);
       return Promise.reject(error);
     }
   );
 
+  const contextValue = React.useMemo(
+    () => ({
+      axios: instance,
+      loading,
+    }),
+    [instance, loading]
+  );
+
   return (
-    <AxiosContext.Provider value={{ axios: instance, loading }}>
+    <AxiosContext.Provider value={contextValue}>
       {children}
     </AxiosContext.Provider>
   );

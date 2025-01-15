@@ -156,11 +156,13 @@ export const FileMapper: React.FC<FileMapperProps> = ({
             break;
         }
       } else if (activeStep === 0) {
-        return navigate(v);
+        navigate(v);
       } else if (activeStep === 1) {
         setPreviews([]);
       }
-      setActiveStep((prev) => prev + v);
+      // IN CASE IF CURRENT STEP INDEX IS 0 AND SOMEHOW USER COME TO THIS PAGE DIRECTLY
+      // SO IT WILL NO GIVE -1 AS CURRENT STEP
+      setActiveStep((prev) => Math.max(0, prev + v));
     },
     [
       activeStep,
