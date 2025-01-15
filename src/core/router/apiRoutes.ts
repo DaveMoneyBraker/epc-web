@@ -13,10 +13,13 @@ export const ApiRoutes = {
   SUPPRESSION_DOMAIN: "suppression/domain",
   SUPPRESSION_MX: "suppression/mx",
   SUPPRESSION_MASK: "suppression/mask",
+  SUPPRESSION_PROD_FILES: "suppression/email-without-esp/file",
   // QUEUES
   QUEUE_JOB: "queue/job",
   QUEUE: "queue",
 
   // DNSBL
   BLACKLIST_DOMAIN: "blacklist-domain",
+
+  // DEV ROUTE
 } as const;

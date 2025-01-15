@@ -6,6 +6,7 @@ export const AppRoutes = {
   SUPPRESSION_DOMAIN: "/pages/suppression/domain",
   SUPPRESSION_MX: "/pages/suppression/mx",
   SUPPRESSION_MASK: "/pages/suppression/mask",
+  SUPPRESSION_PROD_FILES: "/pages/suppression/prod-files",
 
   // DNSBL
   BLACKLIST_DOMAIN: "/pages/dnsbl/blacklist-domain",

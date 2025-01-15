@@ -4,6 +4,10 @@ export interface PermissionRoute {
 }
 
 export const PermissionRoutes: { [key: string]: PermissionRoute } = {
+  // ADMINS ONLY
+  ADMIN: {
+    default: "admin-only",
+  },
   // SUPPRESSIONS
   SUPPRESSION_EMAIL: {
     default: "email-validation:suppression-email",

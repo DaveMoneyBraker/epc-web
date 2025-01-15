@@ -32,6 +32,9 @@ export const useAppNav = (): AppNav[] => {
   const SuppressionMaskPage = React.lazy(
     () => import("../../pages/suppressions/SuppressionMaskPage")
   );
+  const SuppressionSubmitProdFilesPage = React.lazy(
+    () => import("../../pages/suppressions/SuppressionsSubmitProdFilesPage")
+  );
 
   // DNSBL
   const BlacklistDomainPage = React.lazy(
@@ -182,6 +185,23 @@ export const useAppNav = (): AppNav[] => {
               element: (
                 <React.Suspense>
                   <SuppressionMaskPage />
+                </React.Suspense>
+              ),
+            },
+          ],
+        },
+        {
+          title: "ADMINS ONLY",
+          children: [
+            {
+              title: "Prod Files",
+              pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL,
+              apiRoute: ApiRoutes.SUPPRESSION_PROD_FILES,
+              appRoute: AppRoutes.SUPPRESSION_PROD_FILES,
+              permissionsRoute: PermissionRoutes.ADMIN,
+              element: (
+                <React.Suspense>
+                  <SuppressionSubmitProdFilesPage />
                 </React.Suspense>
               ),
             },
