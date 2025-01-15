@@ -21,5 +21,8 @@ export const ApiRoutes = {
   // DNSBL
   BLACKLIST_DOMAIN: "blacklist-domain",
 
+  // FILES
+  GOOGLE_CLOUD: "file",
+
   // DEV ROUTE
 } as const;

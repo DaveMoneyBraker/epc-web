@@ -14,6 +14,9 @@ export const AppRoutes = {
   // QUEUE
   QUEUE: "/pages/queue/",
 
+  // FILES
+  GOOGLE_CLOUD: "/pages/files/google-cloud",
+
   // NOT FOUND
   NOT_FOUND: "/pages/suppressions/email",
 } as const;

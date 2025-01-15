@@ -1,6 +1,7 @@
 export interface PermissionRoute {
   default: string;
   file?: string;
+  download?: string;
 }
 
 export const PermissionRoutes: { [key: string]: PermissionRoute } = {
@@ -33,5 +34,10 @@ export const PermissionRoutes: { [key: string]: PermissionRoute } = {
   // QUEUE
   QUEUE: {
     default: "queue:get-queues",
+  },
+  // FILES
+  GOOGLE_CLOUD: {
+    default: "file:gcloud",
+    download: "file:gcloud:download", // action - read (to download files)
   },
 } as const;

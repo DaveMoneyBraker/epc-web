@@ -119,7 +119,7 @@ export const CommonPage: React.FC<Props> = ({
         />
         <Box sx={{ flex: 1, overflow: "scroll" }}>
           <DefaultGridTable
-            itemName="domain"
+            itemName={itemName}
             data={items}
             rowCount={totalItems}
             loading={loading}

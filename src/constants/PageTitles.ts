@@ -7,6 +7,8 @@ export const PAGE_TITLES = {
   SUPPRESSION_MASK: "Suppression Mask",
   // DNSBL
   BLACKLIST_DOMAIN: "Black List Domains",
+  // FILES
+  GOOGLE_CLOUD: "Google Cloud Files",
   // QUEUES
   QUEUES: "Queues",
 } as const;

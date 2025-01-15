@@ -3,11 +3,12 @@ import { PermissionRoutes, PermissionRoute } from "./permissionRoutes";
 import { ApiRoutes } from "./apiRoutes";
 import { AppRoutes } from "./appRoutes";
 import APP_CONSTANTS from "../../constants/AppConstants";
+import { QUEUES } from "../../components/queues";
 import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import QueueIcon from "@mui/icons-material/Queue";
 import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
-import { QUEUES } from "../../components/queues";
 
 export const useAppNav = (): AppNav[] => {
   // SUPPRESSIONS
@@ -34,6 +35,11 @@ export const useAppNav = (): AppNav[] => {
   );
   const SuppressionSubmitProdFilesPage = React.lazy(
     () => import("../../pages/suppressions/SuppressionsSubmitProdFilesPage")
+  );
+
+  // FILES
+  const GoogleCloudFilesPage = React.lazy(
+    () => import("../../pages/files/GoogleCloudFilesPage")
   );
 
   // DNSBL
@@ -117,7 +123,7 @@ export const useAppNav = (): AppNav[] => {
               ),
             },
             {
-              title: "Submit Suppressions Email",
+              title: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
               pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
               apiRoute: ApiRoutes.SUPPRESSION_EMAIL + "-submit",
               appRoute: AppRoutes.SUPPRESSION_EMAIL + "-submit",
@@ -141,7 +147,7 @@ export const useAppNav = (): AppNav[] => {
               ),
             },
             {
-              title: "Submit Suppressions Domains",
+              title: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_DOMAIN}`,
               pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_DOMAIN}`,
               apiRoute: ApiRoutes.SUPPRESSION_DOMAIN + "-submit",
               appRoute: AppRoutes.SUPPRESSION_DOMAIN + "-submit",
@@ -165,7 +171,7 @@ export const useAppNav = (): AppNav[] => {
               ),
             },
             {
-              title: "Submit Suppressions Mx",
+              title: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
               pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_MX}`,
               apiRoute: ApiRoutes.SUPPRESSION_MX + "-submit",
               appRoute: AppRoutes.SUPPRESSION_MX + "-submit",
@@ -219,14 +225,39 @@ export const useAppNav = (): AppNav[] => {
           title: "BLACKLIST CHECK",
           children: [
             {
-              title: "Blacklist Domains",
-              pageTitle: "Blacklist Domains",
+              title: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
+              pageTitle: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
               apiRoute: ApiRoutes.BLACKLIST_DOMAIN,
               appRoute: AppRoutes.BLACKLIST_DOMAIN,
               permissionsRoute: PermissionRoutes.BLACKLIST_DOMAIN,
               element: (
                 <React.Suspense>
                   <BlacklistDomainPage />
+                </React.Suspense>
+              ),
+            },
+          ],
+        },
+      ],
+    },
+    // FILES
+    {
+      title: "Files",
+      icon: <FolderOpenIcon />,
+      path: "files",
+      categories: [
+        {
+          title: "google",
+          children: [
+            {
+              title: APP_CONSTANTS.PAGE_TITLES.GOOGLE_CLOUD,
+              pageTitle: APP_CONSTANTS.PAGE_TITLES.GOOGLE_CLOUD,
+              apiRoute: ApiRoutes.GOOGLE_CLOUD,
+              appRoute: AppRoutes.GOOGLE_CLOUD,
+              permissionsRoute: PermissionRoutes.GOOGLE_CLOUD,
+              element: (
+                <React.Suspense>
+                  <GoogleCloudFilesPage />
                 </React.Suspense>
               ),
             },

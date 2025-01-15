@@ -8,6 +8,7 @@ import { setDayjsHours } from "./setDayjsHours";
 import { toTitleCase } from "./toTitleCase";
 import { getFileSize } from "./getFileSize";
 import { formatDate } from "./formatDate";
+import { downloadFile } from "./downloadFile";
 
 const AppUtils = {
   getInputValue,
@@ -20,6 +21,7 @@ const AppUtils = {
   toTitleCase,
   getFileSize,
   formatDate,
+  downloadFile,
 } as const;
 
 export default AppUtils;
