@@ -12,13 +12,17 @@ export const useFileParser = (): {
     (files: File[], setter: (data: PapaparseRawData[]) => void) => {
       setParsing(true);
       const data: PapaparseRawData[] = [];
-      files.forEach((file, i) =>
+      let completedFiles = 0;
+      files.forEach((file) =>
         Papa.parse<any, File>(file, {
           preview: 4,
           skipEmptyLines: true,
           complete: (result) => {
             data.push({ data: result.data, filename: file.name });
-            if (i + 1 === files.length) {
+            const filename = file.name;
+            console.log("papaparse: ", { filename });
+            completedFiles++;
+            if (completedFiles === files.length) {
               setParsing(false);
               setTimeout(() => setter(data), 0);
             }

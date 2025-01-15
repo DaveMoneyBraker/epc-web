@@ -9,6 +9,9 @@ export const getFilesPreview = (
     return [];
   }
   const previews: FileMapperPreview[] = [];
+  const { length: rawDataLength } = rawData;
+  // console.log({ rawData });
+  // console.log({ rawDataLength });
   rawData.forEach((v) => {
     const { data, filename } = v;
     const length = data[0].length;

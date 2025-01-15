@@ -20,6 +20,9 @@ export const useAppNav = (): AppNav[] => {
   const SuppressionsEmailPage = React.lazy(
     () => import("../../pages/suppressions/SuppressionsEmailPage")
   );
+  const SuppressionsSubmitEmailPage = React.lazy(
+    () => import("../../pages/suppressions/SuppressionsSubmitEmailPage")
+  );
   const SuppressionsMxPage = React.lazy(
     () => import("../../pages/suppressions/SuppressionMxPage")
   );
@@ -120,7 +123,7 @@ export const useAppNav = (): AppNav[] => {
               ),
             },
             {
-              title: "Submit Suppressions Domain",
+              title: "Submit Suppressions Domains",
               pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_DOMAIN}`,
               apiRoute: ApiRoutes.SUPPRESSION_DOMAIN + "-submit",
               appRoute: AppRoutes.SUPPRESSION_DOMAIN + "-submit",
@@ -128,6 +131,18 @@ export const useAppNav = (): AppNav[] => {
               element: (
                 <React.Suspense>
                   <SuppressionsSubmitDomainPage />
+                </React.Suspense>
+              ),
+            },
+            {
+              title: "Submit Suppressions Email",
+              pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
+              apiRoute: ApiRoutes.SUPPRESSION_EMAIL + "-submit",
+              appRoute: AppRoutes.SUPPRESSION_EMAIL + "-submit",
+              permissionsRoute: PermissionRoutes.SUPPRESSION_EMAIL,
+              element: (
+                <React.Suspense>
+                  <SuppressionsSubmitEmailPage />
                 </React.Suspense>
               ),
             },

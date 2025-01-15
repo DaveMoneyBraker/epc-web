@@ -50,6 +50,9 @@ export const FileMapper: React.FC<FileMapperProps> = ({
 
   const proceedPreviewData = React.useCallback(
     (data: PapaparseRawData[]) => {
+      const { length: dataLength } = data;
+      // console.log({ data });
+      // console.log({ dataLength });
       const newPreviews = FileMapperUtils.getFilesPreview(
         data,
         availableHeaders
@@ -154,6 +157,8 @@ export const FileMapper: React.FC<FileMapperProps> = ({
         }
       } else if (activeStep === 0) {
         return navigate(v);
+      } else if (activeStep === 1) {
+        setPreviews([]);
       }
       setActiveStep((prev) => prev + v);
     },
@@ -163,6 +168,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
       handleFirstStepCompleted,
       handleSecondStepCompleted,
       navigate,
+      setPreviews,
     ]
   );
 

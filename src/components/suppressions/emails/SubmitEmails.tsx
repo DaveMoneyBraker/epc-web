@@ -3,10 +3,9 @@ import { FileMapperProps } from "../../../types";
 import { ApiRoutes } from "../../../core/router";
 import { FileMapper } from "../../3_shared/fileMapper";
 import { useFileUploadWithProgressMutation } from "../../../services/mutations/useFileUploadWithProgressMutation";
-import { EnhancedTextField } from "../../1_enhanced";
 
-export const SubmitSuppressionsDomain: React.FC = () => {
-  const apiUrl = ApiRoutes.SUPPRESSION_DOMAIN + "/file";
+export const SubmitSuppressionsEmail: React.FC = () => {
+  const apiUrl = ApiRoutes.SUPPRESSION_EMAIL + "/file";
   const { mutation, progress, submitted, error, reset } =
     useFileUploadWithProgressMutation(apiUrl);
   const handleFileSubmit = React.useCallback(
@@ -16,30 +15,17 @@ export const SubmitSuppressionsDomain: React.FC = () => {
     [mutation]
   );
 
-  const AdditionalInputs = React.useMemo(
-    () => (
-      <EnhancedTextField
-        helperText={`not allowed: . , + / \\  ' \` " whitespace`}
-        fullWidth={false}
-        value={""}
-        onChange={() => {}}
-      />
-    ),
-    []
-  );
-
   const config: FileMapperProps = React.useMemo(
     () => ({
-      availableHeaders: ["domain", "type"],
-      requiredHeaders: [["domain"]],
+      availableHeaders: ["email", "type"],
+      requiredHeaders: [["email"]],
       progress,
       submitted,
       submitError: error,
-      AdditionalInputs,
       onFileSubmit: handleFileSubmit,
       reset,
     }),
-    [progress, error, submitted, handleFileSubmit, reset, AdditionalInputs]
+    [progress, error, submitted, handleFileSubmit, reset]
   );
   return <FileMapper {...config} />;
 };
