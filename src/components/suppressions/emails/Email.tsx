@@ -1,9 +1,14 @@
 import React from "react";
 import { ApiRoutes } from "../../../core/router";
-import { FILTER_ITEM_TYPE, FilterConfig } from "../../../types";
+import {
+  FILTER_ITEM_TYPE,
+  FilterConfig,
+  ValidatorConfigWithNoError,
+} from "../../../types";
 import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
+import AppValidators from "../../../validators/0_AppValidators";
 
 export const SuppressionsEmail: React.FC = () => {
   const cols = React.useMemo(
@@ -24,7 +29,25 @@ export const SuppressionsEmail: React.FC = () => {
     ],
     []
   );
-  const itemConfigs = AppHooks.useFilteredItemConfigs(filterConfigs);
+
+  const validators = React.useMemo<ValidatorConfigWithNoError[]>(() => {
+    const values: ValidatorConfigWithNoError[] = [];
+    // SIMPLE DOMAIN (E.G. domain.com) Validator
+    values.push({
+      forItemName: "email",
+      validatorFn: AppValidators.emailValidator,
+      errorMessage: "Should be proper email (example@isp.com)",
+    });
+    // CHECK FOR DEFAULT ISP DOMAIN
+
+    return values;
+  }, []);
+
+  const itemConfigs = AppHooks.useFilteredItemConfigs(
+    filterConfigs,
+    [],
+    validators
+  );
 
   return (
     <CommonPage
