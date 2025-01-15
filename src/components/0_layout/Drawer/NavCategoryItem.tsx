@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AppNavCategory, AppNavNode } from "../../../core/router/nav";
+import AppHooks from "../../../hooks/0_AppHooks";
 
 interface Props {
   category: AppNavCategory;
@@ -14,6 +15,9 @@ interface Props {
 
 export const NavCategoryItem: React.FC<Props> = ({ category }) => {
   const navigate = useNavigate();
+  const {
+    primary: { main: mainColor },
+  } = AppHooks.useThemePalette();
 
   const getItem = React.useCallback(
     (child: AppNavNode, i: number) => (
@@ -30,7 +34,7 @@ export const NavCategoryItem: React.FC<Props> = ({ category }) => {
               return {
                 textDecoration: "none",
                 fontWeight: isActive ? "bold" : "",
-                color: isActive ? "#1976D2" : "inherit",
+                color: isActive ? mainColor : "inherit",
               };
             }}
           >
@@ -39,7 +43,7 @@ export const NavCategoryItem: React.FC<Props> = ({ category }) => {
         </ListItemText>
       </ListItemButton>
     ),
-    [navigate]
+    [mainColor, navigate]
   );
   return (
     <>

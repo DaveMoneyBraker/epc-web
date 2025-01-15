@@ -6,6 +6,7 @@ import {
 } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import React from "react";
+import AppHooks from "../../hooks/0_AppHooks";
 
 // UPDATING THEME TYPOGRAPHY
 declare module "@mui/material/styles" {
@@ -40,6 +41,11 @@ declare module "@mui/material/Typography" {
 
 export const useAppMuiTypography = (): TypographyOptions => {
   const theme = useTheme();
+  const {
+    grey,
+    warning: { light: warningLight },
+    error: { light: errorLight },
+  } = AppHooks.useThemePalette();
   return {
     h2: {
       fontSize: "48px",
@@ -58,7 +64,7 @@ export const useAppMuiTypography = (): TypographyOptions => {
     h6: {
       fontSize: "24px",
       fontWeight: 500,
-      color: "#5A5A5A",
+      color: grey[500],
     },
     body2: {
       fontSize: "16px",
@@ -75,14 +81,14 @@ export const useAppMuiTypography = (): TypographyOptions => {
       fontSize: "14px",
       fontWeight: 400,
       lineHeight: "19px",
-      color: theme.palette.warning.light,
+      color: warningLight,
     },
     inputError: {
       fontSize: "10px",
       fontWeight: 500,
       lineHeight: "17px",
       letterSpacing: "0rem",
-      color: theme.palette.error.light,
+      color: errorLight,
     },
     category: {
       fontSize: "15px",

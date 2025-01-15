@@ -10,6 +10,7 @@ import { useInputChangeHandler } from "./useInputChangeHandler";
 import { useFilteredItemConfigs } from "./useFilteredItemConfigs";
 import { useEPCDocumentTitle } from "./useEPCDocumentTitle";
 import { useIsOnline } from "./useIsOnline";
+import { useThemePalette } from "./useThemePalette";
 
 const AppHooks = {
   useAxios,
@@ -24,6 +25,7 @@ const AppHooks = {
   useFilteredItemConfigs,
   useEPCDocumentTitle,
   useIsOnline,
+  useThemePalette,
 } as const;
 
 export default AppHooks;

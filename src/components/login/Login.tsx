@@ -114,7 +114,7 @@ export const Login: React.FC = () => {
           variant="contained"
           onClick={handleSubmit}
         >
-          SUBMIT
+          Login
         </Button>
       </Paper>
     </Container>

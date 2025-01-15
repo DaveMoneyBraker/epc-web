@@ -7,15 +7,26 @@ export const useAppDarkTheme = (): Theme => {
   return createTheme({
     palette: {
       mode: "dark",
+      // LIGHT
+      // primary: {
+      //   light: "#4F70FF",
+      //   main: "#0054F1",
+      //   dark: "#005db0",
+      // },
+      // NEW
       primary: {
-        light: "#63b8ff",
-        main: "#0989e3",
-        dark: "#005db0",
+        light: "#C6CBFF",
+        main: "#A1ACFF",
+        dark: "#7B8DFF",
       },
       secondary: {
-        main: "#D74444",
         light: "#82e9de",
+        main: "#D74444",
         dark: "#00867d",
+      },
+      background: {
+        default: "#020616",
+        paper: "#020616",
       },
     },
     typography: { ...typography },

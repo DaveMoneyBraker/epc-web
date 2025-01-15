@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { AppNav } from "../../../core/router/nav";
+import AppHooks from "../../../hooks/0_AppHooks";
 
 interface Props {
   item: AppNav;
@@ -20,6 +21,9 @@ interface Props {
 }
 
 export const NavItem: React.FC<Props> = ({ item, index, open, onClick }) => {
+  const {
+    primary: { main: mainColor },
+  } = AppHooks.useThemePalette();
   const { pathname } = useLocation();
   const active = React.useMemo(
     () =>
@@ -34,13 +38,13 @@ export const NavItem: React.FC<Props> = ({ item, index, open, onClick }) => {
   return (
     <>
       <ListItemButton onClick={handleClick} dense={true}>
-        <ListItemIcon sx={{ color: active ? "#1976D2" : "inherit" }}>
+        <ListItemIcon sx={{ color: active ? mainColor : "inherit" }}>
           {item.icon}
         </ListItemIcon>
         <ListItemText
           primaryTypographyProps={{
             fontSize: "14px",
-            color: active ? "#1976D2" : "inherit",
+            color: active ? mainColor : "inherit",
           }}
         >
           <Box

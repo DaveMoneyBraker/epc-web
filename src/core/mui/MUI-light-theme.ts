@@ -8,9 +8,14 @@ export const useAppLightTheme = (): Theme => {
     palette: {
       mode: "light",
       primary: {
-        light: "#016CC8",
-        main: "#1976D2",
+        light: "#4F70FF",
+        main: "#0054F1",
         dark: "#005db0",
+      },
+      secondary: {
+        light: "#AEFDE7",
+        main: "#92FCDF",
+        dark: "##65FBD2",
       },
     },
     typography: { ...typography },

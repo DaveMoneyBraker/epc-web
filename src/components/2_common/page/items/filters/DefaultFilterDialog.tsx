@@ -8,7 +8,7 @@ import {
 } from "../../../../../types";
 import { DefaultFilterRow } from "./DefaultFilterRow";
 import AddIcon from "@mui/icons-material/Add";
-import { IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 
 interface Props {
   open: boolean;
@@ -98,23 +98,32 @@ export const DefaultFilterDialog: React.FC<Props> = ({
       onClose={handleClose}
       maxWidth="lg"
     >
-      {state.map((filter, i) => (
-        <DefaultFilterRow
-          filter={filter}
-          index={i}
-          configs={configs}
-          key={i}
-          onChange={handleFilterChange}
-          onDelete={handleDeleteRow}
-        />
-      ))}
-      <IconButton
-        sx={{ alignSelf: "flex-end" }}
-        color="primary"
-        onClick={handleAddRow}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px",
+          width: "100%",
+        }}
       >
-        <AddIcon />
-      </IconButton>
+        {state.map((filter, i) => (
+          <DefaultFilterRow
+            filter={filter}
+            index={i}
+            configs={configs}
+            key={i}
+            onChange={handleFilterChange}
+            onDelete={handleDeleteRow}
+          />
+        ))}
+        <IconButton
+          sx={{ alignSelf: "flex-start" }}
+          color="primary"
+          onClick={handleAddRow}
+        >
+          <AddIcon />
+        </IconButton>
+      </Box>
     </DialogWrapper>
   );
 };

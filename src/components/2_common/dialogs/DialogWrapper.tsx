@@ -49,7 +49,8 @@ export const DialogWrapper: React.FC<Props> = ({
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button
-          variant={theme.palette.mode === "light" ? "outlined" : "contained"}
+          // variant={theme.palette.mode === "light" ? "outlined" : "contained"}
+          variant="outlined"
           onClick={() => onClose(false)}
         >
           Cancel

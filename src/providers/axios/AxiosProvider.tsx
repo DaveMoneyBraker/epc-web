@@ -106,7 +106,10 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
         (config.status === 200 || config.status === 201) &&
         config.config.method !== "get"
       ) {
-        showNotification("Success!", APP_CONSTANTS.NOTIFICATION_VARIANTS.INFO);
+        showNotification(
+          "Success!",
+          APP_CONSTANTS.NOTIFICATION_VARIANTS.SUCCESS
+        );
       }
       return config;
     },
