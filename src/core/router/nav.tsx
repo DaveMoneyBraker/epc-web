@@ -254,7 +254,7 @@ export const useAppNav = (): AppNav[] => {
               pageTitle: APP_CONSTANTS.PAGE_TITLES.GOOGLE_CLOUD,
               apiRoute: ApiRoutes.GOOGLE_CLOUD,
               appRoute: AppRoutes.GOOGLE_CLOUD,
-              permissionsRoute: PermissionRoutes.GOOGLE_CLOUD,
+              permissionsRoute: PermissionRoutes.ADMIN,
               element: (
                 <React.Suspense>
                   <GoogleCloudFilesPage />
