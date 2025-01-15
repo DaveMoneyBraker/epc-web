@@ -36,7 +36,7 @@ export const SuppressionsEmail: React.FC = () => {
     values.push({
       forItemName: "email",
       validatorFn: AppValidators.emailValidator,
-      errorMessage: "Should be proper email (example@isp.com)",
+      errorMessage: "Must be valid email (example@isp.com)",
     });
     // CHECK FOR DEFAULT ISP DOMAIN
 

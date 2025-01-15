@@ -36,13 +36,13 @@ export const SuppressionsDomain: React.FC = () => {
     values.push({
       forItemName: "domain",
       validatorFn: AppValidators.simpleDomainValidator,
-      errorMessage: "Should be proper domain name (domain.com)",
+      errorMessage: "Must be valid domain name (domain.com)",
     });
     // CHECK FOR DEFAULT ISP DOMAIN
     values.push({
       forItemName: "domain",
       validatorFn: AppValidators.defaultISPDomainValidator,
-      errorMessage: "Could not be default isp (e.g. gmail, yahoo etc.)",
+      errorMessage: "Can not be default isp (e.g. gmail, yahoo etc.)",
     });
 
     return values;
