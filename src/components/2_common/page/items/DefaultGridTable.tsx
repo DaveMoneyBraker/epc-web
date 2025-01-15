@@ -106,8 +106,9 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
             aria-haspopup="true"
             aria-expanded={isOpen ? "true" : undefined}
             onClick={(e) => handleClick(id, e)}
+            size="small"
           >
-            <MoreVertIcon />
+            <MoreVertIcon fontSize="small" />
           </IconButton>
           <Menu
             id="basic-menu"
@@ -116,6 +117,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
             onClose={() => handleClose(id)}
             MenuListProps={{
               "aria-labelledby": "basic-button",
+              dense: true,
             }}
           >
             {filteredActions.map((action) => (
