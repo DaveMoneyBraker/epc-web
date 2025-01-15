@@ -53,6 +53,18 @@ export const SuppressionsDomain: React.FC = () => {
     [],
     validators
   );
+  // EXAMPLE OF QUERY OPTIONS USAGE
+  const queryOptions = React.useMemo(
+    () => ({
+      onSuccess: (item: any) => console.log("onSuccess: ", { item }),
+      transform: (item: any) => {
+        console.log("transform");
+        return item;
+      },
+      onError: (item: any) => console.log("onError: ", { item }),
+    }),
+    []
+  );
 
   return (
     <CommonPage
@@ -62,6 +74,7 @@ export const SuppressionsDomain: React.FC = () => {
       apiUrl={apiUrl}
       filterConfigs={filterConfigs}
       itemConfigs={itemConfigs}
+      queryOptions={queryOptions}
     />
   );
 };

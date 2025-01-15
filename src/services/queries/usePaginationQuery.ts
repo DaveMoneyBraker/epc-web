@@ -1,32 +1,51 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { PaginationResponse } from "../../types";
+import { PaginationResponse, QueryProps } from "../../types";
 import { useAxiosContext } from "../../providers/axios";
 
-interface Props {
-  apiUrl: string;
-  queryKey: string;
-  query: string;
-  enabled?: any;
-}
-
-export const usePaginationQuery = <T = unknown>(props: Props) => {
-  const { queryKey, apiUrl, query, enabled = true } = props;
+export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
+  const {
+    queryKey,
+    apiUrl,
+    query,
+    enabled = true,
+    options: { transform, onSuccess, onError } = {},
+  } = props;
   const { axios } = useAxiosContext();
   const client = useQueryClient();
   const isEnabled = React.useMemo(() => (enabled ? true : false), [enabled]);
   const [totalItems, setTotalItems] = React.useState(0);
+  const [isInitialLoad, setIsInitialLoad] = React.useState(true);
 
   const queryFn = React.useCallback(async () => {
-    const response = await axios?.get<PaginationResponse<T>>(apiUrl + query);
-    if (response) {
+    try {
+      if (!axios) {
+        throw new Error("Axios instance not initialized");
+      }
+      const response = await axios?.get<PaginationResponse<T>>(apiUrl + query);
+      if (!response) {
+        throw new Error("No Server Response");
+      }
+
+      if (!response?.data) {
+        throw new Error("Invalid server response");
+      }
+
       const { items, totalItems: total } = response?.data;
+
+      if (!Array.isArray(items)) {
+        throw new Error("Invalid items format in response");
+      }
+
       setTotalItems(total);
-      return items as any;
-    } else if (!response) {
-      throw new Error("No Server Response");
+      onSuccess && onSuccess(items);
+      return items;
+    } catch (error: any) {
+      console.error("Pagination query error:", error);
+      onError && onError(error);
+      throw error;
     }
-  }, [apiUrl, query, axios]);
+  }, [apiUrl, query, axios, onSuccess, onError]);
 
   const data = useQuery<T[]>({
     queryKey: [queryKey],
@@ -34,12 +53,26 @@ export const usePaginationQuery = <T = unknown>(props: Props) => {
     initialData: [],
     enabled: isEnabled,
     retry: 1,
+    staleTime: 500,
+    select: transform,
   });
 
   React.useEffect(() => {
-    // SETTIMEOUT FOR PREVENTING INVALIDATION BEFORE queryFn RERENDER
-    client.invalidateQueries({ queryKey: [queryKey] });
-  }, [query]);
+    if (!data.isLoading && isInitialLoad) {
+      setIsInitialLoad(false);
+    }
+  }, [data.isLoading, isInitialLoad]);
 
-  return { ...data, totalItems };
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      client.invalidateQueries({
+        queryKey: [queryKey],
+        exact: true,
+      });
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
+  }, [query, queryKey, client]);
+
+  return { ...data, totalItems, isInitialLoad };
 };

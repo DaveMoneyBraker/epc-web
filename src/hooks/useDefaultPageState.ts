@@ -3,7 +3,7 @@ import { GridSortModel } from "@mui/x-data-grid";
 import { useRestQuery } from "./useRestQuery";
 import { isSyntheticEvent } from "../typeGuards";
 import { useAxiosContext } from "../providers/axios";
-import { FilterValue } from "../types";
+import { AppQueryOptions, FilterValue } from "../types";
 import AppQueries from "../services/queries/AppQueries";
 import AppMutations from "../services/mutations/AppMutations";
 
@@ -48,7 +48,8 @@ export const useDefaultPageState = <T = any>(
   itemName: string,
   queryKey: string,
   tableCols: string[],
-  apiUrl: string
+  apiUrl: string,
+  options?: AppQueryOptions<T>
 ): ReturnedValue<T> => {
   const { loading: axiosLoading } = useAxiosContext();
   const [selectedItem, setSelectedItem] = React.useState<T | null>(null);
@@ -76,6 +77,7 @@ export const useDefaultPageState = <T = any>(
     queryKey,
     apiUrl,
     query,
+    options,
   });
   const mutationQuery = AppMutations.useMutationQuery(apiUrl, queryKey);
   // THIS PART WITH COLS LOOK REDUNDANT, BUT IS'S HERE JUST TO NOT

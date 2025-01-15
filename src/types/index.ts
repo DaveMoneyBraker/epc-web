@@ -5,3 +5,4 @@ export * from "./fileMapper";
 export * from "./auth";
 export * from "./response";
 export * from "./dnsbl";
+export * from "./queries";

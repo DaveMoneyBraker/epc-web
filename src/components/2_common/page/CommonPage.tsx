@@ -5,6 +5,7 @@ import AppHooks from "../../../hooks/0_AppHooks";
 import { DefaultActionsRow } from "./items/DefaultActionsRow";
 import { DefaultGridTable } from "./items/DefaultGridTable";
 import {
+  AppQueryOptions,
   DefaultDialogItemProps,
   DefaultPageActions,
   FilterConfig,
@@ -21,6 +22,7 @@ interface Props {
   filterConfigs: FilterConfig[];
   itemConfigs: ItemConfig[];
   actions?: DefaultPageActions[];
+  queryOptions?: AppQueryOptions;
   onEvent?: (event: DefaultPageActions, body: unknown) => void;
   ItemDialog?: React.ComponentType<
     Omit<DefaultDialogItemProps<any>, "configs">
@@ -45,8 +47,9 @@ export const CommonPage: React.FC<Props> = ({
   queryKey,
   filterConfigs,
   itemConfigs,
-  onEvent,
   ItemDialog,
+  queryOptions,
+  onEvent,
 }) => {
   const {
     item: {
@@ -64,7 +67,13 @@ export const CommonPage: React.FC<Props> = ({
     filter: { value: filterState, setValue: setFilterState },
     data: { value: items, totalItems, loading },
     cols: defaultStateCols,
-  } = AppHooks.useDefaultPageState(itemName, queryKey, cols, apiUrl);
+  } = AppHooks.useDefaultPageState(
+    itemName,
+    queryKey,
+    cols,
+    apiUrl,
+    queryOptions
+  );
   const filteredByPermissionActions =
     AppHooks.useFilteredByPermissionsActions(actions);
   const dialogTitle = React.useMemo(() => {
