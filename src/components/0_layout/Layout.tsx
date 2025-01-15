@@ -27,8 +27,9 @@ export const Layout: React.FC = () => {
   const online = AppHooks.useIsOnline();
   const { nav, currentNavNode } = useCleanedNavigationContext();
   const pageTitle = React.useMemo(
-    () => currentNavNode?.pageTitle || "Unknown page",
-    [currentNavNode]
+    () =>
+      currentNavNode?.pageTitle || (loading ? "Loading..." : "Unknown page :("),
+    [currentNavNode, loading]
   );
   const { user } = useAccountContext();
   const { mutation: logoutMutation } = AppMutations.useLogoutMutation();
