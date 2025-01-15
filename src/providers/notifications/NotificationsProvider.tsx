@@ -28,10 +28,6 @@ export const NotificationsProvider: React.FC<ChildrenProps> = ({
     [main, errorMain, warningMain]
   );
 
-  React.useEffect(() => {
-    console.log({ StyledMaterialDesignContent });
-  }, [StyledMaterialDesignContent]);
-
   return (
     <SnackbarProvider
       maxSnack={3}

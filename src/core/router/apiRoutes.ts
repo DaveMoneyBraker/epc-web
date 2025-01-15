@@ -3,8 +3,9 @@ export const ApiRoutes = {
   LOGIN: "auth/login",
   LOGOUT: "auth/logout",
 
-  // CURRENT USER
+  // ACCOUNT
   CURRENT_USER: "account/current",
+  CURRENT_USER_ROLES: "roles/current",
   CURRENT_USER_PERMISSIONS: "roles/permissions/current",
 
   // SUPPRESSIONS

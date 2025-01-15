@@ -2,7 +2,14 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiosContext } from "../axios";
 import { AccountContext } from "./AccountContext";
-import { AccountData, ChildrenProps, User, UserPermission } from "../../types";
+import {
+  AccountData,
+  ChildrenProps,
+  emptyUser,
+  User,
+  UserPermission,
+  UserRoles,
+} from "../../types";
 import AppHooks from "../../hooks/0_AppHooks";
 import { ApiRoutes } from "../../core/router";
 
@@ -15,37 +22,60 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
     queryKey: ["accountUser"],
     queryFn: async () => {
       const response = await axios?.get<User>(ApiRoutes.CURRENT_USER);
-      if (response) {
+      if (response && response.data) {
         return response.data as any;
       } else if (!response) {
         throw new Error("No Server Response");
       }
     },
     enabled: !userDisabled,
+    initialData: emptyUser,
   });
 
-  const permissionsDisabled = React.useMemo(() => !user, [user]);
+  const rolesDisabled = React.useMemo(() => !user, [user]);
+  const { data: roles } = useQuery<UserRoles[]>({
+    queryKey: ["userRoles"],
+    queryFn: async () => {
+      const response = await axios?.get<{ roles: UserRoles[] }>(
+        ApiRoutes.CURRENT_USER_ROLES
+      );
+      if (response && response.data && response.data.roles) {
+        const {
+          data: { roles },
+        } = response;
+        return roles as any;
+      } else if (!response) {
+        throw new Error("No Server Response");
+      }
+    },
+    enabled: !rolesDisabled,
+    initialData: [],
+  });
+
+  const permissionsDisabled = React.useMemo(() => !roles, [roles]);
   const { data: permissions } = useQuery<UserPermission[][]>({
     queryKey: ["accountPermissions"],
     queryFn: async () => {
       const response = await axios?.get<{ permissions: UserPermission[][] }>(
         ApiRoutes.CURRENT_USER_PERMISSIONS
       );
-      if (response) {
+      if (response && response.data) {
         return response.data.permissions as any;
       } else if (!response) {
         throw new Error("No Server Response");
       }
     },
     enabled: !permissionsDisabled,
+    initialData: [],
   });
 
   const value: AccountData = React.useMemo(() => {
     return {
       user,
       permissions: permissions ? permissions.flat(1) : permissions,
+      roles,
     };
-  }, [user, permissions]);
+  }, [user, permissions, roles]);
 
   return (
     <AccountContext.Provider value={value}>{children}</AccountContext.Provider>

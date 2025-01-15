@@ -11,6 +11,7 @@ import { useFilteredItemConfigs } from "./useFilteredItemConfigs";
 import { useEPCDocumentTitle } from "./useEPCDocumentTitle";
 import { useIsOnline } from "./useIsOnline";
 import { useThemePalette } from "./useThemePalette";
+import { useIsAdmin } from "./useIsAdmin";
 
 const AppHooks = {
   useAxios,
@@ -26,6 +27,7 @@ const AppHooks = {
   useEPCDocumentTitle,
   useIsOnline,
   useThemePalette,
+  useIsAdmin,
 } as const;
 
 export default AppHooks;

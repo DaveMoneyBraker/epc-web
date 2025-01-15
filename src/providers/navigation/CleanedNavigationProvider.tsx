@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { ChildrenProps } from "../../types";
 import { AppNav, AppNavCategory, useAppNav } from "../../core/router/nav";
 import APP_CONSTANTS from "../../constants/AppConstants";
+import AppHooks from "../../hooks/0_AppHooks";
 
 export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   children,
@@ -12,9 +13,10 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   const location = useLocation();
   const appNav = useAppNav();
   const { permissions } = useAccountContext();
+  const isAdmin = AppHooks.useIsAdmin();
 
   const nav = React.useMemo(() => {
-    if (permissions && permissions.some((p) => p[0] === "admin")) {
+    if (isAdmin) {
       return appNav;
     }
     if (permissions && permissions.length) {
@@ -43,7 +45,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
     }
     return [];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [permissions]);
+  }, [permissions, isAdmin]);
 
   const currentNavNode = React.useMemo(() => {
     let cn = null;

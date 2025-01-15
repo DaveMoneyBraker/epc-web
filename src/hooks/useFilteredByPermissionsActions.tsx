@@ -2,6 +2,7 @@ import React from "react";
 import { DefaultPageActions } from "../types";
 import { useCleanedNavigationContext } from "../providers/navigation";
 import { useAccountContext } from "../providers/account/useAccountContext";
+import AppHooks from "./0_AppHooks";
 
 export const useFilteredByPermissionsActions = (
   actions: DefaultPageActions[]
@@ -12,6 +13,7 @@ export const useFilteredByPermissionsActions = (
     [currentNavNode]
   );
   const { permissions } = useAccountContext();
+  const isAdmin = AppHooks.useIsAdmin();
   const requestedRouteUserPermissions = React.useMemo(
     () =>
       permissions?.filter((permission) =>
@@ -25,6 +27,7 @@ export const useFilteredByPermissionsActions = (
   );
 
   return React.useMemo(() => {
+    if (isAdmin) return actions;
     const filteredActions: DefaultPageActions[] = [];
     if (requestedRouteUserPermissions?.some((v) => v[0] === "admin")) {
       return [...actions];
@@ -54,5 +57,5 @@ export const useFilteredByPermissionsActions = (
       filteredActions.push("submit");
     }
     return filteredActions;
-  }, [requestedRouteUserPermissions, actions]);
+  }, [requestedRouteUserPermissions, actions, isAdmin]);
 };
