@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxiosContext } from "../../providers/axios";
 import AppUtils from "../../utils/0_AppUtils";
 import APP_CONSTANTS from "../../constants/AppConstants";
+import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 
 export const useMutationQuery = (apiUrl: string, queryKey: string) => {
   const { axios } = useAxiosContext();
@@ -20,7 +21,8 @@ export const useMutationQuery = (apiUrl: string, queryKey: string) => {
             : apiUrl + "/" + (body as { id: string }).id;
 
         const response = await axios[method](url, { ...body });
-        const errorMessage = AppUtils.getAxiosResponseError(response);
+        const errorMessage =
+          AppResponseValidators.validateAxiosResponse(response);
 
         if (errorMessage) {
           throw new Error(errorMessage);

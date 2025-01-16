@@ -1,4 +1,4 @@
-import { isString } from "../typeGuards/isString";
+import { isString } from "../../typeGuards/isString";
 
 /**
  * Validates a domain name string according to simplified rules:
@@ -9,7 +9,7 @@ import { isString } from "../typeGuards/isString";
  * - Supports subdomains
  */
 
-export const simpleDomainValidator = (domain: string | unknown): boolean => {
+export const validateSimpleDomain = (domain: string | unknown): boolean => {
   // Domain should be a string and not empty
   if (!domain || !isString(domain)) {
     return false;

@@ -8,7 +8,7 @@ import {
 } from "../../../types";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
-import AppValidators from "../../../validators/0_AppValidators";
+import AppInputValidators from "../../../validators/input/0_InputValidators";
 
 export const BlacklistDomain: React.FC = () => {
   const cols = React.useMemo(
@@ -35,13 +35,13 @@ export const BlacklistDomain: React.FC = () => {
     // SIMPLE DOMAIN (E.G. domain.com) Validator
     values.push({
       forItemName: "domain",
-      validatorFn: AppValidators.simpleDomainValidator,
+      validatorFn: AppInputValidators.validateSimpleDomain,
       errorMessage: "Should be proper domain name (domain.com)",
     });
     // CHECK FOR DEFAULT ISP DOMAIN
     values.push({
       forItemName: "domain",
-      validatorFn: AppValidators.defaultISPDomainValidator,
+      validatorFn: AppInputValidators.validateDefaultISPDomain,
       errorMessage: "Could not be default isp (e.g. gmail, yahoo etc.)",
     });
 

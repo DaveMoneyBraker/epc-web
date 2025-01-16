@@ -8,7 +8,7 @@ import {
 import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
-import AppValidators from "../../../validators/0_AppValidators";
+import AppInputValidators from "../../../validators/input/0_InputValidators";
 
 export const SuppressionsMx: React.FC = () => {
   const cols = React.useMemo(
@@ -35,13 +35,13 @@ export const SuppressionsMx: React.FC = () => {
     // SIMPLE DOMAIN (E.G. domain.com) Validator
     values.push({
       forItemName: "mx",
-      validatorFn: AppValidators.simpleDomainValidator,
+      validatorFn: AppInputValidators.validateSimpleDomain,
       errorMessage: "Must be valid domain name (domain.com)",
     });
     // CHECK FOR DEFAULT ISP DOMAIN
     values.push({
       forItemName: "mx",
-      validatorFn: AppValidators.defaultISPDomainValidator,
+      validatorFn: AppInputValidators.validateDefaultISPDomain,
       errorMessage: "Can not be default isp (e.g. gmail, yahoo etc.)",
     });
 

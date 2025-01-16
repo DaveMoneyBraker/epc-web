@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PaginationResponse, QueryProps } from "../../types";
 import { useAxiosContext } from "../../providers/axios";
-import AppUtils from "../../utils/0_AppUtils";
 import APP_CONSTANTS from "../../constants/AppConstants";
+import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 
 export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
   const {
@@ -25,17 +25,16 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
     }
     try {
       const response = await axios?.get<PaginationResponse<T>>(apiUrl + query);
-      const errorMessage = AppUtils.getAxiosResponseError(response, ["items"]);
+      const errorMessage = AppResponseValidators.validateAxiosResponse(
+        response,
+        [AppResponseValidators.validatePaginationResponse]
+      );
 
       if (errorMessage) {
         throw new Error(errorMessage);
       }
 
       const { items, totalItems: total } = response?.data;
-
-      if (!Array.isArray(items)) {
-        throw new Error(APP_CONSTANTS.APP_ERRORS.INVALID_ITEMS_FORMAT);
-      }
 
       setTotalItems(total);
       onSuccess && onSuccess(items);

@@ -3,6 +3,7 @@ import { useAxiosContext } from "../../providers/axios";
 import AppUtils from "../../utils/0_AppUtils";
 import { useMutation } from "@tanstack/react-query";
 import APP_CONSTANTS from "../../constants/AppConstants";
+import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 
 export const useDownloadServerFileMutation = (apiUrl: string) => {
   const { axios } = useAxiosContext();
@@ -16,7 +17,8 @@ export const useDownloadServerFileMutation = (apiUrl: string) => {
         const url = apiUrl + "/" + id;
 
         const response = await axios.get(url, { responseType: "text" });
-        const errorMessage = AppUtils.getAxiosResponseError(response);
+        const errorMessage =
+          AppResponseValidators.validateAxiosResponse(response);
 
         if (errorMessage) {
           throw new Error(errorMessage);

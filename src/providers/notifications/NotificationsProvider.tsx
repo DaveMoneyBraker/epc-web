@@ -8,7 +8,7 @@ export const NotificationsProvider: React.FC<ChildrenProps> = ({
   children,
 }) => {
   const {
-    primary: { main },
+    primary: { light },
     error: { main: errorMain },
     warning: { main: warningMain },
   } = AppHooks.useThemePalette();
@@ -16,7 +16,7 @@ export const NotificationsProvider: React.FC<ChildrenProps> = ({
     () =>
       styled(MaterialDesignContent)(() => ({
         "&.notistack-MuiContent-success": {
-          backgroundColor: main,
+          backgroundColor: light,
         },
         "&.notistack-MuiContent-error": {
           backgroundColor: errorMain,
@@ -25,7 +25,7 @@ export const NotificationsProvider: React.FC<ChildrenProps> = ({
           backgroundColor: warningMain,
         },
       })),
-    [main, errorMain, warningMain]
+    [light, errorMain, warningMain]
   );
 
   return (

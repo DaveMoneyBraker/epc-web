@@ -8,7 +8,7 @@ import {
 import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
-import AppValidators from "../../../validators/0_AppValidators";
+import AppInputValidators from "../../../validators/input/0_InputValidators";
 
 export const SuppressionsEmail: React.FC = () => {
   const cols = React.useMemo(
@@ -35,7 +35,7 @@ export const SuppressionsEmail: React.FC = () => {
     // SIMPLE DOMAIN (E.G. domain.com) Validator
     values.push({
       forItemName: "email",
-      validatorFn: AppValidators.emailValidator,
+      validatorFn: AppInputValidators.validateEmail,
       errorMessage: "Must be valid email (example@isp.com)",
     });
     // CHECK FOR DEFAULT ISP DOMAIN

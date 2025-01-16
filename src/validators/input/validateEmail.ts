@@ -1,5 +1,5 @@
-import { isString } from "../utils/checks";
-import { simpleDomainValidator } from "./simpleDomainValidator";
+import { isString } from "../../utils/checks";
+import { validateSimpleDomain } from "./validateSimpleDomain";
 
 /**
  * Validates an email address according to common rules:
@@ -11,7 +11,7 @@ import { simpleDomainValidator } from "./simpleDomainValidator";
  * - Proper length limits applied
  */
 
-export const emailValidator = (email: string | unknown): boolean => {
+export const validateEmail = (email: string | unknown): boolean => {
   // Basic input validation
   if (!email || !isString(email)) {
     return false;
@@ -38,7 +38,7 @@ export const emailValidator = (email: string | unknown): boolean => {
   }
 
   // Validate domain part (after @)
-  if (!simpleDomainValidator(domain)) {
+  if (!validateSimpleDomain(domain)) {
     return false;
   }
 

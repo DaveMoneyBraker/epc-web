@@ -7,6 +7,7 @@ import AppHooks from "../../hooks/0_AppHooks";
 import { ApiRoutes, AppRoutes } from "../../core/router";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppUtils from "../../utils/0_AppUtils";
+import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 
 export const useLoginMutation = (username: string, password: string) => {
   const navigate = useNavigate();
@@ -23,7 +24,8 @@ export const useLoginMutation = (username: string, password: string) => {
         username,
         password,
       });
-      const errorMessage = AppUtils.getAxiosResponseError(response);
+      const errorMessage =
+        AppResponseValidators.validateAxiosResponse(response);
 
       if (errorMessage) {
         throw new Error(errorMessage);
