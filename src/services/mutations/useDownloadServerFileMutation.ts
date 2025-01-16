@@ -3,10 +3,12 @@ import { useAxiosContext } from "../../providers/axios";
 import AppUtils from "../../utils/0_AppUtils";
 import { useMutation } from "@tanstack/react-query";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import AppResponseValidators from "../../validators/response/0_ResponseValidators";
+import AppHooks from "../../hooks/0_AppHooks";
 
 export const useDownloadServerFileMutation = (apiUrl: string) => {
   const { axios } = useAxiosContext();
+  const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
+
   const mutationFn = React.useCallback(
     async (input: { id: string; filename: string }) => {
       if (!axios) {
@@ -17,8 +19,7 @@ export const useDownloadServerFileMutation = (apiUrl: string) => {
         const url = apiUrl + "/" + id;
 
         const response = await axios.get(url, { responseType: "text" });
-        const errorMessage =
-          AppResponseValidators.validateAxiosResponse(response);
+        const errorMessage = axiosResponseValidator(response);
 
         if (errorMessage) {
           throw new Error(errorMessage);
@@ -31,7 +32,7 @@ export const useDownloadServerFileMutation = (apiUrl: string) => {
         throw error;
       }
     },
-    [apiUrl, axios]
+    [apiUrl, axios, axiosResponseValidator]
   );
 
   return useMutation({ mutationFn });

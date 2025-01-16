@@ -12,6 +12,7 @@ import { useEPCDocumentTitle } from "./useEPCDocumentTitle";
 import { useIsOnline } from "./useIsOnline";
 import { useThemePalette } from "./useThemePalette";
 import { useIsAdmin } from "./useIsAdmin";
+import { useAxiosResponseValidator } from "./useAxiosResponseValidator";
 
 const AppHooks = {
   useAxios,
@@ -28,6 +29,7 @@ const AppHooks = {
   useIsOnline,
   useThemePalette,
   useIsAdmin,
+  useAxiosResponseValidator,
 } as const;
 
 export default AppHooks;

@@ -6,13 +6,12 @@ import { useAxiosContext } from "../../providers/axios";
 import AppHooks from "../../hooks/0_AppHooks";
 import { ApiRoutes, AppRoutes } from "../../core/router";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import AppUtils from "../../utils/0_AppUtils";
-import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 
 export const useLoginMutation = (username: string, password: string) => {
   const navigate = useNavigate();
   const { axios, loading } = useAxiosContext();
   const [, setToLocalStorage] = AppHooks.useLocalStorage();
+  const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
 
   const mutationFn = React.useCallback(async () => {
     if (!axios) {
@@ -24,8 +23,7 @@ export const useLoginMutation = (username: string, password: string) => {
         username,
         password,
       });
-      const errorMessage =
-        AppResponseValidators.validateAxiosResponse(response);
+      const errorMessage = axiosResponseValidator(response);
 
       if (errorMessage) {
         throw new Error(errorMessage);
@@ -39,7 +37,14 @@ export const useLoginMutation = (username: string, password: string) => {
       console.error("useLoginMutation query error:", error);
       throw error;
     }
-  }, [username, password, axios, navigate, setToLocalStorage]);
+  }, [
+    username,
+    password,
+    axios,
+    navigate,
+    setToLocalStorage,
+    axiosResponseValidator,
+  ]);
 
   const mutation = useMutation({ mutationFn });
 

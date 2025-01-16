@@ -5,12 +5,12 @@ import { useAxiosContext } from "../../providers/axios";
 import AppHooks from "../../hooks/0_AppHooks";
 import { ApiRoutes, AppRoutes } from "../../core/router";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 
 export const useLogoutMutation = () => {
   const navigate = useNavigate();
   const { axios, loading } = useAxiosContext();
   const [, , clear] = AppHooks.useLocalStorage();
+  const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
 
   const mutationFn = React.useCallback(async () => {
     if (!axios) {
@@ -18,8 +18,7 @@ export const useLogoutMutation = () => {
     }
     try {
       const response = await axios?.post(ApiRoutes.LOGOUT);
-      const errorMessage =
-        AppResponseValidators.validateAxiosResponse(response);
+      const errorMessage = axiosResponseValidator(response);
 
       if (errorMessage) {
         throw new Error(errorMessage);

@@ -4,6 +4,7 @@ import { PaginationResponse, QueryProps } from "../../types";
 import { useAxiosContext } from "../../providers/axios";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppResponseValidators from "../../validators/response/0_ResponseValidators";
+import AppHooks from "../../hooks/0_AppHooks";
 
 export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
   const {
@@ -18,6 +19,7 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
   const isEnabled = React.useMemo(() => (enabled ? true : false), [enabled]);
   const [totalItems, setTotalItems] = React.useState(0);
   const [isInitialLoad, setIsInitialLoad] = React.useState(true);
+  const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
 
   const queryFn = React.useCallback(async () => {
     if (!axios) {
@@ -25,10 +27,9 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
     }
     try {
       const response = await axios?.get<PaginationResponse<T>>(apiUrl + query);
-      const errorMessage = AppResponseValidators.validateAxiosResponse(
-        response,
-        [AppResponseValidators.validatePaginationResponse]
-      );
+      const errorMessage = axiosResponseValidator(response, [
+        AppResponseValidators.validatePaginationResponse,
+      ]);
 
       if (errorMessage) {
         throw new Error(errorMessage);
@@ -44,7 +45,7 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
       onError && onError(error);
       throw error;
     }
-  }, [apiUrl, query, axios, onSuccess, onError]);
+  }, [apiUrl, query, axios, onSuccess, onError, axiosResponseValidator]);
 
   const data = useQuery<T[]>({
     queryKey: [queryKey],
