@@ -3,6 +3,7 @@ import { useAxiosContext } from "../../providers/axios";
 import { FileMapperInputValue } from "../../types";
 import { AxiosProgressEvent } from "axios";
 import { useMutation } from "@tanstack/react-query";
+import APP_CONSTANTS from "../../constants/AppConstants";
 
 interface MutationFnProps {
   file: string;
@@ -37,22 +38,28 @@ export const useFileUploadWithProgressMutation = (apiUrl: string) => {
 
   const mutationFn = React.useCallback(
     async (v: MutationFnProps) => {
+      if (!axios) {
+        throw new Error(APP_CONSTANTS.APP_ERRORS.NO_AXIOS_INSTANCE);
+      }
+
       setError(false);
       setProgress(0);
+
       try {
         const { values = [], filename, file } = v;
         const formData = new FormData();
         const fileBlob = new Blob([file]);
         formData.append("file", fileBlob, filename);
         values.forEach((value) => formData.append(value.name, value.value));
-        await axios?.post(apiUrl, formData, {
+        await axios.post(apiUrl, formData, {
           onUploadProgress,
           onDownloadProgress,
           headers: { "Content-Type": "multipart/form-data" },
         });
-      } catch (err) {
-        console.log("FILE SUBMITTING ERROR: ", { err });
+      } catch (error) {
+        console.log("FILE SUBMITTING ERROR: ", { error });
         setError(true);
+        throw error;
       }
     },
     [apiUrl, axios, onDownloadProgress, onUploadProgress]

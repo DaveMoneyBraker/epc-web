@@ -2,6 +2,8 @@ import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PaginationResponse, QueryProps } from "../../types";
 import { useAxiosContext } from "../../providers/axios";
+import AppUtils from "../../utils/0_AppUtils";
+import APP_CONSTANTS from "../../constants/AppConstants";
 
 export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
   const {
@@ -18,23 +20,21 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
   const [isInitialLoad, setIsInitialLoad] = React.useState(true);
 
   const queryFn = React.useCallback(async () => {
+    if (!axios) {
+      throw new Error(APP_CONSTANTS.APP_ERRORS.NO_AXIOS_INSTANCE);
+    }
     try {
-      if (!axios) {
-        throw new Error("Axios instance not initialized");
-      }
       const response = await axios?.get<PaginationResponse<T>>(apiUrl + query);
-      if (!response) {
-        throw new Error("No Server Response");
-      }
+      const errorMessage = AppUtils.getAxiosResponseError(response, ["items"]);
 
-      if (!response?.data) {
-        throw new Error("Invalid server response");
+      if (errorMessage) {
+        throw new Error(errorMessage);
       }
 
       const { items, totalItems: total } = response?.data;
 
       if (!Array.isArray(items)) {
-        throw new Error("Invalid items format in response");
+        throw new Error(APP_CONSTANTS.APP_ERRORS.INVALID_ITEMS_FORMAT);
       }
 
       setTotalItems(total);

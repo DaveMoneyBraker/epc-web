@@ -7,6 +7,7 @@ import {
   DEFAULT_ISP_EMAILS,
 } from "./DefaultIsp";
 import { DEFAULT_USER_ROLES } from "./DefaultUserRoles";
+import { APP_ERRORS } from "./AppErrors";
 
 const APP_CONSTANTS = {
   PAGE_TITLES,
@@ -16,6 +17,7 @@ const APP_CONSTANTS = {
   DEFAULT_IS_DOMAINS,
   DEFAULT_ISP_EMAILS,
   DEFAULT_USER_ROLES,
+  APP_ERRORS,
 } as const;
 
 export default APP_CONSTANTS;

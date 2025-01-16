@@ -9,6 +9,7 @@ import { toTitleCase } from "./toTitleCase";
 import { getFileSize } from "./getFileSize";
 import { formatDate } from "./formatDate";
 import { downloadFile } from "./downloadFile";
+import { getAxiosResponseError } from "./getAxiosResponseError";
 
 const AppUtils = {
   getInputValue,
@@ -22,6 +23,7 @@ const AppUtils = {
   getFileSize,
   formatDate,
   downloadFile,
+  getAxiosResponseError,
 } as const;
 
 export default AppUtils;
