@@ -1,9 +1,14 @@
 import { createTheme, Theme } from "@mui/material/styles";
-import { useAppMuiComponents, useAppMuiTypography } from "./mui-modules";
+import {
+  useAppMuiBreakpoints,
+  useAppMuiComponents,
+  useAppMuiTypography,
+} from "./mui-modules";
 
 export const useAppDarkTheme = (): Theme => {
   const typography = useAppMuiTypography();
   const components = useAppMuiComponents();
+  const breakpoints = useAppMuiBreakpoints();
   return createTheme({
     palette: {
       mode: "dark",
@@ -30,6 +35,7 @@ export const useAppDarkTheme = (): Theme => {
       },
     },
     typography: { ...typography },
+    breakpoints: { ...breakpoints },
     components: {
       ...components,
       // DISABLING AUTOCOMPLETE

@@ -1,8 +1,8 @@
 import {
+  BreakpointsOptions,
   Components,
   CssVarsTheme,
   Theme,
-  useTheme,
 } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import React from "react";
@@ -26,6 +26,19 @@ declare module "@mui/material/styles" {
     warning?: React.CSSProperties;
     queueStats?: React.CSSProperties;
   }
+
+  // Extend the default breakpoints
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    // custom breakpoints
+    iphone: true;
+    ipadMini: true;
+    ipadPro: true;
+  }
 }
 
 // Update the Typography's variant prop options
@@ -37,16 +50,28 @@ declare module "@mui/material/Typography" {
     warning: true;
     queueStats: true;
   }
+
+  // interface BreakpointOverrides {
+  //   iphone: true;
+  //   ipadMini: true;
+  //   ipadPro: true;
+  // }
 }
 
 export const useAppMuiTypography = (): TypographyOptions => {
-  const theme = useTheme();
   const {
     grey,
     warning: { light: warningLight },
     error: { light: errorLight },
   } = AppHooks.useThemePalette();
   return {
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: 14,
+    h1: {
+      // EXAMPLE
+      // fontFamily: "'DM Serif Text', serif",
+      // fontStyle: "italic",
+    },
     h2: {
       fontSize: "48px",
       fontWeight: 800,
@@ -66,7 +91,13 @@ export const useAppMuiTypography = (): TypographyOptions => {
       fontWeight: 500,
       color: grey[500],
     },
+    body1: {
+      // EXAMPLE
+      // fontFamily: "'DM Sans', sens-serif",
+      fontSize: "1rem",
+    },
     body2: {
+      // fontFamily: "'DM Sans', sens-serif",
       fontSize: "16px",
       fontWeight: 400,
       lineHeight: "19px",
@@ -106,10 +137,35 @@ export const useAppMuiTypography = (): TypographyOptions => {
   };
 };
 
+export const useAppMuiBreakpoints = (): BreakpointsOptions => ({
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536,
+    // Common iOS device breakpoints
+    iphone: 390,
+    ipadMini: 768,
+    ipadPro: 1024,
+  },
+});
+
 export const useAppMuiComponents = (): Components<
   Omit<Theme, "components" | "palette"> & CssVarsTheme
 > => {
   return {
+    MuiCssBaseline: {
+      styleOverrides: `
+        @supports (-webkit-touch-callout: none) {
+          body {
+            overscroll-behavior-y: none;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-size-adjust: 100%;
+          }
+        }
+      `,
+    },
     MuiToolbar: {
       styleOverrides: {
         root: {
