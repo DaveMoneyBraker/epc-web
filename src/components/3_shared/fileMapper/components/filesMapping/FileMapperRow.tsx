@@ -37,13 +37,21 @@ const HeaderWrapper = styled(Box)(() => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "5px",
-  "& .MuiBox-root": {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: "20px",
-  },
+  // "& .MuiBox-root": {
+  //   display: "flex",
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   alignItems: "center",
+  //   gap: "20px",
+  // },
+}));
+
+const HeaderContainer = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: "20px",
 }));
 
 const ColumnsWrapper = styled(Box)(() => ({
@@ -73,6 +81,29 @@ export const FileMapperRow: React.FC<Props> = ({
     [preview]
   );
 
+  const unmappedHeadersMessage = React.useMemo(() => {
+    const mappedHeaders = preview.columns
+      .filter((column) => !column.skip && column.header)
+      .map((column) => column.header);
+    const unmappedRequiredHeaderPairs = requiredHeaders.filter(
+      (requiredHeaderPair) =>
+        !requiredHeaderPair.some((requiredHeader) =>
+          mappedHeaders.some((mappedHeader) => mappedHeader === requiredHeader)
+        )
+    );
+    if (unmappedRequiredHeaderPairs.length === 0) {
+      return "";
+    }
+    let value = "Required headers: ";
+    unmappedRequiredHeaderPairs.forEach(
+      (headersPair, i) =>
+        (value +=
+          JSON.stringify(headersPair) +
+          (i + 1 === unmappedRequiredHeaderPairs.length ? "." : ","))
+    );
+    return value;
+  }, [preview, requiredHeaders]);
+
   const handleColumnHeaderChange = React.useCallback(
     (value: string, columnIndex: number) =>
       onColumnHeaderChange(value, columnIndex, index),
@@ -99,7 +130,7 @@ export const FileMapperRow: React.FC<Props> = ({
     <Wrapper>
       {preview && preview.filename && (
         <HeaderWrapper>
-          <Box>
+          <HeaderContainer>
             <Typography variant="h6">
               {index + 1}. {preview.filename}
             </Typography>
@@ -115,10 +146,13 @@ export const FileMapperRow: React.FC<Props> = ({
               label="Skip File"
               onChange={handleSkipFileChange}
             />
-          </Box>
+            {unmappedHeadersMessage && (
+              <Typography variant="body2">{unmappedHeadersMessage}</Typography>
+            )}
+          </HeaderContainer>
           {!preview.skip && unmappedItemsCount > 0 && (
-            <Box>
-              <Box>
+            <HeaderContainer>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
                 <ErrorIcon color="warning" />
                 <Typography variant="warning">
                   unmapped columns count: {unmappedItemsCount}
@@ -127,7 +161,7 @@ export const FileMapperRow: React.FC<Props> = ({
               <Button variant="outlined" size="small">
                 skip unmapped columns
               </Button>
-            </Box>
+            </HeaderContainer>
           )}
         </HeaderWrapper>
       )}
