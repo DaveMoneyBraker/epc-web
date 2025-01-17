@@ -5,7 +5,6 @@ import { AccountContext } from "./AccountContext";
 import {
   AccountData,
   ChildrenProps,
-  emptyUser,
   User,
   UserPermission,
   UserRoles,
@@ -33,13 +32,8 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
       }
     },
     enabled: userEnabled,
-    initialData: emptyUser,
   });
 
-  const rolesEnabled = React.useMemo(
-    () => Boolean(user && user.id && user.id.length > 0),
-    [user]
-  );
   const { data: roles } = useQuery<UserRoles[]>({
     queryKey: ["userRoles"],
     queryFn: async () => {
@@ -55,14 +49,9 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
         throw new Error("No Server Response");
       }
     },
-    enabled: rolesEnabled,
-    initialData: [],
+    enabled: Boolean(user?.id),
   });
 
-  const permissionsEnabled = React.useMemo(
-    () => roles && roles.length > 0,
-    [roles]
-  );
   const { data: permissions } = useQuery<UserPermission[][]>({
     queryKey: ["accountPermissions"],
     queryFn: async () => {
@@ -75,8 +64,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
         throw new Error("No Server Response");
       }
     },
-    enabled: permissionsEnabled,
-    initialData: [],
+    enabled: Boolean(roles?.length),
   });
 
   const value: AccountData = React.useMemo(() => {

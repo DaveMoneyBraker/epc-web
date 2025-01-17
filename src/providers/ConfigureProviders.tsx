@@ -21,9 +21,10 @@ export const ConfigureProviders: React.FC = () => {
         {/*  NOTISTACK NOTIFICATIONS PROVIDER */}
         <NotificationsProvider>
           {/* CUSTOM AXIOS INSTANCE PROVIDER */}
-          <AxiosProvider>
-            {/* TANSTACK QUERY PROVIDER */}
-            <ReactQueryProvider>
+          <ReactQueryProvider>
+            <AxiosProvider>
+              {/* TANSTACK QUERY PROVIDER */}
+
               {/* USER DATA - CURRENT USER, PERMISSIONS - PROVIDER */}
               <AccountProvider>
                 {/* PROVIDER WITH CLEANED BY USER PERMISSIONS NAVIGATION NODES */}
@@ -34,8 +35,8 @@ export const ConfigureProviders: React.FC = () => {
                   </RoutesGuardProvider>
                 </CleanedNavigationProvider>
               </AccountProvider>
-            </ReactQueryProvider>
-          </AxiosProvider>
+            </AxiosProvider>
+          </ReactQueryProvider>
         </NotificationsProvider>
       </LocalizationProvider>
     </ColorModeProvider>

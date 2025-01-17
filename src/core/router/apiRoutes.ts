@@ -25,4 +25,4 @@ export const ApiRoutes = {
   GOOGLE_CLOUD: "file",
 
   // DEV ROUTE
-} as const;
+};
