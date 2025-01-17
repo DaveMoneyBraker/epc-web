@@ -4,7 +4,16 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ChildrenProps } from "../../types";
 
 export const ReactQueryProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const client = new QueryClient();
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+  });
   return (
     <QueryClientProvider client={client}>
       {children}
