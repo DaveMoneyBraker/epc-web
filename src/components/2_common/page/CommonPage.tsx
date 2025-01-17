@@ -117,7 +117,7 @@ export const CommonPage: React.FC<Props> = ({
           onCreateItem={handleItemDialogBtnClicked}
           onFilersSubmit={setFilterState}
         />
-        <Box sx={{ flex: 1, overflow: "scroll" }}>
+        <Box sx={{ flex: 1, overflow: "scroll", paddingBottom: "5px" }}>
           <DefaultGridTable
             itemName={itemName}
             data={items}

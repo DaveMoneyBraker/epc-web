@@ -226,6 +226,12 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
           overflowX: "auto",
           overflowY: "hidden",
         },
+        "& .MuiDataGrid-footerContainer": {
+          height: "70px",
+          minHeight: "70px",
+          maxHeight: "70px",
+          overflow: "hidden",
+        },
       }}
       slots={{
         noRowsOverlay: () => (
