@@ -17,7 +17,11 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
   const inApp = AppHooks.useInApp();
   const { axios } = useAxiosContext();
 
-  const userDisabled = React.useMemo(() => !inApp || !axios, [inApp, axios]);
+  const userEnabled = React.useMemo(
+    () => Boolean(inApp && axios),
+    [inApp, axios]
+  );
+
   const { data: user } = useQuery<User>({
     queryKey: ["accountUser"],
     queryFn: async () => {
@@ -28,11 +32,14 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
         throw new Error("No Server Response");
       }
     },
-    enabled: !userDisabled,
+    enabled: userEnabled,
     initialData: emptyUser,
   });
 
-  const rolesDisabled = React.useMemo(() => !user, [user]);
+  const rolesEnabled = React.useMemo(
+    () => Boolean(user && user.id && user.id.length > 0),
+    [user]
+  );
   const { data: roles } = useQuery<UserRoles[]>({
     queryKey: ["userRoles"],
     queryFn: async () => {
@@ -48,11 +55,14 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
         throw new Error("No Server Response");
       }
     },
-    enabled: !rolesDisabled,
+    enabled: rolesEnabled,
     initialData: [],
   });
 
-  const permissionsDisabled = React.useMemo(() => !roles, [roles]);
+  const permissionsEnabled = React.useMemo(
+    () => roles && roles.length > 0,
+    [roles]
+  );
   const { data: permissions } = useQuery<UserPermission[][]>({
     queryKey: ["accountPermissions"],
     queryFn: async () => {
@@ -65,7 +75,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
         throw new Error("No Server Response");
       }
     },
-    enabled: !permissionsDisabled,
+    enabled: permissionsEnabled,
     initialData: [],
   });
 
