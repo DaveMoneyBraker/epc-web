@@ -21,6 +21,7 @@ import { DefaultPageActions } from "../../../../types";
 // STYLES
 import "./styles/grid-table.scss";
 import AppUtils from "../../../../utils/0_AppUtils";
+import { NoTableDataMessage } from "../../../3_shared/noTableDataMessage";
 
 export interface DefaultTableProps {
   itemName: string;
@@ -229,7 +230,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       slots={{
         noRowsOverlay: () => (
           <Stack height="100%" alignItems="center" justifyContent="center">
-            No data
+            <NoTableDataMessage />
           </Stack>
         ),
         pagination: () => (

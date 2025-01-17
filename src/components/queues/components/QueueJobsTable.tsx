@@ -1,7 +1,9 @@
 import React from "react";
 import { QueueJob, QueueStatus } from "../types";
 import {
+  Box,
   IconButton,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -14,6 +16,7 @@ import AppUtils from "../../../utils/0_AppUtils";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
+import { NoTableDataMessage } from "../../3_shared/noTableDataMessage";
 
 interface Props {
   status: QueueStatus;
@@ -33,7 +36,11 @@ export const QueueJobsTable: React.FC<Props> = ({
   );
   return (
     <TableContainer>
-      <Table sx={{ minWidth: "100%" }} size="small" stickyHeader>
+      <Table
+        sx={{ minWidth: "100%", minHeight: "100%" }}
+        size="small"
+        stickyHeader
+      >
         <TableHead>
           <TableRow>
             {status === "failed" && <TableCell>Retry</TableCell>}
@@ -96,6 +103,13 @@ export const QueueJobsTable: React.FC<Props> = ({
                 </TableCell>
               </TableRow>
             ))}
+          {(!jobs || jobs.length === 0) && (
+            <TableRow>
+              <TableCell colSpan={100} sx={{ border: "none", padding: 0 }}>
+                <NoTableDataMessage />
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </TableContainer>
