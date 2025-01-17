@@ -7,7 +7,6 @@ import AppHooks from "../../hooks/0_AppHooks";
 import { AuthToken, TOKEN } from "../../types";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import { ApiRoutes, AppRoutes } from "../../core/router";
-import { QueryState, useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   children: React.ReactNode;
@@ -30,46 +29,19 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
       ApiRoutes.CURRENT_USER,
       ApiRoutes.CURRENT_USER_ROLES,
       ApiRoutes.CURRENT_USER_PERMISSIONS,
+      ApiRoutes.LOGIN,
+      ApiRoutes.LOGOUT,
     ],
     []
   );
   const getApiUrl = AppHooks.useApiUrlLoader();
   const [get] = AppHooks.useLocalStorage();
   const showNotification = AppHooks.useNotification();
-  const inApp = AppHooks.useInApp();
-  const queryClient = useQueryClient();
   const [pendingRequestsCount, setPendingRequestsCount] = React.useState(0);
   const requestQueue = React.useRef<QueueItem[]>([]);
   const cache = React.useRef<Map<string, CacheItem>>(new Map());
   const CACHE_DURATION = React.useMemo(() => 5 * 60 * 1000, []); // 5 minutes
-
-  const accountUserState = queryClient.getQueryState([
-    "accountUser",
-  ]) as QueryState;
-  const userRolesState = queryClient.getQueryState(["userRoles"]) as QueryState;
-  const accountPermissionsState = queryClient.getQueryState([
-    "accountPermissions",
-  ]) as QueryState;
-
-  const isQueryStateLoaded = React.useCallback(
-    (state: QueryState): boolean =>
-      Boolean(state && state.fetchStatus !== "fetching" && state.data),
-    []
-  );
-
-  // Check if account data is loading by examining query states
-  const isAccountLoaded = React.useMemo(
-    () =>
-      isQueryStateLoaded(accountUserState) &&
-      isQueryStateLoaded(userRolesState) &&
-      isQueryStateLoaded(accountPermissionsState),
-    [
-      accountUserState,
-      userRolesState,
-      accountPermissionsState,
-      isQueryStateLoaded,
-    ]
-  );
+  const initialDataLoaded = AppHooks.useInitialDataLoaded();
 
   const loading = React.useMemo(
     () => pendingRequestsCount > 0,
@@ -90,7 +62,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     });
   }, [CACHE_DURATION]);
 
-  // Periodically clean cache
+  // PERIODICALLY CLEAR CACHE
   React.useEffect(() => {
     const interval = setInterval(clearCache, CACHE_DURATION);
     return () => clearInterval(interval);
@@ -140,7 +112,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
       switch (statusCode) {
         case 401:
         case 403:
-          cache.current.clear(); // Clear cache on auth errors
+          cache.current.clear(); // CLEAR CACHE ON AUTH ERRORS
           redirect(AppRoutes.LOGIN);
           break;
         case 404:
@@ -190,11 +162,10 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
         apiToken && apiToken.token ? `Bearer ${apiToken.token}` : "";
     }
 
-    // If we in app and account data is still loading and this is not an account-related request,
-    // queue the request
+    // UNLESS IT'S ACCOUNT, USER OR AUTH REQUEST
+    // PUT REQUEST IN QUEUE
     if (
-      inApp &&
-      !isAccountLoaded &&
+      !initialDataLoaded &&
       config.url &&
       !PROTECTED_ROUTES.includes(config.url)
     ) {
@@ -207,7 +178,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
       });
     }
 
-    // Check cache for GET requests
+    // CHECK CACHE FOR GET REQUESTS
     if (config.method === "get") {
       const cacheKey = getCacheKey(config);
       const cachedResponse = cache.current.get(cacheKey);
@@ -232,7 +203,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     (response) => {
       updateRequestsCount(-1);
 
-      // Cache GET responses
+      // CACHE GET RESPONSE
       if (
         response.config.method === "get" &&
         !(response.config as any).cached
@@ -264,19 +235,18 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     }
   );
 
-  // Process queue when account data is loaded
+  // PROCESS REQUEST QUEUE WHEN INITIAL DATA IS LOADED
   React.useEffect(() => {
     console.log("Queue processing effect triggered:", {
-      inApp,
-      isAccountLoaded,
+      initialDataLoaded,
       queueLength: requestQueue.current.length,
     });
 
-    if (inApp && isAccountLoaded && requestQueue.current.length > 0) {
+    if (initialDataLoaded && requestQueue.current.length > 0) {
       console.log("Processing queue, all account queries complete");
       processQueue();
     }
-  }, [inApp, isAccountLoaded, processQueue]);
+  }, [initialDataLoaded, processQueue]);
 
   const contextValue = React.useMemo(
     () => ({
