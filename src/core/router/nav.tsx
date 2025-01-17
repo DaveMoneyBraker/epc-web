@@ -46,6 +46,9 @@ export const useAppNav = (): AppNav[] => {
   const BlacklistDomainPage = React.lazy(
     () => import("../../pages/dnsbl/BlackListDomainPage")
   );
+  const SubmitBlacklistDomainsPage = React.lazy(
+    () => import("../../pages/dnsbl/SubmitBlacklistDomainsPage")
+  );
 
   // QUEUES
   const QueuesPage = React.lazy(() => import("../../pages/queues/QueuesPage"));
@@ -233,6 +236,18 @@ export const useAppNav = (): AppNav[] => {
               element: (
                 <React.Suspense>
                   <BlacklistDomainPage />
+                </React.Suspense>
+              ),
+            },
+            {
+              title: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
+              pageTitle: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
+              apiRoute: ApiRoutes.BLACKLIST_DOMAIN + "-submit",
+              appRoute: AppRoutes.BLACKLIST_DOMAIN + "-submit",
+              permissionsRoute: PermissionRoutes.BLACKLIST_DOMAIN,
+              element: (
+                <React.Suspense>
+                  <SubmitBlacklistDomainsPage />
                 </React.Suspense>
               ),
             },
