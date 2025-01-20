@@ -12,8 +12,8 @@ import { DefaultPageActions } from "../../../../types";
 import "./styles/grid-table.scss";
 import AppUtils from "../../../../utils/0_AppUtils";
 import { NoTableDataMessage } from "../../../3_shared/noTableDataMessage";
-import AppHooks from "../../../../hooks/0_AppHooks";
 import GridTableHooks from "./hooks/0_GridTableHooks";
+import { DEFAULT_COLUMN_PROPS } from "./constants";
 
 export interface DefaultTableProps {
   itemName: string;
@@ -41,8 +41,6 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
 }) => {
   const [columns, setColumns] = React.useState<GridColDef[]>([]);
 
-  const defaultColProps = AppHooks.useDefaultDataGridColumnProps();
-
   const defaultActionsCol = GridTableHooks.useActionsCol({ onEvent, actions });
 
   const defaultDateCol = GridTableHooks.useDateCol();
@@ -62,7 +60,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
           newColumn = defaultDateCol(col);
         } else {
           newColumn = {
-            ...defaultColProps,
+            ...DEFAULT_COLUMN_PROPS,
             field: col,
           };
         }
@@ -74,7 +72,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       });
       setColumns(newColumns);
     },
-    [defaultColProps, defaultActionsCol, setColumns, defaultDateCol]
+    [defaultActionsCol, setColumns, defaultDateCol]
   );
 
   React.useEffect(() => {

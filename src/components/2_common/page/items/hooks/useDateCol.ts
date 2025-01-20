@@ -1,18 +1,14 @@
 import React from "react";
-import AppHooks from "../../../../../hooks/0_AppHooks";
 import AppUtils from "../../../../../utils/0_AppUtils";
+import { DEFAULT_COLUMN_PROPS } from "../constants";
 
-export const useDateCol = () => {
-  // DEFAULT COL CONFIGS
-  const defaultColProps = AppHooks.useDefaultDataGridColumnProps();
-
-  return React.useCallback(
+export const useDateCol = () =>
+  React.useCallback(
     (colName: string) => ({
-      ...defaultColProps,
+      ...DEFAULT_COLUMN_PROPS,
       field: colName,
       headerName: colName,
       valueFormatter: (value: number) => AppUtils.formatDate(value),
     }),
-    [defaultColProps]
+    []
   );
-};

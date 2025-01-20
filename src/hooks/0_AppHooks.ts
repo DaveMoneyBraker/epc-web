@@ -14,7 +14,6 @@ import { useThemePalette } from "./useThemePalette";
 import { useIsAdmin } from "./useIsAdmin";
 import { useAxiosResponseValidator } from "./useAxiosResponseValidator";
 import { useInitialDataLoaded } from "./useInitialDataLoaded";
-import { useDefaultDataGridColumnProps } from "./useDefaultDataGridColumnProps";
 
 const AppHooks = {
   useAxios,
@@ -33,7 +32,6 @@ const AppHooks = {
   useIsAdmin,
   useAxiosResponseValidator,
   useInitialDataLoaded,
-  useDefaultDataGridColumnProps,
 } as const;
 
 export default AppHooks;

@@ -1,10 +1,10 @@
 import React from "react";
-import AppHooks from "../../../../../hooks/0_AppHooks";
 import { GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
 import { DefaultPageActions } from "../../../../../types";
 import { DefaultTableProps } from "../DefaultGridTable";
 import { IconButton, ListItemText, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { DEFAULT_COLUMN_PROPS } from "../constants";
 
 export const useActionsCol = ({
   onEvent,
@@ -12,8 +12,6 @@ export const useActionsCol = ({
 }: Pick<DefaultTableProps, "onEvent" | "actions">) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const opens = React.useMemo(() => new Map(), []);
-  // DEFAULT COL CONFIGS
-  const defaultColProps = AppHooks.useDefaultDataGridColumnProps();
 
   const handleClick = React.useCallback(
     (id: GridRowId, event: React.MouseEvent<HTMLButtonElement>) => {
@@ -93,7 +91,7 @@ export const useActionsCol = ({
 
   return React.useCallback(
     () => ({
-      ...defaultColProps,
+      ...DEFAULT_COLUMN_PROPS,
       field: "actions",
       headerName: "Actions",
       sortable: false,
@@ -101,6 +99,6 @@ export const useActionsCol = ({
       minWidth: 100,
       renderCell: renderActionCol,
     }),
-    [defaultColProps, renderActionCol]
+    [renderActionCol]
   );
 };
