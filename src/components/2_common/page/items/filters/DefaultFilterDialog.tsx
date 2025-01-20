@@ -37,7 +37,7 @@ export const DefaultFilterDialog: React.FC<Props> = ({
   }, [configs]);
 
   const handleClose = React.useCallback(
-    (confirm: boolean) => (confirm ? onClose(state) : onClose(false)),
+    (confirm: boolean) => (confirm ? onClose(state) : onClose([])),
     [state, onClose]
   );
 
@@ -97,6 +97,8 @@ export const DefaultFilterDialog: React.FC<Props> = ({
       disabled={disabled}
       onClose={handleClose}
       maxWidth="lg"
+      withCloseIcon={false}
+      cancelBtnText="clear all"
     >
       <Box
         sx={{

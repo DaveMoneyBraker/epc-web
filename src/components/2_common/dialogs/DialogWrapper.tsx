@@ -19,6 +19,8 @@ interface Props {
   children: React.ReactNode;
   maxWidth?: false | Breakpoint | undefined;
   disablePadding?: boolean;
+  cancelBtnText?: string;
+  withCloseIcon?: boolean;
 }
 
 export const DialogWrapper: React.FC<Props> = ({
@@ -29,6 +31,8 @@ export const DialogWrapper: React.FC<Props> = ({
   children,
   maxWidth = "xs",
   disablePadding = false,
+  cancelBtnText = "cancel",
+  withCloseIcon = true,
 }) => {
   const Dialog = React.useMemo(
     () => styledDialog(disablePadding),
@@ -39,9 +43,11 @@ export const DialogWrapper: React.FC<Props> = ({
     <Dialog open={open} maxWidth={maxWidth} fullWidth scroll="paper">
       <DialogTitle component={"div"}>
         <Typography variant="h5">{title}</Typography>
-        <IconButton size="small" onClick={() => onClose(false)}>
-          <CloseIcon />
-        </IconButton>
+        {withCloseIcon && (
+          <IconButton size="small" onClick={() => onClose(false)}>
+            <CloseIcon />
+          </IconButton>
+        )}
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
@@ -50,7 +56,7 @@ export const DialogWrapper: React.FC<Props> = ({
           variant="outlined"
           onClick={() => onClose(false)}
         >
-          Cancel
+          {cancelBtnText}
         </EnhancedButton>
         <EnhancedButton
           variant="contained"
