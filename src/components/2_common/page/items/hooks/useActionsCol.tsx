@@ -86,6 +86,7 @@ export const useActionsCol = ({
       filteredActions,
       anchorEl,
       openMenuId,
+      loading,
       handleClick,
       handleClose,
       handleMenuClicked,

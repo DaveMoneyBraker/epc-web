@@ -40,7 +40,7 @@ export const AppDrawer: React.FC<Props> = ({ nav, open, onClose }) => {
     <Drawer
       open={open}
       onClose={handleClose}
-      PaperProps={{ variant: "outlined" }}
+      PaperProps={{ variant: "outlined", elevation: 0 }}
     >
       <List
         sx={{
