@@ -2,12 +2,13 @@ import React from "react";
 import { Box, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { EnhancedButton } from "../1_enhanced";
+import { AppRoutes } from "../../core/router";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
-    navigate("/");
+    navigate(AppRoutes.PAGES);
   };
 
   return (
