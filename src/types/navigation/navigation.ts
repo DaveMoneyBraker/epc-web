@@ -22,7 +22,7 @@ export interface AppNavNode {
 export interface NavigationState {
   nav: AppNav[];
   currentNavNode: AppNavNode | null;
-  forbiddenNodes: AppNavNode[];
+  forbiddenRoutes: string[];
 }
 
 export interface PermissionRoute {

@@ -69,14 +69,11 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
   }, [CACHE_DURATION, clearCache]);
 
   const processQueue = React.useCallback(async () => {
-    console.log("Current queue length:", requestQueue.current.length);
     if (requestQueue.current.length === 0) return;
 
     const { promise, resolve, reject } = requestQueue.current[0];
-    console.log("Processing request from queue");
     try {
       const result = await promise;
-      console.log("Request processed successfully");
       resolve(result);
     } catch (error) {
       console.log("Request processing failed:", error);
@@ -84,7 +81,6 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     } finally {
       requestQueue.current.shift();
       if (requestQueue.current.length > 0) {
-        console.log("Processing next request in queue");
         processQueue();
       }
     }
@@ -237,13 +233,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
 
   // PROCESS REQUEST QUEUE WHEN INITIAL DATA IS LOADED
   React.useEffect(() => {
-    console.log("Queue processing effect triggered:", {
-      initialDataLoaded,
-      queueLength: requestQueue.current.length,
-    });
-
     if (initialDataLoaded && requestQueue.current.length > 0) {
-      console.log("Processing queue, all account queries complete");
       processQueue();
     }
   }, [initialDataLoaded, processQueue]);

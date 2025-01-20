@@ -36,17 +36,17 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   }, [appNav, location]);
 
   const navigationState = React.useMemo<NavigationState>(() => {
-    if (isAdmin) {
-      return {
-        nav: appNav,
-        currentNavNode,
-        forbiddenNodes: [],
-      };
-    }
+    // if (isAdmin) {
+    //   return {
+    //     nav: appNav,
+    //     currentNavNode,
+    //     forbiddenRoutes: [],
+    //   };
+    // }
 
     if (permissions && permissions.length) {
       const cleanedNav: AppNav[] = [];
-      const forbiddenNodes: AppNavNode[] = [];
+      const forbiddenRoutes: string[] = [];
 
       appNav.forEach((nav) => {
         const { categories } = nav;
@@ -58,7 +58,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
           // Separate permitted and forbidden nodes
           const { allowed, forbidden } = children.reduce<{
             allowed: AppNavNode[];
-            forbidden: AppNavNode[];
+            forbidden: string[];
           }>(
             (acc, child) => {
               const hasPermission = permissions.some(
@@ -70,7 +70,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
               if (hasPermission) {
                 acc.allowed.push(child);
               } else {
-                acc.forbidden.push(child);
+                acc.forbidden.push(child.appRoute);
               }
               return acc;
             },
@@ -78,7 +78,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
           );
 
           // Add forbidden nodes to the collection
-          forbiddenNodes.push(...forbidden);
+          forbiddenRoutes.push(...forbidden);
 
           // Only add categories with allowed children
           if (allowed.length > 0) {
@@ -94,14 +94,14 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
       return {
         nav: cleanedNav,
         currentNavNode,
-        forbiddenNodes,
+        forbiddenRoutes,
       };
     }
 
     return {
       nav: [],
       currentNavNode,
-      forbiddenNodes: [],
+      forbiddenRoutes: [],
     };
   }, [isAdmin, appNav, permissions, currentNavNode]);
 
@@ -109,7 +109,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
     () => ({
       nav: navigationState.nav,
       currentNavNode: navigationState.currentNavNode,
-      forbiddenNodes: navigationState.forbiddenNodes,
+      forbiddenRoutes: navigationState.forbiddenRoutes,
     }),
     [navigationState]
   );
