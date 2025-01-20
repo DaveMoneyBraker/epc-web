@@ -14,10 +14,6 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
     useCleanedNavigationContext();
   const initialDataLoaded = AppHooks.useInitialDataLoaded();
 
-  React.useEffect(() => {
-    console.log({ initialDataLoaded });
-  }, [initialDataLoaded]);
-
   // Get a random accessible navigation node
   const getRandomNavNode = React.useCallback((): AppNavNode | null => {
     const accessibleNodes: AppNavNode[] = [];
@@ -77,14 +73,14 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
   ]);
 
   // DEBUG CONSOLE LOG
-  React.useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.group("RoutesGuardProvider Debug");
-      console.log("Current Path:", location.pathname);
-      console.log("Forbidden Routes:", forbiddenRoutes);
-      console.log("Available Navigation:", nav);
-      console.groupEnd();
-    }
-  }, [location.pathname, forbiddenRoutes, nav]);
+  // React.useEffect(() => {
+  //   if (process.env.NODE_ENV === "development") {
+  //     console.group("RoutesGuardProvider Debug");
+  //     console.log("Current Path:", location.pathname);
+  //     console.log("Forbidden Routes:", forbiddenRoutes);
+  //     console.log("Available Navigation:", nav);
+  //     console.groupEnd();
+  //   }
+  // }, [location.pathname, forbiddenRoutes, nav]);
   return <>{children}</>;
 };
