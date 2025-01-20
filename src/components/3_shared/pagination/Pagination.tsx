@@ -1,5 +1,6 @@
 import { TablePagination } from "@mui/material";
 import React from "react";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 interface Props {
   count: number;
@@ -30,7 +31,7 @@ export const AppPagination: React.FC<Props> = ({
     [onPageChange, onRowsPerPageChange]
   );
   const rowsPerPageOptions = React.useMemo(
-    () => (onRowsPerPageChange ? [10, 25, 50, 100] : []),
+    () => (onRowsPerPageChange ? APP_CONSTANTS.DEFAULT_PAGE_SIZE_OPTIONS : []),
     [onRowsPerPageChange]
   );
   return (

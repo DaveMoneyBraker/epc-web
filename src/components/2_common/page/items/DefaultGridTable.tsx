@@ -14,6 +14,7 @@ import AppUtils from "../../../../utils/0_AppUtils";
 import { NoTableDataMessage } from "../../../3_shared/noTableDataMessage";
 import GridTableHooks from "./hooks/0_GridTableHooks";
 import { DEFAULT_COLUMN_PROPS } from "./constants";
+import APP_CONSTANTS from "../../../../constants/AppConstants";
 
 export interface DefaultTableProps {
   itemName: string;
@@ -90,7 +91,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       onPaginationModelChange={onPaginationModelChange}
       sortingMode="server"
       onSortModelChange={onSort}
-      pageSizeOptions={[10, 50, 100]}
+      pageSizeOptions={APP_CONSTANTS.DEFAULT_PAGE_SIZE_OPTIONS}
       disableRowSelectionOnClick
       density="compact"
       // DISABLE CELL AND TITLE OUTLINE ON CLICK
@@ -130,12 +131,10 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
   );
 };
 
-const StyledGridPagination = styled(GridPagination)(
-  () => `
-  &.MuiTablePagination-root {
-    & .MuiToolbar-root {
-      padding: 0;
-    }
-  }
-`
-);
+const StyledGridPagination = styled(GridPagination)({
+  "&.MuiTablePagination-root": {
+    "& .MuiToolbar-root": {
+      padding: 0,
+    },
+  },
+});

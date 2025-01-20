@@ -11,45 +11,38 @@ export const useActionsCol = ({
   actions = [],
 }: Pick<DefaultTableProps, "onEvent" | "actions">) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const opens = React.useMemo(() => new Map(), []);
+  const [openMenuId, setOpenMenuId] = React.useState<GridRowId | null>(null);
+  const filteredActions = React.useMemo(
+    () => actions.filter((a) => a !== "create" && a !== "submit"),
+    [actions]
+  );
 
   const handleClick = React.useCallback(
     (id: GridRowId, event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget);
-      // WITHOUT TIMEOUT setAnchorEl DON'T GET TO SETUP ELEMENT
-      // WHIT PROVIDE ERROR IN CONSOLE
-      setTimeout(() => opens.set(id, true), 0);
+      setOpenMenuId(id);
     },
-    [opens, setAnchorEl]
+    [setAnchorEl]
   );
 
-  const handleClose = React.useCallback(
-    (id: GridRowId) => {
-      opens.set(id, false);
-      setAnchorEl(null);
-    },
-    [opens, setAnchorEl]
-  );
+  const handleClose = React.useCallback(() => {
+    setOpenMenuId(null);
+    setAnchorEl(null);
+  }, [setAnchorEl]);
 
   const handleMenuClicked = React.useCallback(
     (event: DefaultPageActions, params: GridRenderCellParams) => {
-      const { id, row } = params;
+      const { row } = params;
       onEvent(event, row);
-      handleClose(id);
+      handleClose();
     },
     [onEvent, handleClose]
   );
 
   const renderActionCol = React.useCallback(
     (params: GridRenderCellParams) => {
-      const filteredActions = actions.filter(
-        (a) => a !== "create" && a !== "submit"
-      );
       const { id } = params;
-      if (!opens.has(id)) {
-        opens.set(id, false);
-      }
-      const isOpen = opens.get(id);
+      const isOpen = id === openMenuId;
       return (
         <>
           <IconButton
@@ -65,7 +58,7 @@ export const useActionsCol = ({
             id="basic-menu"
             anchorEl={anchorEl}
             open={isOpen}
-            onClose={() => handleClose(id)}
+            onClose={handleClose}
             MenuListProps={{
               "aria-labelledby": "basic-button",
               dense: true,
@@ -77,6 +70,7 @@ export const useActionsCol = ({
                   minWidth: "100px",
                 }}
                 onClick={() => handleMenuClicked(action, params)}
+                aria-label={`${id}-${action}-action_button`}
                 key={`${id}-${action}`}
               >
                 <ListItemText>{action}</ListItemText>
@@ -86,7 +80,14 @@ export const useActionsCol = ({
         </>
       );
     },
-    [actions, anchorEl, opens, handleClick, handleClose, handleMenuClicked]
+    [
+      filteredActions,
+      anchorEl,
+      openMenuId,
+      handleClick,
+      handleClose,
+      handleMenuClicked,
+    ]
   );
 
   return React.useCallback(

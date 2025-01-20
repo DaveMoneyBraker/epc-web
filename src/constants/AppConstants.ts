@@ -8,6 +8,7 @@ import {
 } from "./DefaultIsp";
 import { DEFAULT_USER_ROLES } from "./DefaultUserRoles";
 import { APP_ERRORS } from "./AppErrors";
+import { DEFAULT_PAGE_SIZE_OPTIONS } from "./DefaultPageSizeOptions";
 
 const APP_CONSTANTS = {
   PAGE_TITLES,
@@ -18,6 +19,7 @@ const APP_CONSTANTS = {
   DEFAULT_ISP_EMAILS,
   DEFAULT_USER_ROLES,
   APP_ERRORS,
+  DEFAULT_PAGE_SIZE_OPTIONS,
 } as const;
 
 export default APP_CONSTANTS;
