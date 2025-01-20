@@ -1,8 +1,9 @@
 import React from "react";
-import { useDocumentTitle } from "usehooks-ts";
+import AppHooks from "../../hooks/0_AppHooks";
+import APP_CONSTANTS from "../../constants/AppConstants";
 
 const NotFoundPage: React.FC = () => {
-  useDocumentTitle("404#");
+  AppHooks.useEPCDocumentTitle(APP_CONSTANTS.PAGE_TITLES.NOT_FOUND);
 
   return <>page not found</>;
 };

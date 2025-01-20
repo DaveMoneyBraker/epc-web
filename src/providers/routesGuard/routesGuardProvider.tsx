@@ -49,15 +49,14 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
     // Check if current route is forbidden
     if (forbiddenRoutes.some((route) => pathname.includes(route))) {
       // TODO - IMPLEMENT NOT-FOUND PAGE
-      console.log("Access denied: Redirecting to login", { pathname });
-      navigate(AppRoutes.LOGIN);
+      console.log("Access denied: Redirecting to not found", { pathname });
+      navigate(AppRoutes.NOT_FOUND);
       return;
     }
 
     // Handle default routes redirection
     if (DEFAULT_ROUTES.includes(pathname)) {
       const randomNode = getRandomNavNode();
-
       if (randomNode) {
         console.log("Redirecting to random accessible route", {
           from: pathname,
@@ -65,11 +64,17 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
         });
         navigate(randomNode.appRoute);
       } else {
-        console.log("No accessible routes found, redirecting to login");
-        navigate(AppRoutes.LOGIN);
+        console.log("No accessible routes found, redirecting to Not Found");
+        navigate(AppRoutes.NOT_FOUND);
       }
     }
-  }, [location, navigate, forbiddenRoutes, getRandomNavNode]);
+  }, [
+    initialDataLoaded,
+    location,
+    navigate,
+    forbiddenRoutes,
+    getRandomNavNode,
+  ]);
 
   // DEBUG CONSOLE LOG
   React.useEffect(() => {

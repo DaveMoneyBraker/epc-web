@@ -51,6 +51,11 @@ export const useAppNav = (): AppNav[] => {
     () => import("../../pages/dnsbl/SubmitBlacklistDomainsPage")
   );
 
+  // NOT FOUND PAGE
+  const NotFoundPage = React.lazy(
+    () => import("../../pages/notFound/NotFoundPage")
+  );
+
   // QUEUES
   const QueuesPage = React.lazy(() => import("../../pages/queues/QueuesPage"));
   const WorkersQueuesNav: AppNav = React.useMemo(() => {

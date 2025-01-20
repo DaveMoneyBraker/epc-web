@@ -20,5 +20,5 @@ export const AppRoutes = {
   GOOGLE_CLOUD: "/pages/files/google-cloud",
 
   // NOT FOUND
-  NOT_FOUND: "/pages/suppressions/email",
+  NOT_FOUND: "/pages/not-found",
 } as const;

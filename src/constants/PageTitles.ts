@@ -11,4 +11,6 @@ export const PAGE_TITLES = {
   GOOGLE_CLOUD: "Google Cloud Files",
   // QUEUES
   QUEUES: "Queues",
+  // NOT FOUND
+  NOT_FOUND: "404#",
 } as const;

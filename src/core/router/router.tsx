@@ -9,7 +9,13 @@ import { Layout } from "../../components/0_layout";
 export const useAppRouter = () => {
   const appNav = useAppNav();
 
+  // LOGIN PAGE
   const LoginPage = React.lazy(() => import("../../pages/login/LoginPage"));
+
+  // NOT FOUND PAGE
+  const NotFoundPage = React.lazy(
+    () => import("../../pages/notFound/NotFoundPage")
+  );
 
   return createBrowserRouter([
     // MAIN APP
@@ -32,6 +38,15 @@ export const useAppRouter = () => {
                 })),
               };
             }),
+            // NOT FOUND
+            {
+              path: AppRoutes.NOT_FOUND,
+              element: (
+                <React.Suspense>
+                  <NotFoundPage />
+                </React.Suspense>
+              ),
+            },
           ],
         },
         // AUTH
@@ -50,9 +65,10 @@ export const useAppRouter = () => {
           ],
         },
         // NOT FOUND
+
         {
           path: "*",
-          element: <Navigate to={AppRoutes.LOGIN} />,
+          element: <Navigate to={AppRoutes.NOT_FOUND} />,
         },
       ],
     },
