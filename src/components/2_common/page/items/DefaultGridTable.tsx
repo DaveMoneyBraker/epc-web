@@ -8,13 +8,13 @@ import {
 } from "@mui/x-data-grid";
 import React from "react";
 import { DefaultPageActions } from "../../../../types";
-// STYLES
-import "./styles/grid-table.scss";
 import AppUtils from "../../../../utils/0_AppUtils";
 import { NoTableDataMessage } from "../../../3_shared/noTableDataMessage";
 import GridTableHooks from "./hooks/0_GridTableHooks";
 import { DEFAULT_COLUMN_PROPS } from "./constants";
 import APP_CONSTANTS from "../../../../constants/AppConstants";
+// STYLES
+import "./styles/grid-table.scss";
 
 export interface DefaultTableProps {
   itemName: string;
@@ -42,7 +42,11 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
 }) => {
   const [columns, setColumns] = React.useState<GridColDef[]>([]);
 
-  const defaultActionsCol = GridTableHooks.useActionsCol({ onEvent, actions });
+  const defaultActionsCol = GridTableHooks.useActionsCol({
+    onEvent,
+    actions,
+    loading,
+  });
 
   const defaultDateCol = GridTableHooks.useDateCol();
 

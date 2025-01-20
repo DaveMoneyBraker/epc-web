@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Badge, Button } from "@mui/material";
 import React from "react";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { DefaultFilterDialog } from "./DefaultFilterDialog";
@@ -24,16 +24,19 @@ export const DefaultFilters: React.FC<Props> = ({
     },
     [onClose]
   );
+  const badgeContent = React.useMemo(() => filterState.length, [filterState]);
 
   return (
     <>
-      <Button
-        variant="outlined"
-        startIcon={<FilterAltOutlinedIcon />}
-        onClick={handleClick}
-      >
-        filter
-      </Button>
+      <Badge badgeContent={badgeContent} color="primary">
+        <Button
+          variant="outlined"
+          startIcon={<FilterAltOutlinedIcon />}
+          onClick={handleClick}
+        >
+          filter
+        </Button>
+      </Badge>
       <DefaultFilterDialog
         open={open}
         configs={configs}

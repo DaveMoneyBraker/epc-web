@@ -9,7 +9,8 @@ import { DEFAULT_COLUMN_PROPS } from "../constants";
 export const useActionsCol = ({
   onEvent,
   actions = [],
-}: Pick<DefaultTableProps, "onEvent" | "actions">) => {
+  loading,
+}: Pick<DefaultTableProps, "onEvent" | "actions" | "loading">) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openMenuId, setOpenMenuId] = React.useState<GridRowId | null>(null);
   const filteredActions = React.useMemo(
@@ -46,6 +47,7 @@ export const useActionsCol = ({
       return (
         <>
           <IconButton
+            disabled={loading}
             aria-controls={isOpen ? "basic-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={isOpen ? "true" : undefined}
