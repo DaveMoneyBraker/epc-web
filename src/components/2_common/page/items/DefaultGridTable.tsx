@@ -22,6 +22,7 @@ import { DefaultPageActions } from "../../../../types";
 import "./styles/grid-table.scss";
 import AppUtils from "../../../../utils/0_AppUtils";
 import { NoTableDataMessage } from "../../../3_shared/noTableDataMessage";
+import AppHooks from "../../../../hooks/0_AppHooks";
 
 export interface DefaultTableProps {
   itemName: string;
@@ -51,6 +52,8 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
   // FOR ACTIONS TABLE CELL
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const opens = React.useMemo(() => new Map(), []);
+  // DEFAULT COL CONFIGS
+  const defaultColProps = AppHooks.useDefaultDataGridColumnProps();
 
   const handleClick = React.useCallback(
     (id: GridRowId, event: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,17 +80,6 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       handleClose(id);
     },
     [onEvent, handleClose]
-  );
-
-  // DEFAULT COL CONFIGS
-  const defaultColProps: Partial<GridColDef> = React.useMemo(
-    () => ({
-      flex: 1,
-      sortable: true,
-      disableColumnMenu: true,
-      minWidth: 150,
-    }),
-    []
   );
 
   const renderActionCol = React.useCallback(
