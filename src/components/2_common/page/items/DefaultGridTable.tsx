@@ -42,13 +42,13 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
 }) => {
   const [columns, setColumns] = React.useState<GridColDef[]>([]);
 
-  const defaultActionsCol = GridTableHooks.useActionsCol({
+  const actionsCol = GridTableHooks.useActionsCol({
     onEvent,
     actions,
     loading,
   });
 
-  const defaultDateCol = GridTableHooks.useDateCol();
+  const dateCol = GridTableHooks.useDateCol();
 
   const setupDataGridCols = React.useCallback(
     (columns: string[]) => {
@@ -56,13 +56,13 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       columns.forEach((col) => {
         let newColumn: GridColDef;
         if (col === "actions") {
-          newColumn = defaultActionsCol();
+          newColumn = actionsCol();
         } else if (
           col === "updatedAt" ||
           col === "createdAt" ||
           col === "deletedAt"
         ) {
-          newColumn = defaultDateCol(col);
+          newColumn = dateCol(col);
         } else {
           newColumn = {
             ...DEFAULT_COLUMN_PROPS,
@@ -77,7 +77,7 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
       });
       setColumns(newColumns);
     },
-    [defaultActionsCol, setColumns, defaultDateCol]
+    [actionsCol, setColumns, dateCol]
   );
 
   React.useEffect(() => {
