@@ -1,5 +1,3 @@
-import { PermissionRoute } from "../../core/router";
-
 export interface AppNav {
   title: string;
   icon: React.ReactNode;
@@ -19,4 +17,10 @@ export interface AppNavNode {
   apiRoute: string;
   permissionsRoute: PermissionRoute;
   element: React.ReactNode;
+}
+
+export interface PermissionRoute {
+  default: string;
+  file?: string;
+  download?: string;
 }

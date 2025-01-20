@@ -1,8 +1,4 @@
-export interface PermissionRoute {
-  default: string;
-  file?: string;
-  download?: string;
-}
+import { PermissionRoute } from "../../types";
 
 export const PermissionRoutes: { [key: string]: PermissionRoute } = {
   // ADMINS ONLY
