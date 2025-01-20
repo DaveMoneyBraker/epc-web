@@ -52,7 +52,6 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
 
     // Handle default routes redirection
     if (DEFAULT_ROUTES.includes(pathname)) {
-      console.log("DEFAULT_ROUTES");
       const randomNode = getRandomNavNode();
       if (randomNode) {
         console.log("Redirecting to random accessible route", {
