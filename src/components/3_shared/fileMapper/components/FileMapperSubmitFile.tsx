@@ -82,6 +82,7 @@ export const FileMapperSubmitFile: React.FC<Props> = ({
             onChange={handleFilenameChange}
           />
           <Button
+            size="small"
             variant="contained"
             disabled={submitDisabled}
             onClick={handleSubmit}
@@ -102,10 +103,10 @@ export const FileMapperSubmitFile: React.FC<Props> = ({
       )}
       {submitted && (
         <Box>
-          <Button variant="contained" onClick={handleReset}>
+          <Button size="small" variant="contained" onClick={handleReset}>
             Submit Another File
           </Button>
-          <Button variant="contained" onClick={handleExit}>
+          <Button size="small" variant="contained" onClick={handleExit}>
             Exit
           </Button>
         </Box>

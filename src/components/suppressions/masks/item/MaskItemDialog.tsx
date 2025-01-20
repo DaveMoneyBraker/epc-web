@@ -192,12 +192,14 @@ export const SuppressionMaskItemDialog: React.FC<
       </DialogContent>
       <DialogActions>
         <Button
+          size="small"
           variant={theme.palette.mode === "light" ? "outlined" : "contained"}
           onClick={() => handleClose(false)}
         >
           Cancel
         </Button>
         <Button
+          size="small"
           variant="contained"
           onClick={() => handleClose(true)}
           disabled={!name || !mask || !type || !valid}

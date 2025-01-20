@@ -31,6 +31,7 @@ export const DefaultFilters: React.FC<Props> = ({
       <Badge badgeContent={badgeContent} color="primary">
         <Button
           variant="outlined"
+          size="small"
           startIcon={<FilterAltOutlinedIcon />}
           onClick={handleClick}
         >

@@ -27,6 +27,7 @@ export const ActionsPanel: React.FC<Props> = ({ status, onAction }) => {
   return (
     <Wrapper>
       <Button
+        size="small"
         variant="outlined"
         startIcon={<CachedOutlinedIcon />}
         onClick={() => handleAction("refresh")}
@@ -35,6 +36,7 @@ export const ActionsPanel: React.FC<Props> = ({ status, onAction }) => {
       </Button>
       {status === "failed" && (
         <Button
+          size="small"
           variant="outlined"
           color="warning"
           startIcon={<ReplayOutlinedIcon />}
@@ -44,6 +46,7 @@ export const ActionsPanel: React.FC<Props> = ({ status, onAction }) => {
         </Button>
       )}
       <Button
+        size="small"
         variant="outlined"
         color="error"
         startIcon={<ReplayOutlinedIcon />}

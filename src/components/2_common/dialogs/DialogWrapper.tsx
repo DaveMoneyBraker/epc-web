@@ -1,5 +1,4 @@
 import {
-  Box,
   Breakpoint,
   Button,
   DialogActions,
@@ -7,7 +6,6 @@ import {
   DialogTitle,
   IconButton,
   Typography,
-  useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
@@ -32,7 +30,6 @@ export const DialogWrapper: React.FC<Props> = ({
   maxWidth = "xs",
   disablePadding = false,
 }) => {
-  const theme = useTheme();
   const Dialog = React.useMemo(
     () => styledDialog(disablePadding),
     [disablePadding]
@@ -42,13 +39,14 @@ export const DialogWrapper: React.FC<Props> = ({
     <Dialog open={open} maxWidth={maxWidth} fullWidth scroll="paper">
       <DialogTitle component={"div"}>
         <Typography variant="h5">{title}</Typography>
-        <IconButton onClick={() => onClose(false)}>
+        <IconButton size="small" onClick={() => onClose(false)}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button
+          size="small"
           // variant={theme.palette.mode === "light" ? "outlined" : "contained"}
           variant="outlined"
           onClick={() => onClose(false)}
@@ -56,6 +54,7 @@ export const DialogWrapper: React.FC<Props> = ({
           Cancel
         </Button>
         <Button
+          size="small"
           variant="contained"
           onClick={() => onClose(true)}
           disabled={disabled}

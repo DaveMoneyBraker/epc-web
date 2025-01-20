@@ -92,7 +92,11 @@ export const DefaultActionsRow: React.FC<Props> = ({
     <Wrapper>
       <ElWrapper>
         {create && (
-          <Button variant="contained" onClick={handleCreateBtnClicked}>
+          <Button
+            size="small"
+            variant="contained"
+            onClick={handleCreateBtnClicked}
+          >
             Create
           </Button>
         )}
@@ -120,7 +124,11 @@ export const DefaultActionsRow: React.FC<Props> = ({
           onClose={handleFiltersDialogClose}
         />
         {submit && (
-          <Button variant="contained" onClick={handleGotToSubmitPage}>
+          <Button
+            size="small"
+            variant="contained"
+            onClick={handleGotToSubmitPage}
+          >
             Submit File
           </Button>
         )}

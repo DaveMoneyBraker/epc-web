@@ -33,7 +33,7 @@ const Wrapper = styled("div")(() => ({
   height: "calc(100vh - 70px)",
   maxHeight: "calc(100vh - 70px)",
   minHeight: "calc(100vh - 70px)",
-  padding: "5px 15px 0px 15px",
+  padding: "7px 15px 0px 15px",
   display: "flex",
   flexDirection: "column",
   overflow: "hidden",

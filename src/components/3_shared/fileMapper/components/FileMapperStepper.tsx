@@ -95,11 +95,17 @@ export const FileMapperStepper: React.FC<Props> = ({
             padding: "15px 0",
           }}
         >
-          <Button variant="contained" onClick={handleBack} sx={{ mr: 1 }}>
+          <Button
+            size="small"
+            variant="contained"
+            onClick={handleBack}
+            sx={{ mr: 1 }}
+          >
             back
           </Button>
           {activeStep !== 2 && (
             <Button
+              size="small"
               variant="contained"
               onClick={handleNext}
               disabled={!isCurrentStepCompleted}
