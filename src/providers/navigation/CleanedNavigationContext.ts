@@ -1,5 +1,5 @@
 import React from "react";
-import { AppNav, AppNavNode } from "../../core/router/nav";
+import { AppNav, AppNavNode } from "../../types";
 
 interface CleanedNavValue {
   nav: AppNav[];

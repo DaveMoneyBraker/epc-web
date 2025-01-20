@@ -2,7 +2,7 @@ import React from "react";
 import { Drawer, List } from "@mui/material";
 import { NavItem } from "./NavItem";
 import { useLocation } from "react-router-dom";
-import { AppNav } from "../../../core/router/nav";
+import { AppNav } from "../../../types";
 
 interface Props {
   nav: AppNav[];

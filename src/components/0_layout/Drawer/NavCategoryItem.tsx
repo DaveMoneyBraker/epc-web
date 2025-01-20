@@ -6,8 +6,8 @@ import {
   ListSubheader,
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AppNavCategory, AppNavNode } from "../../../core/router/nav";
 import AppHooks from "../../../hooks/0_AppHooks";
+import { AppNavCategory, AppNavNode } from "../../../types";
 
 interface Props {
   category: AppNavCategory;

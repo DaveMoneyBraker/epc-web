@@ -1,5 +1,5 @@
 import React from "react";
-import { PermissionRoutes, PermissionRoute } from "./permissionRoutes";
+import { PermissionRoutes } from "./permissionRoutes";
 import { ApiRoutes } from "./apiRoutes";
 import { AppRoutes } from "./appRoutes";
 import APP_CONSTANTS from "../../constants/AppConstants";
@@ -9,6 +9,7 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import QueueIcon from "@mui/icons-material/Queue";
 import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
+import { AppNav, AppNavCategory } from "../../types";
 
 export const useAppNav = (): AppNav[] => {
   // SUPPRESSIONS
@@ -285,24 +286,3 @@ export const useAppNav = (): AppNav[] => {
     { ...ConsumerQueuesNav },
   ];
 };
-
-export interface AppNav {
-  title: string;
-  icon: React.ReactNode;
-  path: string;
-  categories: AppNavCategory[];
-}
-
-export interface AppNavCategory {
-  title: string;
-  children: AppNavNode[];
-}
-
-export interface AppNavNode {
-  title: string;
-  pageTitle: string;
-  appRoute: string;
-  apiRoute: string;
-  permissionsRoute: PermissionRoute;
-  element: React.ReactNode;
-}

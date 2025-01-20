@@ -10,8 +10,8 @@ import { NavCategoryItem } from "./NavCategoryItem";
 import { useLocation } from "react-router-dom";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { AppNav } from "../../../core/router/nav";
 import AppHooks from "../../../hooks/0_AppHooks";
+import { AppNav } from "../../../types";
 
 interface Props {
   item: AppNav;
