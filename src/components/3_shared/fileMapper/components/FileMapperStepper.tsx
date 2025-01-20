@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Button, Step, StepLabel, Stepper, styled } from "@mui/material";
+import { Box, Step, StepLabel, Stepper, styled } from "@mui/material";
+import { EnhancedButton } from "../../../1_enhanced";
 
 interface Props {
   activeStep: number;
@@ -95,23 +96,21 @@ export const FileMapperStepper: React.FC<Props> = ({
             padding: "15px 0",
           }}
         >
-          <Button
-            size="small"
+          <EnhancedButton
             variant="contained"
             onClick={handleBack}
             sx={{ mr: 1 }}
           >
             back
-          </Button>
+          </EnhancedButton>
           {activeStep !== 2 && (
-            <Button
-              size="small"
+            <EnhancedButton
               variant="contained"
               onClick={handleNext}
               disabled={!isCurrentStepCompleted}
             >
               next
-            </Button>
+            </EnhancedButton>
           )}
         </Box>
       </Box>

@@ -1,10 +1,8 @@
 import React from "react";
 import { QueueJob } from "../../types";
 import { useStyledDialog as dialogFunction } from "../../../2_common/dialogs";
-
 import {
   Box,
-  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -14,6 +12,7 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
+import { EnhancedButton } from "../../../1_enhanced";
 
 interface Props {
   job: QueueJob | undefined;
@@ -115,9 +114,9 @@ export const QueueJobInfoDialog: React.FC<Props> = ({ open, job, onClose }) => {
             {selectedItem && formatJson(selectedItem)}
           </DialogContent>
           <DialogActions sx={{ justifyContent: "flex-end !important" }}>
-            <Button onClick={() => handleClose()} variant="contained">
+            <EnhancedButton onClick={() => handleClose()} variant="contained">
               close
-            </Button>
+            </EnhancedButton>
           </DialogActions>
         </Dialog>
       )}

@@ -1,15 +1,10 @@
 import React from "react";
-import {
-  Button,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import { EnhancedButton } from "../../1_enhanced";
 
 interface Props {
   displayName: string;
@@ -31,7 +26,7 @@ export const AppBarMenu: React.FC<Props> = ({ displayName, onLogout }) => {
 
   return (
     <>
-      <Button
+      <EnhancedButton
         sx={{ color: "white" }}
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
@@ -40,7 +35,7 @@ export const AppBarMenu: React.FC<Props> = ({ displayName, onLogout }) => {
         startIcon={<AccountCircleOutlinedIcon />}
       >
         {displayName}
-      </Button>
+      </EnhancedButton>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

@@ -1,6 +1,5 @@
 import {
   Breakpoint,
-  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -10,6 +9,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import { useStyledDialog as styledDialog } from "./useStyledDialog";
+import { EnhancedButton } from "../../1_enhanced";
 
 interface Props {
   open: boolean;
@@ -45,22 +45,20 @@ export const DialogWrapper: React.FC<Props> = ({
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button
-          size="small"
+        <EnhancedButton
           // variant={theme.palette.mode === "light" ? "outlined" : "contained"}
           variant="outlined"
           onClick={() => onClose(false)}
         >
           Cancel
-        </Button>
-        <Button
-          size="small"
+        </EnhancedButton>
+        <EnhancedButton
           variant="contained"
           onClick={() => onClose(true)}
           disabled={disabled}
         >
           Submit
-        </Button>
+        </EnhancedButton>
       </DialogActions>
     </Dialog>
   );

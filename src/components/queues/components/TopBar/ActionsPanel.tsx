@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 import { QueueStatus } from "../../types";
 import styled from "styled-components";
+import { EnhancedButton } from "../../../1_enhanced";
 
 type Action = "retry" | "delete" | "refresh";
 
@@ -26,34 +27,31 @@ export const ActionsPanel: React.FC<Props> = ({ status, onAction }) => {
   );
   return (
     <Wrapper>
-      <Button
-        size="small"
+      <EnhancedButton
         variant="outlined"
         startIcon={<CachedOutlinedIcon />}
         onClick={() => handleAction("refresh")}
       >
         refresh data
-      </Button>
+      </EnhancedButton>
       {status === "failed" && (
-        <Button
-          size="small"
+        <EnhancedButton
           variant="outlined"
           color="warning"
           startIcon={<ReplayOutlinedIcon />}
           onClick={() => handleAction("retry")}
         >
           retry all jobs
-        </Button>
+        </EnhancedButton>
       )}
-      <Button
-        size="small"
+      <EnhancedButton
         variant="outlined"
         color="error"
         startIcon={<ReplayOutlinedIcon />}
         onClick={() => handleAction("delete")}
       >
         delete all {status} jobs
-      </Button>
+      </EnhancedButton>
     </Wrapper>
   );
 };

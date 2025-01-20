@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, InputAdornment, styled, TextField } from "@mui/material";
+import { InputAdornment, styled, TextField } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { DefaultFilters } from "./filters";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../../../../types";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppHooks from "../../../../hooks/0_AppHooks";
+import { EnhancedButton } from "../../../1_enhanced";
 
 const Wrapper = styled("div")(() => ({
   width: "100%",
@@ -92,13 +93,9 @@ export const DefaultActionsRow: React.FC<Props> = ({
     <Wrapper>
       <ElWrapper>
         {create && (
-          <Button
-            size="small"
-            variant="contained"
-            onClick={handleCreateBtnClicked}
-          >
+          <EnhancedButton variant="contained" onClick={handleCreateBtnClicked}>
             Create
-          </Button>
+          </EnhancedButton>
         )}
         <TextField
           variant="standard"
@@ -124,13 +121,9 @@ export const DefaultActionsRow: React.FC<Props> = ({
           onClose={handleFiltersDialogClose}
         />
         {submit && (
-          <Button
-            size="small"
-            variant="contained"
-            onClick={handleGotToSubmitPage}
-          >
+          <EnhancedButton variant="contained" onClick={handleGotToSubmitPage}>
             Submit File
-          </Button>
+          </EnhancedButton>
         )}
       </ElWrapper>
     </Wrapper>

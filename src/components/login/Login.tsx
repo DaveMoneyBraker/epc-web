@@ -4,7 +4,6 @@ import { EpcLogo } from "../../assets/icons/Logo";
 import {
   Backdrop,
   Box,
-  Button,
   CircularProgress,
   FormControl,
   IconButton,
@@ -15,6 +14,7 @@ import {
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import AppMutations from "../../services/mutations/AppMutations";
 import AppUtils from "../../utils/0_AppUtils";
+import { EnhancedButton } from "../1_enhanced";
 
 const Container = styled("div")({
   height: "100vh",
@@ -108,14 +108,14 @@ export const Login: React.FC = () => {
             }
           />
         </FormControl>
-        <Button
+        <EnhancedButton
           disabled={empty}
           fullWidth
           variant="contained"
           onClick={handleSubmit}
         >
           Login
-        </Button>
+        </EnhancedButton>
       </Paper>
     </Container>
   );

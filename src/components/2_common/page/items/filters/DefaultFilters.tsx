@@ -1,8 +1,9 @@
-import { Badge, Button } from "@mui/material";
+import { Badge } from "@mui/material";
 import React from "react";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { DefaultFilterDialog } from "./DefaultFilterDialog";
 import { FilterConfig, FilterValue } from "../../../../../types";
+import { EnhancedButton } from "../../../../1_enhanced";
 
 interface Props {
   configs: FilterConfig[];
@@ -29,14 +30,13 @@ export const DefaultFilters: React.FC<Props> = ({
   return (
     <>
       <Badge badgeContent={badgeContent} color="primary">
-        <Button
+        <EnhancedButton
           variant="outlined"
-          size="small"
           startIcon={<FilterAltOutlinedIcon />}
           onClick={handleClick}
         >
           filter
-        </Button>
+        </EnhancedButton>
       </Badge>
       <DefaultFilterDialog
         open={open}

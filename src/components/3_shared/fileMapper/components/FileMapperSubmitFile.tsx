@@ -1,6 +1,6 @@
 import { Box, Button, LinearProgress, styled, Typography } from "@mui/material";
 import React from "react";
-import { EnhancedTextField } from "../../../1_enhanced";
+import { EnhancedButton, EnhancedTextField } from "../../../1_enhanced";
 import { useNavigate } from "react-router-dom";
 import { LoadingBackdrop } from "../../../0_layout/Backdrops";
 
@@ -81,14 +81,13 @@ export const FileMapperSubmitFile: React.FC<Props> = ({
             value={filename}
             onChange={handleFilenameChange}
           />
-          <Button
-            size="small"
+          <EnhancedButton
             variant="contained"
             disabled={submitDisabled}
             onClick={handleSubmit}
           >
             {!error ? "Submit" : "Try Again"}
-          </Button>
+          </EnhancedButton>
           {error && (
             <Typography sx={{ alignSelf: "center" }} variant="inputError">
               Something goes wrong :(
@@ -103,12 +102,12 @@ export const FileMapperSubmitFile: React.FC<Props> = ({
       )}
       {submitted && (
         <Box>
-          <Button size="small" variant="contained" onClick={handleReset}>
+          <EnhancedButton variant="contained" onClick={handleReset}>
             Submit Another File
-          </Button>
-          <Button size="small" variant="contained" onClick={handleExit}>
+          </EnhancedButton>
+          <EnhancedButton size="small" variant="contained" onClick={handleExit}>
             Exit
-          </Button>
+          </EnhancedButton>
         </Box>
       )}
     </Wrapper>

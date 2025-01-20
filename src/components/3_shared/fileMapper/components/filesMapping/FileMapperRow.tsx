@@ -3,7 +3,7 @@ import { FileMapperPreview } from "../../../../../types";
 import { FileMapperColumn } from "./FileMapperColumn";
 import { Box, Button, styled, Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
-import { EnhancedCheckbox } from "../../../../1_enhanced";
+import { EnhancedButton, EnhancedCheckbox } from "../../../../1_enhanced";
 
 interface Props {
   preview: FileMapperPreview;
@@ -158,9 +158,9 @@ export const FileMapperRow: React.FC<Props> = ({
                   unmapped columns count: {unmappedItemsCount}
                 </Typography>
               </Box>
-              <Button variant="outlined" size="small">
+              <EnhancedButton variant="outlined">
                 skip unmapped columns
-              </Button>
+              </EnhancedButton>
             </HeaderContainer>
           )}
         </HeaderWrapper>

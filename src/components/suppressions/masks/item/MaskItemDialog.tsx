@@ -20,6 +20,7 @@ import {
 import { MaskItem } from "./MaskItem";
 import { MaskItemInfo } from "./MaskItemInfo";
 import { MaskItemExamples } from "./MaskItemExamples";
+import { EnhancedButton } from "../../../1_enhanced";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -191,21 +192,19 @@ export const SuppressionMaskItemDialog: React.FC<
         </CustomTabPanel>
       </DialogContent>
       <DialogActions>
-        <Button
-          size="small"
+        <EnhancedButton
           variant={theme.palette.mode === "light" ? "outlined" : "contained"}
           onClick={() => handleClose(false)}
         >
           Cancel
-        </Button>
-        <Button
-          size="small"
+        </EnhancedButton>
+        <EnhancedButton
           variant="contained"
           onClick={() => handleClose(true)}
           disabled={!name || !mask || !type || !valid}
         >
           Submit
-        </Button>
+        </EnhancedButton>
       </DialogActions>
     </Dialog>
   );
