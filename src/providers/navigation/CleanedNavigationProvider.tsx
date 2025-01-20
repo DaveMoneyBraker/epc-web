@@ -2,7 +2,13 @@ import React from "react";
 import { CleanedNavigationContext } from "./CleanedNavigationContext";
 import { useAccountContext } from "../account/useAccountContext";
 import { useLocation } from "react-router-dom";
-import { AppNav, AppNavCategory, ChildrenProps } from "../../types";
+import {
+  AppNav,
+  AppNavCategory,
+  AppNavNode,
+  ChildrenProps,
+  NavigationState,
+} from "../../types";
 import { useAppNav } from "../../core/router/nav";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppHooks from "../../hooks/0_AppHooks";
@@ -15,41 +21,9 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   const { permissions } = useAccountContext();
   const isAdmin = AppHooks.useIsAdmin();
 
-  const nav = React.useMemo(() => {
-    if (isAdmin) {
-      return appNav;
-    }
-    if (permissions && permissions.length) {
-      const cleanedNav: AppNav[] = [];
-      appNav.forEach((nav) => {
-        const { categories } = nav;
-        const cleanedCategories: AppNavCategory[] = [];
-        categories.forEach((category) => {
-          const { children } = category;
-          const cleanedChildren = children.filter(({ permissionsRoute }) =>
-            permissions.some(
-              ([, r, a]) =>
-                r === permissionsRoute.default &&
-                a === APP_CONSTANTS.PERMISSION_ACTIONS.READ
-            )
-          );
-          if (cleanedChildren && cleanedChildren.length) {
-            cleanedCategories.push({ ...category, children: cleanedChildren });
-          }
-        });
-        if (cleanedCategories && cleanedCategories.length) {
-          cleanedNav.push({ ...nav, categories: cleanedCategories });
-        }
-      });
-      return cleanedNav;
-    }
-    return [];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [permissions, isAdmin]);
-
   const currentNavNode = React.useMemo(() => {
     let cn = null;
-    nav.forEach((n) =>
+    appNav.forEach((n) =>
       n.categories.forEach((c) =>
         c.children.forEach((child) => {
           if (location.pathname.includes(child.appRoute)) {
@@ -59,11 +33,85 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
       )
     );
     return cn;
-  }, [nav, location]);
+  }, [appNav, location]);
+
+  const navigationState = React.useMemo<NavigationState>(() => {
+    if (isAdmin) {
+      return {
+        nav: appNav,
+        currentNavNode,
+        forbiddenNodes: [],
+      };
+    }
+
+    if (permissions && permissions.length) {
+      const cleanedNav: AppNav[] = [];
+      const forbiddenNodes: AppNavNode[] = [];
+
+      appNav.forEach((nav) => {
+        const { categories } = nav;
+        const cleanedCategories: AppNavCategory[] = [];
+
+        categories.forEach((category) => {
+          const { children } = category;
+
+          // Separate permitted and forbidden nodes
+          const { allowed, forbidden } = children.reduce<{
+            allowed: AppNavNode[];
+            forbidden: AppNavNode[];
+          }>(
+            (acc, child) => {
+              const hasPermission = permissions.some(
+                ([, route, action]) =>
+                  route === child.permissionsRoute.default &&
+                  action === APP_CONSTANTS.PERMISSION_ACTIONS.READ
+              );
+
+              if (hasPermission) {
+                acc.allowed.push(child);
+              } else {
+                acc.forbidden.push(child);
+              }
+              return acc;
+            },
+            { allowed: [], forbidden: [] }
+          );
+
+          // Add forbidden nodes to the collection
+          forbiddenNodes.push(...forbidden);
+
+          // Only add categories with allowed children
+          if (allowed.length > 0) {
+            cleanedCategories.push({ ...category, children: allowed });
+          }
+        });
+
+        if (cleanedCategories.length > 0) {
+          cleanedNav.push({ ...nav, categories: cleanedCategories });
+        }
+      });
+
+      return {
+        nav: cleanedNav,
+        currentNavNode,
+        forbiddenNodes,
+      };
+    }
+
+    return {
+      nav: [],
+      currentNavNode,
+      forbiddenNodes: [],
+    };
+  }, [isAdmin, appNav, permissions, currentNavNode]);
 
   const value = React.useMemo(
-    () => ({ nav, currentNavNode }),
-    [nav, currentNavNode]
+    () => ({
+      nav: navigationState.nav,
+      currentNavNode: navigationState.currentNavNode,
+      forbiddenNodes: navigationState.forbiddenNodes,
+    }),
+    [navigationState]
   );
 
   return (

@@ -19,6 +19,12 @@ export interface AppNavNode {
   element: React.ReactNode;
 }
 
+export interface NavigationState {
+  nav: AppNav[];
+  currentNavNode: AppNavNode | null;
+  forbiddenNodes: AppNavNode[];
+}
+
 export interface PermissionRoute {
   default: string;
   file?: string;
