@@ -1,4 +1,6 @@
 export const AppRoutes = {
+  // PAGES ROOT
+  PAGES: "/pages",
   // AUTH
   LOGIN: "/auth/login",
   // SUPPRESSIONS

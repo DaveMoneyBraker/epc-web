@@ -3,15 +3,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppNav, AppNavNode, ChildrenProps } from "../../types";
 import { AppRoutes } from "../../core/router";
 import { useCleanedNavigationContext } from "../navigation";
+import AppHooks from "../../hooks/0_AppHooks";
 
 const DEFAULT_ROUTES = ["/", "/pages", "/pages/"];
 
 export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
-  // TODO - IMPLEMENT WAITING FOR ACCOUNT DATA LOADING
   const navigate = useNavigate();
   const location = useLocation();
   const { forbiddenRoutes, nav }: { forbiddenRoutes: string[]; nav: AppNav[] } =
     useCleanedNavigationContext();
+  const initialDataLoaded = AppHooks.useInitialDataLoaded();
+
+  React.useEffect(() => {
+    console.log({ initialDataLoaded });
+  }, [initialDataLoaded]);
 
   // Get a random accessible navigation node
   const getRandomNavNode = React.useCallback((): AppNavNode | null => {
@@ -37,6 +42,8 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
 
   // Handle routing logic
   React.useEffect(() => {
+    // DO NOTHING WHILE WE DON'T HAVE ALL ACCOUNT DATA
+    if (!initialDataLoaded) return;
     const { pathname } = location;
 
     // Check if current route is forbidden

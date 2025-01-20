@@ -27,7 +27,7 @@ export const useAuth = (): I => {
         .post(ApiRoutes.LOGIN, { username, password })
         .then(({ data }: AxiosResponse<AuthToken>) => {
           setToLocalStorage(TOKEN, data);
-          navigate(AppRoutes.SUPPRESSION_EMAIL);
+          navigate(AppRoutes.PAGES);
         })
         .catch(() => {
           setError(true);
