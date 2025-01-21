@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 import { TOKEN } from "../../types";
 import { useMutation } from "@tanstack/react-query";
-import { useAxiosContext } from "../../providers/axios";
 import AppHooks from "../../hooks/0_AppHooks";
 import { ApiRoutes, AppRoutes } from "../../core/router";
 import APP_CONSTANTS from "../../constants/AppConstants";
+import ContextHooks from "../../providers/0_ContextHooks";
 
 export const useLoginMutation = (username: string, password: string) => {
   const navigate = useNavigate();
-  const { axios, loading } = useAxiosContext();
+  const { axios, loading } = ContextHooks.useAxiosContext();
   const [, setToLocalStorage] = AppHooks.useLocalStorage();
   const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
 

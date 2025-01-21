@@ -1,10 +1,10 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PaginationResponse, QueryProps } from "../../types";
-import { useAxiosContext } from "../../providers/axios";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 import AppHooks from "../../hooks/0_AppHooks";
+import ContextHooks from "../../providers/0_ContextHooks";
 
 export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
   const {
@@ -14,12 +14,12 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
     enabled = true,
     options: { transform, onSuccess, onError } = {},
   } = props;
-  const { axios } = useAxiosContext();
   const client = useQueryClient();
+  const { axios } = ContextHooks.useAxiosContext();
+  const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
   const isEnabled = React.useMemo(() => (enabled ? true : false), [enabled]);
   const [totalItems, setTotalItems] = React.useState(0);
   const [isInitialLoad, setIsInitialLoad] = React.useState(true);
-  const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
 
   const queryFn = React.useCallback(async () => {
     if (!axios) {

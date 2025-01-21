@@ -1,12 +1,12 @@
 import React from "react";
-import { useAxiosContext } from "../../providers/axios";
 import AppUtils from "../../utils/0_AppUtils";
 import { useMutation } from "@tanstack/react-query";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppHooks from "../../hooks/0_AppHooks";
+import ContextHooks from "../../providers/0_ContextHooks";
 
 export const useDownloadServerFileMutation = (apiUrl: string) => {
-  const { axios } = useAxiosContext();
+  const { axios } = ContextHooks.useAxiosContext();
   const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
 
   const mutationFn = React.useCallback(

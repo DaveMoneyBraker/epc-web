@@ -2,10 +2,10 @@ import React from "react";
 import { GridSortModel } from "@mui/x-data-grid";
 import { useRestQuery } from "./useRestQuery";
 import { isSyntheticEvent } from "../typeGuards";
-import { useAxiosContext } from "../providers/axios";
 import { AppQueryOptions, FilterValue } from "../types";
 import AppQueries from "../services/queries/AppQueries";
 import AppMutations from "../services/mutations/AppMutations";
+import ContextHooks from "../providers/0_ContextHooks";
 
 interface ReturnedValue<T = any> {
   input: {
@@ -51,7 +51,7 @@ export const useDefaultPageState = <T = any>(
   apiUrl: string,
   options?: AppQueryOptions<T>
 ): ReturnedValue<T> => {
-  const { loading: axiosLoading } = useAxiosContext();
+  const { loading: axiosLoading } = ContextHooks.useAxiosContext();
   const [selectedItem, setSelectedItem] = React.useState<T | null>(null);
   const [filterValue, setFilterValue] = React.useState<FilterValue[]>([]);
   const [itemDialogOpen, setItemDialogOpen] = React.useState(false);

@@ -1,5 +1,4 @@
 import React from "react";
-import { useCleanedNavigationContext } from "../../providers/navigation";
 import {
   QueueBody,
   QueueCounts,
@@ -19,6 +18,7 @@ import {
 import { DialogWrapper } from "../2_common/dialogs";
 import { useQueueMutation } from "./mutations";
 import { AppPagination } from "../3_shared/pagination";
+import ContextHooks from "../../providers/0_ContextHooks";
 
 type Action = "retry" | "delete" | "refresh";
 
@@ -31,7 +31,7 @@ const Wrapper = styled(Box)({
 });
 
 export const Queues: React.FC = () => {
-  const { currentNavNode } = useCleanedNavigationContext();
+  const { currentNavNode } = ContextHooks.useCleanedNavigationContext();
   const queueName = React.useMemo(
     () => currentNavNode?.apiRoute.split("=")[1] || "",
     [currentNavNode]

@@ -4,7 +4,7 @@ import { AuthToken, TOKEN } from "../types";
 import { useNavigate } from "react-router-dom";
 import { ApiRoutes, AppRoutes } from "../core/router";
 import AppHooks from "./0_AppHooks";
-import { useAxiosContext } from "../providers/axios";
+import ContextHooks from "../providers/0_ContextHooks";
 
 interface I {
   login: (value: { password: string; username: string }) => void;
@@ -15,7 +15,7 @@ interface I {
 
 export const useAuth = (): I => {
   const navigate = useNavigate();
-  const { axios, loading } = useAxiosContext();
+  const { axios, loading } = ContextHooks.useAxiosContext();
   const [, setToLocalStorage, clear] = AppHooks.useLocalStorage();
   const [error, setError] = React.useState(false);
 

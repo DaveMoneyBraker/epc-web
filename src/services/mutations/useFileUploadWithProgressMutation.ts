@@ -1,9 +1,9 @@
 import React from "react";
-import { useAxiosContext } from "../../providers/axios";
 import { FileMapperInputValue } from "../../types";
 import { AxiosProgressEvent } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import APP_CONSTANTS from "../../constants/AppConstants";
+import ContextHooks from "../../providers/0_ContextHooks";
 
 interface MutationFnProps {
   file: string;
@@ -12,7 +12,7 @@ interface MutationFnProps {
 }
 
 export const useFileUploadWithProgressMutation = (apiUrl: string) => {
-  const { axios, loading } = useAxiosContext();
+  const { axios, loading } = ContextHooks.useAxiosContext();
   const [progress, setProgress] = React.useState(0);
   const [error, setError] = React.useState(false);
   const submitted = React.useMemo(

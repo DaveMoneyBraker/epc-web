@@ -5,12 +5,11 @@ import styled from "@emotion/styled";
 import { LoadingBackdrop, OfflineBackdrop } from "./Backdrops";
 import { AppDrawer } from "./Drawer";
 import AppMutations from "../../services/mutations/AppMutations";
-import { useCleanedNavigationContext } from "../../providers/navigation";
-import { useAxiosContext } from "../../providers/axios";
 import AppHooks from "../../hooks/0_AppHooks";
 import { AppSkeleton } from "./Skeleton";
 // STYLES
 import "../../styles/variables.scss";
+import ContextHooks from "../../providers/0_ContextHooks";
 
 const Wrapper = styled("div")({
   height: "100vh",
@@ -42,10 +41,10 @@ const SkeletonWrapper = styled("div")({
 
 export const Layout: React.FC = () => {
   const location = useLocation();
-  const { loading } = useAxiosContext();
+  const { loading } = ContextHooks.useAxiosContext();
+  const { nav, currentNavNode } = ContextHooks.useCleanedNavigationContext();
   const { isFirstLoading } = AppHooks.useFirstPageLoading();
   const online = AppHooks.useIsOnline();
-  const { nav, currentNavNode } = useCleanedNavigationContext();
   const pageTitle = React.useMemo(
     () =>
       currentNavNode?.pageTitle || (loading ? "Loading..." : "Unknown page :("),

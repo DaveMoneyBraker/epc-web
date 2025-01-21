@@ -1,15 +1,15 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { useAxiosContext } from "../providers/axios";
+import ContextHooks from "../providers/0_ContextHooks";
 
 interface UseFirstPageLoadingReturn {
   isFirstLoading: boolean;
 }
 
 export const useFirstPageLoading = (): UseFirstPageLoadingReturn => {
-  const [isFirstLoading, setIsFirstLoading] = React.useState(true);
   const location = useLocation();
-  const { loading: axiosLoading } = useAxiosContext();
+  const { loading: axiosLoading } = ContextHooks.useAxiosContext();
+  const [isFirstLoading, setIsFirstLoading] = React.useState(true);
   const initialLoadCompleted = React.useRef(false);
   const currentPath = React.useRef(location.pathname);
   // DON'T SHOW SKELETON IN QUEUE ROUTE OR SUBMIT FILES PAGE

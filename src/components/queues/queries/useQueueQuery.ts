@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAxiosContext } from "../../../providers/axios";
 import { QueueResponse } from "../types";
+import ContextHooks from "../../../providers/0_ContextHooks";
 
 export const useQueueQuery = (
   apiUrl: string,
@@ -9,7 +9,7 @@ export const useQueueQuery = (
   page: number,
   queryKey: string
 ) => {
-  const { axios } = useAxiosContext();
+  const { axios } = ContextHooks.useAxiosContext();
   const client = useQueryClient();
 
   const queryFn = React.useCallback(async (): Promise<QueueResponse | null> => {

@@ -1,6 +1,6 @@
 import React from "react";
-import { useAxiosContext } from "../providers/axios";
 import { PaginationResponse } from "../types";
+import ContextHooks from "../providers/0_ContextHooks";
 
 export const useAxios = <T>(
   apiRoute: string
@@ -10,9 +10,9 @@ export const useAxios = <T>(
   loading: boolean;
   get: (query?: string) => void;
 } => {
+  const { axios, loading } = ContextHooks.useAxiosContext();
   const [items, setItems] = React.useState<T[]>([]);
   const [totalItems, setTotalItems] = React.useState(0);
-  const { axios, loading } = useAxiosContext();
 
   const get = (query = "?page=1&limit=100") => {
     axios &&

@@ -1,13 +1,13 @@
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAxiosContext } from "../../../providers/axios";
 import { ApiRoutes } from "../../../core/router";
 import { QueueStatus } from "../types";
+import ContextHooks from "../../../providers/0_ContextHooks";
 
 export const useQueueMutation = (queryKey: string) => {
-  const { axios } = useAxiosContext();
-  const apiUrl = ApiRoutes.QUEUE;
   const queryClient = useQueryClient();
+  const { axios } = ContextHooks.useAxiosContext();
+  const apiUrl = ApiRoutes.QUEUE;
 
   // DELETE ONE JOB
   const deleteJobMutationFn = React.useCallback(
