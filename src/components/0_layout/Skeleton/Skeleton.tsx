@@ -25,9 +25,9 @@ export const AppSkeleton: React.FC<TableSkeletonProps> = ({
       component={Paper}
       sx={{
         width: "100%",
-        backgroundColor: "var(--skeleton-background)",
+        backgroundColor: "background.default",
         "& .MuiSkeleton-root": {
-          backgroundColor: "var(--skeleton-highlight)",
+          backgroundColor: "palette.grey",
         },
       }}
     >

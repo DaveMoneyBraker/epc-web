@@ -1,15 +1,15 @@
 import React from "react";
-import { AppBar } from "./AppBar/AppBar";
 import { Outlet, useLocation } from "react-router-dom";
-import styled from "@emotion/styled";
+import { styled } from "@mui/material";
+import AppHooks from "../../hooks/0_AppHooks";
+import AppMutations from "../../services/mutations/AppMutations";
+import ContextHooks from "../../providers/0_ContextHooks";
+import { AppBar } from "./AppBar/AppBar";
 import { LoadingBackdrop, OfflineBackdrop } from "./Backdrops";
 import { AppDrawer } from "./Drawer";
-import AppMutations from "../../services/mutations/AppMutations";
-import AppHooks from "../../hooks/0_AppHooks";
 import { AppSkeleton } from "./Skeleton";
 // STYLES
 import "../../styles/variables.scss";
-import ContextHooks from "../../providers/0_ContextHooks";
 
 const Wrapper = styled("div")({
   height: "100vh",
@@ -29,15 +29,15 @@ const ContentWrapper = styled("div")({
   width: "100%",
 });
 
-const SkeletonWrapper = styled("div")({
+const SkeletonWrapper = styled("div")(({ theme }) => ({
   position: "absolute",
   top: 0,
   left: 0,
   right: 0,
   bottom: 0,
   padding: "16px",
-  backgroundColor: "white",
-});
+  backgroundColor: theme.palette.background.default,
+}));
 
 export const Layout: React.FC = () => {
   const location = useLocation();
@@ -82,7 +82,7 @@ export const Layout: React.FC = () => {
       {/* SIDEBAR NAVIGATION */}
       <AppDrawer nav={nav} open={open} onClose={handleDrawerClose} />
       {/* CONTENT */}
-      <Container>
+      {/* <Container>
         <ContentWrapper>
           <Outlet />
           {isFirstLoading && (
@@ -90,6 +90,14 @@ export const Layout: React.FC = () => {
               <AppSkeleton />
             </SkeletonWrapper>
           )}
+        </ContentWrapper>
+      </Container> */}
+      <Container>
+        <ContentWrapper>
+          <Outlet />
+          <SkeletonWrapper>
+            <AppSkeleton />
+          </SkeletonWrapper>
         </ContentWrapper>
       </Container>
     </Wrapper>
