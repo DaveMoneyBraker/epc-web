@@ -31,7 +31,6 @@ export const Layout: React.FC = () => {
       currentNavNode?.pageTitle || (loading ? "Loading..." : "Unknown page :("),
     [currentNavNode, loading]
   );
-  const { user } = useAccountContext();
   const { mutation: logoutMutation } = AppMutations.useLogoutMutation();
   const isSubmittingFile = React.useMemo(
     () => currentNavNode?.appRoute.includes("-submit"),
@@ -39,19 +38,6 @@ export const Layout: React.FC = () => {
   );
 
   const [open, setOpen] = React.useState(false);
-  const displayName = React.useMemo(() => {
-    if (!user) {
-      return "loading...";
-    }
-    const { firstName, lastName } = user;
-    if (firstName && lastName) {
-      return `${firstName} ${lastName}`;
-    }
-    if (!firstName || !lastName) {
-      return firstName || lastName;
-    }
-    return "no user found";
-  }, [user]);
 
   const handleDrawerClose = () => setOpen(false);
   const handleLogout = () => logoutMutation.mutate();
@@ -72,7 +58,6 @@ export const Layout: React.FC = () => {
       <AppBar
         onClick={() => setOpen(true)}
         pageTitle={pageTitle}
-        displayName={displayName}
         onLogout={handleLogout}
       />
       {/* SIDEBAR NAVIGATION */}

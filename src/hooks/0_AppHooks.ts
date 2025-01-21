@@ -14,6 +14,7 @@ import { useThemePalette } from "./useThemePalette";
 import { useIsAdmin } from "./useIsAdmin";
 import { useAxiosResponseValidator } from "./useAxiosResponseValidator";
 import { useInitialDataLoaded } from "./useInitialDataLoaded";
+import { useUserFullName } from "./useUserFullName";
 
 const AppHooks = {
   useAxios,
@@ -32,6 +33,7 @@ const AppHooks = {
   useIsAdmin,
   useAxiosResponseValidator,
   useInitialDataLoaded,
+  useUserFullName,
 } as const;
 
 export default AppHooks;

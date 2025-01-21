@@ -8,24 +8,17 @@ import {
 } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { EpcLogoMini } from "../../../assets/icons";
 import { AppBarMenu } from "./AppBarMenu";
 import { AppColorMode } from "./AppColorMode";
 import { EpcLogo } from "../../4_icons/EpcLogo";
 
 interface Props {
-  displayName: string;
   pageTitle: string;
   onClick: () => void;
   onLogout: () => void;
 }
 
-export const AppBar: React.FC<Props> = ({
-  displayName,
-  pageTitle,
-  onClick,
-  onLogout,
-}) => {
+export const AppBar: React.FC<Props> = ({ pageTitle, onClick, onLogout }) => {
   const handleLogout = () => onLogout();
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -79,7 +72,7 @@ export const AppBar: React.FC<Props> = ({
             }}
           >
             <AppColorMode />
-            <AppBarMenu displayName={displayName} onLogout={handleLogout} />
+            <AppBarMenu onLogout={handleLogout} />
           </Box>
         </Toolbar>
       </Bar>
