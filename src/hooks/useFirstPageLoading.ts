@@ -16,17 +16,17 @@ export const useFirstPageLoading = (): UseFirstPageLoadingReturn => {
   const forbiddenPathnames = React.useMemo(() => ["submit", "queue"], []);
 
   React.useEffect(() => {
-    if (
-      forbiddenPathnames.some((forbiddenPathname) =>
-        location.pathname.includes(forbiddenPathname)
-      )
-    )
-      return;
+    const isPathChanged = currentPath.current !== location.pathname;
+    const isForbiddenPathName = forbiddenPathnames.some((forbiddenPathname) =>
+      location.pathname.includes(forbiddenPathname)
+    );
+    initialLoadCompleted.current = false;
+    if (isForbiddenPathName) return;
+
     // If path changed, mark as first load for new route
-    if (currentPath.current !== location.pathname) {
+    if (isPathChanged) {
       setIsFirstLoading(true);
       currentPath.current = location.pathname;
-      initialLoadCompleted.current = false;
     }
   }, [location.pathname, forbiddenPathnames]);
 

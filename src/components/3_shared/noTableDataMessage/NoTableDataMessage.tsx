@@ -1,5 +1,7 @@
 import { InboxOutlined } from "@mui/icons-material";
 import { Box, styled, Typography } from "@mui/material";
+import React from "react";
+import AppHooks from "../../../hooks/0_AppHooks";
 
 // Styled components for the empty state
 const EmptyStateContainer = styled(Box)(({ theme }) => ({
@@ -22,16 +24,27 @@ const EmptyStateText = styled(Typography)(({ theme }) => ({
   maxWidth: "300px",
 }));
 
-export const NoTableDataMessage = ({
-  message = "No Data Available",
-}: {
+interface Props {
   message?: string;
-}) => (
-  <EmptyStateContainer>
-    <EmptyStateIcon />
-    <EmptyStateText variant="h6">{message}</EmptyStateText>
-    <EmptyStateText variant="body2" sx={{ mt: 1 }}>
-      Create new element or try adjusting your search or filters
-    </EmptyStateText>
-  </EmptyStateContainer>
-);
+}
+
+export const NoTableDataMessage: React.FC<Props> = ({
+  message = "No Data Available",
+}) => {
+  const { isFirstLoading } = AppHooks.useFirstPageLoading();
+
+  return (
+    <>
+      {isFirstLoading && <></>}
+      {!isFirstLoading && (
+        <EmptyStateContainer>
+          <EmptyStateIcon />
+          <EmptyStateText variant="h6">{message}</EmptyStateText>
+          <EmptyStateText variant="body2" sx={{ mt: 1 }}>
+            Create new element or try adjusting your search or filters
+          </EmptyStateText>
+        </EmptyStateContainer>
+      )}
+    </>
+  );
+};
