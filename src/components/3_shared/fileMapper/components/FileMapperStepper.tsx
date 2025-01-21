@@ -17,9 +17,9 @@ interface Props {
 
 const Wrapper = styled(Box)(() => ({
   width: "100%",
-  height: "calc(100vh - 70px)",
-  maxHeight: "calc(100vh - 70px)",
-  minHeight: "calc(100vh - 70px)",
+  height: "var(--content-height)",
+  maxHeight: "var(--content-height)",
+  minHeight: "var(--content-height)",
   padding: "15px 15px 0px 15px",
   display: "flex",
   flexDirection: "column",

@@ -19,7 +19,7 @@ const NotFound: React.FC = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "calc(100vh - 70px)",
+          minHeight: "var(--content-height)",
           textAlign: "center",
           gap: 2,
         }}
