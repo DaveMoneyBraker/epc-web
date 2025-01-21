@@ -82,7 +82,7 @@ export const Layout: React.FC = () => {
       {/* SIDEBAR NAVIGATION */}
       <AppDrawer nav={nav} open={open} onClose={handleDrawerClose} />
       {/* CONTENT */}
-      {/* <Container>
+      <Container>
         <ContentWrapper>
           <Outlet />
           {isFirstLoading && (
@@ -90,14 +90,6 @@ export const Layout: React.FC = () => {
               <AppSkeleton />
             </SkeletonWrapper>
           )}
-        </ContentWrapper>
-      </Container> */}
-      <Container>
-        <ContentWrapper>
-          <Outlet />
-          <SkeletonWrapper>
-            <AppSkeleton />
-          </SkeletonWrapper>
         </ContentWrapper>
       </Container>
     </Wrapper>
