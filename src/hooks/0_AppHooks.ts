@@ -15,6 +15,7 @@ import { useIsAdmin } from "./useIsAdmin";
 import { useAxiosResponseValidator } from "./useAxiosResponseValidator";
 import { useInitialDataLoaded } from "./useInitialDataLoaded";
 import { useUserFullName } from "./useUserFullName";
+import { useFirstPageLoading } from "./useFirstPageLoading";
 
 const AppHooks = {
   useAxios,
@@ -34,6 +35,7 @@ const AppHooks = {
   useAxiosResponseValidator,
   useInitialDataLoaded,
   useUserFullName,
+  useFirstPageLoading,
 } as const;
 
 export default AppHooks;

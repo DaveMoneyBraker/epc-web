@@ -8,6 +8,9 @@ import AppMutations from "../../services/mutations/AppMutations";
 import { useCleanedNavigationContext } from "../../providers/navigation";
 import { useAxiosContext } from "../../providers/axios";
 import AppHooks from "../../hooks/0_AppHooks";
+import { AppSkeleton } from "./Skeleton";
+// STYLES
+import "../../styles/variables.scss";
 
 const Wrapper = styled("div")({
   height: "100vh",
@@ -15,14 +18,32 @@ const Wrapper = styled("div")({
 });
 
 const Container = styled("div")({
-  height: "calc(100vh - 70px)",
-  maxHeight: "calc(100vh - 70px)",
+  height: "var(--content-height)",
+  maxHeight: "var(--content-height)",
   overflowY: "auto",
+  transition: "all var(--transition-duration) ease-in-out",
+});
+
+const ContentWrapper = styled("div")({
+  position: "relative",
+  height: "100%",
+  width: "100%",
+});
+
+const SkeletonWrapper = styled("div")({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  padding: "16px",
+  backgroundColor: "white",
 });
 
 export const Layout: React.FC = () => {
   const location = useLocation();
   const { loading } = useAxiosContext();
+  const { isFirstLoading } = AppHooks.useFirstPageLoading();
   const online = AppHooks.useIsOnline();
   const { nav, currentNavNode } = useCleanedNavigationContext();
   const pageTitle = React.useMemo(
@@ -63,7 +84,14 @@ export const Layout: React.FC = () => {
       <AppDrawer nav={nav} open={open} onClose={handleDrawerClose} />
       {/* CONTENT */}
       <Container>
-        <Outlet />
+        <ContentWrapper>
+          <Outlet />
+          {isFirstLoading && (
+            <SkeletonWrapper>
+              <AppSkeleton />
+            </SkeletonWrapper>
+          )}
+        </ContentWrapper>
       </Container>
     </Wrapper>
   );
