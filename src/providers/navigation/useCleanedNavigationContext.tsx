@@ -1,7 +1,8 @@
 import React from "react";
 import { CleanedNavigationContext } from "./CleanedNavigationContext";
+import { NavigationState } from "../../types";
 
-export const useCleanedNavigationContext = () => {
+export const useCleanedNavigationContext = (): NavigationState => {
   const value = React.useContext(CleanedNavigationContext);
   if (!value) {
     throw new Error(

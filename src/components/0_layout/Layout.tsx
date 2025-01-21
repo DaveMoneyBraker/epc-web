@@ -7,7 +7,6 @@ import { AppDrawer } from "./Drawer";
 import AppMutations from "../../services/mutations/AppMutations";
 import { useCleanedNavigationContext } from "../../providers/navigation";
 import { useAxiosContext } from "../../providers/axios";
-import { useAccountContext } from "../../providers/account/useAccountContext";
 import AppHooks from "../../hooks/0_AppHooks";
 
 const Wrapper = styled("div")({
@@ -18,7 +17,7 @@ const Wrapper = styled("div")({
 const Container = styled("div")({
   height: "calc(100vh - 70px)",
   maxHeight: "calc(100vh - 70px)",
-  overflow: "scroll",
+  overflowY: "auto",
 });
 
 export const Layout: React.FC = () => {
