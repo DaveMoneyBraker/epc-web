@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, Paper, styled, Typography } from "@mui/material";
+import { Paper, styled, Typography } from "@mui/material";
 import { PageInfo } from "./types";
 import AppHooks from "../../hooks/0_AppHooks";
+import { EnhancedLink } from "../1_enhanced";
 
 const Wrapper = styled(Paper)(({ theme }) => ({
   display: "flex",
@@ -37,9 +38,9 @@ export const InfoCard: React.FC<Props> = ({ pageInfo }) => {
   );
   return (
     <Wrapper elevation={8}>
-      <Typography variant="h6" component="h2" sx={{ width: "100%" }}>
-        <Link href={appRoute}>{title}</Link>
-      </Typography>
+      <EnhancedLink to={appRoute} sx={{ width: "100%" }}>
+        <Typography variant="h5">{title}</Typography>
+      </EnhancedLink>
       <ScrollableContent>
         <Typography variant="body2" sx={{ textAlign: "left" }}>
           {description}

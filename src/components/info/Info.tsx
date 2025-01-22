@@ -10,11 +10,8 @@ export const Info: React.FC = () => {
     <Box sx={{ flexGrow: 1, padding: "15px" }}>
       <Grid container spacing={2}>
         {pagesInfo.map((pageInfo, index) => (
-          <Grid size={4}>
-            <InfoCard
-              pageInfo={pageInfo}
-              key={`${pageInfo.appRoute}-${index}`}
-            />
+          <Grid size={4} key={`${pageInfo.appRoute}-${index}`}>
+            <InfoCard pageInfo={pageInfo} />
           </Grid>
         ))}
       </Grid>
