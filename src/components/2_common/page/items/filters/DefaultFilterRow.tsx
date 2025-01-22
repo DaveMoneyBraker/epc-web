@@ -12,7 +12,6 @@ import {
   NUMBER_COMPARISON_OPERATORS,
   TitleValueObject,
 } from "../../../../../types";
-import styled from "@emotion/styled";
 import {
   Box,
   FormControl,
@@ -20,6 +19,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  styled,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AppUtils from "../../../../../utils/0_AppUtils";

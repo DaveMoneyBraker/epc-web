@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "@emotion/styled";
 import { EpcLogo } from "../../assets/icons/Logo";
 import {
   Backdrop,
@@ -10,6 +9,7 @@ import {
   Input,
   InputAdornment,
   InputLabel,
+  styled,
 } from "@mui/material";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import AppMutations from "../../services/mutations/AppMutations";

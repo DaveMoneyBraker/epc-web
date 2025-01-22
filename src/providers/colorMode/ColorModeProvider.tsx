@@ -1,7 +1,6 @@
 import React from "react";
 import { ColorModeContext } from "./ColorModeContext";
-import { ThemeProvider } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ChildrenProps } from "../../types";
 import { useAppLightTheme } from "../../core/mui";
 import AppHooks from "../../hooks/0_AppHooks";
