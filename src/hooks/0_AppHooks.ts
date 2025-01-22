@@ -16,6 +16,7 @@ import { useAxiosResponseValidator } from "./useAxiosResponseValidator";
 import { useInitialDataLoaded } from "./useInitialDataLoaded";
 import { useUserFullName } from "./useUserFullName";
 import { useFirstPageLoading } from "./useFirstPageLoading";
+import { useDebounce } from "./useDebounce";
 
 const AppHooks = {
   useAxios,
@@ -36,6 +37,7 @@ const AppHooks = {
   useInitialDataLoaded,
   useUserFullName,
   useFirstPageLoading,
+  useDebounce,
 } as const;
 
 export default AppHooks;

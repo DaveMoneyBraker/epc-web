@@ -1,6 +1,5 @@
 import React from "react";
-import { InputAdornment, styled, TextField } from "@mui/material";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { styled } from "@mui/material";
 import { DefaultFilters } from "./filters";
 import {
   DefaultPageActions,
@@ -8,8 +7,8 @@ import {
   FilterValue,
 } from "../../../../types";
 import { useLocation, useNavigate } from "react-router-dom";
-import AppHooks from "../../../../hooks/0_AppHooks";
 import { EnhancedButton } from "../../../1_enhanced";
+import { DebounceSearch } from "../../../3_shared/debounceSearch";
 
 const Wrapper = styled("div")(() => ({
   width: "100%",
@@ -32,7 +31,6 @@ const ElWrapper = styled("div")(() => ({
 
 interface Props {
   actions: DefaultPageActions[];
-  inputValue: string;
   itemName: string;
   filterConfigs: FilterConfig[];
   filterState: FilterValue[];
@@ -43,7 +41,6 @@ interface Props {
 
 export const DefaultActionsRow: React.FC<Props> = ({
   actions,
-  inputValue,
   itemName,
   filterConfigs,
   filterState,
@@ -68,7 +65,10 @@ export const DefaultActionsRow: React.FC<Props> = ({
     [location]
   );
 
-  const handleInputChange = AppHooks.useInputChangeHandler(onChange);
+  const handleInputChange = React.useCallback(
+    (value: string) => onChange(value),
+    [onChange]
+  );
 
   const handleFiltersDialogClose = React.useCallback(
     (filters?: FilterValue[]) => {
@@ -97,22 +97,7 @@ export const DefaultActionsRow: React.FC<Props> = ({
             Create
           </EnhancedButton>
         )}
-        <TextField
-          variant="standard"
-          value={inputValue}
-          id="search-input"
-          placeholder={itemName}
-          onChange={handleInputChange}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchOutlinedIcon />
-                </InputAdornment>
-              ),
-            },
-          }}
-        />
+        <DebounceSearch itemName={itemName} onChange={handleInputChange} />
       </ElWrapper>
       <ElWrapper>
         <DefaultFilters

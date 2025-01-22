@@ -62,7 +62,7 @@ export const CommonPage: React.FC<Props> = ({
       handleDeleteBtnClicked,
       handleDeleteDialogClose,
     },
-    input: { value: inputValue, setValue: setInputValue },
+    input: { setValue: setInputValue },
     sort: { setValue: setSortModel },
     pagination: { value: paginationModel, setValue: setPaginationModel },
     filter: { value: filterState, setValue: setFilterState },
@@ -110,7 +110,6 @@ export const CommonPage: React.FC<Props> = ({
       <Wrapper>
         <DefaultActionsRow
           actions={filteredByPermissionActions}
-          inputValue={inputValue}
           itemName={itemName}
           filterConfigs={filterConfigs}
           filterState={filterState}
