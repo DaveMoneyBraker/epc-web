@@ -1,6 +1,6 @@
 import React from "react";
-import axios from "axios";
-import { redirect } from "react-router-dom";
+import axios, { CancelTokenSource } from "axios";
+import { redirect, useLocation } from "react-router-dom";
 import { AxiosContext } from "./AxiosContext";
 import { encodeConfigURI } from "./encodeConfigURI";
 import AppHooks from "../../hooks/0_AppHooks";
@@ -24,6 +24,10 @@ interface QueueItem {
 }
 
 export const AxiosProvider: React.FC<Props> = ({ children }) => {
+  const location = useLocation();
+  const getApiUrl = AppHooks.useApiUrlLoader();
+  const [get] = AppHooks.useLocalStorage();
+  const showNotification = AppHooks.useNotification();
   const PROTECTED_ROUTES = React.useMemo(
     () => [
       ApiRoutes.CURRENT_USER,
@@ -34,14 +38,14 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     ],
     []
   );
-  const getApiUrl = AppHooks.useApiUrlLoader();
-  const [get] = AppHooks.useLocalStorage();
-  const showNotification = AppHooks.useNotification();
   const [pendingRequestsCount, setPendingRequestsCount] = React.useState(0);
   const requestQueue = React.useRef<QueueItem[]>([]);
   const cache = React.useRef<Map<string, CacheItem>>(new Map());
   const CACHE_DURATION = React.useMemo(() => 5 * 60 * 1000, []); // 5 minutes
   const initialDataLoaded = AppHooks.useInitialDataLoaded();
+  const activeRequests = React.useRef<Map<string, CancelTokenSource>>(
+    new Map()
+  );
 
   const loading = React.useMemo(
     () => pendingRequestsCount > 0,
@@ -52,6 +56,16 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     (v: number) => setPendingRequestsCount((prev) => Math.max(0, prev + v)),
     [setPendingRequestsCount]
   );
+
+  const cancelPendingRequests = React.useCallback(() => {
+    activeRequests.current.forEach((source, url) => {
+      if (!PROTECTED_ROUTES.includes(url)) {
+        updateRequestsCount(-1);
+        source.cancel("Request cancelled due to page navigation");
+        activeRequests.current.delete(url);
+      }
+    });
+  }, [PROTECTED_ROUTES, updateRequestsCount]);
 
   const clearCache = React.useCallback(() => {
     const now = Date.now();
@@ -95,7 +109,10 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
   const handleAxiosError = React.useCallback(
     (error: any) => {
       // DON'T SHOW NOTIFICATION IF REQUEST WAS CANCELED BY OUR SIGNAL
-      if (error.code === "ERR_CANCELED") return;
+      if (error.code === "ERR_CANCELED" || axios.isCancel(error)) {
+        console.log("Request canceled:", error.message);
+        return;
+      }
       console.log("RESPONSE ERROR: ", { error });
 
       const errorMessage =
@@ -158,6 +175,13 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
         apiToken && apiToken.token ? `Bearer ${apiToken.token}` : "";
     }
 
+    // TRACK NON INITIAL REQUEST TO FURTHER CANCELING THEM ON PAGE CHANGE
+    if (config.url && !PROTECTED_ROUTES.includes(config.url)) {
+      const source = axios.CancelToken.source();
+      config.cancelToken = source.token;
+      activeRequests.current.set(config.url, source);
+    }
+
     // UNLESS IT'S ACCOUNT, USER OR AUTH REQUEST
     // PUT REQUEST IN QUEUE
     if (
@@ -199,6 +223,11 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     (response) => {
       updateRequestsCount(-1);
 
+      // DELETE REQUEST FROM ACTIVE REQUESTS
+      if (response.config.url) {
+        activeRequests.current.delete(response.config.url);
+      }
+
       // CACHE GET RESPONSE
       if (
         response.config.method === "get" &&
@@ -227,6 +256,10 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     (error) => {
       updateRequestsCount(-1);
       handleAxiosError(error);
+      // DELETE REQUEST FROM ACTIVE REQUESTS
+      if (error.config?.url) {
+        activeRequests.current.delete(error.config.url);
+      }
       return Promise.reject(error);
     }
   );
@@ -245,6 +278,11 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     }),
     [instance, loading]
   );
+
+  // CANCEL PENDING REQUESTS ON LOCATION CHANGE
+  React.useEffect(() => {
+    cancelPendingRequests();
+  }, [location, cancelPendingRequests]);
 
   return (
     <AxiosContext.Provider value={contextValue}>

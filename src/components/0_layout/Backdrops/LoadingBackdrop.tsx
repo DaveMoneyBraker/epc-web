@@ -7,7 +7,12 @@ interface Props {
 
 export const LoadingBackdrop: React.FC<Props> = ({ loading }) => (
   <Backdrop
-    sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+    sx={(theme) => ({
+      color: "#fff",
+      zIndex: 100,
+      height: "var(--content-height)",
+      marginTop: "70px",
+    })}
     open={loading}
   >
     <CircularProgress />
