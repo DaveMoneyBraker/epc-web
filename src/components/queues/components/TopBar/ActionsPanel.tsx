@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
-import { QueueStatus } from "../../types";
+import { QueueCounts, QueueStatus } from "../../types";
 import styled from "styled-components";
 import { EnhancedButton } from "../../../1_enhanced";
 
@@ -10,6 +10,7 @@ type Action = "retry" | "delete" | "refresh";
 
 interface Props {
   status: QueueStatus;
+  counts: QueueCounts | null;
   onAction: (action: Action) => void;
 }
 
@@ -20,17 +21,24 @@ const Wrapper = styled(Box)({
   justifyContent: "space-between",
 });
 
-export const ActionsPanel: React.FC<Props> = ({ status, onAction }) => {
+export const ActionsPanel: React.FC<Props> = ({ status, counts, onAction }) => {
   const handleAction = React.useCallback(
     (action: Action) => onAction(action),
     [onAction]
   );
+
+  const disabled = React.useMemo(
+    () => !counts || counts[status] === 0,
+    [counts, status]
+  );
+
   return (
     <Wrapper>
       <EnhancedButton
         variant="outlined"
         startIcon={<CachedOutlinedIcon />}
         onClick={() => handleAction("refresh")}
+        disabled={disabled}
       >
         refresh data
       </EnhancedButton>
@@ -40,6 +48,7 @@ export const ActionsPanel: React.FC<Props> = ({ status, onAction }) => {
           color="warning"
           startIcon={<ReplayOutlinedIcon />}
           onClick={() => handleAction("retry")}
+          disabled={disabled}
         >
           retry all jobs
         </EnhancedButton>
@@ -49,6 +58,7 @@ export const ActionsPanel: React.FC<Props> = ({ status, onAction }) => {
         color="error"
         startIcon={<ReplayOutlinedIcon />}
         onClick={() => handleAction("delete")}
+        disabled={disabled}
       >
         delete all {status} jobs
       </EnhancedButton>

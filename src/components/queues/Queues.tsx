@@ -30,6 +30,24 @@ const Wrapper = styled(Box)({
   overflow: "hidden",
 });
 
+const mockedStats: QueueStatsInterface = {
+  blocked_clients: "0",
+  connected_clients: "0",
+  mem_fragmentation_ratio: "0",
+  redis_version: "?",
+  total_system_memory: "1",
+  used_memory: "0",
+};
+
+const mockedCounts: Omit<QueueCounts, "latest"> = {
+  active: 0,
+  completed: 0,
+  delayed: 0,
+  failed: 0,
+  paused: 0,
+  waiting: 0,
+};
+
 export const Queues: React.FC = () => {
   const { currentNavNode } = ContextHooks.useCleanedNavigationContext();
   const queueName = React.useMemo(
@@ -50,14 +68,16 @@ export const Queues: React.FC = () => {
     deleteAllJobsMutation,
     retryAllJobsMutation,
   } = useQueueMutation(queryKey);
-  const [stats, setStats] = React.useState<QueueStatsInterface | null>(null);
+  const [stats, setStats] = React.useState<QueueStatsInterface | null>(
+    mockedStats
+  );
   const [queue, setQueue] = React.useState<QueueBody | null>(null);
   const jobs = React.useMemo<QueueJob[]>(
     () => (queue ? queue.jobs : []),
     [queue]
   );
   const counts = React.useMemo<QueueCounts | null>(
-    () => (queue ? queue.counts : null),
+    () => (queue ? queue.counts : (mockedCounts as QueueCounts)),
     [queue]
   );
   const [deleteOpen, setDeleteOpen] = React.useState(false);
@@ -159,7 +179,7 @@ export const Queues: React.FC = () => {
       setStats(data.stats);
       setQueue(data.queues);
     } else {
-      setStats(null);
+      setStats(mockedStats);
       setQueue(null);
     }
   }, [data]);
@@ -175,7 +195,12 @@ export const Queues: React.FC = () => {
             zIndex: 1100,
           }}
         >
-          <QueueTopBar stats={stats} status={status} onAction={handleAction} />
+          <QueueTopBar
+            stats={stats}
+            status={status}
+            counts={counts}
+            onAction={handleAction}
+          />
           <StatusBar
             selectedStatus={status}
             counts={counts}
