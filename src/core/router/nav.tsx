@@ -4,12 +4,13 @@ import { ApiRoutes } from "./apiRoutes";
 import { AppRoutes } from "./appRoutes";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import { QUEUES } from "../../components/queues";
+import { AppNav, AppNavCategory } from "../../types";
 import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import QueueIcon from "@mui/icons-material/Queue";
 import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
-import { AppNav, AppNavCategory } from "../../types";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 export const useAppNav = (): AppNav[] => {
   // SUPPRESSIONS
@@ -51,10 +52,8 @@ export const useAppNav = (): AppNav[] => {
     () => import("../../pages/dnsbl/SubmitBlacklistDomainsPage")
   );
 
-  // NOT FOUND PAGE
-  const NotFoundPage = React.lazy(
-    () => import("../../pages/notFound/NotFoundPage")
-  );
+  // INFO PAGE
+  const InfoPage = React.lazy(() => import("../../pages/info/InfoPage"));
 
   // QUEUES
   const QueuesPage = React.lazy(() => import("../../pages/queues/QueuesPage"));
@@ -110,6 +109,31 @@ export const useAppNav = (): AppNav[] => {
   }, [QueuesPage]);
 
   return [
+    // INFO
+    {
+      title: "Info",
+      icon: <InfoOutlinedIcon />,
+      path: "info",
+      categories: [
+        {
+          title: "main",
+          children: [
+            {
+              title: APP_CONSTANTS.PAGE_TITLES.INFO,
+              pageTitle: APP_CONSTANTS.PAGE_TITLES.INFO,
+              apiRoute: "",
+              appRoute: AppRoutes.INFO,
+              permissionsRoute: PermissionRoutes.ALLOW_ALL,
+              element: (
+                <React.Suspense>
+                  <InfoPage />
+                </React.Suspense>
+              ),
+            },
+          ],
+        },
+      ],
+    },
     // SUPPRESSIONS
     {
       title: "SUPPRESSION",

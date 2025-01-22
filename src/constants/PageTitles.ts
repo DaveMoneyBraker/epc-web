@@ -1,4 +1,7 @@
 export const PAGE_TITLES = {
+  // INFO
+  INFO: "Information",
+  // AUTH
   LOGIN: "LOGIN",
   // SUPPRESSIONS
   SUPPRESSION_EMAIL: "Suppression Emails",

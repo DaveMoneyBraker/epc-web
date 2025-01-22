@@ -1,0 +1,23 @@
+import React from "react";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid2";
+import { InfoCard } from "./InfoCard";
+import { useCleanedPagesInfo } from "./hooks/useCleanedPagesInfo";
+
+export const Info: React.FC = () => {
+  const pagesInfo = useCleanedPagesInfo();
+  return (
+    <Box sx={{ flexGrow: 1, padding: "15px" }}>
+      <Grid container spacing={2}>
+        {pagesInfo.map((pageInfo, index) => (
+          <Grid size={4}>
+            <InfoCard
+              pageInfo={pageInfo}
+              key={`${pageInfo.appRoute}-${index}`}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+};

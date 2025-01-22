@@ -5,6 +5,10 @@ export const PermissionRoutes: { [key: string]: PermissionRoute } = {
   ADMIN: {
     default: "admin-only",
   },
+  // ALLOW ALL
+  ALLOW_ALL: {
+    default: "allow-all",
+  },
   // SUPPRESSIONS
   SUPPRESSION_EMAIL: {
     default: "email-validation:suppression-email",

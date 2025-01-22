@@ -1,8 +1,10 @@
 export const AppRoutes = {
-  // PAGES ROOT
-  PAGES: "/pages",
   // AUTH
   LOGIN: "/auth/login",
+  // PAGES ROOT
+  PAGES: "/pages",
+  // INFO
+  INFO: "/pages/info/main",
   // SUPPRESSIONS
   SUPPRESSION_EMAIL: "/pages/suppression/email",
   SUPPRESSION_DOMAIN: "/pages/suppression/domain",

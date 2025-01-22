@@ -12,6 +12,7 @@ import {
 import { useAppNav } from "../../core/router/nav";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppHooks from "../../hooks/0_AppHooks";
+import { PermissionRoutes } from "../../core/router";
 
 export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   children,
@@ -36,13 +37,13 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   }, [appNav, location]);
 
   const navigationState = React.useMemo<NavigationState>(() => {
-    // if (isAdmin) {
-    //   return {
-    //     nav: appNav,
-    //     currentNavNode,
-    //     forbiddenRoutes: [],
-    //   };
-    // }
+    if (isAdmin) {
+      return {
+        nav: appNav,
+        currentNavNode,
+        forbiddenRoutes: [],
+      };
+    }
 
     if (permissions && permissions.length) {
       const cleanedNav: AppNav[] = [];
@@ -63,8 +64,10 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
             (acc, child) => {
               const hasPermission = permissions.some(
                 ([, route, action]) =>
-                  route === child.permissionsRoute.default &&
-                  action === APP_CONSTANTS.PERMISSION_ACTIONS.READ
+                  child.permissionsRoute.default ===
+                    PermissionRoutes.ALLOW_ALL.default ||
+                  (route === child.permissionsRoute.default &&
+                    action === APP_CONSTANTS.PERMISSION_ACTIONS.READ)
               );
 
               if (hasPermission) {
