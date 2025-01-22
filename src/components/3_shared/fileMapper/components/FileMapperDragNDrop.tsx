@@ -1,12 +1,20 @@
 import React from "react";
-import { IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Paper,
+  Stack,
+  LinearProgress,
+  List,
+  ListItem,
+  ListItemText,
+  styled,
+} from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ClearIcon from "@mui/icons-material/Clear";
 import APP_CONSTANTS from "../../../../constants/AppConstants";
 import AppHooks from "../../../../hooks/0_AppHooks";
-// STYLES
-import "../styles/drag-drop.scss";
-import "../styles/dark-drag-drop.scss";
 
 interface Props {
   fileSizeLimit: number;
@@ -15,6 +23,30 @@ interface Props {
   onFileDelete: (index: number) => void;
 }
 
+// Styled components for the drag and drop area
+const DropZone = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  border: `2px dashed ${theme.palette.divider}`,
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: theme.palette.background.default,
+  cursor: "pointer",
+  transition: "all 0.3s ease-in-out",
+  "&:hover": {
+    borderColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&.active": {
+    borderColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.action.selected,
+  },
+}));
+
+// Styled component for the scrollable file list
+const ScrollableFileList = styled(List)({
+  maxHeight: "200px",
+  overflow: "auto",
+});
+
 export const FileMapperDragNDrop: React.FC<Props> = ({
   fileSizeLimit,
   selectedFiles,
@@ -22,6 +54,8 @@ export const FileMapperDragNDrop: React.FC<Props> = ({
   onFileDelete,
 }) => {
   const notification = AppHooks.useNotification();
+  const [isDragging, setIsDragging] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const getFilesArrayMBSize = React.useCallback(
     (files: File[]) =>
@@ -36,6 +70,8 @@ export const FileMapperDragNDrop: React.FC<Props> = ({
     () => getFilesArrayMBSize(selectedFiles),
     [selectedFiles, getFilesArrayMBSize]
   );
+
+  const usedSpacePercentage = (totalFilesSize / fileSizeLimit) * 100;
 
   const isEmpty = React.useCallback(
     (files: File[]) => files.some((f) => f.size === 0),
@@ -54,16 +90,15 @@ export const FileMapperDragNDrop: React.FC<Props> = ({
     (newFiles: File[]) => {
       const newFilesNames = newFiles.map((file) => file.name);
 
-      // CHECK FOR FILE TYPE JUST BY CHECKING END OF FILENAME
       if (!newFilesNames.every((name) => name.endsWith(".csv"))) {
         return notification(
           "Wrong File Type! .csv Only!",
           APP_CONSTANTS.NOTIFICATION_VARIANTS.WARNING
         );
       }
+
       const oldFileNames = selectedFiles.map((file) => file.name);
 
-      // CHECKING IS FILE ALREADY DROPPED BY FILENAMES
       if (
         newFilesNames.some((newName) =>
           oldFileNames.some((oldName) => oldName === newName)
@@ -75,7 +110,6 @@ export const FileMapperDragNDrop: React.FC<Props> = ({
         );
       }
 
-      // CHECK IS EMPTY (EMPTY FILE WILL BROKE PAPAPARSE)
       if (isEmpty(newFiles)) {
         return notification(
           "Some of your files is empty!",
@@ -83,7 +117,6 @@ export const FileMapperDragNDrop: React.FC<Props> = ({
         );
       }
 
-      // CHECK FILE SIZE LIMIT
       if (!isFileSizeLegit(newFiles)) {
         return notification(
           "The Total File Size Exceeds the Limit!",
@@ -97,8 +130,9 @@ export const FileMapperDragNDrop: React.FC<Props> = ({
   );
 
   const handleDrop = React.useCallback(
-    (event: any) => {
+    (event: React.DragEvent) => {
       event.preventDefault();
+      setIsDragging(false);
       const droppedFiles = event.dataTransfer.files;
       if (droppedFiles.length > 0) {
         const newFiles = Array.from(droppedFiles) as File[];
@@ -108,54 +142,159 @@ export const FileMapperDragNDrop: React.FC<Props> = ({
     [proceedFiles]
   );
 
-  const handleRemoveFile = React.useCallback(
+  const handleDragOver = React.useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+      setIsDragging(true);
+    },
+    [setIsDragging]
+  );
+
+  const handleDragLeave = React.useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+      setIsDragging(false);
+    },
+    [setIsDragging]
+  );
+
+  const handleClick = React.useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    const current = inputRef.current;
+    if (current) {
+      current.click();
+    }
+  }, []);
+
+  const handleFilesSelected = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      event.preventDefault();
+      setIsDragging(false);
+      const {
+        currentTarget: { files: browserFiles },
+      } = event;
+      if (browserFiles && browserFiles.length > 0) {
+        const newFiles = Array.from(browserFiles) as File[];
+        proceedFiles(newFiles);
+      }
+    },
+    [setIsDragging, proceedFiles]
+  );
+
+  const handleFileDelete = React.useCallback(
     (index: number) => onFileDelete(index),
     [onFileDelete]
   );
 
   return (
-    <section className="drag-drop">
-      <div
-        className={`document-uploader ${
-          selectedFiles.length > 0 ? "upload-box active" : "upload-box"
-        }`}
-        onDrop={handleDrop}
-        onDragOver={(event) => event.preventDefault()}
-      >
-        <div className="upload-info">
-          <CloudUploadIcon />
-          <div>
-            <p>Drag and drop your files here</p>
-            <p>Limit 15MB total.</p>
-            <p>.CSV FILES ONLY!</p>
-          </div>
-        </div>
+    <Box
+      sx={{
+        width: "100%",
+        height: "100%", // Full viewport height
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        p: 3,
+      }}
+    >
+      <Box sx={{ width: "100%", maxWidth: 600 }}>
+        <input
+          ref={inputRef}
+          style={{ display: "none" }}
+          type="file"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          onChange={handleFilesSelected}
+        />
+        <DropZone
+          className={isDragging ? "active" : ""}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onClick={handleClick}
+        >
+          <Stack spacing={2} alignItems="center">
+            <CloudUploadIcon sx={{ fontSize: 48, color: "primary.main" }} />
+            <Stack spacing={1} alignItems="center">
+              <Typography variant="h6">
+                Drag and drop your files here
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Or click and chose files from browser
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Limit {fileSizeLimit}MB total. CSV files only.
+              </Typography>
+            </Stack>
+          </Stack>
+        </DropZone>
 
         {selectedFiles.length > 0 && (
-          <div className="file-list">
-            <div className="file-list__container">
-              <div className="file-list__size">
-                <p>Total file's size: {totalFilesSize}MB</p>
-                <p>
-                  Size left: {(fileSizeLimit - totalFilesSize).toFixed(2)}MB
-                </p>
-              </div>
-              {selectedFiles.map((file, index) => (
-                <div className="file-item" key={index}>
-                  <div className="file-info">
-                    <p>{file.name}</p>
-                  </div>
-                  <div className="file-actions">
-                    <IconButton onClick={() => handleRemoveFile(index)}>
-                      <ClearIcon />
-                    </IconButton>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <Box
+            sx={{
+              mt: 3,
+              backgroundColor: "background.paper",
+              borderRadius: 1,
+              p: 2,
+              boxShadow: 1,
+            }}
+          >
+            <Stack spacing={2}>
+              <Box>
+                <Typography variant="subtitle2" gutterBottom>
+                  Storage Usage
+                </Typography>
+                <LinearProgress
+                  variant="determinate"
+                  value={usedSpacePercentage}
+                  sx={{ height: 8, borderRadius: 1 }}
+                />
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{ mt: 1 }}
+                >
+                  <Typography variant="caption">
+                    Used: {totalFilesSize.toFixed(2)}MB
+                  </Typography>
+                  <Typography variant="caption">
+                    Available: {(fileSizeLimit - totalFilesSize).toFixed(2)}MB
+                  </Typography>
+                </Stack>
+              </Box>
+
+              <ScrollableFileList>
+                {selectedFiles.map((file, index) => (
+                  <ListItem
+                    key={index}
+                    sx={{
+                      bgcolor: "background.paper",
+                      borderRadius: 1,
+                      mb: 1,
+                      "&:last-child": {
+                        mb: 0,
+                      },
+                    }}
+                    secondaryAction={
+                      <IconButton
+                        edge="end"
+                        onClick={() => handleFileDelete(index)}
+                        size="small"
+                      >
+                        <ClearIcon />
+                      </IconButton>
+                    }
+                  >
+                    <ListItemText
+                      primary={file.name}
+                      secondary={`${(file.size / (1024 * 1024)).toFixed(2)} MB`}
+                    />
+                  </ListItem>
+                ))}
+              </ScrollableFileList>
+            </Stack>
+          </Box>
         )}
-      </div>
-    </section>
+      </Box>
+    </Box>
   );
 };
