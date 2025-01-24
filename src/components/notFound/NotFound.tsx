@@ -53,7 +53,6 @@ const NotFound: React.FC = () => {
         </Typography>
 
         <EnhancedButton
-          variant="contained"
           size="large"
           onClick={handleGoHome}
           sx={{

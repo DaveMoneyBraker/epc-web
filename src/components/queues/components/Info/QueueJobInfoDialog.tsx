@@ -114,9 +114,7 @@ export const QueueJobInfoDialog: React.FC<Props> = ({ open, job, onClose }) => {
             {selectedItem && formatJson(selectedItem)}
           </DialogContent>
           <DialogActions sx={{ justifyContent: "flex-end !important" }}>
-            <EnhancedButton onClick={() => handleClose()} variant="contained">
-              close
-            </EnhancedButton>
+            <EnhancedButton onClick={() => handleClose()}>close</EnhancedButton>
           </DialogActions>
         </Dialog>
       )}

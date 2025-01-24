@@ -64,16 +64,11 @@ export const EnhancedStepper: React.FC<Props> = ({ configs }) => {
             padding: "15px 0",
           }}
         >
-          <EnhancedButton
-            variant="contained"
-            onClick={handleBack}
-            sx={{ mr: 1 }}
-          >
+          <EnhancedButton onClick={handleBack} sx={{ mr: 1 }}>
             back
           </EnhancedButton>
           {activeStep + 1 !== stepsLength && (
             <EnhancedButton
-              variant="contained"
               onClick={handleNext}
               disabled={!activeStepCompleted}
             >

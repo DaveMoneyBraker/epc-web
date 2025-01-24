@@ -93,7 +93,7 @@ export const DefaultActionsRow: React.FC<Props> = ({
     <Wrapper>
       <ElWrapper>
         {create && (
-          <EnhancedButton variant="contained" onClick={handleCreateBtnClicked}>
+          <EnhancedButton onClick={handleCreateBtnClicked}>
             Create
           </EnhancedButton>
         )}
@@ -106,7 +106,7 @@ export const DefaultActionsRow: React.FC<Props> = ({
           onClose={handleFiltersDialogClose}
         />
         {submit && (
-          <EnhancedButton variant="contained" onClick={handleGotToSubmitPage}>
+          <EnhancedButton onClick={handleGotToSubmitPage}>
             Submit File
           </EnhancedButton>
         )}

@@ -58,11 +58,7 @@ export const DialogWrapper: React.FC<Props> = ({
         >
           {cancelBtnText}
         </EnhancedButton>
-        <EnhancedButton
-          variant="contained"
-          onClick={() => onClose(true)}
-          disabled={disabled}
-        >
+        <EnhancedButton onClick={() => onClose(true)} disabled={disabled}>
           Submit
         </EnhancedButton>
       </DialogActions>

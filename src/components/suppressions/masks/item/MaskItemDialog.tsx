@@ -199,7 +199,6 @@ export const SuppressionMaskItemDialog: React.FC<
           Cancel
         </EnhancedButton>
         <EnhancedButton
-          variant="contained"
           onClick={() => handleClose(true)}
           disabled={!name || !mask || !type || !valid}
         >

@@ -108,12 +108,7 @@ export const Login: React.FC = () => {
             }
           />
         </FormControl>
-        <EnhancedButton
-          disabled={empty}
-          fullWidth
-          variant="contained"
-          onClick={handleSubmit}
-        >
+        <EnhancedButton disabled={empty} fullWidth onClick={handleSubmit}>
           Login
         </EnhancedButton>
       </Paper>
