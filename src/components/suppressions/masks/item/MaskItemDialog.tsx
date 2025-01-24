@@ -8,7 +8,6 @@ import {
 } from "../../../../types";
 import {
   Box,
-  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -59,6 +58,10 @@ export const SuppressionMaskItemDialog: React.FC<
   const [testStatus, setTestStatus] = React.useState<
     null | "valid" | "invalid"
   >(null);
+  const title = React.useMemo<string>(
+    () => (selectedItem ? "Edit Mask" : "Create Mask"),
+    [selectedItem]
+  );
   // DIALOG
   const Dialog = React.useMemo(() => dialogFunction(true), []);
   const theme = useTheme();
@@ -165,7 +168,7 @@ export const SuppressionMaskItemDialog: React.FC<
           }}
         >
           <Tabs value={tabIndex} onChange={handleTabChange} variant="fullWidth">
-            <Tab label="Create Mask" {...a11yProps(0)} />
+            <Tab label={title} {...a11yProps(0)} />
             <Tab label="Info" {...a11yProps(1)} />
             <Tab label="Examples" {...a11yProps(2)} />
           </Tabs>
