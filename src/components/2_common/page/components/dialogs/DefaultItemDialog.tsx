@@ -181,18 +181,27 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
                       type={itemType}
                       required={required}
                     />
-                    {validators &&
-                      validators.map(
-                        ({ error, errorMessage }, errorI) =>
-                          error && (
-                            <Typography
-                              variant="inputError"
-                              key={`inputError-${errorI}-${i}`}
-                            >
-                              {errorMessage}
-                            </Typography>
-                          )
-                      )}
+                    {validators && (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "1px",
+                        }}
+                      >
+                        {validators.map(
+                          ({ error, errorMessage }, errorI) =>
+                            error && (
+                              <Typography
+                                variant="inputError"
+                                key={`inputError-${errorI}-${i}`}
+                              >
+                                {errorMessage}
+                              </Typography>
+                            )
+                        )}
+                      </Box>
+                    )}
                   </div>
                 );
               }
