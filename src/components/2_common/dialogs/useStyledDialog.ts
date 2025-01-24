@@ -1,12 +1,12 @@
 import { Dialog, styled } from "@mui/material";
 
-export const useStyledDialog = (disablePadding = false) =>
+export const useStyledDialog = (disablePadding = false, minHeight = "285px") =>
   styled(Dialog)(
     () => `
     &.MuiDialog-root {
   
       & .MuiDialog-paper {
-        min-height: 285px;
+        min-height: ${minHeight};
       }
   
       & .MuiDialogTitle-root {

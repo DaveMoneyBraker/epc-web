@@ -17,6 +17,7 @@ interface Props {
   title: string;
   disabled: boolean;
   children: React.ReactNode;
+  minHeight?: string;
   maxWidth?: false | Breakpoint | undefined;
   disablePadding?: boolean;
   cancelBtnText?: string;
@@ -33,15 +34,23 @@ export const DialogWrapper: React.FC<Props> = ({
   disablePadding = false,
   cancelBtnText = "cancel",
   withCloseIcon = true,
+  minHeight = "285px",
 }) => {
   const Dialog = React.useMemo(
-    () => styledDialog(disablePadding),
-    [disablePadding]
+    () => styledDialog(disablePadding, minHeight),
+    [disablePadding, minHeight]
   );
 
   return (
-    <Dialog open={open} maxWidth={maxWidth} fullWidth scroll="paper">
-      <DialogTitle component={"div"}>
+    <Dialog
+      open={open}
+      maxWidth={maxWidth}
+      fullWidth
+      scroll="paper"
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle component={"div"} id="alert-dialog-title">
         <Typography variant="h5">{title}</Typography>
         {withCloseIcon && (
           <IconButton size="small" onClick={() => onClose(false)}>
@@ -51,11 +60,7 @@ export const DialogWrapper: React.FC<Props> = ({
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <EnhancedButton
-          // variant={theme.palette.mode === "light" ? "outlined" : "contained"}
-          variant="outlined"
-          onClick={() => onClose(false)}
-        >
+        <EnhancedButton variant="outlined" onClick={() => onClose(false)}>
           {cancelBtnText}
         </EnhancedButton>
         <EnhancedButton onClick={() => onClose(true)} disabled={disabled}>

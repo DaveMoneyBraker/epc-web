@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { DialogWrapper } from "../dialogs";
 import AppHooks from "../../../hooks/0_AppHooks";
 import {
@@ -141,9 +141,15 @@ export const CommonPage: React.FC<Props> = ({
         open={deleteDialogOpen}
         onClose={handleDeleteDialogClose}
         disabled={false}
+        withCloseIcon={false}
+        minHeight="fit-content"
       >
-        Delete {(selectedItem && selectedItem[itemName]) || "item"}?
+        <Typography variant="body1" color="info" id="alert-dialog-description">
+          {(selectedItem && selectedItem[itemName]) ||
+            "item doesn't found, please try again :("}
+        </Typography>
       </DialogWrapper>
+
       {ItemDialog ? (
         <ItemDialog
           open={itemDialogOpen}

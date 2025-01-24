@@ -151,6 +151,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
       <Box
         sx={{
           display: "flex",
+          width: "100%",
           flexDirection: "column",
           justifyContent: "center",
           gap: "15px",
