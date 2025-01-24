@@ -8,3 +8,4 @@ export * from "./dnsbl";
 export * from "./queries";
 export * from "./navigation";
 export * from "./enhanced";
+export * from "./table";

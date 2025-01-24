@@ -1,35 +1,14 @@
 import { Stack, styled } from "@mui/material";
-import {
-  DataGrid,
-  GridColDef,
-  GridPagination,
-  GridPaginationModel,
-  GridSortModel,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPagination } from "@mui/x-data-grid";
 import React from "react";
-import { DefaultPageActions } from "../../../../types";
-import AppUtils from "../../../../utils/0_AppUtils";
-import { NoTableDataMessage } from "../../../3_shared/noTableDataMessage";
-import GridTableHooks from "./hooks/0_GridTableHooks";
-import { DEFAULT_COLUMN_PROPS } from "./constants";
-import APP_CONSTANTS from "../../../../constants/AppConstants";
-// STYLES
-import "./styles/grid-table.scss";
+import { DefaultGridTableProps } from "../../../../../types";
+import AppUtils from "../../../../../utils/0_AppUtils";
+import { NoTableDataMessage } from "../../../../3_shared/noTableDataMessage";
+import { DEFAULT_COLUMN_PROPS } from "../../constants";
+import APP_CONSTANTS from "../../../../../constants/AppConstants";
+import GridTableHooks from "../../hooks/0_GridTableHooks";
 
-export interface DefaultTableProps {
-  itemName: string;
-  data: any[];
-  loading: boolean;
-  cols: string[];
-  actions?: DefaultPageActions[];
-  rowCount: number;
-  paginationModel: GridPaginationModel;
-  onPaginationModelChange: (_model: GridPaginationModel) => void;
-  onSort?: (_model: GridSortModel) => void;
-  onEvent: (event: DefaultPageActions, body: unknown) => void;
-}
-
-export const DefaultGridTable: React.FC<DefaultTableProps> = ({
+export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({
   data,
   actions = [],
   loading,
@@ -104,7 +83,9 @@ export const DefaultGridTable: React.FC<DefaultTableProps> = ({
           {
             outline: "none !important",
           },
-        // TO STYLE HEADER CELLS
+        "&.MuiDataGrid-root .MuiDataGrid-cell": { fontSize: "13px" },
+        // TO STYLE HEA
+        // DER CELLS
         // "& .table--header": {
         //   fontWeight: "500",
         //   fontSize: "12px",

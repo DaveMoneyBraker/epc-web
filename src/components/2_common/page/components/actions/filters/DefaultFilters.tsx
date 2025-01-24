@@ -2,8 +2,8 @@ import { Badge } from "@mui/material";
 import React from "react";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { DefaultFilterDialog } from "./DefaultFilterDialog";
-import { FilterConfig, FilterValue } from "../../../../../types";
-import { EnhancedButton } from "../../../../1_enhanced";
+import { FilterConfig, FilterValue } from "../../../../../../types";
+import { EnhancedButton } from "../../../../../1_enhanced";
 
 interface Props {
   configs: FilterConfig[];

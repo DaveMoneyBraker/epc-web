@@ -1,14 +1,14 @@
 import React from "react";
-import { DialogWrapper } from "../../../dialogs";
 import {
   COMPARISON_OPERATORS,
   CONDITIONS_OPERATORS,
   FilterConfig,
   FilterValue,
-} from "../../../../../types";
+} from "../../../../../../types";
 import { DefaultFilterRow } from "./DefaultFilterRow";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, IconButton } from "@mui/material";
+import { DialogWrapper } from "../../../../dialogs";
 
 interface Props {
   open: boolean;

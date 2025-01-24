@@ -2,8 +2,6 @@ import React from "react";
 import { Box, styled } from "@mui/material";
 import { DialogWrapper } from "../dialogs";
 import AppHooks from "../../../hooks/0_AppHooks";
-import { DefaultActionsRow } from "./items/DefaultActionsRow";
-import { DefaultGridTable } from "./items/DefaultGridTable";
 import {
   AppQueryOptions,
   DefaultDialogItemProps,
@@ -11,8 +9,12 @@ import {
   FilterConfig,
   ItemConfig,
 } from "../../../types";
-import { DefaultItemDialog } from "./dialogs";
 import AppUtils from "../../../utils/0_AppUtils";
+import {
+  DefaultActionsRow,
+  DefaultGridTable,
+  DefaultItemDialog,
+} from "./components";
 
 interface Props {
   itemName: string;

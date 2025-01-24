@@ -1,13 +1,12 @@
 import React from "react";
+import { Box, Typography } from "@mui/material";
 import {
   DefaultDialogItemProps,
   ItemConfig,
   ObjectLiteral,
-} from "../../../../types";
-import { DialogWrapper } from "../../dialogs";
-
-import { Box, Typography } from "@mui/material";
-import { EnhancedSelect, EnhancedTextField } from "../../../1_enhanced";
+} from "../../../../../types";
+import { DialogWrapper } from "../../../dialogs";
+import { EnhancedSelect, EnhancedTextField } from "../../../../1_enhanced";
 
 interface DialogState extends ItemConfig {
   value: unknown;

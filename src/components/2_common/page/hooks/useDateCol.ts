@@ -1,5 +1,5 @@
 import React from "react";
-import AppUtils from "../../../../../utils/0_AppUtils";
+import AppUtils from "../../../../utils/0_AppUtils";
 import { DEFAULT_COLUMN_PROPS } from "../constants";
 
 export const useDateCol = () =>

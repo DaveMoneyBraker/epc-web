@@ -1,14 +1,14 @@
 import React from "react";
 import { styled } from "@mui/material";
-import { DefaultFilters } from "./filters";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   DefaultPageActions,
   FilterConfig,
   FilterValue,
-} from "../../../../types";
-import { useLocation, useNavigate } from "react-router-dom";
-import { EnhancedButton } from "../../../1_enhanced";
-import { DebounceSearch } from "../../../3_shared/debounceSearch";
+} from "../../../../../types";
+import { EnhancedButton } from "../../../../1_enhanced";
+import { DebounceSearch } from "../../../../3_shared/debounceSearch";
+import { DefaultFilters } from "./filters";
 
 const Wrapper = styled("div")(() => ({
   width: "100%",
