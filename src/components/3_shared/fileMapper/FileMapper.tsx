@@ -3,20 +3,22 @@ import {
   FileMapperPreview,
   FileMapperProps,
   PapaparseRawData,
+  StepperConfig,
+  Step as StepInterface,
 } from "../../../types";
-import { FileMapperStepper } from "./components/FileMapperStepper";
 import { useFileParser } from "./hooks";
 import { FilesMapping } from "./components/filesMapping";
 import FileMapperUtils from "./utils/0_utils";
 import { FileMapperSubmitFile } from "./components/FileMapperSubmitFile";
 import { useNavigate } from "react-router-dom";
 import { AppDragNDrop } from "../filesDragNDrop";
+import { EnhancedStepper } from "../../1_enhanced";
 
 export const FileMapper: React.FC<FileMapperProps> = ({
   fileSize = 15,
   availableHeaders,
   requiredHeaders,
-  AdditionalInputs,
+  additionalInputs: AdditionalInputs,
   submitError,
   progress,
   submitted,
@@ -50,9 +52,6 @@ export const FileMapper: React.FC<FileMapperProps> = ({
 
   const proceedPreviewData = React.useCallback(
     (data: PapaparseRawData[]) => {
-      const { length: dataLength } = data;
-      // console.log({ data });
-      // console.log({ dataLength });
       const newPreviews = FileMapperUtils.getFilesPreview(
         data,
         availableHeaders
@@ -188,42 +187,82 @@ export const FileMapper: React.FC<FileMapperProps> = ({
     setActiveStep,
   ]);
 
-  return (
-    <FileMapperStepper
-      activeStep={activeStep}
-      onStepChange={handleStepChange}
-      firstStep={
-        <AppDragNDrop
-          fileSizeLimit={fileSize}
-          selectedFiles={selectedFiles}
-          onFilesSelect={handleFilesSelect}
-          onFileDelete={handleFileDelete}
-        />
-      }
-      firstStepCompleted={filesSelected}
-      secondStep={
-        <FilesMapping
-          previews={previews}
-          parsing={parsing}
-          availableHeaders={availableHeaders}
-          requiredHeaders={requiredHeaders}
-          onPreviewsChange={handlePreviewsChange}
-          additionalInputs={AdditionalInputs}
-        />
-      }
-      secondStepCompleted={filesMapped}
-      ThirdStep={
-        <FileMapperSubmitFile
-          filename={filename}
-          onFilenameChange={handleFilenameChange}
-          mappingComplete={mappingComplete}
-          progress={progress}
-          error={submitError}
-          submitted={submitted}
-          onSubmit={handleSubmit}
-          onReset={handleStepperReset}
-        />
-      }
-    />
+  const steps = React.useMemo<StepInterface[]>(
+    () => [
+      {
+        title: "Select Files",
+        element: (
+          <AppDragNDrop
+            fileSizeLimit={fileSize}
+            selectedFiles={selectedFiles}
+            onFilesSelect={handleFilesSelect}
+            onFileDelete={handleFileDelete}
+          />
+        ),
+        completed: filesSelected,
+      },
+      {
+        title: "Map Files",
+        element: (
+          <FilesMapping
+            previews={previews}
+            parsing={parsing}
+            availableHeaders={availableHeaders}
+            requiredHeaders={requiredHeaders}
+            onPreviewsChange={handlePreviewsChange}
+            additionalInputs={AdditionalInputs}
+          />
+        ),
+        completed: filesMapped,
+      },
+      {
+        title: "Submit Files",
+        element: (
+          <FileMapperSubmitFile
+            filename={filename}
+            onFilenameChange={handleFilenameChange}
+            mappingComplete={mappingComplete}
+            progress={progress}
+            error={submitError}
+            submitted={submitted}
+            onSubmit={handleSubmit}
+            onReset={handleStepperReset}
+          />
+        ),
+        completed: false,
+      },
+    ],
+    [
+      AdditionalInputs,
+      availableHeaders,
+      fileSize,
+      filename,
+      filesMapped,
+      filesSelected,
+      handleFileDelete,
+      handleFilenameChange,
+      handleFilesSelect,
+      handlePreviewsChange,
+      handleStepperReset,
+      handleSubmit,
+      mappingComplete,
+      parsing,
+      previews,
+      progress,
+      requiredHeaders,
+      selectedFiles,
+      submitError,
+      submitted,
+    ]
   );
+
+  const stepperConfigs = React.useMemo<StepperConfig>(
+    () => ({
+      steps,
+      activeStep,
+      onStepChange: handleStepChange,
+    }),
+    [activeStep, steps, handleStepChange]
+  );
+  return <EnhancedStepper configs={stepperConfigs} />;
 };

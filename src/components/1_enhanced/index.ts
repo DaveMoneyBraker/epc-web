@@ -5,3 +5,4 @@ export * from "./EnhancedTextField";
 export * from "./EnhancedCheckbox";
 export * from "./EnhancedButton";
 export * from "./EnhancedLink";
+export * from "./EnhancedStepper";

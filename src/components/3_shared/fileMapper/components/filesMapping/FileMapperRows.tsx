@@ -119,7 +119,7 @@ export const FileMapperRows: React.FC<Props> = ({
     <Wrapper>
       <LoadingBackdrop loading={parsing} />
       {previews.map((preview, i) => (
-        <div key={i}>
+        <div key={`${preview.filename}-${i}`}>
           <FileMapperRow
             preview={preview}
             requiredHeaders={requiredHeaders}

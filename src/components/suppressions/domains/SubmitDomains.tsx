@@ -28,14 +28,14 @@ export const SubmitSuppressionsDomain: React.FC = () => {
     []
   );
 
-  const config: FileMapperProps = React.useMemo(
+  const config = React.useMemo<FileMapperProps>(
     () => ({
       availableHeaders: ["domain", "type"],
       requiredHeaders: [["domain"]],
       progress,
       submitted,
       submitError: error,
-      AdditionalInputs,
+      additionalInputs: AdditionalInputs,
       onFileSubmit: handleFileSubmit,
       reset,
     }),

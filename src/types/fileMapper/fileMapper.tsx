@@ -2,7 +2,7 @@ export interface FileMapperProps {
   availableHeaders: string[];
   requiredHeaders: string[][];
   fileSize?: number;
-  AdditionalInputs?: React.ReactNode;
+  additionalInputs?: React.ReactNode;
   onFileSubmit: (file: string, filename: string) => void;
   progress: number;
   submitted: boolean;
