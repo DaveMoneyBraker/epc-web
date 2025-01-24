@@ -12,20 +12,13 @@ import {
   NUMBER_COMPARISON_OPERATORS,
   TitleValueObject,
 } from "../../../../../../types";
-import {
-  Box,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  styled,
-} from "@mui/material";
+import { Box, IconButton, styled } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AppUtils from "../../../../../../utils/0_AppUtils";
 import {
   EnhancedDatePicker,
   EnhancedDateRangePicker,
+  EnhancedSelect,
   EnhancedTextField,
 } from "../../../../../1_enhanced";
 
@@ -151,14 +144,6 @@ export const DefaultFilterRow: React.FC<Props> = ({
     [index, onChange, proceedFilterChange]
   );
 
-  const handleSelectChange = React.useCallback(
-    (event: any, key: string) => {
-      const v = event.target.value as string;
-      handleFilterChange(v, key);
-    },
-    [handleFilterChange]
-  );
-
   const handleDelete = React.useCallback(
     () => onDelete(index),
     [index, onDelete]
@@ -166,60 +151,29 @@ export const DefaultFilterRow: React.FC<Props> = ({
 
   return (
     <Container>
-      <FormControl fullWidth required>
-        <InputLabel id={`select-input-id-${index}-condition`}>
-          Condition
-        </InputLabel>
-        <Select
-          labelId={`select-input-id-${index}-condition`}
-          value={filter.condition}
-          label={"Condition"}
-          onChange={(e) => handleSelectChange(e, "condition")}
-        >
-          {conditionOperatorOptions &&
-            conditionOperatorOptions.map((v, i) => (
-              <MenuItem value={v.value} key={`${v.value}-${i}`}>
-                {v.title}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth required>
-        <InputLabel id={`select-input-id-${index}-item-name`}>
-          Item Name
-        </InputLabel>
-        <Select
-          labelId={`select-input-id-${index}-item-name`}
-          value={filter.itemName}
-          label={"Item Name"}
-          onChange={(e) => handleSelectChange(e, "itemName")}
-        >
-          {itemNameOptions &&
-            itemNameOptions.map((v, i) => (
-              <MenuItem value={v.value} key={`${v.value}-${i}`}>
-                {v.title}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth required>
-        <InputLabel id={`select-input-id-${index}-comparison`}>
-          Comparison
-        </InputLabel>
-        <Select
-          labelId={`select-input-id-${index}-comparison`}
-          value={filter.comparison}
-          label={"Comparison"}
-          onChange={(e) => handleSelectChange(e, "comparison")}
-        >
-          {comparisonOperatorOptions &&
-            comparisonOperatorOptions.map((v, i) => (
-              <MenuItem value={v.value} key={`${v.value}-${i}`}>
-                {v.title}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
+      <EnhancedSelect
+        required
+        label="Condition"
+        value={filter.condition}
+        options={conditionOperatorOptions}
+        onChange={(v) => handleFilterChange(v, "condition")}
+      />
+
+      <EnhancedSelect
+        required
+        label="Item Name"
+        value={filter.itemName}
+        options={itemNameOptions}
+        onChange={(v) => handleFilterChange(v, "itemName")}
+      />
+
+      <EnhancedSelect
+        required
+        label="Comparison"
+        value={filter.comparison}
+        options={comparisonOperatorOptions}
+        onChange={(v) => handleFilterChange(v, "comparison")}
+      />
 
       {(itemType === "string" || itemType === "number") && (
         <EnhancedTextField
@@ -232,25 +186,14 @@ export const DefaultFilterRow: React.FC<Props> = ({
       )}
 
       {itemType === "enum" && itemSelectOptions && (
-        <FormControl fullWidth required>
-          <InputLabel id={`select-input-id-${index}-value-enum`}>
-            Value
-          </InputLabel>
-          <Select
-            labelId={`select-input-id-${index}-value-enum`}
-            value={filter.value}
-            label={"Value"}
-            onChange={(e) => handleSelectChange(e, "value")}
-            disabled={inputDisabled}
-          >
-            {itemSelectOptions &&
-              itemSelectOptions.map((v, i) => (
-                <MenuItem value={v.value} key={`${v.value}-${i}`}>
-                  {v.title}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
+        <EnhancedSelect
+          required
+          label="Value"
+          value={filter.value}
+          options={itemSelectOptions}
+          onChange={(v) => handleFilterChange(v, "value")}
+          disabled={inputDisabled}
+        />
       )}
 
       {itemType === "date" &&
