@@ -7,9 +7,8 @@ import {
   Step as StepInterface,
 } from "../../../types";
 import { useFileParser } from "./hooks";
-import { FilesMapping } from "./components/filesMapping";
+import { FilesMapping, FileMapperSubmitFile } from "./components";
 import FileMapperUtils from "./utils/0_utils";
-import { FileMapperSubmitFile } from "./components/FileMapperSubmitFile";
 import { useNavigate } from "react-router-dom";
 import { AppDragNDrop } from "../filesDragNDrop";
 import { EnhancedStepper } from "../../1_enhanced";
