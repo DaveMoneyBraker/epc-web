@@ -1,21 +1,12 @@
 import React from "react";
-import { TextField, TextFieldVariants } from "@mui/material";
+import { TextField, TextFieldProps } from "@mui/material";
 import AppHooks from "../../hooks/0_AppHooks";
 
-interface Props {
-  value: string;
-  placeholder?: string;
+type Props = Omit<TextFieldProps, "onChange"> & {
   label?: string;
-  type?: "string" | "number";
-  variant?: TextFieldVariants;
-  fullWidth?: boolean;
-  error?: boolean;
   width?: string;
-  required?: boolean;
-  disabled?: boolean;
-  helperText?: string | null;
   onChange: (v: string) => void;
-}
+};
 
 export const EnhancedTextField: React.FC<Props> = ({
   value,
@@ -30,6 +21,7 @@ export const EnhancedTextField: React.FC<Props> = ({
   error = false,
   helperText = "",
   onChange,
+  ...props
 }) => {
   const [firstOpen, setFirstOpen] = React.useState(true);
   const handler = AppHooks.useInputChangeHandler(onChange);
@@ -60,6 +52,7 @@ export const EnhancedTextField: React.FC<Props> = ({
       fullWidth={fullWidth}
       disabled={disabled}
       type={type}
+      {...props}
     />
   );
 };

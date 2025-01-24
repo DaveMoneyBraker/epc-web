@@ -1,18 +1,23 @@
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  TextFieldProps,
+} from "@mui/material";
 import React from "react";
 import AppUtils from "../../utils/0_AppUtils";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-interface Props {
-  value: string;
+type Props = Omit<TextFieldProps, "onChange"> & {
   label?: string;
   onChange: (value: string) => void;
-}
+};
 
 export const EnhancePasswordInput: React.FC<Props> = ({
   value,
   label = "Password",
   onChange,
+  ...props
 }) => {
   const [firstOpen, setFirstOpen] = React.useState(true);
   const [show, setShow] = React.useState(false);
