@@ -1,17 +1,12 @@
 import React from "react";
 import { EpcLogo } from "../../assets/icons/Logo";
-import {
-  Backdrop,
-  Box,
-  CircularProgress,
-  FormControl,
-  Input,
-  InputLabel,
-  styled,
-} from "@mui/material";
+import { Backdrop, Box, CircularProgress, styled } from "@mui/material";
 import AppMutations from "../../services/mutations/AppMutations";
-import AppUtils from "../../utils/0_AppUtils";
-import { EnhancedButton, EnhancePasswordInput } from "../1_enhanced";
+import {
+  EnhancedButton,
+  EnhancedTextField,
+  EnhancePasswordInput,
+} from "../1_enhanced";
 
 const Container = styled("div")({
   height: "100vh",
@@ -42,15 +37,14 @@ export const Login: React.FC = () => {
     password
   );
 
+  const handleUsernameChange = React.useCallback(
+    (value: string) => setUsername(value),
+    [setUsername]
+  );
   const handlePasswordChange = React.useCallback(
     (value: string) => setPassword(value),
     [setPassword]
   );
-
-  const handleUsernameChange = (e: any) => {
-    const value = AppUtils.getInputValue(e);
-    setUsername(value);
-  };
 
   const handleSubmit = () => {
     loginMutation.mutate();
@@ -66,15 +60,13 @@ export const Login: React.FC = () => {
       </Backdrop>
       <Paper>
         <EpcLogo />
-        <FormControl fullWidth required>
-          <InputLabel htmlFor="username">Username</InputLabel>
-          <Input
-            id="username"
-            placeholder="username"
-            value={username}
-            onChange={handleUsernameChange}
-          />
-        </FormControl>
+        <EnhancedTextField
+          value={username}
+          onChange={handleUsernameChange}
+          label="Username"
+          placeholder="username"
+          variant="standard"
+        />
         <EnhancePasswordInput
           value={password}
           onChange={handlePasswordChange}

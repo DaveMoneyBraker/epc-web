@@ -1,30 +1,27 @@
-import {
-  FormControl,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-} from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import React from "react";
 import AppUtils from "../../utils/0_AppUtils";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface Props {
   value: string;
-  title?: string;
+  label?: string;
   onChange: (value: string) => void;
 }
 
 export const EnhancePasswordInput: React.FC<Props> = ({
   value,
-  title = "Password",
+  label = "Password",
   onChange,
 }) => {
+  const [firstOpen, setFirstOpen] = React.useState(true);
   const [show, setShow] = React.useState(false);
+  const error = React.useMemo(() => !firstOpen && !value, [firstOpen, value]);
 
   const handleValueChange = React.useCallback(
     (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const v = AppUtils.getInputValue(event);
+      setFirstOpen(false);
       onChange(v);
     },
     [onChange]
@@ -42,28 +39,33 @@ export const EnhancePasswordInput: React.FC<Props> = ({
     [setShow]
   );
   return (
-    <FormControl fullWidth required>
-      <InputLabel htmlFor="password">{title}</InputLabel>
-      <Input
-        id="password"
-        type={show ? "text" : "password"}
-        value={value}
-        onChange={handleValueChange}
-        placeholder="password"
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleShowToggle}
-              onMouseDown={handleMouseDownUpPassword}
-              onMouseUp={handleMouseDownUpPassword}
-              edge="end"
-            >
-              {show ? <VisibilityOff /> : <Visibility />}
-            </IconButton>
-          </InputAdornment>
-        }
-      />
-    </FormControl>
+    <TextField
+      fullWidth
+      required
+      error={error}
+      variant="standard"
+      type={show ? "text" : "password"}
+      value={value}
+      onChange={handleValueChange}
+      label={label}
+      placeholder="password"
+      slotProps={{
+        input: {
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleShowToggle}
+                onMouseDown={handleMouseDownUpPassword}
+                onMouseUp={handleMouseDownUpPassword}
+                edge="end"
+              >
+                {show ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
+      }}
+    />
   );
 };

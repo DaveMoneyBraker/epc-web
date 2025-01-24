@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, TextField } from "@mui/material";
+import { TextField, TextFieldVariants } from "@mui/material";
 import AppHooks from "../../hooks/0_AppHooks";
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
   placeholder?: string;
   label?: string;
   type?: "string" | "number";
+  variant?: TextFieldVariants;
   fullWidth?: boolean;
   error?: boolean;
   width?: string;
@@ -22,7 +23,8 @@ export const EnhancedTextField: React.FC<Props> = ({
   label = "Value",
   type = "string",
   fullWidth = true,
-  width = fullWidth ? "auto" : "250px",
+  width = fullWidth ? "100%" : "250px",
+  variant = "outlined",
   required = true,
   disabled = false,
   error = false,
@@ -44,22 +46,20 @@ export const EnhancedTextField: React.FC<Props> = ({
   );
 
   return (
-    <FormControl fullWidth={fullWidth} required={required}>
-      {/* <InputLabel id={`select-input-id-${label.trim()}`}>{label}</InputLabel> */}
-      <TextField
-        error={error || requiredError}
-        required={required}
-        helperText={helperText}
-        sx={{ width }}
-        id={`select-input-id-${label.trim()}`}
-        value={value}
-        label={label}
-        placeholder={placeholder}
-        onChange={handleInputChange}
-        fullWidth
-        disabled={disabled}
-        type={type}
-      />
-    </FormControl>
+    <TextField
+      variant={variant}
+      error={error || requiredError}
+      required={required}
+      helperText={helperText}
+      sx={{ width }}
+      id={`select-input-id-${label.trim()}`}
+      value={value}
+      label={label}
+      placeholder={placeholder}
+      onChange={handleInputChange}
+      fullWidth={fullWidth}
+      disabled={disabled}
+      type={type}
+    />
   );
 };
