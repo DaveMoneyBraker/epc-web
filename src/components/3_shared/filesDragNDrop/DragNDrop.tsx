@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ClearIcon from "@mui/icons-material/Clear";
-import APP_CONSTANTS from "../../../../constants/AppConstants";
-import AppHooks from "../../../../hooks/0_AppHooks";
+import AppHooks from "../../../hooks/0_AppHooks";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 interface Props {
   fileSizeLimit: number;
@@ -47,7 +47,7 @@ const ScrollableFileList = styled(List)({
   overflow: "auto",
 });
 
-export const FileMapperDragNDrop: React.FC<Props> = ({
+export const AppDragNDrop: React.FC<Props> = ({
   fileSizeLimit,
   selectedFiles,
   onFilesSelect,

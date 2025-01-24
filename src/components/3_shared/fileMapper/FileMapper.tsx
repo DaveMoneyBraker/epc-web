@@ -5,12 +5,12 @@ import {
   PapaparseRawData,
 } from "../../../types";
 import { FileMapperStepper } from "./components/FileMapperStepper";
-import { FileMapperDragNDrop } from "./components/FileMapperDragNDrop";
 import { useFileParser } from "./hooks";
 import { FilesMapping } from "./components/filesMapping";
 import FileMapperUtils from "./utils/0_utils";
 import { FileMapperSubmitFile } from "./components/FileMapperSubmitFile";
 import { useNavigate } from "react-router-dom";
+import { AppDragNDrop } from "../filesDragNDrop";
 
 export const FileMapper: React.FC<FileMapperProps> = ({
   fileSize = 15,
@@ -193,7 +193,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
       activeStep={activeStep}
       onStepChange={handleStepChange}
       firstStep={
-        <FileMapperDragNDrop
+        <AppDragNDrop
           fileSizeLimit={fileSize}
           selectedFiles={selectedFiles}
           onFilesSelect={handleFilesSelect}
