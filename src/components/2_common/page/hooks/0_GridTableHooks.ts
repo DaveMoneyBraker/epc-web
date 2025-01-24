@@ -1,9 +1,9 @@
 import { useDateCol } from "./useDateCol";
 import { useActionsCol } from "./useActionsCol";
 
-const GridTableHooks = {
+const DefaultPageHooks = {
   useDateCol,
   useActionsCol,
 };
 
-export default GridTableHooks;
+export default DefaultPageHooks;

@@ -6,7 +6,7 @@ import AppUtils from "../../../../../utils/0_AppUtils";
 import { NoTableDataMessage } from "../../../../3_shared/noTableDataMessage";
 import { DEFAULT_COLUMN_PROPS } from "../../constants";
 import APP_CONSTANTS from "../../../../../constants/AppConstants";
-import GridTableHooks from "../../hooks/0_GridTableHooks";
+import DefaultPageHooks from "../../hooks/0_GridTableHooks";
 
 export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({
   data,
@@ -21,13 +21,13 @@ export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({
 }) => {
   const [columns, setColumns] = React.useState<GridColDef[]>([]);
 
-  const actionsCol = GridTableHooks.useActionsCol({
+  const actionsCol = DefaultPageHooks.useActionsCol({
     onEvent,
     actions,
     loading,
   });
 
-  const dateCol = GridTableHooks.useDateCol();
+  const dateCol = DefaultPageHooks.useDateCol();
 
   const setupDataGridCols = React.useCallback(
     (columns: string[]) => {
