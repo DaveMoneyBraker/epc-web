@@ -24,7 +24,6 @@ export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({
   const actionsCol = DefaultPageHooks.useActionsCol({
     onEvent,
     actions,
-    loading,
   });
 
   const dateCol = DefaultPageHooks.useDateCol();
@@ -77,6 +76,7 @@ export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({
       pageSizeOptions={APP_CONSTANTS.DEFAULT_PAGE_SIZE_OPTIONS}
       disableRowSelectionOnClick
       density="compact"
+      disableColumnResize
       // DISABLE CELL AND TITLE OUTLINE ON CLICK
       sx={{
         "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within, &.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within":
