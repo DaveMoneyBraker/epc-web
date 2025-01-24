@@ -45,7 +45,7 @@ export const SuppressionsMask: React.FC = () => {
       apiUrl={apiUrl}
       filterConfigs={filterConfigs}
       itemConfigs={itemConfigs}
-      ItemDialog={SuppressionMaskItemDialog}
+      itemDialog={SuppressionMaskItemDialog}
     />
   );
 };

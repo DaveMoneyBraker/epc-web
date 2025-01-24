@@ -24,7 +24,7 @@ interface Props {
   actions?: DefaultPageActions[];
   queryOptions?: AppQueryOptions;
   onEvent?: (event: DefaultPageActions, body: unknown) => void;
-  ItemDialog?: React.ComponentType<
+  itemDialog?: React.ComponentType<
     Omit<DefaultDialogItemProps<any>, "configs">
   >;
 }
@@ -48,7 +48,7 @@ export const CommonPage: React.FC<Props> = ({
   queryKey,
   filterConfigs,
   itemConfigs,
-  ItemDialog,
+  itemDialog: ItemDialog,
   queryOptions,
   onEvent,
 }) => {
