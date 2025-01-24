@@ -56,7 +56,7 @@ export const AppDrawer: React.FC<Props> = ({ nav, open, onClose }) => {
             item={navItem}
             open={statuses[i] || false}
             index={i}
-            key={i}
+            key={`${navItem.path}-${i}`}
             onClick={toggleCategory}
           />
         ))}

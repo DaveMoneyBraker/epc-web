@@ -172,7 +172,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
             ) => {
               if (itemType === "string" || itemType === "number") {
                 return (
-                  <div key={i}>
+                  <div key={`${itemName}-${itemType}-${i}`}>
                     <EnhancedTextField
                       label={itemName}
                       value={value as string}
@@ -185,7 +185,10 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
                       validators.map(
                         ({ error, errorMessage }, errorI) =>
                           error && (
-                            <Typography variant="inputError" key={errorI}>
+                            <Typography
+                              variant="inputError"
+                              key={`inputError-${errorI}-${i}`}
+                            >
                               {errorMessage}
                             </Typography>
                           )
@@ -204,7 +207,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
                     onChange={(v) => handleInputChanges(v, i)}
                     fullWidth
                     required={required}
-                    key={i}
+                    key={`${itemName}-${itemType}-${i}`}
                   />
                 );
               }

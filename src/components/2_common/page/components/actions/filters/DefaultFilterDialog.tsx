@@ -113,7 +113,7 @@ export const DefaultFilterDialog: React.FC<Props> = ({
             filter={filter}
             index={i}
             configs={configs}
-            key={i}
+            key={`${filter.itemName}-${i}`}
             onChange={handleFilterChange}
             onDelete={handleDeleteRow}
           />

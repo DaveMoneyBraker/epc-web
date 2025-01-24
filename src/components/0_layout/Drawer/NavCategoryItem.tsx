@@ -24,7 +24,7 @@ export const NavCategoryItem: React.FC<Props> = ({ category }) => {
       <ListItemButton
         dense={true}
         sx={{ pl: 4 }}
-        key={i}
+        key={`${child.appRoute}-${child.permissionsRoute.default}-${i}`}
         onClick={() => navigate(child.appRoute)}
       >
         <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>

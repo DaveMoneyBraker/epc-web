@@ -46,7 +46,7 @@ export const EnhancedSelect: React.FC<Props> = ({
       >
         {options &&
           options.map((v, i) => (
-            <MenuItem value={v.value} key={i}>
+            <MenuItem value={v.value} key={`${v.value}-${i}`}>
               {v.title}
             </MenuItem>
           ))}

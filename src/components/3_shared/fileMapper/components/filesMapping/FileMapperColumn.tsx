@@ -80,35 +80,6 @@ export const FileMapperColumn: React.FC<Props> = ({
     [header, skip]
   );
 
-  const listItems = React.useMemo(() => {
-    const items: React.ReactNode[] = [];
-    data.forEach((row, i) => {
-      if (i === 0 && containHeaders) {
-        return;
-      }
-      items.push(
-        <ListItem key={i} dense>
-          <ListItemText
-            disableTypography={true}
-            primary={
-              <Typography
-                variant="body2"
-                sx={{
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {row}
-              </Typography>
-            }
-          />
-        </ListItem>
-      );
-      return items;
-    });
-  }, [data, containHeaders]);
-
   return (
     <Wrapper>
       <DataContainer mapped={mapped}>
@@ -128,7 +99,7 @@ export const FileMapperColumn: React.FC<Props> = ({
           {data &&
             data.map((row, i) => (
               <ListItem
-                key={i}
+                key={`${row}-${i}`}
                 dense
                 sx={{
                   display: i === 0 && containHeaders ? "none" : "inline-block",

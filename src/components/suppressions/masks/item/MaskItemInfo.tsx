@@ -80,7 +80,7 @@ export const MaskItemInfo: React.FC = () => {
       {maskInfo.map(({ symbol, name, text }, index) => (
         <ListItem
           secondaryAction={<Typography variant="body2">{symbol}</Typography>}
-          key={index}
+          key={`mask-item-info-${index}`}
         >
           <ListItemText>
             <Typography variant="body2" width={"95%"}>

@@ -59,7 +59,7 @@ export const NavItem: React.FC<Props> = ({ item, index, open, onClick }) => {
       </ListItemButton>
       <Collapse in={open} timeout="auto">
         {item.categories.map((category, i) => (
-          <NavCategoryItem category={category} key={i} />
+          <NavCategoryItem category={category} key={`${category.title}-${i}`} />
         ))}
       </Collapse>
     </>

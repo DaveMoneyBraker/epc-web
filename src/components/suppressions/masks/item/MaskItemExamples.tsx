@@ -65,7 +65,7 @@ export const MaskItemExamples: React.FC = () => {
         <TableBody>
           {rows.map(({ char, desc, example, matches }, index) => (
             <TableRow
-              key={index}
+              key={`mask-item-example-${char}-${index}`}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">

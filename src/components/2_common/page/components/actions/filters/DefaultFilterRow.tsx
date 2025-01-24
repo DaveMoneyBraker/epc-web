@@ -178,7 +178,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
         >
           {conditionOperatorOptions &&
             conditionOperatorOptions.map((v, i) => (
-              <MenuItem value={v.value} key={i}>
+              <MenuItem value={v.value} key={`${v.value}-${i}`}>
                 {v.title}
               </MenuItem>
             ))}
@@ -196,7 +196,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
         >
           {itemNameOptions &&
             itemNameOptions.map((v, i) => (
-              <MenuItem value={v.value} key={i}>
+              <MenuItem value={v.value} key={`${v.value}-${i}`}>
                 {v.title}
               </MenuItem>
             ))}
@@ -214,7 +214,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
         >
           {comparisonOperatorOptions &&
             comparisonOperatorOptions.map((v, i) => (
-              <MenuItem value={v.value} key={i}>
+              <MenuItem value={v.value} key={`${v.value}-${i}`}>
                 {v.title}
               </MenuItem>
             ))}
@@ -245,7 +245,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
           >
             {itemSelectOptions &&
               itemSelectOptions.map((v, i) => (
-                <MenuItem value={v.value} key={i}>
+                <MenuItem value={v.value} key={`${v.value}-${i}`}>
                   {v.title}
                 </MenuItem>
               ))}

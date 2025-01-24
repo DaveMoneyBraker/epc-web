@@ -190,7 +190,7 @@ export const FileMapperRow: React.FC<Props> = ({
               availableHeaders={availableHeaders}
               onColumnHeaderChange={handleColumnHeaderChange}
               onSkipColumnChange={handleSkipColumnChange}
-              key={i}
+              key={`column-${column.header}-${i}`}
             />
           ))}
       </ColumnsWrapper>

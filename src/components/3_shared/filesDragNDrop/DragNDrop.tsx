@@ -265,7 +265,7 @@ export const AppDragNDrop: React.FC<Props> = ({
               <ScrollableFileList>
                 {selectedFiles.map((file, index) => (
                   <ListItem
-                    key={index}
+                    key={`file-${file.name}-${index}`}
                     sx={{
                       bgcolor: "background.paper",
                       borderRadius: 1,

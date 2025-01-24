@@ -52,10 +52,10 @@ export const StatusBar: React.FC<Props> = ({
     >
       {statuses &&
         counts &&
-        statuses.map((status) => (
+        statuses.map((status, i) => (
           <ToggleButton
             value={status}
-            key={status}
+            key={`${status}-${i}`}
             sx={{
               display: "flex",
               flexDirection: "row",

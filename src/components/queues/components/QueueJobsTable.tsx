@@ -56,7 +56,7 @@ export const QueueJobsTable: React.FC<Props> = ({
         <TableBody>
           {jobs &&
             jobs.map((job, i) => (
-              <TableRow key={i}>
+              <TableRow key={`jobRow-${i}`}>
                 {status === "failed" && (
                   <TableCell>
                     <IconButton
