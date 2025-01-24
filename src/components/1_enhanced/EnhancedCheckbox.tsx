@@ -20,6 +20,7 @@ export const EnhancedCheckbox: React.FC<Props> = ({
   disabled = false,
   fullWidth = true,
   onChange,
+  ...props
 }) => {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -34,6 +35,7 @@ export const EnhancedCheckbox: React.FC<Props> = ({
             checked={value}
             onChange={handleChange}
             sx={{ "MuiFormControlLabel-label": { color: "red" } }}
+            {...props}
           />
         }
         label={<Typography variant="body3">{label}</Typography>}

@@ -3,7 +3,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   SelectProps,
 } from "@mui/material";
 import React from "react";
@@ -24,9 +23,10 @@ export const EnhancedSelect: React.FC<Props> = ({
   fullWidth = true,
   disabled = false,
   onChange,
+  ...props
 }) => {
   const handleChange = React.useCallback(
-    (event: SelectChangeEvent) => {
+    (event: any) => {
       const v = event.target.value as string;
       onChange(v);
     },
@@ -40,6 +40,7 @@ export const EnhancedSelect: React.FC<Props> = ({
         labelId={`select-input-id-${label.trim()}`}
         value={value}
         label={label}
+        {...props}
         onChange={handleChange}
       >
         {options &&

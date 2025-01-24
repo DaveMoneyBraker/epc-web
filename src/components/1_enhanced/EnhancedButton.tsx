@@ -7,10 +7,10 @@ export const EnhancedButton: React.FC<Props> = ({
   size = "small",
   variant = "contained",
   children,
-  ...otherProps
+  ...props
 }) => {
   return (
-    <Button size={size} variant={variant} {...otherProps}>
+    <Button size={size} variant={variant} {...props}>
       {children}
     </Button>
   );

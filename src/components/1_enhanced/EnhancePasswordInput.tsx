@@ -71,6 +71,7 @@ export const EnhancePasswordInput: React.FC<Props> = ({
           ),
         },
       }}
+      {...props}
     />
   );
 };
