@@ -28,6 +28,7 @@ export const AppBarMenu: React.FC<Props> = ({ onLogout }) => {
   return (
     <>
       <EnhancedButton
+        variant="text"
         sx={{ color: "white" }}
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
