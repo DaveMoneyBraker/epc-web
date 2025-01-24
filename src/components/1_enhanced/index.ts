@@ -6,3 +6,4 @@ export * from "./EnhancedCheckbox";
 export * from "./EnhancedButton";
 export * from "./EnhancedLink";
 export * from "./EnhancedStepper";
+export * from "./EnhancePasswordInput";

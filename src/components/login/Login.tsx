@@ -5,16 +5,13 @@ import {
   Box,
   CircularProgress,
   FormControl,
-  IconButton,
   Input,
-  InputAdornment,
   InputLabel,
   styled,
 } from "@mui/material";
-import { VisibilityOff, Visibility } from "@mui/icons-material";
 import AppMutations from "../../services/mutations/AppMutations";
 import AppUtils from "../../utils/0_AppUtils";
-import { EnhancedButton } from "../1_enhanced";
+import { EnhancedButton, EnhancePasswordInput } from "../1_enhanced";
 
 const Container = styled("div")({
   height: "100vh",
@@ -34,7 +31,6 @@ const Paper = styled(Box)({
 });
 
 export const Login: React.FC = () => {
-  const [show, setShow] = React.useState(false);
   const [password, setPassword] = React.useState<string>("");
   const [username, setUsername] = React.useState<string>("");
   const empty = React.useMemo(
@@ -46,16 +42,10 @@ export const Login: React.FC = () => {
     password
   );
 
-  const handleMouseDownUpPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-
-  const handlePasswordChange = (e: any) => {
-    const value = AppUtils.getInputValue(e);
-    setPassword(value);
-  };
+  const handlePasswordChange = React.useCallback(
+    (value: string) => setPassword(value),
+    [setPassword]
+  );
 
   const handleUsernameChange = (e: any) => {
     const value = AppUtils.getInputValue(e);
@@ -85,29 +75,10 @@ export const Login: React.FC = () => {
             onChange={handleUsernameChange}
           />
         </FormControl>
-        <FormControl fullWidth required>
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <Input
-            id="password"
-            type={show ? "text" : "password"}
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="password"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => setShow((v) => !v)}
-                  onMouseDown={handleMouseDownUpPassword}
-                  onMouseUp={handleMouseDownUpPassword}
-                  edge="end"
-                >
-                  {show ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
+        <EnhancePasswordInput
+          value={password}
+          onChange={handlePasswordChange}
+        />
         <EnhancedButton disabled={empty} fullWidth onClick={handleSubmit}>
           Login
         </EnhancedButton>
