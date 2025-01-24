@@ -203,6 +203,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
             onChange={(v) => handleFilterChange(v, "value")}
           />
         )}
+
       {itemType === "date" && isRange && (
         <EnhancedDateRangePicker
           startValue={filter.value}
@@ -210,6 +211,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
           onChange={handleFilterChange}
         />
       )}
+
       <IconButton color="error" onClick={handleDelete}>
         <DeleteIcon />
       </IconButton>

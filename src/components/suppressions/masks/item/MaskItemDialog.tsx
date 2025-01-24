@@ -125,7 +125,7 @@ export const SuppressionMaskItemDialog: React.FC<
   }, []);
 
   const handleItemChange = React.useCallback(
-    (key: string, value: any) => {
+    (value: any, key: string) => {
       if (key === "name") {
         setName(value);
       }
