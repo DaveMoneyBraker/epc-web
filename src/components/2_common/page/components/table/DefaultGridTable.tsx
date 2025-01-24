@@ -33,7 +33,7 @@ export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({
       let newColumns: GridColDef[] = [];
       columns.forEach((col) => {
         let newColumn: GridColDef;
-        if (col === "actions") {
+        if (col === "actions" && actions && actions.length > 0) {
           newColumn = actionsCol();
         } else if (
           col === "updatedAt" ||
@@ -48,14 +48,16 @@ export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({
           };
         }
 
-        newColumns.push({
-          ...newColumn,
-          headerName: AppUtils.camelToTitleCase(col),
-        });
+        if (newColumn) {
+          newColumns.push({
+            ...newColumn,
+            headerName: AppUtils.camelToTitleCase(col),
+          });
+        }
       });
       setColumns(newColumns);
     },
-    [actionsCol, setColumns, dateCol]
+    [actions, actionsCol, setColumns, dateCol]
   );
 
   React.useEffect(() => {
