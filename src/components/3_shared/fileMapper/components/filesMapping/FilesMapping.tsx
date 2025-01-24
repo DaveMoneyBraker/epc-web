@@ -9,7 +9,7 @@ interface Props {
   availableHeaders: string[];
   requiredHeaders: string[][];
   onPreviewsChange: (previews: FileMapperPreview[]) => void;
-  AdditionalInputs?: React.ReactNode;
+  additionalInputs?: React.ReactNode;
 }
 
 const Wrapper = styled(Box)(() => ({
@@ -36,7 +36,7 @@ export const FilesMapping: React.FC<Props> = ({
   availableHeaders,
   requiredHeaders,
   onPreviewsChange,
-  AdditionalInputs,
+  additionalInputs: AdditionalInputs,
 }) => {
   const handlePreviewsChange = React.useCallback(
     (newValue: FileMapperPreview[]) => onPreviewsChange(newValue),

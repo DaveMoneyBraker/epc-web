@@ -5,10 +5,10 @@ import { EnhancedButton } from "../../../1_enhanced";
 interface Props {
   activeStep: number;
   onStepChange: (v: 1 | -1) => void;
-  FirstStep: React.ReactNode;
+  firstStep: React.ReactNode;
   firstStepTitle?: string;
   firstStepCompleted: boolean;
-  SecondStep: React.ReactNode;
+  secondStep: React.ReactNode;
   secondStepTitle?: string;
   secondStepCompleted: boolean;
   ThirdStep?: React.ReactNode;
@@ -29,10 +29,10 @@ const Wrapper = styled(Box)(() => ({
 export const FileMapperStepper: React.FC<Props> = ({
   activeStep,
   onStepChange,
-  FirstStep,
+  firstStep: FirstStep,
   firstStepTitle = "Select Files",
   firstStepCompleted,
-  SecondStep,
+  secondStep: SecondStep,
   secondStepTitle = "Map Files",
   secondStepCompleted,
   ThirdStep,

@@ -4,6 +4,7 @@ import { FileMapperColumn } from "./FileMapperColumn";
 import { Box, Button, styled, Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 import { EnhancedButton, EnhancedCheckbox } from "../../../../1_enhanced";
+import FileMapperUtils from "../../utils/0_utils";
 
 interface Props {
   preview: FileMapperPreview;
@@ -51,7 +52,7 @@ const HeaderContainer = styled(Box)(() => ({
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
-  gap: "20px",
+  gap: 10,
 }));
 
 const ColumnsWrapper = styled(Box)(() => ({
@@ -81,6 +82,12 @@ export const FileMapperRow: React.FC<Props> = ({
     [preview]
   );
 
+  const isFileMapped = FileMapperUtils.isFileMapped(preview, requiredHeaders);
+  const headerColor = React.useMemo(
+    () => (isFileMapped ? "info" : "warning"),
+    [isFileMapped]
+  );
+
   const unmappedHeadersMessage = React.useMemo(() => {
     const mappedHeaders = preview.columns
       .filter((column) => !column.skip && column.header)
@@ -94,14 +101,21 @@ export const FileMapperRow: React.FC<Props> = ({
     if (unmappedRequiredHeaderPairs.length === 0) {
       return "";
     }
-    let value = "Required headers: ";
+    let value = "";
     unmappedRequiredHeaderPairs.forEach(
       (headersPair, i) =>
         (value +=
           JSON.stringify(headersPair) +
           (i + 1 === unmappedRequiredHeaderPairs.length ? "." : ","))
     );
-    return value;
+    return (
+      <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+        <Typography variant="body2">Required headers:</Typography>
+        <Typography variant="body2" color="warning">
+          {value}
+        </Typography>
+      </Box>
+    );
   }, [preview, requiredHeaders]);
 
   const handleColumnHeaderChange = React.useCallback(
@@ -131,8 +145,9 @@ export const FileMapperRow: React.FC<Props> = ({
       {preview && preview.filename && (
         <HeaderWrapper>
           <HeaderContainer>
-            <Typography variant="h6">
-              {index + 1}. {preview.filename}
+            <Typography variant="h6">{index + 1}.</Typography>
+            <Typography variant="h6" color={headerColor}>
+              {preview.filename}
             </Typography>
             <EnhancedCheckbox
               fullWidth={false}
@@ -146,9 +161,7 @@ export const FileMapperRow: React.FC<Props> = ({
               label="Skip File"
               onChange={handleSkipFileChange}
             />
-            {unmappedHeadersMessage && (
-              <Typography variant="body2">{unmappedHeadersMessage}</Typography>
-            )}
+            {!preview.skip && unmappedHeadersMessage && unmappedHeadersMessage}
           </HeaderContainer>
           {!preview.skip && unmappedItemsCount > 0 && (
             <HeaderContainer>

@@ -192,7 +192,7 @@ export const FileMapper: React.FC<FileMapperProps> = ({
     <FileMapperStepper
       activeStep={activeStep}
       onStepChange={handleStepChange}
-      FirstStep={
+      firstStep={
         <FileMapperDragNDrop
           fileSizeLimit={fileSize}
           selectedFiles={selectedFiles}
@@ -201,14 +201,14 @@ export const FileMapper: React.FC<FileMapperProps> = ({
         />
       }
       firstStepCompleted={filesSelected}
-      SecondStep={
+      secondStep={
         <FilesMapping
           previews={previews}
           parsing={parsing}
           availableHeaders={availableHeaders}
           requiredHeaders={requiredHeaders}
           onPreviewsChange={handlePreviewsChange}
-          AdditionalInputs={AdditionalInputs}
+          additionalInputs={AdditionalInputs}
         />
       }
       secondStepCompleted={filesMapped}
