@@ -1,9 +1,16 @@
 import React from "react";
-import { Box, Step, StepLabel, Stepper, styled } from "@mui/material";
+import {
+  Box,
+  Step,
+  StepLabel,
+  Stepper,
+  StepperProps,
+  styled,
+} from "@mui/material";
 import { EnhancedButton } from "./EnhancedButton";
 import { StepperConfig } from "../../types";
 
-interface Props {
+interface Props extends StepperProps {
   configs: StepperConfig;
 }
 
@@ -18,7 +25,7 @@ const Wrapper = styled(Box)(() => ({
   overflow: "hidden",
 }));
 
-export const EnhancedStepper: React.FC<Props> = ({ configs }) => {
+export const EnhancedStepper: React.FC<Props> = ({ configs, ...props }) => {
   const { activeStep, steps, onStepChange } = configs;
 
   const activeStepCompleted = React.useMemo(
@@ -32,7 +39,7 @@ export const EnhancedStepper: React.FC<Props> = ({ configs }) => {
 
   return (
     <Wrapper>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep} {...props}>
         {steps.map(({ title }, index) => (
           <Step key={`step-${index}`}>
             <StepLabel optional={false}>{title}</StepLabel>

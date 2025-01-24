@@ -1,18 +1,18 @@
 import React from "react";
 import {
   Checkbox,
+  CheckboxProps,
   FormControl,
   FormControlLabel,
   Typography,
 } from "@mui/material";
 
-interface Props {
+type Props = Omit<CheckboxProps, "onChange"> & {
   label: string;
   value: boolean;
-  disabled?: boolean;
   fullWidth?: boolean;
   onChange: (value: boolean) => void;
-}
+};
 
 export const EnhancedCheckbox: React.FC<Props> = ({
   label,

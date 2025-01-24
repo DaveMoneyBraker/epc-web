@@ -4,19 +4,17 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  SelectProps,
 } from "@mui/material";
 import React from "react";
 import { TitleValueObject } from "../../types";
 
-interface Props {
+type Props = Omit<SelectProps, "onChange"> & {
   value: string;
   options: TitleValueObject[];
   label?: string;
-  fullWidth?: boolean;
-  required?: boolean;
-  disabled?: boolean;
   onChange: (v: string) => void;
-}
+};
 
 export const EnhancedSelect: React.FC<Props> = ({
   value,
