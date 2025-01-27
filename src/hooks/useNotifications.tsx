@@ -6,7 +6,7 @@ import APP_CONSTANTS from "../constants/AppConstants";
 
 export const useNotification = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const showNotification = React.useCallback(
+  return React.useCallback(
     (
       message: string,
       variant: VariantType = APP_CONSTANTS.NOTIFICATION_VARIANTS.DEFAULT
@@ -28,5 +28,4 @@ export const useNotification = () => {
     },
     [enqueueSnackbar, closeSnackbar]
   );
-  return showNotification;
 };
