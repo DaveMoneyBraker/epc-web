@@ -8,7 +8,6 @@ import APP_CONSTANTS from "../../constants/AppConstants";
 
 export const useAppRouter = () => {
   const appNav = useAppNav();
-  const { APP_ROUTES } = APP_CONSTANTS;
 
   // LOGIN PAGE
   const LoginPage = React.lazy(() => import("../../pages/login/LoginPage"));
@@ -46,7 +45,7 @@ export const useAppRouter = () => {
                   }),
                   // NOT FOUND
                   {
-                    path: APP_ROUTES.NOT_FOUND,
+                    path: APP_CONSTANTS.APP_ROUTES.NOT_FOUND,
                     element: (
                       <React.Suspense>
                         <NotFoundPage />
@@ -74,12 +73,12 @@ export const useAppRouter = () => {
 
               {
                 path: "*",
-                element: <Navigate to={APP_ROUTES.NOT_FOUND} />,
+                element: <Navigate to={APP_CONSTANTS.APP_ROUTES.NOT_FOUND} />,
               },
             ],
           },
         ])
       ),
-    [APP_ROUTES.NOT_FOUND, LoginPage, NotFoundPage, appNav]
+    [LoginPage, NotFoundPage, appNav]
   );
 };
