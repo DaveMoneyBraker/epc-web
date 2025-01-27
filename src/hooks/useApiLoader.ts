@@ -6,28 +6,33 @@ export const useApiUrlLoader = () => {
   const development: boolean =
     !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
-  const fetchApiUrl = async (): Promise<string> =>
-    await fetch("/config/config.json", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        let url: string = development ? res.devUrl : res.apiUrl;
-        if (!url.endsWith("/")) {
-          url += "/";
-        }
-        // if (!url.endsWith("api/")) {
-        //   url += "api/";
-        // }
-        setApiUrl(url);
-        return url;
-      });
+  const fetchApiUrl = React.useCallback(
+    async (): Promise<string> =>
+      await fetch("/config/config.json", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          let url: string = development ? res.devUrl : res.apiUrl;
+          if (!url.endsWith("/")) {
+            url += "/";
+          }
+          // if (!url.endsWith("api/")) {
+          //   url += "api/";
+          // }
+          setApiUrl(url);
+          return url;
+        }),
+    [development]
+  );
 
-  const getApiUrl = async (): Promise<string> =>
-    apiUrl ? apiUrl : fetchApiUrl();
+  const getApiUrl = React.useMemo(
+    async (): Promise<string> => (apiUrl ? apiUrl : fetchApiUrl()),
+    [apiUrl, fetchApiUrl]
+  );
 
   return getApiUrl;
 };
