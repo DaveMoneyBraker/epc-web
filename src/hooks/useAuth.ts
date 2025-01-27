@@ -7,35 +7,38 @@ import AppHooks from "./0_AppHooks";
 import ContextHooks from "../providers/0_ContextHooks";
 import APP_CONSTANTS from "../constants/AppConstants";
 
-interface I {
+interface Value {
   login: (value: { password: string; username: string }) => void;
   logout: () => void;
   loading: boolean;
   error: any;
 }
 
-export const useAuth = (): I => {
+export const useAuth = (): Value => {
   const navigate = useNavigate();
   const { axios, loading } = ContextHooks.useAxiosContext();
   const { set, clear } = AppHooks.useLocalStorage();
   const [error, setError] = React.useState(false);
 
-  const login = (value: { password: string; username: string }) => {
-    setError(false);
-    const { username, password } = value;
-    axios &&
-      axios
-        .post(ApiRoutes.LOGIN, { username, password })
-        .then(({ data }: AxiosResponse<AuthToken>) => {
-          set(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
-          navigate(AppRoutes.PAGES);
-        })
-        .catch(() => {
-          setError(true);
-        });
-  };
+  const login = React.useCallback(
+    (value: { password: string; username: string }) => {
+      setError(false);
+      const { username, password } = value;
+      axios &&
+        axios
+          .post(ApiRoutes.LOGIN, { username, password })
+          .then(({ data }: AxiosResponse<AuthToken>) => {
+            set(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
+            navigate(AppRoutes.PAGES);
+          })
+          .catch(() => {
+            setError(true);
+          });
+    },
+    [axios, navigate, set]
+  );
 
-  const logout = () => {
+  const logout = React.useCallback(() => {
     setError(false);
     axios &&
       axios
@@ -47,6 +50,10 @@ export const useAuth = (): I => {
         .catch((err: AxiosError) => {
           setError(true);
         });
-  };
-  return { login, logout, loading, error };
+  }, [axios, clear, navigate]);
+
+  return React.useMemo(
+    () => ({ login, logout, loading, error }),
+    [error, loading, login, logout]
+  );
 };
