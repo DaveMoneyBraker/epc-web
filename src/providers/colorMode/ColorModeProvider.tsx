@@ -1,24 +1,20 @@
 import React from "react";
 import { ColorModeContext } from "./ColorModeContext";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ChildrenProps } from "../../types";
-import { useAppLightTheme } from "../../core/mui";
+import { CssBaseline, Theme, ThemeProvider } from "@mui/material";
+import { ChildrenProps, ThemeMode } from "../../types";
 import AppHooks from "../../hooks/0_AppHooks";
-import { useAppDarkTheme } from "../../core/mui/MUI-dark-theme";
-
-type Mode = "light" | "dark";
+import APP_CONSTANTS from "../../constants/AppConstants";
+import { useAppMuiTheme } from "../../core/mui";
 
 export const ColorModeProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const lightTheme = useAppLightTheme();
-  const darkTheme = useAppDarkTheme();
-  const [getItem, setItem] = AppHooks.useLocalStorage<Mode>();
-  const [mode, setMode] = React.useState<Mode>("light");
+  const themes = useAppMuiTheme();
+  const [getItem, setItem] = AppHooks.useLocalStorage<ThemeMode>();
+  const [theme, setTheme] = React.useState<Theme>(themes.light);
 
-  const changeRootClassName = React.useCallback((currentMode: string) => {
+  const changeRootClassName = React.useCallback((newClassName: ThemeMode) => {
     const root = document.getElementById("root");
     if (root) {
       const { className } = root;
-      const newClassName = currentMode === "light" ? "dark" : "light";
       // ON INIT ROOT HAS NO CLASS
       if (className) {
         document.getElementById("root")?.classList.remove(className);
@@ -27,29 +23,40 @@ export const ColorModeProvider: React.FC<ChildrenProps> = ({ children }) => {
     }
   }, []);
 
-  const colorMode = React.useMemo(
+  const value = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => {
-          const newMode = prevMode === "light" ? "dark" : "light";
-          changeRootClassName(prevMode);
-          setItem("colorMode", newMode);
-          return newMode;
+        setTheme((prevMode) => {
+          const config =
+            prevMode === themes.light
+              ? {
+                  newTheme: themes.dark,
+                  newThemeMode: APP_CONSTANTS.THEME_MODE.DARK,
+                }
+              : {
+                  newTheme: themes.light,
+                  newThemeMode: APP_CONSTANTS.THEME_MODE.LIGHT,
+                };
+          changeRootClassName(config.newThemeMode);
+          setItem(APP_CONSTANTS.LOCAL_STORAGE.COLOR_MODE, config.newThemeMode);
+          return config.newTheme;
         });
       },
     }),
-    [setMode, setItem, changeRootClassName]
+    [themes, setItem, changeRootClassName]
   );
 
   React.useEffect(() => {
-    const existedColorMode = getItem("colorMode") || "light";
-    document.getElementById("root")?.classList.add(existedColorMode);
-    setMode(existedColorMode);
-  }, [getItem, setMode]);
+    const currentThemeMode =
+      getItem(APP_CONSTANTS.LOCAL_STORAGE.COLOR_MODE) ||
+      APP_CONSTANTS.THEME_MODE.LIGHT;
+    document.getElementById("root")?.classList.add(currentThemeMode);
+    setTheme(themes[currentThemeMode]);
+  }, [themes, getItem]);
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
+    <ColorModeContext.Provider value={value}>
+      <ThemeProvider theme={theme}>
         {/* RESET DEFAULT CSS STYLES */}
         <CssBaseline />
         {children}

@@ -2,9 +2,9 @@ import React from "react";
 import { ApiRoutes, AppRoutes } from "../../../core/router";
 import axios from "axios";
 import AppHooks from "../../../hooks/0_AppHooks";
-import { TOKEN } from "../../../types";
 import { redirect } from "react-router-dom";
 import { NOTIFICATION_VARIANTS } from "../../../constants/NotificationVariants";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 export const useRefreshToken = () => {
   const [, setToLocalStorage, clear] = AppHooks.useLocalStorage();
@@ -19,7 +19,7 @@ export const useRefreshToken = () => {
     try {
       const response = await axios.post(url, {}, { withCredentials: true });
       const { data } = response;
-      setToLocalStorage(TOKEN, data);
+      setToLocalStorage(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
     } catch (error) {
       console.log("REFRESH TOKEN ERROR: ", { error });
       clear();

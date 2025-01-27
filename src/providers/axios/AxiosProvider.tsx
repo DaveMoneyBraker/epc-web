@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { AxiosContext } from "./AxiosContext";
 import { encodeConfigURI } from "./encodeConfigURI";
 import AppHooks from "../../hooks/0_AppHooks";
-import { AuthToken, CacheItem, TOKEN } from "../../types";
+import { AuthToken, CacheItem } from "../../types";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import { ApiRoutes } from "../../core/router";
 import AxiosProviderHooks from "./hooks/AxiosProviderHooks";
@@ -125,7 +125,7 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
 
     // SETUP AUTH TOKEN IF IT IS NOT LOGIN
     if (config.url !== "auth/login") {
-      const apiToken = get(TOKEN) as AuthToken;
+      const apiToken = get(APP_CONSTANTS.LOCAL_STORAGE.TOKEN) as AuthToken;
       config.headers.Authorization =
         apiToken && apiToken.token ? `Bearer ${apiToken.token}` : "";
     }

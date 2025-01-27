@@ -1,10 +1,11 @@
 import React from "react";
 import { AxiosError, AxiosResponse } from "axios";
-import { AuthToken, TOKEN } from "../types";
+import { AuthToken } from "../types";
 import { useNavigate } from "react-router-dom";
 import { ApiRoutes, AppRoutes } from "../core/router";
 import AppHooks from "./0_AppHooks";
 import ContextHooks from "../providers/0_ContextHooks";
+import APP_CONSTANTS from "../constants/AppConstants";
 
 interface I {
   login: (value: { password: string; username: string }) => void;
@@ -26,7 +27,7 @@ export const useAuth = (): I => {
       axios
         .post(ApiRoutes.LOGIN, { username, password })
         .then(({ data }: AxiosResponse<AuthToken>) => {
-          setToLocalStorage(TOKEN, data);
+          setToLocalStorage(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
           navigate(AppRoutes.PAGES);
         })
         .catch(() => {

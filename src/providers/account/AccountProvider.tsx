@@ -28,7 +28,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
       if (response && response.data) {
         return response.data as any;
       } else if (!response) {
-        throw new Error("No Server Response");
+        throw new Error("No Current User Server Response");
       }
     },
     enabled: userEnabled,
@@ -46,7 +46,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
         } = response;
         return roles as any;
       } else if (!response) {
-        throw new Error("No Server Response");
+        throw new Error("No User Roles Server Response");
       }
     },
     enabled: Boolean(user?.id),
@@ -61,7 +61,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
       if (response && response.data) {
         return response.data.permissions as any;
       } else if (!response) {
-        throw new Error("No Server Response");
+        throw new Error("No User Permissions Server Response");
       }
     },
     enabled: Boolean(roles?.length),

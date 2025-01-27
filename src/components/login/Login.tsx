@@ -53,7 +53,10 @@ export const Login: React.FC = () => {
   return (
     <Container>
       <Backdrop
-        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        sx={(theme) => ({
+          color: theme.palette.background.default,
+          zIndex: theme.zIndex.drawer + 1,
+        })}
         open={loading}
       >
         <CircularProgress />

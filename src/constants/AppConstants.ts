@@ -9,6 +9,8 @@ import {
 import { DEFAULT_USER_ROLES } from "./DefaultUserRoles";
 import { APP_ERRORS } from "./AppErrors";
 import { DEFAULT_PAGE_SIZE_OPTIONS } from "./DefaultPageSizeOptions";
+import { THEME_MODE } from "./ThemeConstants";
+import { LOCAL_STORAGE } from "./LocalStorage";
 
 const APP_CONSTANTS = {
   PAGE_TITLES,
@@ -20,6 +22,8 @@ const APP_CONSTANTS = {
   DEFAULT_USER_ROLES,
   APP_ERRORS,
   DEFAULT_PAGE_SIZE_OPTIONS,
+  THEME_MODE,
+  LOCAL_STORAGE,
 } as const;
 
 export default APP_CONSTANTS;

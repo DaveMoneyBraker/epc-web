@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import { TOKEN } from "../../types";
 import { useMutation } from "@tanstack/react-query";
 import AppHooks from "../../hooks/0_AppHooks";
 import { ApiRoutes, AppRoutes } from "../../core/router";
@@ -30,7 +29,7 @@ export const useLoginMutation = (username: string, password: string) => {
       }
 
       const { data } = response;
-      setToLocalStorage(TOKEN, data);
+      setToLocalStorage(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
       navigate(AppRoutes.SUPPRESSION_DOMAIN);
       return data;
     } catch (error) {

@@ -1,1 +1,1 @@
-export * from "./MUI-light-theme";
+export * from "./useMuiTheme";
