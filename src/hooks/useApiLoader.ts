@@ -29,7 +29,7 @@ export const useApiUrlLoader = () => {
     [development]
   );
 
-  const getApiUrl = React.useMemo(
+  const getApiUrl = React.useCallback(
     async (): Promise<string> => (apiUrl ? apiUrl : fetchApiUrl()),
     [apiUrl, fetchApiUrl]
   );
