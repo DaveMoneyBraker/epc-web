@@ -1,6 +1,6 @@
-import { PermissionRoute } from "../../types";
+import { PermissionRoute } from "../types";
 
-export const PermissionRoutes: { [key: string]: PermissionRoute } = {
+export const PERMISSION_ROUTES: { [key: string]: PermissionRoute } = {
   // ADMINS ONLY
   ADMIN: {
     default: "admin-only",

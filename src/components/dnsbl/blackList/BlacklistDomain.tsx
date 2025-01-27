@@ -1,5 +1,4 @@
 import React from "react";
-import { ApiRoutes } from "../../../core/router";
 import {
   BlacklistDomainBasedOptions,
   FILTER_ITEM_TYPE,
@@ -9,6 +8,7 @@ import {
 import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import AppInputValidators from "../../../validators/input/0_InputValidators";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 export const BlacklistDomain: React.FC = () => {
   const cols = React.useMemo(
@@ -16,7 +16,10 @@ export const BlacklistDomain: React.FC = () => {
     []
   );
   const queryKey = React.useMemo(() => "BlacklistDomains", []);
-  const apiUrl = React.useMemo(() => ApiRoutes.BLACKLIST_DOMAIN, []);
+  const apiUrl = React.useMemo(
+    () => APP_CONSTANTS.API_ROUTES.BLACKLIST_DOMAIN,
+    []
+  );
   const filterConfigs: FilterConfig[] = React.useMemo(
     () => [
       { itemType: FILTER_ITEM_TYPE.STRING, itemName: "domain" },

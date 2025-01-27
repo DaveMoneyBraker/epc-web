@@ -1,5 +1,5 @@
 import React from "react";
-import { QueueStats as QueueStatsInterface } from "../../types";
+import { QueueStats as QueueStatsInterface } from "../../../../types";
 import { Box, styled, Typography } from "@mui/material";
 import AppUtils from "../../../../utils/0_AppUtils";
 

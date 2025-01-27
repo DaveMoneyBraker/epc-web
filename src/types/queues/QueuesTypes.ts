@@ -56,3 +56,16 @@ export interface QueueResponse {
   queues: QueueBody;
   stats: QueueStats;
 }
+
+export interface QueueNavCategory {
+  title: string;
+  routes: {
+    title: string;
+    value: string;
+  }[];
+}
+
+export interface QueueConst {
+  WORKER: QueueNavCategory[];
+  CONSUMER: QueueNavCategory[];
+}

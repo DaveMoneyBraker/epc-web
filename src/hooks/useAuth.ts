@@ -2,7 +2,6 @@ import React from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { AuthToken } from "../types";
 import { useNavigate } from "react-router-dom";
-import { ApiRoutes, AppRoutes } from "../core/router";
 import AppHooks from "./0_AppHooks";
 import ContextHooks from "../providers/0_ContextHooks";
 import APP_CONSTANTS from "../constants/AppConstants";
@@ -26,10 +25,10 @@ export const useAuth = (): Value => {
       const { username, password } = value;
       axios &&
         axios
-          .post(ApiRoutes.LOGIN, { username, password })
+          .post(APP_CONSTANTS.API_ROUTES.LOGIN, { username, password })
           .then(({ data }: AxiosResponse<AuthToken>) => {
             set(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
-            navigate(AppRoutes.PAGES);
+            navigate(APP_CONSTANTS.APP_ROUTES.PAGES);
           })
           .catch(() => {
             setError(true);
@@ -42,10 +41,10 @@ export const useAuth = (): Value => {
     setError(false);
     axios &&
       axios
-        .post(ApiRoutes.LOGOUT)
+        .post(APP_CONSTANTS.API_ROUTES.LOGOUT)
         .then(() => {
           clear();
-          navigate(AppRoutes.LOGIN);
+          navigate(APP_CONSTANTS.APP_ROUTES.LOGIN);
         })
         .catch((err: AxiosError) => {
           setError(true);

@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { QueueResponse } from "../types";
-import ContextHooks from "../../../providers/0_ContextHooks";
+import { QueueResponse } from "../../types";
+import ContextHooks from "../../providers/0_ContextHooks";
 
 export const useQueueQuery = (
   apiUrl: string,

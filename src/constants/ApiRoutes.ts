@@ -1,4 +1,4 @@
-export const ApiRoutes = {
+export const API_ROUTES = {
   // AUTH
   LOGIN: "auth/login",
   LOGOUT: "auth/logout",

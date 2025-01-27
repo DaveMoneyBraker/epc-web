@@ -10,7 +10,7 @@ import {
   UserRoles,
 } from "../../types";
 import AppHooks from "../../hooks/0_AppHooks";
-import { ApiRoutes } from "../../core/router";
+import APP_CONSTANTS from "../../constants/AppConstants";
 
 export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
   const inApp = AppHooks.useInApp();
@@ -24,7 +24,9 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
   const { data: user } = useQuery<User>({
     queryKey: ["accountUser"],
     queryFn: async () => {
-      const response = await axios?.get<User>(ApiRoutes.CURRENT_USER);
+      const response = await axios?.get<User>(
+        APP_CONSTANTS.API_ROUTES.CURRENT_USER
+      );
       if (response && response.data) {
         return response.data as any;
       } else if (!response) {
@@ -38,7 +40,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
     queryKey: ["userRoles"],
     queryFn: async () => {
       const response = await axios?.get<{ roles: UserRoles[] }>(
-        ApiRoutes.CURRENT_USER_ROLES
+        APP_CONSTANTS.API_ROUTES.CURRENT_USER_ROLES
       );
       if (response && response.data && response.data.roles) {
         const {
@@ -56,7 +58,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
     queryKey: ["accountPermissions"],
     queryFn: async () => {
       const response = await axios?.get<{ permissions: UserPermission[][] }>(
-        ApiRoutes.CURRENT_USER_PERMISSIONS
+        APP_CONSTANTS.API_ROUTES.CURRENT_USER_PERMISSIONS
       );
       if (response && response.data) {
         return response.data.permissions as any;

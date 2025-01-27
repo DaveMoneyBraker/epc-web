@@ -1,12 +1,15 @@
 import React from "react";
 import { FileMapperProps } from "../../../types";
-import { ApiRoutes } from "../../../core/router";
 import { FileMapper } from "../../3_shared/fileMapper";
 import { useFileUploadWithProgressMutation } from "../../../services/mutations/useFileUploadWithProgressMutation";
 import { EnhancedTextField } from "../../1_enhanced";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 export const SubmitSuppressionsDomain: React.FC = () => {
-  const apiUrl = ApiRoutes.SUPPRESSION_DOMAIN + "/file";
+  const apiUrl = React.useMemo(
+    () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_DOMAIN + "/file",
+    []
+  );
   const { mutation, progress, submitted, error, reset } =
     useFileUploadWithProgressMutation(apiUrl);
   const handleFileSubmit = React.useCallback(

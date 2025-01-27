@@ -1,8 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import AppHooks from "../../hooks/0_AppHooks";
-import { ApiRoutes, AppRoutes } from "../../core/router";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import ContextHooks from "../../providers/0_ContextHooks";
 
@@ -18,7 +17,7 @@ export const useLoginMutation = (username: string, password: string) => {
     }
 
     try {
-      const response = await axios?.post(ApiRoutes.LOGIN, {
+      const response = await axios?.post(APP_CONSTANTS.API_ROUTES.LOGIN, {
         username,
         password,
       });
@@ -30,13 +29,13 @@ export const useLoginMutation = (username: string, password: string) => {
 
       const { data } = response;
       set(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
-      navigate(AppRoutes.SUPPRESSION_DOMAIN);
+      navigate(APP_CONSTANTS.APP_ROUTES.SUPPRESSION_DOMAIN);
       return data;
     } catch (error) {
       console.error("useLoginMutation query error:", error);
       throw error;
     }
-  }, [username, password, axios, navigate, set, axiosResponseValidator]);
+  }, [axios, username, password, axiosResponseValidator, set, navigate]);
 
   const mutation = useMutation({ mutationFn });
 

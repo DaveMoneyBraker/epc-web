@@ -11,6 +11,10 @@ import { APP_ERRORS } from "./AppErrors";
 import { DEFAULT_PAGE_SIZE_OPTIONS } from "./DefaultPageSizeOptions";
 import { THEME_MODE } from "./ThemeConstants";
 import { LOCAL_STORAGE } from "./LocalStorage";
+import { API_ROUTES } from "./ApiRoutes";
+import { APP_ROUTES } from "./AppRoutes";
+import { PERMISSION_ROUTES } from "./PermissionRoutes";
+import { QUEUES, QUEUE_STATUS } from "./QueuesConstant";
 
 const APP_CONSTANTS = {
   PAGE_TITLES,
@@ -24,6 +28,11 @@ const APP_CONSTANTS = {
   DEFAULT_PAGE_SIZE_OPTIONS,
   THEME_MODE,
   LOCAL_STORAGE,
+  API_ROUTES,
+  APP_ROUTES,
+  PERMISSION_ROUTES,
+  QUEUES,
+  QUEUE_STATUS,
 } as const;
 
 export default APP_CONSTANTS;

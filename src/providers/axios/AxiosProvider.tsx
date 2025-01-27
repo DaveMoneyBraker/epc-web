@@ -6,7 +6,6 @@ import { encodeConfigURI } from "./encodeConfigURI";
 import AppHooks from "../../hooks/0_AppHooks";
 import { AuthToken, CacheItem } from "../../types";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import { ApiRoutes } from "../../core/router";
 import AxiosProviderHooks from "./hooks/AxiosProviderHooks";
 
 interface Props {
@@ -38,11 +37,11 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
   const CACHE_DURATION = React.useMemo(() => 5 * 60 * 1000, []); // 5 minutes
   const PROTECTED_ROUTES = React.useMemo(
     () => [
-      ApiRoutes.CURRENT_USER,
-      ApiRoutes.CURRENT_USER_ROLES,
-      ApiRoutes.CURRENT_USER_PERMISSIONS,
-      ApiRoutes.LOGIN,
-      ApiRoutes.LOGOUT,
+      APP_CONSTANTS.API_ROUTES.CURRENT_USER,
+      APP_CONSTANTS.API_ROUTES.CURRENT_USER_ROLES,
+      APP_CONSTANTS.API_ROUTES.CURRENT_USER_PERMISSIONS,
+      APP_CONSTANTS.API_ROUTES.LOGIN,
+      APP_CONSTANTS.API_ROUTES.LOGOUT,
     ],
     []
   );

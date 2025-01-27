@@ -1,5 +1,4 @@
 import React from "react";
-import { ApiRoutes, AppRoutes } from "../../../core/router";
 import axios from "axios";
 import AppHooks from "../../../hooks/0_AppHooks";
 import { redirect } from "react-router-dom";
@@ -15,7 +14,7 @@ export const useRefreshToken = () => {
   const refreshToken = React.useCallback(async () => {
     setRefresh(true);
     const baseUrl = await getApiUrl();
-    const url = baseUrl + ApiRoutes.REFRESH_TOKEN;
+    const url = baseUrl + APP_CONSTANTS.API_ROUTES.REFRESH_TOKEN;
     try {
       const response = await axios.post(url, {}, { withCredentials: true });
       const { data } = response;
@@ -27,7 +26,7 @@ export const useRefreshToken = () => {
         "Token Refresh Error. Try Login again",
         NOTIFICATION_VARIANTS.ERROR
       );
-      redirect(AppRoutes.LOGIN);
+      redirect(APP_CONSTANTS.APP_ROUTES.LOGIN);
     } finally {
       setRefresh(false);
     }

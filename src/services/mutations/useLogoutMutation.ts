@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import AppHooks from "../../hooks/0_AppHooks";
-import { ApiRoutes, AppRoutes } from "../../core/router";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import ContextHooks from "../../providers/0_ContextHooks";
 
@@ -17,7 +16,7 @@ export const useLogoutMutation = () => {
       throw new Error(APP_CONSTANTS.APP_ERRORS.NO_AXIOS_INSTANCE);
     }
     try {
-      const response = await axios?.post(ApiRoutes.LOGOUT);
+      const response = await axios?.post(APP_CONSTANTS.API_ROUTES.LOGOUT);
       const errorMessage = axiosResponseValidator(response);
 
       if (errorMessage) {
@@ -25,14 +24,14 @@ export const useLogoutMutation = () => {
       }
 
       clear();
-      navigate(AppRoutes.LOGIN);
+      navigate(APP_CONSTANTS.APP_ROUTES.LOGIN);
       return response;
     } catch (error) {
       console.error("useLogoutMutation query error:", error);
-      navigate(AppRoutes.LOGIN);
+      navigate(APP_CONSTANTS.APP_ROUTES.LOGIN);
       throw error;
     }
-  }, [axios, navigate, clear, axiosResponseValidator]);
+  }, [axios, axiosResponseValidator, clear, navigate]);
 
   const mutation = useMutation({ mutationFn });
   return { mutation, loading };

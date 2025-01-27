@@ -1,11 +1,14 @@
 import React from "react";
 import { FileMapperProps } from "../../../types";
-import { ApiRoutes } from "../../../core/router";
 import { FileMapper } from "../../3_shared/fileMapper";
 import { useFileUploadWithProgressMutation } from "../../../services/mutations/useFileUploadWithProgressMutation";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 export const SubmitSuppressionsMx: React.FC = () => {
-  const apiUrl = ApiRoutes.SUPPRESSION_MX + "/file";
+  const apiUrl = React.useMemo(
+    () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_MX + "/file",
+    []
+  );
   const { mutation, progress, submitted, error, reset } =
     useFileUploadWithProgressMutation(apiUrl);
   const handleFileSubmit = React.useCallback(

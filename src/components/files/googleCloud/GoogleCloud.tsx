@@ -1,5 +1,4 @@
 import React from "react";
-import { ApiRoutes } from "../../../core/router";
 import {
   DefaultPageActions,
   FILTER_ITEM_TYPE,
@@ -10,6 +9,7 @@ import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import { isGCloudFile } from "../../../typeGuards";
 import AppMutations from "../../../services/mutations/AppMutations";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 export const GoogleCloudFile: React.FC = () => {
   const cols = React.useMemo(
@@ -27,7 +27,7 @@ export const GoogleCloudFile: React.FC = () => {
     []
   );
   const queryKey = React.useMemo(() => "GCloudFiles", []);
-  const apiUrl = React.useMemo(() => ApiRoutes.GOOGLE_CLOUD, []);
+  const apiUrl = React.useMemo(() => APP_CONSTANTS.API_ROUTES.GOOGLE_CLOUD, []);
   const mutation = AppMutations.useDownloadServerFileMutation(apiUrl);
   const filterConfigs: FilterConfig[] = React.useMemo(
     () => [

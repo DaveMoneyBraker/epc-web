@@ -1,7 +1,6 @@
 import React from "react";
 import AppHooks from "../../../hooks/0_AppHooks";
 import axios from "axios";
-import { AppRoutes } from "../../../core/router";
 import { redirect } from "react-router-dom";
 import APP_CONSTANTS from "../../../constants/AppConstants";
 
@@ -29,7 +28,7 @@ export const useAxiosErrorHandler = (refreshToken: () => Promise<any>) => {
           refreshToken();
           break;
         case 403:
-          redirect(AppRoutes.LOGIN);
+          redirect(APP_CONSTANTS.APP_ROUTES.LOGIN);
           break;
         case 404:
           showNotification(

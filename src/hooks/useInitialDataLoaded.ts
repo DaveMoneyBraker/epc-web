@@ -1,5 +1,5 @@
-import { QueryState, useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import { QueryState, useQueryClient } from "@tanstack/react-query";
 import { useInApp } from "./useInApp";
 
 export const useInitialDataLoaded = (): boolean => {

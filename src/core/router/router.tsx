@@ -1,13 +1,14 @@
 import React from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { useAppNav } from "./nav";
-import { AppRoutes } from "./appRoutes";
 import AppUtils from "../../utils/0_AppUtils";
 import { ConfigureProviders } from "../../providers/ConfigureProviders";
 import { Layout } from "../../components/0_layout";
+import APP_CONSTANTS from "../../constants/AppConstants";
 
 export const useAppRouter = () => {
   const appNav = useAppNav();
+  const { APP_ROUTES } = APP_CONSTANTS;
 
   // LOGIN PAGE
   const LoginPage = React.lazy(() => import("../../pages/login/LoginPage"));
@@ -17,62 +18,68 @@ export const useAppRouter = () => {
     () => import("../../pages/notFound/NotFoundPage")
   );
 
-  return createBrowserRouter(
-    AppUtils.addIndexRedirects([
-      // MAIN APP
-      {
-        path: "/",
-        element: <ConfigureProviders />,
-        children: [
+  return React.useMemo(
+    () =>
+      createBrowserRouter(
+        AppUtils.addIndexRedirects([
+          // MAIN APP
           {
-            path: "pages",
-            element: <Layout />,
+            path: "/",
+            element: <ConfigureProviders />,
             children: [
-              ...appNav.map((nav) => {
-                const { categories, path } = nav;
-                const navNodes = categories.map(({ children }) => children);
-                return {
-                  path,
-                  children: navNodes.flat(1).map(({ appRoute, element }) => ({
-                    path: AppUtils.getLastPartOfString(appRoute),
-                    element,
-                  })),
-                };
-              }),
+              {
+                path: "pages",
+                element: <Layout />,
+                children: [
+                  ...appNav.map((nav) => {
+                    const { categories, path } = nav;
+                    const navNodes = categories.map(({ children }) => children);
+                    return {
+                      path,
+                      children: navNodes
+                        .flat(1)
+                        .map(({ appRoute, element }) => ({
+                          path: AppUtils.getLastPartOfString(appRoute),
+                          element,
+                        })),
+                    };
+                  }),
+                  // NOT FOUND
+                  {
+                    path: APP_ROUTES.NOT_FOUND,
+                    element: (
+                      <React.Suspense>
+                        <NotFoundPage />
+                      </React.Suspense>
+                    ),
+                  },
+                ],
+              },
+              // AUTH
+              {
+                path: "auth",
+                children: [
+                  {
+                    path: "login",
+                    index: true,
+                    element: (
+                      <React.Suspense>
+                        <LoginPage />
+                      </React.Suspense>
+                    ),
+                  },
+                ],
+              },
               // NOT FOUND
-              {
-                path: AppRoutes.NOT_FOUND,
-                element: (
-                  <React.Suspense>
-                    <NotFoundPage />
-                  </React.Suspense>
-                ),
-              },
-            ],
-          },
-          // AUTH
-          {
-            path: "auth",
-            children: [
-              {
-                path: "login",
-                index: true,
-                element: (
-                  <React.Suspense>
-                    <LoginPage />
-                  </React.Suspense>
-                ),
-              },
-            ],
-          },
-          // NOT FOUND
 
-          {
-            path: "*",
-            element: <Navigate to={AppRoutes.NOT_FOUND} />,
+              {
+                path: "*",
+                element: <Navigate to={APP_ROUTES.NOT_FOUND} />,
+              },
+            ],
           },
-        ],
-      },
-    ])
+        ])
+      ),
+    [APP_ROUTES.NOT_FOUND, LoginPage, NotFoundPage, appNav]
   );
 };

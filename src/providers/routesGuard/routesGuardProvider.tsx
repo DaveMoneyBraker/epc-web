@@ -1,9 +1,9 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppNav, AppNavNode, ChildrenProps } from "../../types";
-import { AppRoutes } from "../../core/router";
 import { useCleanedNavigationContext } from "../navigation";
 import AppHooks from "../../hooks/0_AppHooks";
+import APP_CONSTANTS from "../../constants/AppConstants";
 
 const DEFAULT_ROUTES = ["/", "/pages", "/pages/"];
 
@@ -46,7 +46,7 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
     if (forbiddenRoutes.some((route) => pathname.includes(route))) {
       // TODO - IMPLEMENT NOT-FOUND PAGE
       console.log("Access denied: Redirecting to not found", { pathname });
-      navigate(AppRoutes.NOT_FOUND);
+      navigate(APP_CONSTANTS.APP_ROUTES.NOT_FOUND);
       return;
     }
 
@@ -61,7 +61,7 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
         navigate(randomNode.appRoute);
       } else {
         console.log("No accessible routes found, redirecting to Not Found");
-        navigate(AppRoutes.NOT_FOUND);
+        navigate(APP_CONSTANTS.APP_ROUTES.NOT_FOUND);
       }
     }
   }, [

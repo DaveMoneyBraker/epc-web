@@ -1,5 +1,4 @@
 import React from "react";
-import { ApiRoutes } from "../../../core/router";
 import {
   DefaultPageActions,
   FILTER_ITEM_TYPE,
@@ -9,6 +8,7 @@ import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions
 import AppHooks from "../../../hooks/0_AppHooks";
 import { SuppressionMaskItemDialog } from "./item/MaskItemDialog";
 import { CommonPage } from "../../2_common/page";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 export const SuppressionsMask: React.FC = () => {
   const cols = React.useMemo(
@@ -16,7 +16,10 @@ export const SuppressionsMask: React.FC = () => {
     []
   );
   const queryKey = React.useMemo(() => "SuppressionsDomains", []);
-  const apiUrl = React.useMemo(() => ApiRoutes.SUPPRESSION_MASK, []);
+  const apiUrl = React.useMemo(
+    () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_MASK,
+    []
+  );
   const filterConfigs: FilterConfig[] = React.useMemo(
     () => [
       { itemType: FILTER_ITEM_TYPE.STRING, itemName: "mask" },

@@ -45,7 +45,7 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
       onError && onError(error);
       throw error;
     }
-  }, [apiUrl, query, axios, onSuccess, onError, axiosResponseValidator]);
+  }, [axios, apiUrl, query, axiosResponseValidator, onSuccess, onError]);
 
   const data = useQuery<T[]>({
     queryKey: [queryKey],

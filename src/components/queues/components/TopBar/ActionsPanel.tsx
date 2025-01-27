@@ -2,9 +2,9 @@ import React from "react";
 import { Box } from "@mui/material";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
-import { QueueCounts, QueueStatus } from "../../types";
 import styled from "styled-components";
 import { EnhancedButton } from "../../../1_enhanced";
+import { QueueCounts, QueueStatus } from "../../../../types";
 
 type Action = "retry" | "delete" | "refresh";
 

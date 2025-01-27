@@ -1,4 +1,4 @@
-import { QueueStatus } from "../types";
+import { QueueConst, QueueStatus } from "../types";
 
 export const QUEUES: QueueConst = {
   WORKER: [
@@ -203,19 +203,6 @@ export const QUEUES: QueueConst = {
     },
   ],
 };
-
-interface QueueNavCategory {
-  title: string;
-  routes: {
-    title: string;
-    value: string;
-  }[];
-}
-
-interface QueueConst {
-  WORKER: QueueNavCategory[];
-  CONSUMER: QueueNavCategory[];
-}
 
 export const QUEUE_STATUS: { [key: string]: QueueStatus } = {
   LATEST: "latest",

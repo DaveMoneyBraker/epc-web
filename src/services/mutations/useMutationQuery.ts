@@ -5,6 +5,7 @@ import AppHooks from "../../hooks/0_AppHooks";
 import ContextHooks from "../../providers/0_ContextHooks";
 
 export const useMutationQuery = (apiUrl: string, queryKey: string) => {
+  const { APP_ERRORS } = APP_CONSTANTS;
   const queryClient = useQueryClient();
   const { axios } = ContextHooks.useAxiosContext();
   const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
@@ -37,7 +38,7 @@ export const useMutationQuery = (apiUrl: string, queryKey: string) => {
         throw error;
       }
     },
-    [apiUrl, queryKey, axios, queryClient, axiosResponseValidator]
+    [axios, apiUrl, axiosResponseValidator, queryClient, queryKey]
   );
 
   return useMutation({ mutationFn });

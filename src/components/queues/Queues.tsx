@@ -5,9 +5,7 @@ import {
   QueueJob,
   QueueStats as QueueStatsInterface,
   QueueStatus,
-} from "./types";
-import { QUEUE_STATUS } from "./constants";
-import { useQueueQuery } from "./queries";
+} from "../../types";
 import { Box, styled } from "@mui/material";
 import {
   QueueJobInfoDialog,
@@ -16,9 +14,11 @@ import {
   StatusBar,
 } from "./components";
 import { DialogWrapper } from "../2_common/dialogs";
-import { useQueueMutation } from "./mutations";
 import { AppPagination } from "../3_shared/pagination";
 import ContextHooks from "../../providers/0_ContextHooks";
+import APP_CONSTANTS from "../../constants/AppConstants";
+import AppQueries from "../../services/queries/AppQueries";
+import AppMutations from "../../services/mutations/AppMutations";
 
 type Action = "retry" | "delete" | "refresh";
 
@@ -60,14 +60,21 @@ export const Queues: React.FC = () => {
   );
   const [page, setPage] = React.useState(0);
   const queryKey = React.useMemo(() => "queue", []);
-  const [status, setStatus] = React.useState<QueueStatus>(QUEUE_STATUS.LATEST);
-  const { data, client } = useQueueQuery(apiRoute, status, page, queryKey);
+  const [status, setStatus] = React.useState<QueueStatus>(
+    APP_CONSTANTS.QUEUE_STATUS.LATEST
+  );
+  const { data, client } = AppQueries.useQueueQuery(
+    apiRoute,
+    status,
+    page,
+    queryKey
+  );
   const {
     deleteJobMutation,
     retryJobMutation,
     deleteAllJobsMutation,
     retryAllJobsMutation,
-  } = useQueueMutation(queryKey);
+  } = AppMutations.useQueueMutation(queryKey);
   const [stats, setStats] = React.useState<QueueStatsInterface | null>(
     mockedStats
   );

@@ -1,9 +1,5 @@
 import React from "react";
-import { PermissionRoutes } from "./permissionRoutes";
-import { ApiRoutes } from "./apiRoutes";
-import { AppRoutes } from "./appRoutes";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import { QUEUES } from "../../components/queues";
 import { AppNav, AppNavCategory } from "../../types";
 import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
@@ -13,6 +9,7 @@ import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 export const useAppNav = (): AppNav[] => {
+  const { API_ROUTES, APP_ROUTES, PERMISSION_ROUTES, QUEUES } = APP_CONSTANTS;
   // SUPPRESSIONS
   const SuppressionsDomainPage = React.lazy(
     () => import("../../pages/suppressions/SuppressionDomainPage")
@@ -64,9 +61,9 @@ export const useAppNav = (): AppNav[] => {
         children: routes.map(({ title, value }) => ({
           title,
           pageTitle: title,
-          apiRoute: `${ApiRoutes.QUEUE_JOB}?queueName=${value}`,
-          appRoute: `${AppRoutes.QUEUE}${value}`,
-          permissionsRoute: PermissionRoutes.QUEUE,
+          apiRoute: `${API_ROUTES.QUEUE_JOB}?queueName=${value}`,
+          appRoute: `${APP_ROUTES.QUEUE}${value}`,
+          permissionsRoute: PERMISSION_ROUTES.QUEUE,
           element: (
             <React.Suspense>
               <QueuesPage />
@@ -81,7 +78,13 @@ export const useAppNav = (): AppNav[] => {
       path: "queue",
       categories,
     };
-  }, [QueuesPage]);
+  }, [
+    API_ROUTES.QUEUE_JOB,
+    APP_ROUTES.QUEUE,
+    PERMISSION_ROUTES.QUEUE,
+    QUEUES.WORKER,
+    QueuesPage,
+  ]);
   const ConsumerQueuesNav: AppNav = React.useMemo(() => {
     const categories: AppNavCategory[] = QUEUES.CONSUMER.map(
       ({ title: categoryTitle, routes }) => ({
@@ -89,9 +92,9 @@ export const useAppNav = (): AppNav[] => {
         children: routes.map(({ title, value }) => ({
           title,
           pageTitle: title,
-          apiRoute: `${ApiRoutes.QUEUE_JOB}?queueName=${value}`,
-          appRoute: `${AppRoutes.QUEUE}${value}`,
-          permissionsRoute: PermissionRoutes.QUEUE,
+          apiRoute: `${API_ROUTES.QUEUE_JOB}?queueName=${value}`,
+          appRoute: `${APP_ROUTES.QUEUE}${value}`,
+          permissionsRoute: PERMISSION_ROUTES.QUEUE,
           element: (
             <React.Suspense>
               <QueuesPage />
@@ -106,7 +109,13 @@ export const useAppNav = (): AppNav[] => {
       path: "queue",
       categories,
     };
-  }, [QueuesPage]);
+  }, [
+    API_ROUTES.QUEUE_JOB,
+    APP_ROUTES.QUEUE,
+    PERMISSION_ROUTES.QUEUE,
+    QUEUES.CONSUMER,
+    QueuesPage,
+  ]);
 
   return [
     // INFO
@@ -122,8 +131,8 @@ export const useAppNav = (): AppNav[] => {
               title: APP_CONSTANTS.PAGE_TITLES.INFO,
               pageTitle: APP_CONSTANTS.PAGE_TITLES.INFO,
               apiRoute: "",
-              appRoute: AppRoutes.INFO,
-              permissionsRoute: PermissionRoutes.ALLOW_ALL,
+              appRoute: APP_ROUTES.INFO,
+              permissionsRoute: PERMISSION_ROUTES.ALLOW_ALL,
               element: (
                 <React.Suspense>
                   <InfoPage />
@@ -146,9 +155,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: "Email",
               pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL,
-              apiRoute: ApiRoutes.SUPPRESSION_EMAIL,
-              appRoute: AppRoutes.SUPPRESSION_EMAIL,
-              permissionsRoute: PermissionRoutes.SUPPRESSION_EMAIL,
+              apiRoute: API_ROUTES.SUPPRESSION_EMAIL,
+              appRoute: APP_ROUTES.SUPPRESSION_EMAIL,
+              permissionsRoute: PERMISSION_ROUTES.SUPPRESSION_EMAIL,
               element: (
                 <React.Suspense>
                   <SuppressionsEmailPage />
@@ -158,9 +167,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
               pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
-              apiRoute: ApiRoutes.SUPPRESSION_EMAIL + "-submit",
-              appRoute: AppRoutes.SUPPRESSION_EMAIL + "-submit",
-              permissionsRoute: PermissionRoutes.SUPPRESSION_EMAIL,
+              apiRoute: API_ROUTES.SUPPRESSION_EMAIL + "-submit",
+              appRoute: APP_ROUTES.SUPPRESSION_EMAIL + "-submit",
+              permissionsRoute: PERMISSION_ROUTES.SUPPRESSION_EMAIL,
               element: (
                 <React.Suspense>
                   <SuppressionsSubmitEmailPage />
@@ -170,9 +179,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: "Domain",
               pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_DOMAIN,
-              apiRoute: ApiRoutes.SUPPRESSION_DOMAIN,
-              appRoute: AppRoutes.SUPPRESSION_DOMAIN,
-              permissionsRoute: PermissionRoutes.SUPPRESSION_DOMAIN,
+              apiRoute: API_ROUTES.SUPPRESSION_DOMAIN,
+              appRoute: APP_ROUTES.SUPPRESSION_DOMAIN,
+              permissionsRoute: PERMISSION_ROUTES.SUPPRESSION_DOMAIN,
               element: (
                 <React.Suspense>
                   <SuppressionsDomainPage />
@@ -182,9 +191,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_DOMAIN}`,
               pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_DOMAIN}`,
-              apiRoute: ApiRoutes.SUPPRESSION_DOMAIN + "-submit",
-              appRoute: AppRoutes.SUPPRESSION_DOMAIN + "-submit",
-              permissionsRoute: PermissionRoutes.SUPPRESSION_DOMAIN,
+              apiRoute: API_ROUTES.SUPPRESSION_DOMAIN + "-submit",
+              appRoute: APP_ROUTES.SUPPRESSION_DOMAIN + "-submit",
+              permissionsRoute: PERMISSION_ROUTES.SUPPRESSION_DOMAIN,
               element: (
                 <React.Suspense>
                   <SuppressionsSubmitDomainPage />
@@ -194,9 +203,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: "Mx",
               pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_MX,
-              apiRoute: ApiRoutes.SUPPRESSION_MX,
-              appRoute: AppRoutes.SUPPRESSION_MX,
-              permissionsRoute: PermissionRoutes.SUPPRESSION_MX,
+              apiRoute: API_ROUTES.SUPPRESSION_MX,
+              appRoute: APP_ROUTES.SUPPRESSION_MX,
+              permissionsRoute: PERMISSION_ROUTES.SUPPRESSION_MX,
               element: (
                 <React.Suspense>
                   <SuppressionsMxPage />
@@ -206,9 +215,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL}`,
               pageTitle: `Submit ${APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_MX}`,
-              apiRoute: ApiRoutes.SUPPRESSION_MX + "-submit",
-              appRoute: AppRoutes.SUPPRESSION_MX + "-submit",
-              permissionsRoute: PermissionRoutes.SUPPRESSION_MX,
+              apiRoute: API_ROUTES.SUPPRESSION_MX + "-submit",
+              appRoute: APP_ROUTES.SUPPRESSION_MX + "-submit",
+              permissionsRoute: PERMISSION_ROUTES.SUPPRESSION_MX,
               element: (
                 <React.Suspense>
                   <SuppressionsSubmitMxPage />
@@ -218,9 +227,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: "Mask",
               pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_MASK,
-              apiRoute: ApiRoutes.SUPPRESSION_MASK,
-              appRoute: AppRoutes.SUPPRESSION_MASK,
-              permissionsRoute: PermissionRoutes.SUPPRESSION_MASK,
+              apiRoute: API_ROUTES.SUPPRESSION_MASK,
+              appRoute: APP_ROUTES.SUPPRESSION_MASK,
+              permissionsRoute: PERMISSION_ROUTES.SUPPRESSION_MASK,
               element: (
                 <React.Suspense>
                   <SuppressionMaskPage />
@@ -235,9 +244,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: "Prod Files",
               pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL,
-              apiRoute: ApiRoutes.SUPPRESSION_PROD_FILES,
-              appRoute: AppRoutes.SUPPRESSION_PROD_FILES,
-              permissionsRoute: PermissionRoutes.ADMIN,
+              apiRoute: API_ROUTES.SUPPRESSION_PROD_FILES,
+              appRoute: APP_ROUTES.SUPPRESSION_PROD_FILES,
+              permissionsRoute: PERMISSION_ROUTES.ADMIN,
               element: (
                 <React.Suspense>
                   <SuppressionSubmitProdFilesPage />
@@ -260,9 +269,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
               pageTitle: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
-              apiRoute: ApiRoutes.BLACKLIST_DOMAIN,
-              appRoute: AppRoutes.BLACKLIST_DOMAIN,
-              permissionsRoute: PermissionRoutes.BLACKLIST_DOMAIN,
+              apiRoute: API_ROUTES.BLACKLIST_DOMAIN,
+              appRoute: APP_ROUTES.BLACKLIST_DOMAIN,
+              permissionsRoute: PERMISSION_ROUTES.BLACKLIST_DOMAIN,
               element: (
                 <React.Suspense>
                   <BlacklistDomainPage />
@@ -272,9 +281,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
               pageTitle: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
-              apiRoute: ApiRoutes.BLACKLIST_DOMAIN + "-submit",
-              appRoute: AppRoutes.BLACKLIST_DOMAIN + "-submit",
-              permissionsRoute: PermissionRoutes.BLACKLIST_DOMAIN,
+              apiRoute: API_ROUTES.BLACKLIST_DOMAIN + "-submit",
+              appRoute: APP_ROUTES.BLACKLIST_DOMAIN + "-submit",
+              permissionsRoute: PERMISSION_ROUTES.BLACKLIST_DOMAIN,
               element: (
                 <React.Suspense>
                   <SubmitBlacklistDomainsPage />
@@ -297,9 +306,9 @@ export const useAppNav = (): AppNav[] => {
             {
               title: APP_CONSTANTS.PAGE_TITLES.GOOGLE_CLOUD,
               pageTitle: APP_CONSTANTS.PAGE_TITLES.GOOGLE_CLOUD,
-              apiRoute: ApiRoutes.GOOGLE_CLOUD,
-              appRoute: AppRoutes.GOOGLE_CLOUD,
-              permissionsRoute: PermissionRoutes.ADMIN,
+              apiRoute: API_ROUTES.GOOGLE_CLOUD,
+              appRoute: APP_ROUTES.GOOGLE_CLOUD,
+              permissionsRoute: PERMISSION_ROUTES.ADMIN,
               element: (
                 <React.Suspense>
                   <GoogleCloudFilesPage />

@@ -1,9 +1,6 @@
 import React from "react";
-import { QueueJob, QueueStatus } from "../types";
 import {
-  Box,
   IconButton,
-  styled,
   Table,
   TableBody,
   TableCell,
@@ -17,6 +14,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
 import { NoTableDataMessage } from "../../3_shared/noTableDataMessage";
+import { QueueJob, QueueStatus } from "../../../types";
 
 interface Props {
   status: QueueStatus;

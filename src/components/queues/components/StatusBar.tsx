@@ -5,7 +5,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { QueueCounts, QueueStatus } from "../types";
+import { QueueCounts, QueueStatus } from "../../../types";
 
 interface Props {
   selectedStatus: QueueStatus;

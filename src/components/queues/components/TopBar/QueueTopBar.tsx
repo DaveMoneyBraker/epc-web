@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import React from "react";
 import { ActionsPanel } from "./ActionsPanel";
 import { ServerStats } from "./ServerStats";
-import { QueueCounts, QueueStats, QueueStatus } from "../../types";
+import { QueueCounts, QueueStats, QueueStatus } from "../../../../types";
 
 type Action = "retry" | "delete" | "refresh";
 

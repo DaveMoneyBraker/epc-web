@@ -1,5 +1,4 @@
 import React from "react";
-import { ApiRoutes } from "../../../core/router";
 import {
   FILTER_ITEM_TYPE,
   FilterConfig,
@@ -9,6 +8,7 @@ import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions
 import AppHooks from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import AppInputValidators from "../../../validators/input/0_InputValidators";
+import APP_CONSTANTS from "../../../constants/AppConstants";
 
 export const SuppressionsDomain: React.FC = () => {
   const cols = React.useMemo(
@@ -16,7 +16,10 @@ export const SuppressionsDomain: React.FC = () => {
     []
   );
   const queryKey = React.useMemo(() => "SuppressionsDomains", []);
-  const apiUrl = React.useMemo(() => ApiRoutes.SUPPRESSION_DOMAIN, []);
+  const apiUrl = React.useMemo(
+    () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_DOMAIN,
+    []
+  );
   const filterConfigs: FilterConfig[] = React.useMemo(
     () => [
       { itemType: FILTER_ITEM_TYPE.STRING, itemName: "domain" },

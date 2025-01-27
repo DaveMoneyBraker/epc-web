@@ -11,3 +11,4 @@ export * from "./enhanced";
 export * from "./table";
 export * from "./axios";
 export * from "./theme";
+export * from "./queues";

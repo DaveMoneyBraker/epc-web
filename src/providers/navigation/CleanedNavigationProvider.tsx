@@ -12,7 +12,6 @@ import {
 import { useAppNav } from "../../core/router/nav";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppHooks from "../../hooks/0_AppHooks";
-import { PermissionRoutes } from "../../core/router";
 
 export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   children,
@@ -65,7 +64,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
               const hasPermission = permissions.some(
                 ([, route, action]) =>
                   child.permissionsRoute.default ===
-                    PermissionRoutes.ALLOW_ALL.default ||
+                    APP_CONSTANTS.PERMISSION_ROUTES.ALLOW_ALL.default ||
                   (route === child.permissionsRoute.default &&
                     action === APP_CONSTANTS.PERMISSION_ACTIONS.READ)
               );
@@ -106,7 +105,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
       currentNavNode,
       forbiddenRoutes: [],
     };
-  }, [isAdmin, appNav, permissions, currentNavNode]);
+  }, [isAdmin, permissions, currentNavNode, appNav]);
 
   const value = React.useMemo(
     () => ({

@@ -1,5 +1,4 @@
 import React from "react";
-import { QueueJob } from "../../types";
 import { useStyledDialog as dialogFunction } from "../../../2_common/dialogs";
 import {
   Box,
@@ -13,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { EnhancedButton } from "../../../1_enhanced";
+import { QueueJob } from "../../../../types";
 
 interface Props {
   job: QueueJob | undefined;
