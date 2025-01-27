@@ -15,6 +15,7 @@ import { API_ROUTES } from "./ApiRoutes";
 import { APP_ROUTES } from "./AppRoutes";
 import { PERMISSION_ROUTES } from "./PermissionRoutes";
 import { QUEUES, QUEUE_STATUS } from "./QueuesConstant";
+import { PAGES_INFO } from "./Info";
 
 const APP_CONSTANTS = {
   PAGE_TITLES,
@@ -33,6 +34,7 @@ const APP_CONSTANTS = {
   PERMISSION_ROUTES,
   QUEUES,
   QUEUE_STATUS,
+  PAGES_INFO,
 } as const;
 
 export default APP_CONSTANTS;

@@ -1,8 +1,7 @@
 import React from "react";
-import ContextHooks from "../../../providers/0_ContextHooks";
-import { AppNav, AppNavCategory, AppNavNode } from "../../../types";
-import { PagesInfo } from "../constants";
-import { PageInfo } from "../types";
+import { AppNav, AppNavCategory, AppNavNode, PageInfo } from "../types";
+import ContextHooks from "../providers/0_ContextHooks";
+import APP_CONSTANTS from "../constants/AppConstants";
 
 export const useCleanedPagesInfo = (): PageInfo[] => {
   const { nav } = ContextHooks.useCleanedNavigationContext();
@@ -26,7 +25,7 @@ export const useCleanedPagesInfo = (): PageInfo[] => {
 
   return React.useMemo(
     () =>
-      PagesInfo.filter(({ appRoute: pageInfoAppRoute }) =>
+      APP_CONSTANTS.PAGES_INFO.filter(({ appRoute: pageInfoAppRoute }) =>
         navNodes.some(({ appRoute }) => appRoute === pageInfoAppRoute)
       ),
     [navNodes]

@@ -1,8 +1,8 @@
 import React from "react";
 import { Paper, styled, Typography } from "@mui/material";
-import { PageInfo } from "./types";
 import AppHooks from "../../hooks/0_AppHooks";
 import { EnhancedLink } from "../1_enhanced";
+import { PageInfo } from "../../types";
 
 const Wrapper = styled(Paper)(({ theme }) => ({
   display: "flex",

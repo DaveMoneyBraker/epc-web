@@ -17,6 +17,7 @@ import { useInitialDataLoaded } from "./useInitialDataLoaded";
 import { useUserFullName } from "./useUserFullName";
 import { useFirstPageLoading } from "./useFirstPageLoading";
 import { useDebounce } from "./useDebounce";
+import { useCleanedPagesInfo } from "./useCleanedPagesInfo";
 
 const AppHooks = {
   useAxios,
@@ -38,6 +39,7 @@ const AppHooks = {
   useUserFullName,
   useFirstPageLoading,
   useDebounce,
+  useCleanedPagesInfo,
 } as const;
 
 export default AppHooks;
