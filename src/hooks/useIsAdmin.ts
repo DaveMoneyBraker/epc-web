@@ -2,7 +2,9 @@ import React from "react";
 import APP_CONSTANTS from "../constants/AppConstants";
 import ContextHooks from "../providers/0_ContextHooks";
 
-export const useIsAdmin = (): boolean => {
+export type UseIsAdmin = () => boolean;
+
+export const useIsAdmin: UseIsAdmin = () => {
   const { roles } = ContextHooks.useAccountContext();
   return React.useMemo(
     () =>

@@ -7,7 +7,15 @@ import AppQueries from "../services/queries/AppQueries";
 import AppMutations from "../services/mutations/AppMutations";
 import ContextHooks from "../providers/0_ContextHooks";
 
-interface ReturnedValue<T = any> {
+export type UseDefaultPageState = <T>(
+  itemName: string,
+  queryKey: string,
+  tableCols: string[],
+  apiUrl: string,
+  options?: AppQueryOptions<T>
+) => DefaultPageStateReturnValue<T>;
+
+interface DefaultPageStateReturnValue<T = any> {
   input: {
     value: string;
     setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -50,7 +58,7 @@ export const useDefaultPageState = <T = any>(
   tableCols: string[],
   apiUrl: string,
   options?: AppQueryOptions<T>
-): ReturnedValue<T> => {
+): DefaultPageStateReturnValue<T> => {
   const { loading: axiosLoading } = ContextHooks.useAxiosContext();
   const [selectedItem, setSelectedItem] = React.useState<T | null>(null);
   const [filterValue, setFilterValue] = React.useState<FilterValue[]>([]);

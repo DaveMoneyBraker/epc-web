@@ -2,7 +2,9 @@ import React from "react";
 import { QueryState, useQueryClient } from "@tanstack/react-query";
 import { useInApp } from "./useInApp";
 
-export const useInitialDataLoaded = (): boolean => {
+export type UseInitialDataLoaded = () => boolean;
+
+export const useInitialDataLoaded: UseInitialDataLoaded = () => {
   const inApp = useInApp();
   const queryClient = useQueryClient();
   const accountUserState = queryClient.getQueryState([

@@ -1,13 +1,15 @@
 import React from "react";
 import { AxiosResponse } from "axios";
 import APP_CONSTANTS from "../constants/AppConstants";
-import AppHooks from "./0_AppHooks";
+import APP_HOOKS from "./0_AppHooks";
 import { ValidationHookResult } from "../types";
 
-export const useAxiosResponseValidator = <
+export type UseAxiosResponseValidator = <T = any>() => ValidationHookResult<T>;
+
+export const useAxiosResponseValidator: UseAxiosResponseValidator = <
   T = any
->(): ValidationHookResult<T> => {
-  const showNotification = AppHooks.useNotification();
+>() => {
+  const showNotification = APP_HOOKS.useNotification();
   const [err, setErr] = React.useState<string>("");
 
   React.useEffect(() => {

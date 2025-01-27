@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ClearIcon from "@mui/icons-material/Clear";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 import APP_CONSTANTS from "../../../constants/AppConstants";
 
 interface Props {
@@ -53,7 +53,7 @@ export const AppDragNDrop: React.FC<Props> = ({
   onFilesSelect,
   onFileDelete,
 }) => {
-  const notification = AppHooks.useNotification();
+  const notification = APP_HOOKS.useNotification();
   const [isDragging, setIsDragging] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 

@@ -1,10 +1,10 @@
 import React from "react";
 import { Login } from "../../components/login";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 
 const LoginPage: React.FC = (props) => {
-  AppHooks.useEPCDocumentTitle(APP_CONSTANTS.PAGE_TITLES.LOGIN);
+  APP_HOOKS.useEPCDocumentTitle(APP_CONSTANTS.PAGE_TITLES.LOGIN);
 
   return <Login {...props} />;
 };

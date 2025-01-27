@@ -3,7 +3,7 @@ import axios, { CancelTokenSource } from "axios";
 import { useLocation } from "react-router-dom";
 import { AxiosContext } from "./AxiosContext";
 import { encodeConfigURI } from "./utils";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 import { AuthToken, CacheItem } from "../../types";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AxiosProviderHooks from "./hooks/AxiosProviderHooks";
@@ -20,10 +20,10 @@ interface QueueItem {
 
 export const AxiosProvider: React.FC<Props> = ({ children }) => {
   const location = useLocation();
-  const getApiUrl = AppHooks.useApiUrlLoader();
-  const { get } = AppHooks.useLocalStorage();
-  const showNotification = AppHooks.useNotification();
-  const initialDataLoaded = AppHooks.useInitialDataLoaded();
+  const getApiUrl = APP_HOOKS.useApiUrlLoader();
+  const { get } = APP_HOOKS.useLocalStorage();
+  const showNotification = APP_HOOKS.useNotification();
+  const initialDataLoaded = APP_HOOKS.useInitialDataLoaded();
   const { refresh, refreshToken } = AxiosProviderHooks.useRefreshToken();
   const handleAxiosError =
     AxiosProviderHooks.useAxiosErrorHandler(refreshToken);

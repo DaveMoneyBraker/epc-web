@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, styled, Typography } from "@mui/material";
 import { DialogWrapper } from "../dialogs";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 import {
   AppQueryOptions,
   DefaultDialogItemProps,
@@ -70,7 +70,7 @@ export const CommonPage: React.FC<Props> = ({
     filter: { value: filterState, setValue: setFilterState },
     data: { value: items, totalItems, loading },
     cols: defaultStateCols,
-  } = AppHooks.useDefaultPageState(
+  } = APP_HOOKS.useDefaultPageState(
     itemName,
     queryKey,
     cols,
@@ -78,7 +78,7 @@ export const CommonPage: React.FC<Props> = ({
     queryOptions
   );
   const filteredByPermissionActions =
-    AppHooks.useFilteredByPermissionsActions(actions);
+    APP_HOOKS.useFilteredByPermissionsActions(actions);
   const dialogTitle = React.useMemo(() => {
     const titleCaseItemName = AppUtils.toTitleCase(itemName);
     return selectedItem

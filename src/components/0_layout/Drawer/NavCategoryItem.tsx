@@ -6,7 +6,7 @@ import {
   ListSubheader,
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { AppNavCategory, AppNavNode } from "../../../types";
 
 interface Props {
@@ -17,7 +17,7 @@ export const NavCategoryItem: React.FC<Props> = ({ category }) => {
   const navigate = useNavigate();
   const {
     primary: { main: mainColor },
-  } = AppHooks.useThemePalette();
+  } = APP_HOOKS.useThemePalette();
 
   const getItem = React.useCallback(
     (child: AppNavNode, i: number) => (

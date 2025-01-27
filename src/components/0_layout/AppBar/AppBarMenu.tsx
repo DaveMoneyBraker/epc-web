@@ -5,14 +5,14 @@ import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import { EnhancedButton } from "../../1_enhanced";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 
 interface Props {
   onLogout: () => void;
 }
 
 export const AppBarMenu: React.FC<Props> = ({ onLogout }) => {
-  const userFullName = AppHooks.useUserFullName();
+  const userFullName = APP_HOOKS.useUserFullName();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 

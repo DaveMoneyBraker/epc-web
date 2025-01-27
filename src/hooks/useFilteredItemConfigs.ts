@@ -1,7 +1,13 @@
 import React from "react";
 import { FilterConfig, ItemConfig, ValidatorConfig } from "../types";
 
-export const useFilteredItemConfigs = (
+export type UseFilteredItemConfigs = (
+  configs: FilterConfig[],
+  restrictedItemNames?: string[],
+  validatorConfigs?: Omit<ValidatorConfig, "error">[]
+) => ItemConfig[];
+
+export const useFilteredItemConfigs: UseFilteredItemConfigs = (
   configs: FilterConfig[],
   restrictedItemNames: string[] = [],
   validatorConfigs?: Omit<ValidatorConfig, "error">[]

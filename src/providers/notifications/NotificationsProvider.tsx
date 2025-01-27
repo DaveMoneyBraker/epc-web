@@ -2,7 +2,7 @@ import React from "react";
 import { MaterialDesignContent, SnackbarProvider } from "notistack";
 import { ChildrenProps } from "../../types";
 import { styled } from "@mui/material";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 
 export const NotificationsProvider: React.FC<ChildrenProps> = ({
   children,
@@ -11,7 +11,7 @@ export const NotificationsProvider: React.FC<ChildrenProps> = ({
     primary: { light },
     error: { main: errorMain },
     warning: { main: warningMain },
-  } = AppHooks.useThemePalette();
+  } = APP_HOOKS.useThemePalette();
   const StyledMaterialDesignContent = React.useMemo(
     () =>
       styled(MaterialDesignContent)(() => ({

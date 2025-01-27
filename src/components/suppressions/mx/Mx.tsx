@@ -5,7 +5,7 @@ import {
   ValidatorConfigWithNoError,
 } from "../../../types";
 import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import AppInputValidators from "../../../validators/input/0_InputValidators";
 import APP_CONSTANTS from "../../../constants/AppConstants";
@@ -51,7 +51,7 @@ export const SuppressionsMx: React.FC = () => {
     return values;
   }, []);
 
-  const itemConfigs = AppHooks.useFilteredItemConfigs(
+  const itemConfigs = APP_HOOKS.useFilteredItemConfigs(
     filterConfigs,
     [],
     validators

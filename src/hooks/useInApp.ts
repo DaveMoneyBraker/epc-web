@@ -1,7 +1,9 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-export const useInApp = () => {
+export type UseInApp = () => boolean;
+
+export const useInApp: UseInApp = () => {
   const [inApp, setInApp] = React.useState(false);
   const location = useLocation();
   React.useEffect(() => {

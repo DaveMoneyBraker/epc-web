@@ -1,10 +1,10 @@
 import React from "react";
 import { SuppressionsEmail } from "../../components/suppressions";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 
 const SuppressionsEmailPage: React.FC = () => {
-  AppHooks.useEPCDocumentTitle(APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL);
+  APP_HOOKS.useEPCDocumentTitle(APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL);
   return <SuppressionsEmail />;
 };
 

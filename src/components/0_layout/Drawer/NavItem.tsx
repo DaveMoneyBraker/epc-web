@@ -10,7 +10,7 @@ import { NavCategoryItem } from "./NavCategoryItem";
 import { useLocation } from "react-router-dom";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { AppNav } from "../../../types";
 
 interface Props {
@@ -23,7 +23,7 @@ interface Props {
 export const NavItem: React.FC<Props> = ({ item, index, open, onClick }) => {
   const {
     primary: { main: mainColor },
-  } = AppHooks.useThemePalette();
+  } = APP_HOOKS.useThemePalette();
   const { pathname } = useLocation();
   const active = React.useMemo(
     () =>

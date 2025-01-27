@@ -4,7 +4,12 @@ import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import APP_CONSTANTS from "../constants/AppConstants";
 
-export const useNotification = () => {
+export type UseNotification = () => (
+  message: string,
+  variant?: VariantType
+) => void;
+
+export const useNotification: UseNotification = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   return React.useCallback(
     (

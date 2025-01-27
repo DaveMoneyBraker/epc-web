@@ -5,7 +5,7 @@ import {
   FilterConfig,
 } from "../../../types";
 import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { SuppressionMaskItemDialog } from "./item/MaskItemDialog";
 import { CommonPage } from "../../2_common/page";
 import APP_CONSTANTS from "../../../constants/AppConstants";
@@ -32,7 +32,7 @@ export const SuppressionsMask: React.FC = () => {
     ],
     []
   );
-  const itemConfigs = AppHooks.useFilteredItemConfigs(filterConfigs);
+  const itemConfigs = APP_HOOKS.useFilteredItemConfigs(filterConfigs);
 
   const actions = React.useMemo<DefaultPageActions[]>(
     () => ["create", "edit", "delete"],

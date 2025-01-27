@@ -1,14 +1,14 @@
 import React from "react";
 import axios from "axios";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { redirect } from "react-router-dom";
 import { NOTIFICATION_VARIANTS } from "../../../constants/NotificationVariants";
 import APP_CONSTANTS from "../../../constants/AppConstants";
 
 export const useRefreshToken = () => {
-  const { set, clear } = AppHooks.useLocalStorage();
-  const getApiUrl = AppHooks.useApiUrlLoader();
-  const showNotification = AppHooks.useNotification();
+  const { set, clear } = APP_HOOKS.useLocalStorage();
+  const getApiUrl = APP_HOOKS.useApiUrlLoader();
+  const showNotification = APP_HOOKS.useNotification();
   const [refresh, setRefresh] = React.useState(false);
 
   const refreshToken = React.useCallback(async () => {

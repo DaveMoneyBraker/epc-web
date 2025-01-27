@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { styled } from "@mui/material";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 import AppMutations from "../../services/mutations/AppMutations";
 import ContextHooks from "../../providers/0_ContextHooks";
 import { AppBar } from "./AppBar/AppBar";
@@ -43,8 +43,8 @@ export const Layout: React.FC = () => {
   const location = useLocation();
   const { loading } = ContextHooks.useAxiosContext();
   const { nav, currentNavNode } = ContextHooks.useCleanedNavigationContext();
-  const { isFirstLoading } = AppHooks.useFirstPageLoading();
-  const online = AppHooks.useIsOnline();
+  const isFirstLoading = APP_HOOKS.useFirstPageLoading();
+  const online = APP_HOOKS.useIsOnline();
   const pageTitle = React.useMemo(
     () =>
       currentNavNode?.pageTitle || (loading ? "Loading..." : "Unknown page :("),

@@ -1,7 +1,9 @@
 import React from "react";
 
+export type UseApiUrlLoader = () => () => Promise<string>;
+
 // LOADING API URL FROM JSON FILE PUBLIC/CONFIG/CONFIG.JSON
-export const useApiUrlLoader = () => {
+export const useApiUrlLoader: UseApiUrlLoader = () => {
   const [apiUrl, setApiUrl] = React.useState("");
   const development: boolean =
     !process.env.NODE_ENV || process.env.NODE_ENV === "development";
@@ -29,10 +31,8 @@ export const useApiUrlLoader = () => {
     [development]
   );
 
-  const getApiUrl = React.useCallback(
+  return React.useCallback(
     async (): Promise<string> => (apiUrl ? apiUrl : fetchApiUrl()),
     [apiUrl, fetchApiUrl]
   );
-
-  return getApiUrl;
 };

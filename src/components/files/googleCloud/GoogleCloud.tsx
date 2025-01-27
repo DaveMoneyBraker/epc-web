@@ -5,7 +5,7 @@ import {
   FilterConfig,
 } from "../../../types";
 import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import { isGCloudFile } from "../../../typeGuards";
 import AppMutations from "../../../services/mutations/AppMutations";
@@ -46,7 +46,7 @@ export const GoogleCloudFile: React.FC = () => {
     []
   );
 
-  const itemConfigs = AppHooks.useFilteredItemConfigs(filterConfigs, [
+  const itemConfigs = APP_HOOKS.useFilteredItemConfigs(filterConfigs, [
     "gcloudId",
   ]);
 

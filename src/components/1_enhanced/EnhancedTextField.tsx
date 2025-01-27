@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, TextFieldProps } from "@mui/material";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 
 type Props = Omit<TextFieldProps, "onChange"> & {
   label?: string;
@@ -24,7 +24,7 @@ export const EnhancedTextField: React.FC<Props> = ({
   ...props
 }) => {
   const [firstOpen, setFirstOpen] = React.useState(true);
-  const handler = AppHooks.useInputChangeHandler(onChange);
+  const handler = APP_HOOKS.useInputChangeHandler(onChange);
   const handleInputChange = React.useCallback(
     (v: any) => {
       setFirstOpen(false);

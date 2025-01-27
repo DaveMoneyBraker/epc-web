@@ -2,11 +2,9 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import ContextHooks from "../providers/0_ContextHooks";
 
-interface UseFirstPageLoadingReturn {
-  isFirstLoading: boolean;
-}
+export type UseFirstPageLoading = () => boolean;
 
-export const useFirstPageLoading = (): UseFirstPageLoadingReturn => {
+export const useFirstPageLoading: UseFirstPageLoading = () => {
   const location = useLocation();
   const { loading: axiosLoading } = ContextHooks.useAxiosContext();
   const [isFirstLoading, setIsFirstLoading] = React.useState(true);
@@ -38,5 +36,5 @@ export const useFirstPageLoading = (): UseFirstPageLoadingReturn => {
     }
   }, [axiosLoading, isFirstLoading]);
 
-  return { isFirstLoading };
+  return isFirstLoading;
 };

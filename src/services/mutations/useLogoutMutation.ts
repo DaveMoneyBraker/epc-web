@@ -1,15 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import ContextHooks from "../../providers/0_ContextHooks";
 
 export const useLogoutMutation = () => {
   const navigate = useNavigate();
   const { axios, loading } = ContextHooks.useAxiosContext();
-  const { clear } = AppHooks.useLocalStorage();
-  const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
+  const { clear } = APP_HOOKS.useLocalStorage();
+  const axiosResponseValidator = APP_HOOKS.useAxiosResponseValidator();
 
   const mutationFn = React.useCallback(async () => {
     if (!axios) {

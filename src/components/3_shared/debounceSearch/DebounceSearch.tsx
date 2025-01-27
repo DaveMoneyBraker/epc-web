@@ -1,7 +1,7 @@
 import React from "react";
 import { InputAdornment, TextField } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 
 interface Props {
   onChange: (value: string) => void;
@@ -13,9 +13,9 @@ export const DebounceSearch: React.FC<Props> = ({
   onChange,
 }) => {
   const [value, setValue] = React.useState<string>("");
-  AppHooks.useDebounce<string>(onChange, value);
+  APP_HOOKS.useDebounce<string>(onChange, value);
 
-  const handleChange = AppHooks.useInputChangeHandler(setValue);
+  const handleChange = APP_HOOKS.useInputChangeHandler(setValue);
 
   return (
     <TextField

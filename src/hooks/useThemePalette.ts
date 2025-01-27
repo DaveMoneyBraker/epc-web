@@ -1,7 +1,9 @@
-import { Theme, useTheme } from "@mui/material";
+import { Palette, Theme, useTheme } from "@mui/material";
 import React from "react";
 
-export const useThemePalette = () => {
+export type UseThemePalette = () => Palette;
+
+export const useThemePalette: UseThemePalette = () => {
   const theme = useTheme<Theme>();
   return React.useMemo(() => ({ ...theme.palette }), [theme]);
 };

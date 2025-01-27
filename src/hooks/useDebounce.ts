@@ -1,6 +1,12 @@
 import React from "react";
 
-export const useDebounce = <T>(
+export type UseDebounce = <T = any>(
+  callback: (v: T) => any,
+  value: T,
+  delay?: number
+) => void;
+
+export const useDebounce: UseDebounce = <T = any>(
   callback: (v: T) => any,
   value: T,
   delay = 700

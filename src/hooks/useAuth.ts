@@ -2,21 +2,21 @@ import React from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { AuthToken } from "../types";
 import { useNavigate } from "react-router-dom";
-import AppHooks from "./0_AppHooks";
+import APP_HOOKS from "./0_AppHooks";
 import ContextHooks from "../providers/0_ContextHooks";
 import APP_CONSTANTS from "../constants/AppConstants";
 
-interface Value {
+export type UseAuth = () => {
   login: (value: { password: string; username: string }) => void;
   logout: () => void;
   loading: boolean;
   error: any;
-}
+};
 
-export const useAuth = (): Value => {
+export const useAuth: UseAuth = () => {
   const navigate = useNavigate();
   const { axios, loading } = ContextHooks.useAxiosContext();
-  const { set, clear } = AppHooks.useLocalStorage();
+  const { set, clear } = APP_HOOKS.useLocalStorage();
   const [error, setError] = React.useState(false);
 
   const login = React.useCallback(

@@ -6,7 +6,7 @@ import {
 } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import React from "react";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 
 // UPDATING THEME TYPOGRAPHY
 declare module "@mui/material/styles" {
@@ -63,7 +63,7 @@ export const useAppMuiTypography = () => {
     grey,
     warning: { light: warningLight },
     error: { light: errorLight },
-  } = AppHooks.useThemePalette();
+  } = APP_HOOKS.useThemePalette();
   return React.useMemo<TypographyOptions>(
     () => ({
       fontFamily: "'DM Sans', sans-serif",

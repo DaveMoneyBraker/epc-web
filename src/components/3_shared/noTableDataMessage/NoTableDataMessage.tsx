@@ -1,7 +1,7 @@
 import { InboxOutlined } from "@mui/icons-material";
 import { Box, styled, Typography } from "@mui/material";
 import React from "react";
-import AppHooks from "../../../hooks/0_AppHooks";
+import APP_HOOKS from "../../../hooks/0_AppHooks";
 
 // Styled components for the empty state
 const EmptyStateContainer = styled(Box)(({ theme }) => ({
@@ -31,7 +31,7 @@ interface Props {
 export const NoTableDataMessage: React.FC<Props> = ({
   message = "No Data Available",
 }) => {
-  const { isFirstLoading } = AppHooks.useFirstPageLoading();
+  const isFirstLoading = APP_HOOKS.useFirstPageLoading();
 
   return (
     <>

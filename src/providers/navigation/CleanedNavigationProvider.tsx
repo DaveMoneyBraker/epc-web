@@ -11,7 +11,7 @@ import {
 } from "../../types";
 import { useAppNav } from "../../core/router/nav";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 
 export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   children,
@@ -19,7 +19,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
   const location = useLocation();
   const appNav = useAppNav();
   const { permissions } = useAccountContext();
-  const isAdmin = AppHooks.useIsAdmin();
+  const isAdmin = APP_HOOKS.useIsAdmin();
 
   const currentNavNode = React.useMemo(() => {
     let cn = null;

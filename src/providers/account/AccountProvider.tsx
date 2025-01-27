@@ -9,11 +9,11 @@ import {
   UserPermission,
   UserRoles,
 } from "../../types";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 import APP_CONSTANTS from "../../constants/AppConstants";
 
 export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
-  const inApp = AppHooks.useInApp();
+  const inApp = APP_HOOKS.useInApp();
   const { axios } = useAxiosContext();
 
   const userEnabled = React.useMemo(

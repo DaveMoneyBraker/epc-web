@@ -1,6 +1,6 @@
 import React from "react";
 import { Paper, styled, Typography } from "@mui/material";
-import AppHooks from "../../hooks/0_AppHooks";
+import APP_HOOKS from "../../hooks/0_AppHooks";
 import { EnhancedLink } from "../1_enhanced";
 import { PageInfo } from "../../types";
 
@@ -31,7 +31,7 @@ interface Props {
 
 export const InfoCard: React.FC<Props> = ({ pageInfo }) => {
   const { title, description, appRoute, permissions } = pageInfo;
-  const isAdmin = AppHooks.useIsAdmin();
+  const isAdmin = APP_HOOKS.useIsAdmin();
   const permissionsString = React.useMemo(
     () => permissions.join(", "),
     [permissions]
