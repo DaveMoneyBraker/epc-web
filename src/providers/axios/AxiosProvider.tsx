@@ -2,7 +2,7 @@ import React from "react";
 import axios, { CancelTokenSource } from "axios";
 import { useLocation } from "react-router-dom";
 import { AxiosContext } from "./AxiosContext";
-import { encodeConfigURI } from "./encodeConfigURI";
+import { encodeConfigURI } from "./utils";
 import AppHooks from "../../hooks/0_AppHooks";
 import { AuthToken, CacheItem } from "../../types";
 import APP_CONSTANTS from "../../constants/AppConstants";
