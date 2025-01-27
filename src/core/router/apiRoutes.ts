@@ -2,6 +2,7 @@ export const ApiRoutes = {
   // AUTH
   LOGIN: "auth/login",
   LOGOUT: "auth/logout",
+  REFRESH_TOKEN: "auth/refresh-token",
 
   // ACCOUNT
   CURRENT_USER: "account/current",

@@ -1,20 +1,16 @@
 import React from "react";
 import axios, { CancelTokenSource } from "axios";
-import { redirect, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { AxiosContext } from "./AxiosContext";
 import { encodeConfigURI } from "./encodeConfigURI";
 import AppHooks from "../../hooks/0_AppHooks";
-import { AuthToken, TOKEN } from "../../types";
+import { AuthToken, CacheItem, TOKEN } from "../../types";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import { ApiRoutes, AppRoutes } from "../../core/router";
+import { ApiRoutes } from "../../core/router";
+import AxiosProviderHooks from "./hooks/AxiosProviderHooks";
 
 interface Props {
   children: React.ReactNode;
-}
-
-interface CacheItem {
-  data: any;
-  timestamp: number;
 }
 
 interface QueueItem {
@@ -46,6 +42,9 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
   const activeRequests = React.useRef<Map<string, CancelTokenSource>>(
     new Map()
   );
+  const { refresh, refreshToken } = AxiosProviderHooks.useRefreshToken();
+  const handleAxiosError =
+    AxiosProviderHooks.useAxiosErrorHandler(refreshToken);
 
   const loading = React.useMemo(
     () => pendingRequestsCount > 0,
@@ -106,50 +105,6 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     )}-${JSON.stringify(config.data || {})}`;
   }, []);
 
-  const handleAxiosError = React.useCallback(
-    (error: any) => {
-      // DON'T SHOW NOTIFICATION IF REQUEST WAS CANCELED BY OUR SIGNAL
-      if (error.code === "ERR_CANCELED" || axios.isCancel(error)) {
-        console.log("Request canceled:", error.message);
-        return;
-      }
-      console.log("RESPONSE ERROR: ", { error });
-
-      const errorMessage =
-        error.response?.data?.message ??
-        error.message ??
-        "An unexpected error occurred";
-
-      const statusCode = error.response?.status;
-
-      switch (statusCode) {
-        case 401:
-        case 403:
-          cache.current.clear(); // CLEAR CACHE ON AUTH ERRORS
-          redirect(AppRoutes.LOGIN);
-          break;
-        case 404:
-          showNotification(
-            "Resource not found",
-            APP_CONSTANTS.NOTIFICATION_VARIANTS.WARNING
-          );
-          break;
-        case 500:
-          showNotification(
-            "Server error",
-            APP_CONSTANTS.NOTIFICATION_VARIANTS.ERROR
-          );
-          break;
-        default:
-          showNotification(
-            errorMessage,
-            APP_CONSTANTS.NOTIFICATION_VARIANTS.ERROR
-          );
-      }
-    },
-    [showNotification]
-  );
-
   const instance = axios.create({
     headers: {
       // SET DEFAULT HEADERS
@@ -182,12 +137,13 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
       activeRequests.current.set(config.url, source);
     }
 
-    // UNLESS IT'S ACCOUNT, USER OR AUTH REQUEST
+    // IF TOKEN IS REFRESHING OR IT'S NOT ACCOUNT, USER OR AUTH REQUEST
     // PUT REQUEST IN QUEUE
     if (
-      !initialDataLoaded &&
-      config.url &&
-      !PROTECTED_ROUTES.includes(config.url)
+      refresh ||
+      (!initialDataLoaded &&
+        config.url &&
+        !PROTECTED_ROUTES.includes(config.url))
     ) {
       return new Promise((resolve, reject) => {
         requestQueue.current.push({
@@ -255,21 +211,47 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     // ERRORS HANDLING
     (error) => {
       updateRequestsCount(-1);
+      // IF IT 403 ERROR
+      // CLEAR ALL ACTIVE AND PENDING REQUESTS
+      // AND CLEAR CACHE
+      if (error.response?.status === 403) {
+        activeRequests.current.clear();
+        cache.current.clear();
+        requestQueue.current = [];
+      }
       handleAxiosError(error);
       // DELETE REQUEST FROM ACTIVE REQUESTS
       if (error.config?.url) {
         activeRequests.current.delete(error.config.url);
       }
+      // IF IT 401 ERROR - PUT REQUEST IN TO QUEUE
+      if (error.response?.status === 401) {
+        const { config } = error.response;
+        if (config) {
+          return new Promise((resolve, reject) => {
+            requestQueue.current.push({
+              promise: Promise.resolve(config),
+              resolve,
+              reject,
+            });
+          });
+        }
+      }
       return Promise.reject(error);
     }
   );
 
-  // PROCESS REQUEST QUEUE WHEN INITIAL DATA IS LOADED
+  // PROCESS REQUEST QUEUE WHEN INITIAL DATA IS LOADED OR TOKEN IS REFRESHED
   React.useEffect(() => {
-    if (initialDataLoaded && requestQueue.current.length > 0) {
+    if ((!refresh || initialDataLoaded) && requestQueue.current.length > 0) {
       processQueue();
     }
-  }, [initialDataLoaded, processQueue]);
+  }, [initialDataLoaded, refresh, processQueue]);
+
+  // CANCEL PENDING REQUESTS ON LOCATION CHANGE
+  React.useEffect(() => {
+    cancelPendingRequests();
+  }, [location, cancelPendingRequests]);
 
   const contextValue = React.useMemo(
     () => ({
@@ -278,11 +260,6 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     }),
     [instance, loading]
   );
-
-  // CANCEL PENDING REQUESTS ON LOCATION CHANGE
-  React.useEffect(() => {
-    cancelPendingRequests();
-  }, [location, cancelPendingRequests]);
 
   return (
     <AxiosContext.Provider value={contextValue}>

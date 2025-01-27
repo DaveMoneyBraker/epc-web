@@ -3,6 +3,8 @@ import React from "react";
 // LOADING API URL FROM JSON FILE PUBLIC/CONFIG/CONFIG.JSON
 export const useApiUrlLoader = () => {
   const [apiUrl, setApiUrl] = React.useState("");
+  const development: boolean =
+    !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
   const fetchApiUrl = async (): Promise<string> =>
     await fetch("/config/config.json", {
@@ -13,7 +15,7 @@ export const useApiUrlLoader = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        let url: string = res.apiUrl;
+        let url: string = development ? res.devUrl : res.apiUrl;
         if (!url.endsWith("/")) {
           url += "/";
         }
