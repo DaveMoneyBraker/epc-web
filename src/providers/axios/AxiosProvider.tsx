@@ -24,6 +24,18 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
   const getApiUrl = AppHooks.useApiUrlLoader();
   const [get] = AppHooks.useLocalStorage();
   const showNotification = AppHooks.useNotification();
+  const initialDataLoaded = AppHooks.useInitialDataLoaded();
+  const { refresh, refreshToken } = AxiosProviderHooks.useRefreshToken();
+  const handleAxiosError =
+    AxiosProviderHooks.useAxiosErrorHandler(refreshToken);
+  const getCacheKey = AxiosProviderHooks.useCacheKey();
+  const [pendingRequestsCount, setPendingRequestsCount] = React.useState(0);
+  const requestQueue = React.useRef<QueueItem[]>([]);
+  const cache = React.useRef<Map<string, CacheItem>>(new Map());
+  const activeRequests = React.useRef<Map<string, CancelTokenSource>>(
+    new Map()
+  );
+  const CACHE_DURATION = React.useMemo(() => 5 * 60 * 1000, []); // 5 minutes
   const PROTECTED_ROUTES = React.useMemo(
     () => [
       ApiRoutes.CURRENT_USER,
@@ -34,18 +46,6 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     ],
     []
   );
-  const [pendingRequestsCount, setPendingRequestsCount] = React.useState(0);
-  const requestQueue = React.useRef<QueueItem[]>([]);
-  const cache = React.useRef<Map<string, CacheItem>>(new Map());
-  const CACHE_DURATION = React.useMemo(() => 5 * 60 * 1000, []); // 5 minutes
-  const initialDataLoaded = AppHooks.useInitialDataLoaded();
-  const activeRequests = React.useRef<Map<string, CancelTokenSource>>(
-    new Map()
-  );
-  const { refresh, refreshToken } = AxiosProviderHooks.useRefreshToken();
-  const handleAxiosError =
-    AxiosProviderHooks.useAxiosErrorHandler(refreshToken);
-
   const loading = React.useMemo(
     () => pendingRequestsCount > 0,
     [pendingRequestsCount]
@@ -99,11 +99,11 @@ export const AxiosProvider: React.FC<Props> = ({ children }) => {
     }
   }, [requestQueue]);
 
-  const getCacheKey = React.useCallback((config: any) => {
-    return `${config.method}-${config.url}-${JSON.stringify(
-      config.params || {}
-    )}-${JSON.stringify(config.data || {})}`;
-  }, []);
+  // const getCacheKey = React.useCallback((config: any) => {
+  //   return `${config.method}-${config.url}-${JSON.stringify(
+  //     config.params || {}
+  //   )}-${JSON.stringify(config.data || {})}`;
+  // }, []);
 
   const instance = axios.create({
     headers: {
