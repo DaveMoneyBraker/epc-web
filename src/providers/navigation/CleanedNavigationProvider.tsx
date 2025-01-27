@@ -101,7 +101,7 @@ export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({
     }
 
     return {
-      nav: [],
+      nav: appNav.filter((nav) => nav.freeAccess),
       currentNavNode,
       forbiddenRoutes: [],
     };

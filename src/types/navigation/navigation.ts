@@ -3,6 +3,7 @@ export interface AppNav {
   icon: React.ReactNode;
   path: string;
   categories: AppNavCategory[];
+  freeAccess?: boolean;
 }
 
 export interface AppNavCategory {

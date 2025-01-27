@@ -110,6 +110,7 @@ export const useAppNav = (): AppNav[] => {
       {
         title: "Info",
         icon: <InfoOutlinedIcon />,
+        freeAccess: true,
         path: "info",
         categories: [
           {
