@@ -9,7 +9,7 @@ import ContextHooks from "../../providers/0_ContextHooks";
 export const useLoginMutation = (username: string, password: string) => {
   const navigate = useNavigate();
   const { axios, loading } = ContextHooks.useAxiosContext();
-  const [, setToLocalStorage] = AppHooks.useLocalStorage();
+  const { set } = AppHooks.useLocalStorage();
   const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
 
   const mutationFn = React.useCallback(async () => {
@@ -29,21 +29,14 @@ export const useLoginMutation = (username: string, password: string) => {
       }
 
       const { data } = response;
-      setToLocalStorage(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
+      set(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
       navigate(AppRoutes.SUPPRESSION_DOMAIN);
       return data;
     } catch (error) {
       console.error("useLoginMutation query error:", error);
       throw error;
     }
-  }, [
-    username,
-    password,
-    axios,
-    navigate,
-    setToLocalStorage,
-    axiosResponseValidator,
-  ]);
+  }, [username, password, axios, navigate, set, axiosResponseValidator]);
 
   const mutation = useMutation({ mutationFn });
 

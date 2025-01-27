@@ -8,7 +8,7 @@ import { useAppMuiTheme } from "../../core/mui";
 
 export const ColorModeProvider: React.FC<ChildrenProps> = ({ children }) => {
   const themes = useAppMuiTheme();
-  const [getItem, setItem] = AppHooks.useLocalStorage<ThemeMode>();
+  const { get, set } = AppHooks.useLocalStorage<ThemeMode>();
   const [theme, setTheme] = React.useState<Theme>(themes.light);
 
   const changeRootClassName = React.useCallback((newClassName: ThemeMode) => {
@@ -38,21 +38,21 @@ export const ColorModeProvider: React.FC<ChildrenProps> = ({ children }) => {
                   newThemeMode: APP_CONSTANTS.THEME_MODE.LIGHT,
                 };
           changeRootClassName(config.newThemeMode);
-          setItem(APP_CONSTANTS.LOCAL_STORAGE.COLOR_MODE, config.newThemeMode);
+          set(APP_CONSTANTS.LOCAL_STORAGE.COLOR_MODE, config.newThemeMode);
           return config.newTheme;
         });
       },
     }),
-    [themes, setItem, changeRootClassName]
+    [themes, set, changeRootClassName]
   );
 
   React.useEffect(() => {
     const currentThemeMode =
-      getItem(APP_CONSTANTS.LOCAL_STORAGE.COLOR_MODE) ||
+      get(APP_CONSTANTS.LOCAL_STORAGE.COLOR_MODE) ||
       APP_CONSTANTS.THEME_MODE.LIGHT;
     document.getElementById("root")?.classList.add(currentThemeMode);
     setTheme(themes[currentThemeMode]);
-  }, [themes, getItem]);
+  }, [themes, get]);
 
   return (
     <ColorModeContext.Provider value={value}>

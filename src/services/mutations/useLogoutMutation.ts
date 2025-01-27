@@ -9,7 +9,7 @@ import ContextHooks from "../../providers/0_ContextHooks";
 export const useLogoutMutation = () => {
   const navigate = useNavigate();
   const { axios, loading } = ContextHooks.useAxiosContext();
-  const [, , clear] = AppHooks.useLocalStorage();
+  const { clear } = AppHooks.useLocalStorage();
   const axiosResponseValidator = AppHooks.useAxiosResponseValidator();
 
   const mutationFn = React.useCallback(async () => {

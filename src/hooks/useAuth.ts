@@ -17,7 +17,7 @@ interface I {
 export const useAuth = (): I => {
   const navigate = useNavigate();
   const { axios, loading } = ContextHooks.useAxiosContext();
-  const [, setToLocalStorage, clear] = AppHooks.useLocalStorage();
+  const { set, clear } = AppHooks.useLocalStorage();
   const [error, setError] = React.useState(false);
 
   const login = (value: { password: string; username: string }) => {
@@ -27,7 +27,7 @@ export const useAuth = (): I => {
       axios
         .post(ApiRoutes.LOGIN, { username, password })
         .then(({ data }: AxiosResponse<AuthToken>) => {
-          setToLocalStorage(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
+          set(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
           navigate(AppRoutes.PAGES);
         })
         .catch(() => {

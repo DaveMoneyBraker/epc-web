@@ -22,7 +22,7 @@ interface QueueItem {
 export const AxiosProvider: React.FC<Props> = ({ children }) => {
   const location = useLocation();
   const getApiUrl = AppHooks.useApiUrlLoader();
-  const [get] = AppHooks.useLocalStorage();
+  const { get } = AppHooks.useLocalStorage();
   const showNotification = AppHooks.useNotification();
   const initialDataLoaded = AppHooks.useInitialDataLoaded();
   const { refresh, refreshToken } = AxiosProviderHooks.useRefreshToken();
