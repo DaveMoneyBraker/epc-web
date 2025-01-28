@@ -1,7 +1,7 @@
 import React from "react";
 import { DefaultPageActions } from "../types";
 import APP_HOOKS from "./0_AppHooks";
-import ContextHooks from "../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../providers/0_ContextHooks";
 
 export type UseFilteredByPermissionsActions = (
   actions: DefaultPageActions[]
@@ -9,8 +9,8 @@ export type UseFilteredByPermissionsActions = (
 
 export const useFilteredByPermissionsActions: UseFilteredByPermissionsActions =
   (actions: DefaultPageActions[]) => {
-    const { currentNavNode } = ContextHooks.useCleanedNavigationContext();
-    const { permissions } = ContextHooks.useAccountContext();
+    const { currentNavNode } = CONTEXT_HOOKS.useCleanedNavigationContext();
+    const { permissions } = CONTEXT_HOOKS.useAccountContext();
     const isAdmin = APP_HOOKS.useIsAdmin();
     const currentNavNodePermissionRoute = React.useMemo(
       () => currentNavNode?.permissionsRoute || null,

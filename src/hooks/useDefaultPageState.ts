@@ -5,7 +5,7 @@ import { isSyntheticEvent } from "../typeGuards";
 import { AppQueryOptions, FilterValue } from "../types";
 import AppQueries from "../services/queries/AppQueries";
 import AppMutations from "../services/mutations/AppMutations";
-import ContextHooks from "../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../providers/0_ContextHooks";
 
 export type UseDefaultPageState = <T>(
   itemName: string,
@@ -59,7 +59,7 @@ export const useDefaultPageState = <T = any>(
   apiUrl: string,
   options?: AppQueryOptions<T>
 ): DefaultPageStateReturnValue<T> => {
-  const { loading: axiosLoading } = ContextHooks.useAxiosContext();
+  const { loading: axiosLoading } = CONTEXT_HOOKS.useAxiosContext();
   const [selectedItem, setSelectedItem] = React.useState<T | null>(null);
   const [filterValue, setFilterValue] = React.useState<FilterValue[]>([]);
   const [itemDialogOpen, setItemDialogOpen] = React.useState(false);

@@ -1,7 +1,12 @@
 import React from "react";
 import { AxiosInstance } from "axios";
 
-export const AxiosContext = React.createContext<{
+export interface AxiosContextValue {
   axios: AxiosInstance | null;
   loading: boolean;
-}>({ axios: null, loading: false });
+}
+
+export const AxiosContext = React.createContext<AxiosContextValue>({
+  axios: null,
+  loading: false,
+});

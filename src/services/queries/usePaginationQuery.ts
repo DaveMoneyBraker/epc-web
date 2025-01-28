@@ -4,7 +4,7 @@ import { PaginationResponse, QueryProps } from "../../types";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 import APP_HOOKS from "../../hooks/0_AppHooks";
-import ContextHooks from "../../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
   const {
@@ -15,7 +15,7 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
     options: { transform, onSuccess, onError } = {},
   } = props;
   const client = useQueryClient();
-  const { axios } = ContextHooks.useAxiosContext();
+  const { axios } = CONTEXT_HOOKS.useAxiosContext();
   const axiosResponseValidator = APP_HOOKS.useAxiosResponseValidator();
   const isEnabled = React.useMemo(() => (enabled ? true : false), [enabled]);
   const [totalItems, setTotalItems] = React.useState(0);

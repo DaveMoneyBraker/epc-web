@@ -1,10 +1,10 @@
 import React from "react";
-import ContextHooks from "../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../providers/0_ContextHooks";
 
 export type UseUserFullName = () => string;
 
 export const useUserFullName: UseUserFullName = () => {
-  const { user } = ContextHooks.useAccountContext();
+  const { user } = CONTEXT_HOOKS.useAccountContext();
   return React.useMemo(() => {
     if (!user) {
       return "loading...";

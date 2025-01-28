@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import APP_CONSTANTS from "../../constants/AppConstants";
-import ContextHooks from "../../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 export const useLogoutMutation = () => {
   const navigate = useNavigate();
-  const { axios, loading } = ContextHooks.useAxiosContext();
+  const { axios, loading } = CONTEXT_HOOKS.useAxiosContext();
   const { clear } = APP_HOOKS.useLocalStorage();
   const axiosResponseValidator = APP_HOOKS.useAxiosResponseValidator();
 

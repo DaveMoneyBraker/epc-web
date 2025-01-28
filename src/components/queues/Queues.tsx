@@ -15,7 +15,7 @@ import {
 } from "./components";
 import { DialogWrapper } from "../2_common/dialogs";
 import { AppPagination } from "../3_shared/pagination";
-import ContextHooks from "../../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import AppQueries from "../../services/queries/AppQueries";
 import AppMutations from "../../services/mutations/AppMutations";
@@ -49,7 +49,7 @@ const mockedCounts: Omit<QueueCounts, "latest"> = {
 };
 
 export const Queues: React.FC = () => {
-  const { currentNavNode } = ContextHooks.useCleanedNavigationContext();
+  const { currentNavNode } = CONTEXT_HOOKS.useCleanedNavigationContext();
   const queueName = React.useMemo(
     () => currentNavNode?.apiRoute.split("=")[1] || "",
     [currentNavNode]

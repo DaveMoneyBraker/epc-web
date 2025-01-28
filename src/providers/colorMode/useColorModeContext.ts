@@ -1,7 +1,9 @@
 import React from "react";
-import { ColorModeContext } from "./ColorModeContext";
+import { ColorModeContext, ColorModeContextValue } from "./ColorModeContext";
 
-export const useColorModeContext = () => {
+export type UseColorModeContext = () => ColorModeContextValue;
+
+export const useColorModeContext: UseColorModeContext = () => {
   const value = React.useContext(ColorModeContext);
   if (!value) {
     throw new Error("useColorModeContext used outside of ColorModeContext");

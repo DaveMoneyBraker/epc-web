@@ -1,12 +1,12 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import ContextHooks from "../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../providers/0_ContextHooks";
 
 export type UseFirstPageLoading = () => boolean;
 
 export const useFirstPageLoading: UseFirstPageLoading = () => {
   const location = useLocation();
-  const { loading: axiosLoading } = ContextHooks.useAxiosContext();
+  const { loading: axiosLoading } = CONTEXT_HOOKS.useAxiosContext();
   const [isFirstLoading, setIsFirstLoading] = React.useState(true);
   const initialLoadCompleted = React.useRef(false);
   const currentPath = React.useRef(location.pathname);

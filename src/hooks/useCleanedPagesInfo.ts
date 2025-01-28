@@ -1,12 +1,12 @@
 import React from "react";
 import { AppNav, AppNavCategory, AppNavNode, PageInfo } from "../types";
-import ContextHooks from "../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../providers/0_ContextHooks";
 import APP_CONSTANTS from "../constants/AppConstants";
 
 export type UseCleanedPagesInfo = () => PageInfo[];
 
 export const useCleanedPagesInfo: UseCleanedPagesInfo = () => {
-  const { nav } = ContextHooks.useCleanedNavigationContext();
+  const { nav } = CONTEXT_HOOKS.useCleanedNavigationContext();
   const navNodes = React.useMemo<AppNavNode[]>(
     () =>
       nav.reduce((allNodes: AppNavNode[], navItem: AppNav) => {

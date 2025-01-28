@@ -2,11 +2,11 @@ import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APP_CONSTANTS from "../../constants/AppConstants";
 import APP_HOOKS from "../../hooks/0_AppHooks";
-import ContextHooks from "../../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 export const useMutationQuery = (apiUrl: string, queryKey: string) => {
   const queryClient = useQueryClient();
-  const { axios } = ContextHooks.useAxiosContext();
+  const { axios } = CONTEXT_HOOKS.useAxiosContext();
   const axiosResponseValidator = APP_HOOKS.useAxiosResponseValidator();
 
   const mutationFn = React.useCallback(

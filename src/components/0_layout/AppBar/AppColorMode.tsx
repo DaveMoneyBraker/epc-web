@@ -3,11 +3,11 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { IconButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import ContextHooks from "../../../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../../../providers/0_ContextHooks";
 
 export const AppColorMode: React.FC = () => {
   const theme = useTheme();
-  const colorMode = ContextHooks.useColorModeContext();
+  const colorMode = CONTEXT_HOOKS.useColorModeContext();
 
   return (
     <IconButton

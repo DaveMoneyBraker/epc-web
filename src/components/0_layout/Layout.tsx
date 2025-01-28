@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { styled } from "@mui/material";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import AppMutations from "../../services/mutations/AppMutations";
-import ContextHooks from "../../providers/0_ContextHooks";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 import { AppBar } from "./AppBar/AppBar";
 import { LoadingBackdrop, OfflineBackdrop } from "./Backdrops";
 import { AppDrawer } from "./Drawer";
@@ -41,8 +41,8 @@ const SkeletonWrapper = styled("div")(({ theme }) => ({
 
 export const Layout: React.FC = () => {
   const location = useLocation();
-  const { loading } = ContextHooks.useAxiosContext();
-  const { nav, currentNavNode } = ContextHooks.useCleanedNavigationContext();
+  const { loading } = CONTEXT_HOOKS.useAxiosContext();
+  const { nav, currentNavNode } = CONTEXT_HOOKS.useCleanedNavigationContext();
   const isFirstLoading = APP_HOOKS.useFirstPageLoading();
   const online = APP_HOOKS.useIsOnline();
   const pageTitle = React.useMemo(
