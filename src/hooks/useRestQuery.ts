@@ -1,10 +1,7 @@
 import { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import React from "react";
-import {
-  COMPARISON_OPERATORS,
-  CONDITIONS_OPERATORS,
-  FilterValue,
-} from "../types";
+import { FilterValue } from "../types";
+import APP_CONSTANTS from "../constants/0_AppConstants";
 
 interface Props {
   inputValue: string;
@@ -45,13 +42,15 @@ export const useRestQuery = ({
       filterValue.forEach((filter) => {
         const { itemName, value, endValue, comparison, condition } = filter;
         let f =
-          (condition === CONDITIONS_OPERATORS.AND ? "&filter=" : "&or=") +
+          (condition === APP_CONSTANTS.CONDITIONS_OPERATORS.AND
+            ? "&filter="
+            : "&or=") +
           itemName +
           "__" +
           comparison;
         if (
-          comparison !== COMPARISON_OPERATORS.NOTNULL &&
-          comparison !== COMPARISON_OPERATORS.ISNULL
+          comparison !== APP_CONSTANTS.COMPARISON_OPERATORS.NOTNULL &&
+          comparison !== APP_CONSTANTS.COMPARISON_OPERATORS.ISNULL
         ) {
           f += "__" + value;
         }
@@ -59,7 +58,7 @@ export const useRestQuery = ({
           (itemName === "createdAt" ||
             itemName === "updatedAt" ||
             itemName === "deletedAt") &&
-          comparison === COMPARISON_OPERATORS.BETWEEN
+          comparison === APP_CONSTANTS.COMPARISON_OPERATORS.BETWEEN
         ) {
           f += "," + endValue;
         }

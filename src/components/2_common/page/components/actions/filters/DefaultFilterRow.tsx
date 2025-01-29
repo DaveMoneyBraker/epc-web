@@ -1,15 +1,9 @@
 import React from "react";
 import {
-  COMPARISON_OPERATORS,
-  ComparisonOperatorType,
-  ConditionOperatorsValues,
-  DATE_COMPARISON_OPERATORS,
-  DEFAULT_COMPARISON_OPERATORS,
-  ENUM_COMPARISON_OPERATORS,
+  ComparisonOperator,
   FilterConfig,
-  FilterItemTypes,
+  FilterItemType,
   FilterValue,
-  NUMBER_COMPARISON_OPERATORS,
   TitleValueObject,
 } from "../../../../../../types";
 import { Box, IconButton, styled } from "@mui/material";
@@ -21,6 +15,7 @@ import {
   EnhancedSelect,
   EnhancedTextField,
 } from "../../../../../1_enhanced";
+import APP_CONSTANTS from "../../../../../../constants/0_AppConstants";
 
 interface Props {
   filter: FilterValue;
@@ -47,10 +42,10 @@ export const DefaultFilterRow: React.FC<Props> = ({
   onDelete,
 }) => {
   const conditionOperatorOptions = React.useMemo(
-    () => [...ConditionOperatorsValues],
+    () => [...APP_CONSTANTS.CONDITIONS_OPERATOR_VALUES],
     []
   );
-  const itemType: FilterItemTypes = React.useMemo(
+  const itemType: FilterItemType = React.useMemo(
     () =>
       configs.find((config) => config.itemName === filter.itemName)?.itemType ||
       "string",
@@ -76,28 +71,28 @@ export const DefaultFilterRow: React.FC<Props> = ({
   );
   const inputDisabled = React.useMemo(
     () =>
-      filter.comparison === COMPARISON_OPERATORS.ISNULL ||
-      filter.comparison === COMPARISON_OPERATORS.NOTNULL,
+      filter.comparison === APP_CONSTANTS.COMPARISON_OPERATORS.ISNULL ||
+      filter.comparison === APP_CONSTANTS.COMPARISON_OPERATORS.NOTNULL,
     [filter.comparison]
   );
 
   const getComparisonOperators = React.useCallback(
-    (type: string): TitleValueObject<ComparisonOperatorType>[] => {
+    (type: string): TitleValueObject<ComparisonOperator>[] => {
       if (type === "string") {
-        return DEFAULT_COMPARISON_OPERATORS;
+        return APP_CONSTANTS.DEFAULT_COMPARISON_OPERATORS;
       } else if (type === "date") {
-        return DATE_COMPARISON_OPERATORS;
+        return APP_CONSTANTS.DATE_COMPARISON_OPERATORS;
       } else if (type === "enum") {
-        return ENUM_COMPARISON_OPERATORS;
+        return APP_CONSTANTS.ENUM_COMPARISON_OPERATORS;
       } else if (type === "number") {
-        return NUMBER_COMPARISON_OPERATORS;
+        return APP_CONSTANTS.NUMBER_COMPARISON_OPERATORS;
       }
-      return NUMBER_COMPARISON_OPERATORS;
+      return APP_CONSTANTS.DEFAULT_COMPARISON_OPERATORS;
     },
     []
   );
   const [comparisonOperatorOptions, setComparisonOperatorOptions] =
-    React.useState<TitleValueObject<ComparisonOperatorType>[]>(() =>
+    React.useState<TitleValueObject<ComparisonOperator>[]>(() =>
       getComparisonOperators(
         configs.find((config) => config.itemName === filter.itemName)
           ?.itemType || "string"
@@ -197,7 +192,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
       )}
 
       {itemType === "date" &&
-        filter.comparison !== COMPARISON_OPERATORS.BETWEEN && (
+        filter.comparison !== APP_CONSTANTS.COMPARISON_OPERATORS.BETWEEN && (
           <EnhancedDatePicker
             value={filter.value}
             onChange={(v) => handleFilterChange(v, "value")}

@@ -1,18 +1,28 @@
-import { TitleValueObject } from "./default";
+import {
+  ComparisonOperatorOption,
+  ConditionOperator,
+  ConditionOperatorMap,
+  FilterItemTypeMap,
+  TitleValueObject,
+} from "../types";
 
-export const CONDITIONS_OPERATORS = {
+export const CONDITIONS_OPERATORS: ConditionOperatorMap = {
   AND: "AND",
   OR: "OR",
 };
 
-export type ConditionOperatorType =
-  (typeof CONDITIONS_OPERATORS)[keyof typeof CONDITIONS_OPERATORS];
-
-export const ConditionOperatorsValues: TitleValueObject<ConditionOperatorType>[] =
+export const CONDITIONS_OPERATOR_VALUES: TitleValueObject<ConditionOperator>[] =
   [
-    { title: CONDITIONS_OPERATORS.AND, value: CONDITIONS_OPERATORS.AND },
-    { title: CONDITIONS_OPERATORS.OR, value: CONDITIONS_OPERATORS.OR },
+    { title: "AND", value: "AND" },
+    { title: "OR", value: "OR" },
   ];
+
+export const FILTER_ITEM_TYPE: FilterItemTypeMap = {
+  STRING: "string",
+  DATE: "date",
+  NUMBER: "number",
+  ENUM: "enum",
+};
 
 export const COMPARISON_OPERATORS = {
   EQ: "$eq",
@@ -39,15 +49,7 @@ export const COMPARISON_OPERATORS = {
   BETWEEN: "$between",
 } as const;
 
-export type ComparisonOperatorType =
-  (typeof COMPARISON_OPERATORS)[keyof typeof COMPARISON_OPERATORS];
-
-export interface ComparisonOperator {
-  title: string;
-  value: ComparisonOperatorType;
-}
-
-export const DEFAULT_COMPARISON_OPERATORS: ComparisonOperator[] = [
+export const DEFAULT_COMPARISON_OPERATORS: ComparisonOperatorOption[] = [
   { title: "equal to", value: COMPARISON_OPERATORS.EQ },
   { title: "equal to (case insensitive)", value: COMPARISON_OPERATORS.EQL },
   { title: "not equal to", value: COMPARISON_OPERATORS.NE },
@@ -69,12 +71,12 @@ export const DEFAULT_COMPARISON_OPERATORS: ComparisonOperator[] = [
   { title: "not null", value: COMPARISON_OPERATORS.NOTNULL },
 ];
 
-export const UUID_COMPARISON_OPERATORS: ComparisonOperator[] = [
+export const UUID_COMPARISON_OPERATORS: ComparisonOperatorOption[] = [
   { title: "equal to", value: COMPARISON_OPERATORS.EQ },
   { title: "not equal to", value: COMPARISON_OPERATORS.NE },
 ];
 
-export const DATE_COMPARISON_OPERATORS: ComparisonOperator[] = [
+export const DATE_COMPARISON_OPERATORS: ComparisonOperatorOption[] = [
   { title: "greater than", value: COMPARISON_OPERATORS.GT },
   { title: "less than", value: COMPARISON_OPERATORS.LS },
   { title: "greater than or equal to", value: COMPARISON_OPERATORS.GTE },
@@ -82,7 +84,7 @@ export const DATE_COMPARISON_OPERATORS: ComparisonOperator[] = [
   { title: "between", value: COMPARISON_OPERATORS.BETWEEN },
 ];
 
-export const NUMBER_COMPARISON_OPERATORS: ComparisonOperator[] = [
+export const NUMBER_COMPARISON_OPERATORS: ComparisonOperatorOption[] = [
   { title: "equal to", value: COMPARISON_OPERATORS.EQ },
   { title: "not equal to", value: COMPARISON_OPERATORS.NE },
   { title: "greater than", value: COMPARISON_OPERATORS.GT },
@@ -91,31 +93,7 @@ export const NUMBER_COMPARISON_OPERATORS: ComparisonOperator[] = [
   { title: "less than or equal to", value: COMPARISON_OPERATORS.LTE },
 ];
 
-export const ENUM_COMPARISON_OPERATORS: ComparisonOperator[] = [
+export const ENUM_COMPARISON_OPERATORS: ComparisonOperatorOption[] = [
   { title: "equal to", value: COMPARISON_OPERATORS.EQ },
   { title: "not equal to", value: COMPARISON_OPERATORS.NE },
 ];
-
-export const FILTER_ITEM_TYPE = {
-  STRING: "string",
-  DATE: "date",
-  NUMBER: "number",
-  ENUM: "enum",
-} as const;
-
-export type FilterItemTypes =
-  (typeof FILTER_ITEM_TYPE)[keyof typeof FILTER_ITEM_TYPE];
-
-export interface FilterConfig {
-  itemType: FilterItemTypes;
-  itemName: string;
-  selectOptions?: TitleValueObject[];
-}
-
-export interface FilterValue<T = string> {
-  value: T;
-  itemName: string;
-  condition: ConditionOperatorType;
-  comparison: ComparisonOperatorType;
-  endValue: string;
-}

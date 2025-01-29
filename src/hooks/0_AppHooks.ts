@@ -48,6 +48,7 @@ import {
   useDefaultPageActions,
   UseDefaultPageActions,
 } from "./useDefaultPageActions";
+import { usePageItemConfig, UsePageItemConfig } from "./usePageItemConfig";
 
 interface AppHooksInterface {
   // LOADING API URL FROM ASSETS FOLDER
@@ -90,6 +91,8 @@ interface AppHooksInterface {
   useCleanedPagesInfo: UseCleanedPagesInfo;
   // GET DEFAULT PAGE ACTIONS - CREATE, EDIT, DELETE, SUBMIT
   useDefaultPageActions: UseDefaultPageActions;
+  // GET DEFAULT PAGE ITEM CONFIGS - COLUMNS, FILTERS, ITEM CREATE/EDIT CONFIGS
+  usePageItemConfig: UsePageItemConfig;
 }
 
 const APP_HOOKS: AppHooksInterface = {
@@ -113,6 +116,7 @@ const APP_HOOKS: AppHooksInterface = {
   useDebounce,
   useCleanedPagesInfo,
   useDefaultPageActions,
+  usePageItemConfig,
 } as const;
 
 export default APP_HOOKS;

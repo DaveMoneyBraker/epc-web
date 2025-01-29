@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  COMPARISON_OPERATORS,
-  CONDITIONS_OPERATORS,
-  FilterConfig,
-  FilterValue,
-} from "../../../../../../types";
+import { FilterConfig, FilterValue } from "../../../../../../types";
 import { DefaultFilterRow } from "./DefaultFilterRow";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, IconButton } from "@mui/material";
 import { DialogWrapper } from "../../../../dialogs";
+import APP_CONSTANTS from "../../../../../../constants/0_AppConstants";
 
 interface Props {
   open: boolean;
@@ -31,8 +27,8 @@ export const DefaultFilterDialog: React.FC<Props> = ({
       value: "",
       endValue: new Date().toISOString(),
       itemName: config.itemName,
-      condition: CONDITIONS_OPERATORS.AND,
-      comparison: COMPARISON_OPERATORS.CONT,
+      condition: APP_CONSTANTS.CONDITIONS_OPERATORS.AND,
+      comparison: APP_CONSTANTS.COMPARISON_OPERATORS.CONT,
     };
   }, [configs]);
 
@@ -82,8 +78,8 @@ export const DefaultFilterDialog: React.FC<Props> = ({
       state.some(
         (filter) =>
           (!filter.value &&
-            filter.comparison !== COMPARISON_OPERATORS.NOTNULL &&
-            filter.comparison !== COMPARISON_OPERATORS.ISNULL) ||
+            filter.comparison !== APP_CONSTANTS.COMPARISON_OPERATORS.NOTNULL &&
+            filter.comparison !== APP_CONSTANTS.COMPARISON_OPERATORS.ISNULL) ||
           !filter.condition ||
           !filter.comparison
       ),

@@ -18,6 +18,7 @@ import { QUEUES, QUEUE_STATUS } from "./QueuesConstant";
 import { PAGES_INFO } from "./Info";
 import { SUPPRESSION_TYPES, SUPPRESSIONS_TYPE_OPTIONS } from "./Suppressions";
 import { PAGE_ACTIONS } from "./PageActions";
+import * as FILTERS from "./Filters";
 
 const APP_CONSTANTS = {
   PAGE_TITLES,
@@ -40,6 +41,7 @@ const APP_CONSTANTS = {
   SUPPRESSION_TYPES,
   SUPPRESSIONS_TYPE_OPTIONS,
   PAGE_ACTIONS,
+  ...FILTERS,
 } as const;
 
 export default APP_CONSTANTS;

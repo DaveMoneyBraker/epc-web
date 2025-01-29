@@ -1,3 +1,4 @@
+import { FilterConfig } from "../filters";
 import { ItemConfig } from "../items";
 import { AppQueryOptions } from "../queries";
 import {
@@ -5,7 +6,6 @@ import {
   DefaultDialogItemComponentProps,
 } from "./defaultDialogItemProps";
 import { DefaultPageActions } from "./defaultPageActions";
-import { FilterConfig } from "./filters";
 
 export interface DefaultPageProps<T = DefaultDialogItem> {
   itemName: string;

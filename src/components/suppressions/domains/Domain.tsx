@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  FILTER_ITEM_TYPE,
-  FilterConfig,
-  ValidatorConfigWithNoError,
-} from "../../../types";
+import { FilterConfig, ValidatorConfigWithNoError } from "../../../types";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import AppInputValidators from "../../../validators/input/0_InputValidators";
@@ -21,13 +17,13 @@ export const SuppressionsDomain: React.FC = () => {
   );
   const filterConfigs: FilterConfig[] = React.useMemo(
     () => [
-      { itemType: FILTER_ITEM_TYPE.STRING, itemName: "domain" },
+      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING, itemName: "domain" },
       {
-        itemType: FILTER_ITEM_TYPE.ENUM,
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
         itemName: "type",
         selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
       },
-      { itemType: FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
+      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
     ],
     []
   );
@@ -67,6 +63,14 @@ export const SuppressionsDomain: React.FC = () => {
     }),
     []
   );
+
+  // const {} = APP_HOOKS.usePageItemConfig({
+  //   columns: [
+  //     {
+  //       key: 'email'
+  //     }
+  //   ]
+  // })
 
   return (
     <CommonPage

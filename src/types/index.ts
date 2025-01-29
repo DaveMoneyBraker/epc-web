@@ -13,3 +13,4 @@ export * from "./axios";
 export * from "./theme";
 export * from "./queues";
 export * from "./info";
+export * from "./filters";

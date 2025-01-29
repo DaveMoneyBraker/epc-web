@@ -1,7 +1,6 @@
 import React from "react";
 import {
   BlacklistDomainBasedOptions,
-  FILTER_ITEM_TYPE,
   FilterConfig,
   ValidatorConfigWithNoError,
 } from "../../../types";
@@ -22,13 +21,13 @@ export const BlacklistDomain: React.FC = () => {
   );
   const filterConfigs: FilterConfig[] = React.useMemo(
     () => [
-      { itemType: FILTER_ITEM_TYPE.STRING, itemName: "domain" },
+      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING, itemName: "domain" },
       {
-        itemType: FILTER_ITEM_TYPE.ENUM,
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
         itemName: "based",
         selectOptions: BlacklistDomainBasedOptions,
       },
-      { itemType: FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
+      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
     ],
     []
   );

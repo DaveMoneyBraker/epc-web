@@ -1,7 +1,6 @@
 import React from "react";
 import {
   DefaultPageActions,
-  FILTER_ITEM_TYPE,
   FilterConfig,
   SuppressionMask,
 } from "../../../types";
@@ -22,13 +21,13 @@ export const SuppressionsMask: React.FC = () => {
   );
   const filterConfigs: FilterConfig[] = React.useMemo(
     () => [
-      { itemType: FILTER_ITEM_TYPE.STRING, itemName: "mask" },
+      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING, itemName: "mask" },
       {
-        itemType: FILTER_ITEM_TYPE.ENUM,
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
         itemName: "type",
         selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
       },
-      { itemType: FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
+      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
     ],
     []
   );

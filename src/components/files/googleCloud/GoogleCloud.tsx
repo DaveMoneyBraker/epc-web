@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  DefaultPageActions,
-  FILTER_ITEM_TYPE,
-  FilterConfig,
-} from "../../../types";
+import { DefaultPageActions, FilterConfig } from "../../../types";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import { isGCloudFile } from "../../../typeGuards";
@@ -30,13 +26,13 @@ export const GoogleCloudFile: React.FC = () => {
   const mutation = AppMutations.useDownloadServerFileMutation(apiUrl);
   const filterConfigs: FilterConfig[] = React.useMemo(
     () => [
-      { itemType: FILTER_ITEM_TYPE.STRING, itemName: "filename" },
+      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING, itemName: "filename" },
       {
-        itemType: FILTER_ITEM_TYPE.STRING,
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
         itemName: "gcloudId",
         selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
       },
-      { itemType: FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
+      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
     ],
     []
   );
