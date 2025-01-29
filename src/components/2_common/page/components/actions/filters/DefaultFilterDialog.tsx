@@ -1,5 +1,5 @@
 import React from "react";
-import { FilterConfig, FilterValue } from "../../../../../../types";
+import { FilterValue, ItemConfiguration } from "../../../../../../types";
 import { DefaultFilterRow } from "./DefaultFilterRow";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, IconButton } from "@mui/material";
@@ -8,7 +8,7 @@ import APP_CONSTANTS from "../../../../../../constants/0_AppConstants";
 
 interface Props {
   open: boolean;
-  configs: FilterConfig[];
+  configs: ItemConfiguration[];
   filterState: FilterValue[];
   onClose: (value?: any) => void;
 }
@@ -26,7 +26,7 @@ export const DefaultFilterDialog: React.FC<Props> = ({
     return {
       value: "",
       endValue: new Date().toISOString(),
-      itemName: config.itemName,
+      itemName: config.key,
       condition: APP_CONSTANTS.CONDITIONS_OPERATORS.AND,
       comparison: APP_CONSTANTS.COMPARISON_OPERATORS.CONT,
     };

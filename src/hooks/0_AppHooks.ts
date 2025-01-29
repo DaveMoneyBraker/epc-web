@@ -16,10 +16,6 @@ import {
   UseInputChangeHandler,
 } from "./useInputChangeHandler";
 import {
-  useFilteredItemConfigs,
-  UseFilteredItemConfigs,
-} from "./useFilteredItemConfigs";
-import {
   useEPCDocumentTitle,
   UseEPCDocumentTitle,
 } from "./useEPCDocumentTitle";
@@ -67,8 +63,6 @@ interface AppHooksInterface {
   useDefaultPageState: UseDefaultPageState;
   // DEFAULT INPUT HANDLER
   useInputChangeHandler: UseInputChangeHandler;
-  // CREATING ITEMS CONFIG FOR DEFAULT PAGE FROM FILTERS CONFIGS
-  useFilteredItemConfigs: UseFilteredItemConfigs;
   // SETUP EPC HUB PAGE TITLE
   useEPCDocumentTitle: UseEPCDocumentTitle;
   // CHECK IS USER HAVE NETWORK CONNECTION
@@ -104,7 +98,6 @@ const APP_HOOKS: AppHooksInterface = {
   useFilteredByPermissionsActions,
   useDefaultPageState,
   useInputChangeHandler,
-  useFilteredItemConfigs,
   useEPCDocumentTitle,
   useIsOnline,
   useThemePalette,

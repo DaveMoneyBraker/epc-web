@@ -1,6 +1,7 @@
 import { ObjectLiteral } from "./default";
-import { ItemConfig } from "../items/itemConfig";
+import { ItemConfiguration } from "../items/itemConfig";
 import { DefaultAppItem } from "./defaultAppItem";
+import { ValidatorConfig } from "../items";
 
 export interface DefaultDialogItem extends ObjectLiteral, DefaultAppItem {}
 
@@ -8,6 +9,7 @@ export interface DefaultDialogItemComponentProps<T = DefaultDialogItem | any> {
   open: boolean;
   title: string;
   selectedItem: T;
-  configs: ItemConfig[];
+  itemConfigs: ItemConfiguration[];
+  validators: ValidatorConfig[];
   onClose: (value: unknown | null) => void;
 }

@@ -3,8 +3,8 @@ import { styled } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   DefaultPageActions,
-  FilterConfig,
   FilterValue,
+  ItemConfiguration,
 } from "../../../../../types";
 import { EnhancedButton } from "../../../../1_enhanced";
 import { DebounceSearch } from "../../../../3_shared/debounceSearch";
@@ -33,7 +33,7 @@ const ElWrapper = styled("div")(() => ({
 interface Props {
   actions: DefaultPageActions[];
   itemName: string;
-  filterConfigs: FilterConfig[];
+  filterConfigs: ItemConfiguration[];
   filterState: FilterValue[];
   onChange: (v: string) => void;
   onCreateItem: () => void;

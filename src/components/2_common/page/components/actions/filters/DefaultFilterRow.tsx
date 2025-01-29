@@ -1,9 +1,9 @@
 import React from "react";
 import {
   ComparisonOperator,
-  FilterConfig,
   FilterItemType,
   FilterValue,
+  ItemConfiguration,
   TitleValueObject,
 } from "../../../../../../types";
 import { Box, IconButton, styled } from "@mui/material";
@@ -20,7 +20,7 @@ import APP_CONSTANTS from "../../../../../../constants/0_AppConstants";
 interface Props {
   filter: FilterValue;
   index: number;
-  configs: FilterConfig[];
+  configs: ItemConfiguration[];
   onChange: (filter: FilterValue, index: number) => void;
   onDelete: (index: number) => void;
 }
@@ -47,22 +47,22 @@ export const DefaultFilterRow: React.FC<Props> = ({
   );
   const itemType: FilterItemType = React.useMemo(
     () =>
-      configs.find((config) => config.itemName === filter.itemName)?.itemType ||
+      configs.find((config) => config.key === filter.itemName)?.itemType ||
       "string",
     [configs, filter.itemName]
   );
-  const itemNameOptions: TitleValueObject[] = React.useMemo(
+  const keyOptions: TitleValueObject[] = React.useMemo(
     () =>
       configs.map((config) => ({
-        title: AppUtils.camelCaseToString(config.itemName),
-        value: config.itemName,
+        title: AppUtils.camelCaseToString(config.key),
+        value: config.key,
       })),
     [configs]
   );
   const itemSelectOptions: TitleValueObject[] = React.useMemo(
     () =>
-      configs.find((config) => config.itemName === filter.itemName)
-        ?.selectOptions || [],
+      configs.find((config) => config.key === filter.itemName)?.selectOptions ||
+      [],
     [configs, filter.itemName]
   );
   const isRange = React.useMemo(
@@ -94,8 +94,8 @@ export const DefaultFilterRow: React.FC<Props> = ({
   const [comparisonOperatorOptions, setComparisonOperatorOptions] =
     React.useState<TitleValueObject<ComparisonOperator>[]>(() =>
       getComparisonOperators(
-        configs.find((config) => config.itemName === filter.itemName)
-          ?.itemType || "string"
+        configs.find((config) => config.key === filter.itemName)?.itemType ||
+          "string"
       )
     );
 
@@ -104,15 +104,16 @@ export const DefaultFilterRow: React.FC<Props> = ({
   const proceedFilterChange = React.useCallback(
     (value: unknown, key: string): FilterValue => {
       if (key === "itemName") {
-        const config = configs.find((conf) => conf.itemName === value);
-        const newItemType = config?.itemType || "string";
+        const config = configs.find((conf) => conf.key === value);
+        const newItemType =
+          config?.itemType || APP_CONSTANTS.FILTER_ITEM_TYPE.STRING;
         let newValue = "";
         let newEndValue = filter.endValue;
         const newCompOp = getComparisonOperators(newItemType);
-        if (newItemType === "date") {
+        if (newItemType === APP_CONSTANTS.FILTER_ITEM_TYPE.DATE) {
           newValue = new Date().toISOString();
           newEndValue = new Date().toISOString();
-        } else if (newItemType === "enum") {
+        } else if (newItemType === APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM) {
           newValue =
             (config && config.selectOptions && config.selectOptions[0].value) ||
             "";
@@ -158,7 +159,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
         required
         label="Item Name"
         value={filter.itemName}
-        options={itemNameOptions}
+        options={keyOptions}
         onChange={(v) => handleFilterChange(v, "itemName")}
       />
 

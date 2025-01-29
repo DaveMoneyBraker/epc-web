@@ -47,7 +47,7 @@ export type FilterItemTypeMap = {
 
 export interface FilterConfig {
   itemType: FilterItemType;
-  itemName: string;
+  key: string;
   selectOptions?: TitleValueObject[];
 }
 

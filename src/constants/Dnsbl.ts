@@ -1,17 +1,15 @@
-import { TitleValueObject } from "../default/default";
+import {
+  BlacklistDomainBasedMap,
+  BlacklistDomainBasedType,
+  TitleValueObject,
+} from "../types";
 
 export const BLACKLIST_DOMAIN_BASED_TYPE: BlacklistDomainBasedMap = {
   IP_BASED: "IP_BASED",
   DOMAIN_BASED: "DOMAIN_BASED",
 };
 
-export type BlacklistDomainBasedType = "IP_BASED" | "DOMAIN_BASED";
-
-export type BlacklistDomainBasedMap = {
-  [K in BlacklistDomainBasedType]: BlacklistDomainBasedType;
-};
-
-export const BlacklistDomainBasedOptions: TitleValueObject<BlacklistDomainBasedType>[] =
+export const BLACKLIST_DOMAIN_BASED_OPTIONS: TitleValueObject<BlacklistDomainBasedType>[] =
   [
     {
       title: BLACKLIST_DOMAIN_BASED_TYPE.IP_BASED,

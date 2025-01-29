@@ -34,6 +34,7 @@ export const CommonPage = <T,>({
   queryKey,
   filterConfigs,
   itemConfigs,
+  validators = [],
   itemDialog: CustomItemDialog,
   queryOptions,
   onEvent,
@@ -80,7 +81,8 @@ export const CommonPage = <T,>({
       onClose: handleItemDialogClose,
       selectedItem,
       title: dialogTitle,
-      configs: itemConfigs,
+      itemConfigs,
+      validators,
     }),
     [
       dialogTitle,
@@ -88,6 +90,7 @@ export const CommonPage = <T,>({
       itemConfigs,
       itemDialogOpen,
       selectedItem,
+      validators,
     ]
   );
 
@@ -160,7 +163,9 @@ export const CommonPage = <T,>({
         </Typography>
       </DialogWrapper>
 
-      <ItemDialog {...itemDialogProps} />
+      {actions.includes(APP_CONSTANTS.PAGE_ACTIONS.CREATE) && (
+        <ItemDialog {...itemDialogProps} />
+      )}
     </>
   );
 };

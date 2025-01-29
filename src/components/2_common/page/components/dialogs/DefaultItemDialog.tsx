@@ -2,65 +2,74 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import {
   DefaultDialogItemComponentProps,
-  ItemConfig,
+  ItemConfiguration,
   ObjectLiteral,
 } from "../../../../../types";
 import { DialogWrapper } from "../../../dialogs";
 import { EnhancedSelect, EnhancedTextField } from "../../../../1_enhanced";
+import APP_CONSTANTS from "../../../../../constants/0_AppConstants";
 
-interface DialogState extends ItemConfig {
+interface DialogState extends ItemConfiguration {
   value: unknown;
+}
+
+interface ErrorState {
+  key: string;
+  errorMessages: string[];
 }
 
 export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
   open,
   title,
   selectedItem,
-  configs,
+  itemConfigs,
+  validators,
   onClose,
 }) => {
   const [state, setState] = React.useState<DialogState[]>([
-    ...configs.map((config) => ({
+    ...itemConfigs.map((config) => ({
       ...config,
       value: config.selectOptions ? config.selectOptions[0].value : "",
     })),
   ]);
+  const [errorState, setErrorState] = React.useState<ErrorState[]>([
+    ...itemConfigs.map((config) => ({ key: config.key, errorMessages: [] })),
+  ]);
   const keys = React.useMemo(
-    () => configs.map(({ itemName }) => itemName),
-    [configs]
+    () => itemConfigs.map(({ key }) => key),
+    [itemConfigs]
   );
 
   const isValidationFunctionsPassed = React.useCallback((): boolean => {
     let isPassed = true;
-    state.forEach(({ validators, value, itemName }, currentStateIndex) => {
+    state.forEach(({ value, key }, currentStateIndex) => {
       if (validators && validators.length > 0) {
-        validators.forEach(
-          ({ validatorFn, forItemName }, currentValidatorIndex) => {
-            if (forItemName === itemName && !validatorFn(value)) {
-              isPassed = false;
-              setState((prev) =>
-                prev.map((p, pI) =>
-                  pI === currentStateIndex
-                    ? {
-                        ...p,
-                        validators: p.validators.map(
-                          (prevValidator, prevValidatorIndex) =>
-                            prevValidatorIndex === currentValidatorIndex
-                              ? { ...prevValidator, error: true }
-                              : prevValidator
-                        ),
-                      }
-                    : p
-                )
-              );
-            }
-          }
+        const relatedValidators = validators.filter((validator) =>
+          validator.keys.includes(key)
         );
+        relatedValidators.forEach(({ validatorFn, keys, errorMessage }) => {
+          if (!validatorFn(value)) {
+            isPassed = false;
+            setErrorState((prev) =>
+              prev.map((prevErr) => {
+                if (keys.includes(key)) {
+                  return prevErr.errorMessages.includes(errorMessage)
+                    ? prevErr
+                    : {
+                        ...prevErr,
+                        errorMessages: [...prevErr.errorMessages, errorMessage],
+                      };
+                }
+                return prevErr;
+              })
+            );
+          }
+        });
       }
     });
 
     return isPassed;
-  }, [state]);
+  }, [state, validators]);
 
   const handleDialogClose = React.useCallback(
     (confirm: boolean) => {
@@ -73,7 +82,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
           : ({} as ObjectLiteral);
         keys.forEach((key) =>
           state.forEach((v) => {
-            if (v.itemName === key) {
+            if (v.key === key) {
               body[key] = v.value;
             }
           })
@@ -86,11 +95,10 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
   );
 
   const defaultConfigMapped = React.useCallback(
-    (passedConfigs: ItemConfig[]): DialogState[] => [
+    (passedConfigs: ItemConfiguration[]): DialogState[] => [
       ...passedConfigs.map((config) => ({
         ...config,
         value: config.selectOptions ? config.selectOptions[0].value : "",
-        error: false,
       })),
     ],
     []
@@ -98,37 +106,35 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
 
   const proceedStateChanges = React.useCallback(
     (isOpen: boolean) => {
-      const defaultState = defaultConfigMapped(configs);
+      const defaultState = defaultConfigMapped(itemConfigs);
       if (isOpen && selectedItem) {
         return setState(() =>
-          defaultState.map((v) => ({ ...v, value: selectedItem[v.itemName] }))
+          defaultState.map((v) => ({ ...v, value: selectedItem[v.key] }))
         );
       }
       // TIMEOUT IS FOR PREVENTING UI GLITCHES ON DIALOG CLOSE
       setTimeout(() => setState(defaultState), 100);
     },
-    [configs, selectedItem, defaultConfigMapped, setState]
+    [itemConfigs, selectedItem, defaultConfigMapped, setState]
   );
 
   // ON INPUT CHANGE - REMOVE ALL ERROR MESSAGES
   const handleInputChanges = React.useCallback(
-    (value: unknown, i: number) =>
+    (value: unknown, i: number) => {
       setState((prev) =>
         prev.map((p, index) =>
           index === i
             ? {
                 ...p,
                 value,
-                validators: p.validators
-                  ? p.validators.map((validator) => ({
-                      ...validator,
-                      error: false,
-                    }))
-                  : [],
               }
             : p
         )
-      ),
+      );
+      setErrorState((prev) =>
+        prev.map((err) => ({ ...err, errorMessages: [] }))
+      );
+    },
     [setState]
   );
 
@@ -158,71 +164,61 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
         }}
       >
         {state &&
-          state.map(
-            (
-              {
-                itemName,
-                itemType,
-                value,
-                selectOptions,
-                required,
-                validators,
-              },
-              i
-            ) => {
-              if (itemType === "string" || itemType === "number") {
-                return (
-                  <div key={`${itemName}-${itemType}-${i}`}>
-                    <EnhancedTextField
-                      label={itemName}
-                      value={value as string}
-                      onChange={(v) => handleInputChanges(v, i)}
-                      fullWidth
-                      type={itemType}
-                      required={required}
-                    />
-                    {validators && (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "1px",
-                        }}
-                      >
-                        {validators.map(
-                          ({ error, errorMessage }, errorI) =>
-                            error && (
-                              <Typography
-                                variant="inputError"
-                                key={`inputError-${errorI}-${i}`}
-                              >
-                                {errorMessage}
-                              </Typography>
-                            )
-                        )}
-                      </Box>
-                    )}
-                  </div>
-                );
-              }
-              // FOR ENUM TYPE WE USE SELECT_INPUT ELEMENT
-              // SO THERE IS NO POSSIBILITY FOR USER TO MAKE ERROR
-              if (itemType === "enum" && selectOptions) {
-                return (
-                  <EnhancedSelect
-                    label={itemName}
+          state.map(({ key, itemType, value, selectOptions, required }, i) => {
+            if (
+              itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.STRING ||
+              itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.NUMBER
+            ) {
+              return (
+                <div key={`${key}-${itemType}-${i}`}>
+                  <EnhancedTextField
+                    label={key}
                     value={value as string}
-                    options={selectOptions}
                     onChange={(v) => handleInputChanges(v, i)}
                     fullWidth
+                    type={itemType}
                     required={required}
-                    key={`${itemName}-${itemType}-${i}`}
                   />
-                );
-              }
-              return <></>;
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "1px",
+                    }}
+                  >
+                    {errorState
+                      .filter((err) => err.key === key)
+                      .map(({ errorMessages }) =>
+                        errorMessages.map((errorMessage, errorI) => (
+                          <Typography
+                            variant="inputError"
+                            key={`inputError-${errorI}-${i}`}
+                          >
+                            {errorMessage}
+                          </Typography>
+                        ))
+                      )}
+                  </Box>
+                </div>
+              );
             }
-          )}
+            // FOR ENUM TYPE WE USE SELECT_INPUT ELEMENT
+            // SO THERE IS NO POSSIBILITY FOR USER TO MAKE ERROR
+            if (itemType === "enum" && selectOptions) {
+              return (
+                <EnhancedSelect
+                  label={key}
+                  value={value as string}
+                  options={selectOptions}
+                  onChange={(v) => handleInputChanges(v, i)}
+                  fullWidth
+                  required={required}
+                  key={`${key}-${itemType}-${i}`}
+                />
+              );
+            }
+            return <></>;
+          })}
       </Box>
     </DialogWrapper>
   );

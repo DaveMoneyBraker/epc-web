@@ -1,11 +1,9 @@
 import React from "react";
 import {
-  FilterConfig,
-  ItemConfig,
   PageItemConfigOptions,
-  ValidatorConfigWithNoError,
   PageItemConfig,
-  PageColumnConfig,
+  ValidatorConfig,
+  ItemConfiguration,
 } from "../types";
 import APP_CONSTANTS from "../constants/0_AppConstants";
 
@@ -14,63 +12,63 @@ export type UsePageItemConfig = (
 ) => PageItemConfig;
 
 export const usePageItemConfig: UsePageItemConfig = ({
-  columns: columnConfigs,
-  requiredFields = [],
-  excludeFromFilters: excludeFromFiltersConfigs = [],
+  itemConfigs: columnConfigs,
+  validators = [],
   additionalActions = true,
 }) => {
-  const excludeFromFilters = React.useMemo(
-    () => [...excludeFromFiltersConfigs, "updatedAt", "deletedAt"],
-    [excludeFromFiltersConfigs]
+  const excludeKeys = React.useMemo(
+    () => ["createdAt", "updatedAt", "deletedAt"],
+    []
   );
-  //   const columns = React.useMemo<PageColumnConfig[]>(() => ([...columnConfigs,
-  //     {
-  //         key: 'createdAt',
-  //         filterType: APP_CONSTANTS.FILT
-  //     }
-  //   ]), [columnConfigs]);
+  const configs = React.useMemo<ItemConfiguration[]>(
+    () => [
+      ...columnConfigs,
+      {
+        key: "createdAt",
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.DATE,
+      },
+      {
+        key: "updatedAt",
+        excludeFilter: true,
+      },
+    ],
+    [columnConfigs]
+  );
 
   // Extract just the column keys for display
   const tableColumns = React.useMemo(() => {
-    const cols = [...columnConfigs.map((col) => col.key), "updatedAt"];
+    const cols = [...configs.map((config) => config.key)];
     if (additionalActions) {
       cols.push("actions");
     }
     return cols;
-  }, [columnConfigs, additionalActions]);
+  }, [configs, additionalActions]);
 
   // Create filter configurations based on column configs
-  const filters = React.useMemo<FilterConfig[]>(() => {
-    return columnConfigs
-      .filter((col) => !excludeFromFilters.includes(col.key))
-      .map((col) => ({
-        itemType: col.filterType,
-        itemName: col.key,
-        selectOptions: col.selectOptions,
-      }));
-  }, [columnConfigs, excludeFromFilters]);
+  const filterConfigs = React.useMemo<ItemConfiguration[]>(
+    () => configs.filter((config) => !config.excludeFilter),
+    [configs]
+  );
 
   // Combine all validators from column configs
-  const validators = React.useMemo<ValidatorConfigWithNoError[]>(() => {
-    return columnConfigs
-      .filter((col) => col.validators && col.validators.length > 0)
-      .flatMap((col) => col.validators || []);
-  }, [columnConfigs]);
+  const validatorsWithErrorState = React.useMemo<ValidatorConfig[]>(
+    () => [...validators.map((validator) => ({ ...validator, error: false }))],
+    [validators]
+  );
 
   // Create item configs by combining filters and validators
-  const itemConfigs = React.useMemo<ItemConfig[]>(() => {
-    return filters.map((filter) => ({
-      ...filter,
-      required: requiredFields.includes(filter.itemName),
-      validators: validators
-        .filter((validator) => validator.forItemName === filter.itemName)
-        .map((validator) => ({ ...validator, error: false })),
-    }));
-  }, [filters, validators, requiredFields]);
+  const itemConfigs = React.useMemo<ItemConfiguration[]>(
+    () => configs.filter((filter) => !excludeKeys.includes(filter.key)),
+    [configs, excludeKeys]
+  );
 
-  return {
-    columns: tableColumns,
-    filters,
-    itemConfigs,
-  };
+  return React.useMemo(
+    () => ({
+      cols: tableColumns,
+      itemConfigs,
+      filterConfigs,
+      validators: validatorsWithErrorState,
+    }),
+    [filterConfigs, itemConfigs, tableColumns, validatorsWithErrorState]
+  );
 };

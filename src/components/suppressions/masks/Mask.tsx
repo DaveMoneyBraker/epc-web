@@ -1,37 +1,38 @@
 import React from "react";
-import {
-  DefaultPageActions,
-  FilterConfig,
-  SuppressionMask,
-} from "../../../types";
+import { DefaultPageActions, SuppressionMask } from "../../../types";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { SuppressionMaskItemDialog } from "./item/MaskItemDialog";
 import { CommonPage } from "../../2_common/page";
 import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 export const SuppressionsMask: React.FC = () => {
-  const cols = React.useMemo(
-    () => ["name", "mask", "type", "updatedAt", "createdAt", "actions"],
-    []
-  );
-  const queryKey = React.useMemo(() => "SuppressionsDomains", []);
+  const configs = APP_HOOKS.usePageItemConfig({
+    itemConfigs: [
+      {
+        key: "name",
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
+        required: true,
+      },
+      {
+        key: "mask",
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
+        required: true,
+        excludeFilter: true,
+      },
+      {
+        key: "type",
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
+        selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
+        required: true,
+      },
+    ],
+  });
+
+  const queryKey = React.useMemo(() => "SuppressionMask", []);
   const apiUrl = React.useMemo(
     () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_MASK,
     []
   );
-  const filterConfigs: FilterConfig[] = React.useMemo(
-    () => [
-      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING, itemName: "mask" },
-      {
-        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
-        itemName: "type",
-        selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
-      },
-      { itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
-    ],
-    []
-  );
-  const itemConfigs = APP_HOOKS.useFilteredItemConfigs(filterConfigs);
 
   const defaultActions = APP_HOOKS.useDefaultPageActions();
   const actions = React.useMemo<DefaultPageActions[]>(
@@ -45,13 +46,11 @@ export const SuppressionsMask: React.FC = () => {
   return (
     <CommonPage<SuppressionMask>
       itemName="mask"
-      cols={cols}
       actions={actions}
       queryKey={queryKey}
       apiUrl={apiUrl}
-      filterConfigs={filterConfigs}
-      itemConfigs={itemConfigs}
       itemDialog={SuppressionMaskItemDialog}
+      {...configs}
     />
   );
 };

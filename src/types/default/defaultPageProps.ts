@@ -1,5 +1,4 @@
-import { FilterConfig } from "../filters";
-import { ItemConfig } from "../items";
+import { ItemConfiguration, ValidatorConfig } from "../items";
 import { AppQueryOptions } from "../queries";
 import {
   DefaultDialogItem,
@@ -12,8 +11,9 @@ export interface DefaultPageProps<T = DefaultDialogItem> {
   cols: string[];
   queryKey: string;
   apiUrl: string;
-  filterConfigs: FilterConfig[];
-  itemConfigs: ItemConfig[];
+  filterConfigs: ItemConfiguration[];
+  itemConfigs: ItemConfiguration[];
+  validators?: ValidatorConfig[];
   actions?: DefaultPageActions[];
   queryOptions?: AppQueryOptions;
   onEvent?: (event: DefaultPageActions, body: unknown) => void;
