@@ -3,11 +3,9 @@ import { Box, styled, Typography } from "@mui/material";
 import { DialogWrapper } from "../dialogs";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import {
-  AppQueryOptions,
-  DefaultDialogItemProps,
+  DefaultDialogItemComponentProps,
   DefaultPageActions,
-  FilterConfig,
-  ItemConfig,
+  DefaultPageProps,
 } from "../../../types";
 import AppUtils from "../../../utils/0_AppUtils";
 import {
@@ -15,21 +13,6 @@ import {
   DefaultGridTable,
   DefaultItemDialog,
 } from "./components";
-
-interface Props {
-  itemName: string;
-  cols: string[];
-  queryKey: string;
-  apiUrl: string;
-  filterConfigs: FilterConfig[];
-  itemConfigs: ItemConfig[];
-  actions?: DefaultPageActions[];
-  queryOptions?: AppQueryOptions;
-  onEvent?: (event: DefaultPageActions, body: unknown) => void;
-  itemDialog?: React.ComponentType<
-    Omit<DefaultDialogItemProps<any>, "configs">
-  >;
-}
 
 const Wrapper = styled("div")(() => ({
   height: "var(--content-height)",
@@ -42,7 +25,7 @@ const Wrapper = styled("div")(() => ({
   overflow: "hidden",
 }));
 
-export const CommonPage: React.FC<Props> = ({
+export const CommonPage = <T,>({
   itemName,
   actions = ["create", "edit", "delete", "submit"],
   apiUrl,
@@ -50,10 +33,10 @@ export const CommonPage: React.FC<Props> = ({
   queryKey,
   filterConfigs,
   itemConfigs,
-  itemDialog: ItemDialog,
+  itemDialog: CustomItemDialog,
   queryOptions,
   onEvent,
-}) => {
+}: DefaultPageProps<T>) => {
   const {
     item: {
       selectedItem,
@@ -85,6 +68,27 @@ export const CommonPage: React.FC<Props> = ({
       ? `Edit ${titleCaseItemName}`
       : `Create ${titleCaseItemName}`;
   }, [selectedItem, itemName]);
+  const itemDialogProps = React.useMemo<DefaultDialogItemComponentProps>(
+    () => ({
+      open: itemDialogOpen,
+      onClose: handleItemDialogClose,
+      selectedItem,
+      title: dialogTitle,
+      configs: itemConfigs,
+    }),
+    [
+      dialogTitle,
+      handleItemDialogClose,
+      itemConfigs,
+      itemDialogOpen,
+      selectedItem,
+    ]
+  );
+
+  const ItemDialog = React.useMemo(
+    () => CustomItemDialog || DefaultItemDialog,
+    [CustomItemDialog]
+  );
 
   const handleEvent = React.useCallback(
     (event: DefaultPageActions, body: unknown) => {
@@ -150,22 +154,7 @@ export const CommonPage: React.FC<Props> = ({
         </Typography>
       </DialogWrapper>
 
-      {ItemDialog ? (
-        <ItemDialog
-          open={itemDialogOpen}
-          onClose={handleItemDialogClose}
-          selectedItem={selectedItem}
-          title={dialogTitle}
-        />
-      ) : (
-        <DefaultItemDialog
-          open={itemDialogOpen}
-          onClose={handleItemDialogClose}
-          selectedItem={selectedItem}
-          title={dialogTitle}
-          configs={itemConfigs}
-        />
-      )}
+      <ItemDialog {...itemDialogProps} />
     </>
   );
 };

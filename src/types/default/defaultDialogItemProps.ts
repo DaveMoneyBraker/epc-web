@@ -1,7 +1,10 @@
 import { ObjectLiteral } from "./default";
 import { ItemConfig } from "../items/itemConfig";
+import { DefaultAppItem } from "./defaultAppItem";
 
-export interface DefaultDialogItemProps<T = ObjectLiteral> {
+export interface DefaultDialogItem extends ObjectLiteral, DefaultAppItem {}
+
+export interface DefaultDialogItemComponentProps<T = DefaultDialogItem | any> {
   open: boolean;
   title: string;
   selectedItem: T;

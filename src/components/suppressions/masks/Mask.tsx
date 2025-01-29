@@ -3,6 +3,7 @@ import {
   DefaultPageActions,
   FILTER_ITEM_TYPE,
   FilterConfig,
+  SuppressionMask,
 } from "../../../types";
 import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
@@ -40,7 +41,7 @@ export const SuppressionsMask: React.FC = () => {
   );
 
   return (
-    <CommonPage
+    <CommonPage<SuppressionMask>
       itemName="mask"
       cols={cols}
       actions={actions}

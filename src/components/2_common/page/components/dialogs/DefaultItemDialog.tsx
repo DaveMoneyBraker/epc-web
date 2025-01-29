@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import {
-  DefaultDialogItemProps,
+  DefaultDialogItemComponentProps,
   ItemConfig,
   ObjectLiteral,
 } from "../../../../../types";
@@ -12,7 +12,7 @@ interface DialogState extends ItemConfig {
   value: unknown;
 }
 
-export const DefaultItemDialog: React.FC<DefaultDialogItemProps> = ({
+export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
   open,
   title,
   selectedItem,

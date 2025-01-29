@@ -1,7 +1,7 @@
 import React from "react";
 import { useStyledDialog as dialogFunction } from "../../../2_common/dialogs";
 import {
-  DefaultDialogItemProps,
+  DefaultDialogItemComponentProps,
   SUPPRESSION_TYPES,
   SuppressionMask,
   SuppressionType,
@@ -44,7 +44,7 @@ const CustomTabPanel: React.FC<TabPanelProps> = (props) => {
 };
 
 export const SuppressionMaskItemDialog: React.FC<
-  Omit<DefaultDialogItemProps<SuppressionMask>, "configs">
+  Partial<DefaultDialogItemComponentProps<SuppressionMask>>
 > = ({ open, onClose, selectedItem }) => {
   // ITEM
   const [name, setName] = React.useState("");
@@ -69,12 +69,12 @@ export const SuppressionMaskItemDialog: React.FC<
   const handleClose = React.useCallback(
     (confirm: boolean) => {
       if (!confirm) {
-        onClose(null);
+        onClose && onClose(null);
       } else {
         const body = selectedItem
           ? { ...selectedItem, name, type, mask }
           : { name, type, mask };
-        onClose(body);
+        onClose && onClose(body);
       }
     },
     [selectedItem, type, mask, name, onClose]
@@ -144,7 +144,7 @@ export const SuppressionMaskItemDialog: React.FC<
 
   return (
     <Dialog
-      open={open}
+      open={open || false}
       maxWidth="md"
       scroll="paper"
       fullWidth={true}

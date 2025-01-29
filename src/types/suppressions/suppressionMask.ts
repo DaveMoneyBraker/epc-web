@@ -1,7 +1,7 @@
-import { DefaultAppItem } from "../default/defaultAppItem";
+import { DefaultDialogItem } from "../default";
 import { SuppressionType } from "./suppressions";
 
-export interface SuppressionMask extends DefaultAppItem {
+export interface SuppressionMask extends DefaultDialogItem {
   name: string;
   mask: string;
   type: SuppressionType;
