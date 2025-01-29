@@ -44,6 +44,10 @@ import {
   useCleanedPagesInfo,
   UseCleanedPagesInfo,
 } from "./useCleanedPagesInfo";
+import {
+  useDefaultPageActions,
+  UseDefaultPageActions,
+} from "./useDefaultPageActions";
 
 interface AppHooksInterface {
   // LOADING API URL FROM ASSETS FOLDER
@@ -84,6 +88,8 @@ interface AppHooksInterface {
   useDebounce: UseDebounce;
   // FUNCTION THAT GET BACK INFO ABOUT ONLY ALLOWED TO USER PAGES
   useCleanedPagesInfo: UseCleanedPagesInfo;
+  // GET DEFAULT PAGE ACTIONS - CREATE, EDIT, DELETE, SUBMIT
+  useDefaultPageActions: UseDefaultPageActions;
 }
 
 const APP_HOOKS: AppHooksInterface = {
@@ -106,6 +112,7 @@ const APP_HOOKS: AppHooksInterface = {
   useFirstPageLoading,
   useDebounce,
   useCleanedPagesInfo,
+  useDefaultPageActions,
 } as const;
 
 export default APP_HOOKS;

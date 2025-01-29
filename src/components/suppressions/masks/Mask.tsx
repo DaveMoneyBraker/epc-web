@@ -34,9 +34,13 @@ export const SuppressionsMask: React.FC = () => {
   );
   const itemConfigs = APP_HOOKS.useFilteredItemConfigs(filterConfigs);
 
+  const defaultActions = APP_HOOKS.useDefaultPageActions();
   const actions = React.useMemo<DefaultPageActions[]>(
-    () => ["create", "edit", "delete"],
-    []
+    () =>
+      defaultActions.filter(
+        (action) => action !== APP_CONSTANTS.PAGE_ACTIONS.SUBMIT
+      ),
+    [defaultActions]
   );
 
   return (

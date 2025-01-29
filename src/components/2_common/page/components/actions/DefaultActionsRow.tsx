@@ -9,6 +9,7 @@ import {
 import { EnhancedButton } from "../../../../1_enhanced";
 import { DebounceSearch } from "../../../../3_shared/debounceSearch";
 import { DefaultFilters } from "./filters";
+import APP_CONSTANTS from "../../../../../constants/0_AppConstants";
 
 const Wrapper = styled("div")(() => ({
   width: "100%",
@@ -51,12 +52,14 @@ export const DefaultActionsRow: React.FC<Props> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const create = React.useMemo(
-    () => actions.some((action) => action === "create"),
+    () =>
+      actions.some((action) => action === APP_CONSTANTS.PAGE_ACTIONS.CREATE),
     [actions]
   );
 
   const submit = React.useMemo(
-    () => actions.some((action) => action === "submit"),
+    () =>
+      actions.some((action) => action === APP_CONSTANTS.PAGE_ACTIONS.SUBMIT),
     [actions]
   );
 

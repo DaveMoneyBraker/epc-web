@@ -4,6 +4,7 @@ import { DefaultGridTableProps, DefaultPageActions } from "../../../../types";
 import { IconButton, ListItemText, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DEFAULT_COLUMN_PROPS } from "../constants";
+import APP_CONSTANTS from "../../../../constants/0_AppConstants";
 
 export const useActionsCol = ({
   onEvent,
@@ -12,7 +13,12 @@ export const useActionsCol = ({
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openMenuId, setOpenMenuId] = React.useState<GridRowId | null>(null);
   const filteredActions = React.useMemo(
-    () => actions.filter((a) => a !== "create" && a !== "submit"),
+    () =>
+      actions.filter(
+        (a) =>
+          a !== APP_CONSTANTS.PAGE_ACTIONS.CREATE &&
+          a !== APP_CONSTANTS.PAGE_ACTIONS.SUBMIT
+      ),
     [actions]
   );
 

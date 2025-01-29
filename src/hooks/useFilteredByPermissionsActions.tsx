@@ -2,6 +2,7 @@ import React from "react";
 import { DefaultPageActions } from "../types";
 import APP_HOOKS from "./0_AppHooks";
 import CONTEXT_HOOKS from "../providers/0_ContextHooks";
+import APP_CONSTANTS from "../constants/0_AppConstants";
 
 export type UseFilteredByPermissionsActions = (
   actions: DefaultPageActions[]
@@ -35,28 +36,32 @@ export const useFilteredByPermissionsActions: UseFilteredByPermissionsActions =
         return [...actions];
       }
       if (
-        actions.some((a) => a === "create") &&
-        requestedRouteUserPermissions?.some((rq) => rq[2] === "create")
+        actions.some((a) => a === APP_CONSTANTS.PAGE_ACTIONS.CREATE) &&
+        requestedRouteUserPermissions?.some(
+          (rq) => rq[2] === APP_CONSTANTS.PAGE_ACTIONS.CREATE
+        )
       ) {
-        filteredActions.push("create");
+        filteredActions.push(APP_CONSTANTS.PAGE_ACTIONS.CREATE);
       }
       if (
-        actions.some((a) => a === "edit") &&
+        actions.some((a) => a === APP_CONSTANTS.PAGE_ACTIONS.EDIT) &&
         requestedRouteUserPermissions?.some((rq) => rq[2] === "update")
       ) {
-        filteredActions.push("edit");
+        filteredActions.push(APP_CONSTANTS.PAGE_ACTIONS.EDIT);
       }
       if (
-        actions.some((a) => a === "delete") &&
-        requestedRouteUserPermissions?.some((rq) => rq[2] === "delete")
+        actions.some((a) => a === APP_CONSTANTS.PAGE_ACTIONS.DELETE) &&
+        requestedRouteUserPermissions?.some(
+          (rq) => rq[2] === APP_CONSTANTS.PAGE_ACTIONS.DELETE
+        )
       ) {
-        filteredActions.push("delete");
+        filteredActions.push(APP_CONSTANTS.PAGE_ACTIONS.DELETE);
       }
       if (
-        actions.some((a) => a === "submit") &&
+        actions.some((a) => a === APP_CONSTANTS.PAGE_ACTIONS.SUBMIT) &&
         requestedRouteUserPermissions?.some((rq) => rq[1].endsWith("file"))
       ) {
-        filteredActions.push("submit");
+        filteredActions.push(APP_CONSTANTS.PAGE_ACTIONS.SUBMIT);
       }
       return filteredActions;
     }, [requestedRouteUserPermissions, actions, isAdmin]);

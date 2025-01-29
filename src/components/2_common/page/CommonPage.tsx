@@ -13,6 +13,7 @@ import {
   DefaultGridTable,
   DefaultItemDialog,
 } from "./components";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 const Wrapper = styled("div")(() => ({
   height: "var(--content-height)",
@@ -27,7 +28,7 @@ const Wrapper = styled("div")(() => ({
 
 export const CommonPage = <T,>({
   itemName,
-  actions = ["create", "edit", "delete", "submit"],
+  actions: propsActions,
   apiUrl,
   cols,
   queryKey,
@@ -59,6 +60,11 @@ export const CommonPage = <T,>({
     cols,
     apiUrl,
     queryOptions
+  );
+  const defaultActions = APP_HOOKS.useDefaultPageActions();
+  const actions = React.useMemo(
+    () => propsActions || defaultActions,
+    [defaultActions, propsActions]
   );
   const filteredByPermissionActions =
     APP_HOOKS.useFilteredByPermissionsActions(actions);
@@ -93,11 +99,11 @@ export const CommonPage = <T,>({
   const handleEvent = React.useCallback(
     (event: DefaultPageActions, body: unknown) => {
       switch (event) {
-        case "edit": {
+        case APP_CONSTANTS.PAGE_ACTIONS.EDIT: {
           handleItemDialogBtnClicked(body);
           break;
         }
-        case "delete": {
+        case APP_CONSTANTS.PAGE_ACTIONS.DELETE: {
           handleDeleteBtnClicked(body);
           break;
         }
