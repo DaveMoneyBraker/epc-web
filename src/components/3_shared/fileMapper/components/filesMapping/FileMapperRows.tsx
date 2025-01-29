@@ -84,6 +84,30 @@ export const FileMapperRows: React.FC<Props> = ({
     [previews, onPreviewsChange]
   );
 
+  const handleSkipUnmappedColumns = React.useCallback(
+    (fileIndex: number) => {
+      const newValue = previews
+        .map((preview, i) => ({
+          ...preview,
+          columns:
+            fileIndex === i
+              ? preview.columns.map((col) => ({
+                  ...col,
+                  skip: col.header ? col.skip : true,
+                }))
+              : [...preview.columns],
+        })) // IF ALL COLUMNS IN FILE SKIPPED - SKIP FILE
+        .map((preview) => {
+          if (preview.columns.every((col) => col.skip)) {
+            return { ...preview, skip: true };
+          }
+          return preview;
+        });
+      onPreviewsChange(newValue);
+    },
+    [onPreviewsChange, previews]
+  );
+
   const handleSkipFileChange = React.useCallback(
     (value: boolean, rowIndex: number) => {
       const newValue = previews.map((preview, i) => ({
@@ -129,6 +153,7 @@ export const FileMapperRows: React.FC<Props> = ({
             onSkipColumnChange={handleSkipColumnChange}
             onSkipFileChange={handleSkipFileChange}
             onContainHeadersChange={handleContainHeadersChange}
+            onSkipUnmappedColumns={handleSkipUnmappedColumns}
           />
           <Divider />
         </div>

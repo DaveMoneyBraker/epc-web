@@ -1,7 +1,7 @@
 import React from "react";
 import { FileMapperPreview } from "../../../../../types";
 import { FileMapperColumn } from "./FileMapperColumn";
-import { Box, Button, styled, Typography } from "@mui/material";
+import { Box, styled, Tooltip, Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 import { EnhancedButton, EnhancedCheckbox } from "../../../../1_enhanced";
 import FileMapperUtils from "../../utils/0_utils";
@@ -21,6 +21,7 @@ interface Props {
     columnIndex: number,
     rowIndex: number
   ) => void;
+  onSkipUnmappedColumns: (index: number) => void;
   onSkipFileChange: (value: boolean, rowIndex: number) => void;
   onContainHeadersChange: (value: boolean, rowIndex: number) => void;
 }
@@ -38,13 +39,6 @@ const HeaderWrapper = styled(Box)(() => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "5px",
-  // "& .MuiBox-root": {
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  //   alignItems: "center",
-  //   gap: "20px",
-  // },
 }));
 
 const HeaderContainer = styled(Box)(() => ({
@@ -70,6 +64,7 @@ export const FileMapperRow: React.FC<Props> = ({
   onSkipColumnChange,
   onSkipFileChange,
   onContainHeadersChange,
+  onSkipUnmappedColumns,
 }) => {
   const unmappedItemsCount = React.useMemo(
     () =>
@@ -82,10 +77,16 @@ export const FileMapperRow: React.FC<Props> = ({
     [preview]
   );
 
-  const isFileMapped = FileMapperUtils.isFileMapped(preview, requiredHeaders);
+  const fileMapped = FileMapperUtils.isFileMapped(preview, requiredHeaders);
+  const fileSkipped = React.useMemo(() => preview.skip, [preview]);
   const headerColor = React.useMemo(
-    () => (isFileMapped ? "info" : "warning"),
-    [isFileMapped]
+    () =>
+      fileSkipped
+        ? "text.disabled"
+        : fileMapped
+        ? "primary.main"
+        : "warning.main",
+    [fileMapped, fileSkipped]
   );
 
   const unmappedHeadersMessage = React.useMemo(() => {
@@ -130,6 +131,11 @@ export const FileMapperRow: React.FC<Props> = ({
     [index, onSkipColumnChange]
   );
 
+  const handleSkipUnmappedColumns = React.useCallback(
+    () => onSkipUnmappedColumns(index),
+    [index, onSkipUnmappedColumns]
+  );
+
   const handleSkipFileChange = React.useCallback(
     (value: boolean) => onSkipFileChange(value, index),
     [index, onSkipFileChange]
@@ -146,9 +152,20 @@ export const FileMapperRow: React.FC<Props> = ({
         <HeaderWrapper>
           <HeaderContainer>
             <Typography variant="h6">{index + 1}.</Typography>
-            <Typography variant="h6" color={headerColor}>
-              {preview.filename}
-            </Typography>
+            <Tooltip title={preview.filename}>
+              <Typography
+                variant="h6"
+                sx={{
+                  maxWidth: "250px",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  cursor: "pointer",
+                }}
+              >
+                {preview.filename}
+              </Typography>
+            </Tooltip>
             <EnhancedCheckbox
               fullWidth={false}
               value={preview.containHeaders}
@@ -157,13 +174,13 @@ export const FileMapperRow: React.FC<Props> = ({
             />
             <EnhancedCheckbox
               fullWidth={false}
-              value={preview.skip}
+              value={fileSkipped}
               label="Skip File"
               onChange={handleSkipFileChange}
             />
-            {!preview.skip && unmappedHeadersMessage && unmappedHeadersMessage}
+            {!fileSkipped && unmappedHeadersMessage && unmappedHeadersMessage}
           </HeaderContainer>
-          {!preview.skip && unmappedItemsCount > 0 && (
+          {!fileSkipped && unmappedItemsCount > 0 && (
             <HeaderContainer>
               <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
                 <ErrorIcon color="warning" />
@@ -171,7 +188,10 @@ export const FileMapperRow: React.FC<Props> = ({
                   unmapped columns count: {unmappedItemsCount}
                 </Typography>
               </Box>
-              <EnhancedButton variant="outlined">
+              <EnhancedButton
+                variant="outlined"
+                onClick={handleSkipUnmappedColumns}
+              >
                 skip unmapped columns
               </EnhancedButton>
             </HeaderContainer>
@@ -183,7 +203,7 @@ export const FileMapperRow: React.FC<Props> = ({
           preview.columns &&
           preview.columns.map((column, i) => (
             <FileMapperColumn
-              fileSkip={preview.skip}
+              fileSkipped={fileSkipped}
               containHeaders={preview.containHeaders}
               index={i}
               column={column}

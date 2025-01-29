@@ -16,7 +16,7 @@ import { EnhancedCheckbox, EnhancedSelect } from "../../../../1_enhanced";
 interface Props {
   index: number;
   column: FileMapperPreviewColumn;
-  fileSkip: boolean;
+  fileSkipped: boolean;
   availableHeaders: string[];
   containHeaders: boolean;
   onColumnHeaderChange: (value: string, index: number) => void;
@@ -31,20 +31,17 @@ const Wrapper = styled(Box)(() => ({
   minWidth: "250px",
   margin: "15px 5px 5px 5px",
 }));
-const DataContainer = styled(Box)<{ mapped: string }>(({ theme, mapped }) => ({
+const DataContainer = styled(Box)(() => ({
   boxSizing: "border-box",
   height: "230px",
   maxHeight: "230px",
   padding: "15px",
-  border: `1px solid ${
-    mapped ? theme.palette.info.main : theme.palette.error.main
-  }`,
   borderRadius: "10px",
 }));
 
 export const FileMapperColumn: React.FC<Props> = ({
   index,
-  fileSkip,
+  fileSkipped,
   column: { header, data, skip },
   containHeaders,
   availableHeaders,
@@ -73,16 +70,21 @@ export const FileMapperColumn: React.FC<Props> = ({
     setColHeader(header);
   }, [header]);
 
-  // IF BOOLEAN TYPE USED
-  // CONSOLE SHOW ERROR THAT PROP 'MAPPED' MUST BE STRING
-  const mapped = React.useMemo(
-    () => (skip || header ? "true" : ""),
-    [header, skip]
-  );
+  const mapped = React.useMemo(() => Boolean(header), [header]);
 
   return (
     <Wrapper>
-      <DataContainer mapped={mapped}>
+      <DataContainer
+        sx={(theme) => ({
+          border: `1px solid ${
+            fileSkipped || skip
+              ? theme.palette.text.disabled
+              : mapped
+              ? theme.palette.primary.main
+              : theme.palette.warning.main
+          }`,
+        })}
+      >
         <EnhancedSelect
           label={"Column Header"}
           value={colHeader as string}
@@ -90,7 +92,7 @@ export const FileMapperColumn: React.FC<Props> = ({
           onChange={handleHeaderInputChange}
           fullWidth
           required={true}
-          disabled={skip || fileSkip}
+          disabled={skip || fileSkipped}
         />
         <List
           disablePadding
@@ -126,7 +128,7 @@ export const FileMapperColumn: React.FC<Props> = ({
       </DataContainer>
       <EnhancedCheckbox
         value={skip}
-        disabled={fileSkip}
+        disabled={fileSkipped}
         label="Skip column"
         onChange={handleSkipColumnChange}
       />

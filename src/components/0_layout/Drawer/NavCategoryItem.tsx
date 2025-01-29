@@ -57,6 +57,7 @@ export const NavCategoryItem: React.FC<Props> = ({ category }) => {
               borderBottom: 1,
               borderTop: 1,
               borderColor: "divider",
+              lineHeight: "32px",
             }}
           >
             {category.title.toUpperCase()}
