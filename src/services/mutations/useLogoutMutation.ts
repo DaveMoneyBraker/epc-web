@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import APP_HOOKS from "../../hooks/0_AppHooks";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 export const useLogoutMutation = () => {

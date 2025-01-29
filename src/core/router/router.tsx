@@ -4,7 +4,7 @@ import { useAppNav } from "./nav";
 import AppUtils from "../../utils/0_AppUtils";
 import { ConfigureProviders } from "../../providers/ConfigureProviders";
 import { Layout } from "../../components/0_layout";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 
 export const useAppRouter = () => {
   const appNav = useAppNav();

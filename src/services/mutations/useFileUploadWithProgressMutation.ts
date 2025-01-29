@@ -2,7 +2,7 @@ import React from "react";
 import { FileMapperInputValue } from "../../types";
 import { AxiosProgressEvent } from "axios";
 import { useMutation } from "@tanstack/react-query";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 interface MutationFnProps {

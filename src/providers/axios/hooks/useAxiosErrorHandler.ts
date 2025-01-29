@@ -2,7 +2,7 @@ import React from "react";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import axios from "axios";
 import { redirect } from "react-router-dom";
-import APP_CONSTANTS from "../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 export const useAxiosErrorHandler = (refreshToken: () => Promise<any>) => {
   const showNotification = APP_HOOKS.useNotification();

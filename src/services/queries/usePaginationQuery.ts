@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PaginationResponse, QueryProps } from "../../types";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";

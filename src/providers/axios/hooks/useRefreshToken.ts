@@ -3,7 +3,7 @@ import axios from "axios";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { redirect } from "react-router-dom";
 import { NOTIFICATION_VARIANTS } from "../../../constants/NotificationVariants";
-import APP_CONSTANTS from "../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 export const useRefreshToken = () => {
   const { set, clear } = APP_HOOKS.useLocalStorage();

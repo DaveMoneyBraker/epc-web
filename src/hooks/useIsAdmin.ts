@@ -1,5 +1,5 @@
 import React from "react";
-import APP_CONSTANTS from "../constants/AppConstants";
+import APP_CONSTANTS from "../constants/0_AppConstants";
 import CONTEXT_HOOKS from "../providers/0_ContextHooks";
 
 export type UseIsAdmin = () => boolean;

@@ -10,7 +10,7 @@ import {
   NavigationState,
 } from "../../types";
 import { useAppNav } from "../../core/router/nav";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 
 export const CleanedNavigationProvider: React.FC<ChildrenProps> = ({

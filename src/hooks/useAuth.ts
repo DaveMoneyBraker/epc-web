@@ -4,7 +4,7 @@ import { AuthToken } from "../types";
 import { useNavigate } from "react-router-dom";
 import APP_HOOKS from "./0_AppHooks";
 import CONTEXT_HOOKS from "../providers/0_ContextHooks";
-import APP_CONSTANTS from "../constants/AppConstants";
+import APP_CONSTANTS from "../constants/0_AppConstants";
 
 export type UseAuth = () => {
   login: (value: { password: string; username: string }) => void;

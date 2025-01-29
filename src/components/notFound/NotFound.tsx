@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { EnhancedButton } from "../1_enhanced";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();

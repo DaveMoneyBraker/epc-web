@@ -1,0 +1,24 @@
+import {
+  SuppressionType,
+  SuppressionTypeMap,
+  TitleValueObject,
+} from "../types";
+
+export const SUPPRESSION_TYPES: SuppressionTypeMap = {
+  MANUAL: "MANUAL",
+  DISPOSABLE: "DISPOSABLE",
+  SPAMTRAP: "SPAMTRAP",
+  ABUSE: "ABUSE",
+  UNRECOGNIZED: "UNRECOGNIZED",
+};
+
+export const SUPPRESSIONS_TYPE_OPTIONS: TitleValueObject<SuppressionType>[] = [
+  { title: SUPPRESSION_TYPES.MANUAL, value: SUPPRESSION_TYPES.MANUAL },
+  { title: SUPPRESSION_TYPES.ABUSE, value: SUPPRESSION_TYPES.ABUSE },
+  { title: SUPPRESSION_TYPES.DISPOSABLE, value: SUPPRESSION_TYPES.DISPOSABLE },
+  { title: SUPPRESSION_TYPES.SPAMTRAP, value: SUPPRESSION_TYPES.SPAMTRAP },
+  {
+    title: SUPPRESSION_TYPES.UNRECOGNIZED,
+    value: SUPPRESSION_TYPES.UNRECOGNIZED,
+  },
+];

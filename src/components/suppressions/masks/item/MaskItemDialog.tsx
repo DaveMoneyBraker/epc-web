@@ -2,7 +2,6 @@ import React from "react";
 import { useStyledDialog as dialogFunction } from "../../../2_common/dialogs";
 import {
   DefaultDialogItemComponentProps,
-  SUPPRESSION_TYPES,
   SuppressionMask,
   SuppressionType,
 } from "../../../../types";
@@ -20,6 +19,7 @@ import { MaskItem } from "./MaskItem";
 import { MaskItemInfo } from "./MaskItemInfo";
 import { MaskItemExamples } from "./MaskItemExamples";
 import { EnhancedButton } from "../../../1_enhanced";
+import APP_CONSTANTS from "../../../../constants/0_AppConstants";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,7 +52,7 @@ export const SuppressionMaskItemDialog: React.FC<
   const [valid, setValid] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [type, setType] = React.useState<SuppressionType>(
-    SUPPRESSION_TYPES.MANUAL
+    APP_CONSTANTS.SUPPRESSION_TYPES.MANUAL
   );
   const [test, setTest] = React.useState("");
   const [testStatus, setTestStatus] = React.useState<

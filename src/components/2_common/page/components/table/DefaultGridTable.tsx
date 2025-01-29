@@ -5,7 +5,7 @@ import { DefaultGridTableProps } from "../../../../../types";
 import AppUtils from "../../../../../utils/0_AppUtils";
 import { NoTableDataMessage } from "../../../../3_shared/noTableDataMessage";
 import { DEFAULT_COLUMN_PROPS } from "../../constants";
-import APP_CONSTANTS from "../../../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../../../constants/0_AppConstants";
 import DefaultPageHooks from "../../hooks/0_GridTableHooks";
 
 export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({

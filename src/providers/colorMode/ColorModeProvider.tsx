@@ -3,7 +3,7 @@ import { ColorModeContext } from "./ColorModeContext";
 import { CssBaseline, Theme, ThemeProvider } from "@mui/material";
 import { ChildrenProps, ThemeMode } from "../../types";
 import APP_HOOKS from "../../hooks/0_AppHooks";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import { useAppMuiTheme } from "../../core/mui";
 
 export const ColorModeProvider: React.FC<ChildrenProps> = ({ children }) => {

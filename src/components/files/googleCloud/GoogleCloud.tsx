@@ -4,12 +4,11 @@ import {
   FILTER_ITEM_TYPE,
   FilterConfig,
 } from "../../../types";
-import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import { isGCloudFile } from "../../../typeGuards";
 import AppMutations from "../../../services/mutations/AppMutations";
-import APP_CONSTANTS from "../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 export const GoogleCloudFile: React.FC = () => {
   const cols = React.useMemo(
@@ -35,7 +34,7 @@ export const GoogleCloudFile: React.FC = () => {
       {
         itemType: FILTER_ITEM_TYPE.STRING,
         itemName: "gcloudId",
-        selectOptions: SuppressionTypeOptions,
+        selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
       },
       { itemType: FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
     ],

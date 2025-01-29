@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppNav, AppNavNode, ChildrenProps } from "../../types";
 import { useCleanedNavigationContext } from "../navigation";
 import APP_HOOKS from "../../hooks/0_AppHooks";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 
 const DEFAULT_ROUTES = ["/", "/pages", "/pages/"];
 

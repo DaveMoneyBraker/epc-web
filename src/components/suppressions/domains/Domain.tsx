@@ -4,11 +4,10 @@ import {
   FilterConfig,
   ValidatorConfigWithNoError,
 } from "../../../types";
-import { SuppressionTypeOptions } from "../../../types/suppressions/suppressions";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import AppInputValidators from "../../../validators/input/0_InputValidators";
-import APP_CONSTANTS from "../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 export const SuppressionsDomain: React.FC = () => {
   const cols = React.useMemo(
@@ -26,7 +25,7 @@ export const SuppressionsDomain: React.FC = () => {
       {
         itemType: FILTER_ITEM_TYPE.ENUM,
         itemName: "type",
-        selectOptions: SuppressionTypeOptions,
+        selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
       },
       { itemType: FILTER_ITEM_TYPE.DATE, itemName: "createdAt" },
     ],

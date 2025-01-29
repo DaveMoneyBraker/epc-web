@@ -1,6 +1,6 @@
 import { TablePagination } from "@mui/material";
 import React from "react";
-import APP_CONSTANTS from "../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 interface Props {
   count: number;

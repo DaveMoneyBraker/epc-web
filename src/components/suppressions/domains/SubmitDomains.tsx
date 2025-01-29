@@ -3,7 +3,7 @@ import { FileMapperProps } from "../../../types";
 import { FileMapper } from "../../3_shared/fileMapper";
 import { useFileUploadWithProgressMutation } from "../../../services/mutations/useFileUploadWithProgressMutation";
 import { EnhancedTextField } from "../../1_enhanced";
-import APP_CONSTANTS from "../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 export const SubmitSuppressionsDomain: React.FC = () => {
   const apiUrl = React.useMemo(

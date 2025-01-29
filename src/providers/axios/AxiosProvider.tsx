@@ -5,7 +5,7 @@ import { AxiosContext } from "./AxiosContext";
 import { encodeConfigURI } from "./utils";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import { AuthToken, CacheItem } from "../../types";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import AxiosProviderHooks from "./hooks/AxiosProviderHooks";
 
 interface Props {

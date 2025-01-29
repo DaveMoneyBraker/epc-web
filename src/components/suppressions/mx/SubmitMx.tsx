@@ -2,7 +2,7 @@ import React from "react";
 import { FileMapperProps } from "../../../types";
 import { FileMapper } from "../../3_shared/fileMapper";
 import { useFileUploadWithProgressMutation } from "../../../services/mutations/useFileUploadWithProgressMutation";
-import APP_CONSTANTS from "../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 export const SubmitSuppressionsMx: React.FC = () => {
   const apiUrl = React.useMemo(

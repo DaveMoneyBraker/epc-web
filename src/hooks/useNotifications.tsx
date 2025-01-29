@@ -2,7 +2,7 @@ import React from "react";
 import { useSnackbar, VariantType } from "notistack";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import APP_CONSTANTS from "../constants/AppConstants";
+import APP_CONSTANTS from "../constants/0_AppConstants";
 
 export type UseNotification = () => (
   message: string,

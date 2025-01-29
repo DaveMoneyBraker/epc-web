@@ -14,7 +14,7 @@ import {
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ClearIcon from "@mui/icons-material/Clear";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
-import APP_CONSTANTS from "../../../constants/AppConstants";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 interface Props {
   fileSizeLimit: number;

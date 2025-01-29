@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, styled } from "@mui/material";
-import { SuppressionTypeOptions, SuppressionMask } from "../../../../types";
+import { SuppressionMask } from "../../../../types";
 import { EnhancedSelect, EnhancedTextField } from "../../../1_enhanced";
+import APP_CONSTANTS from "../../../../constants/0_AppConstants";
 
 interface Props
   extends Omit<SuppressionMask, "createdAt" | "id" | "updatedAt"> {
@@ -31,7 +32,10 @@ export const MaskItem: React.FC<Props> = ({
   errorMessage,
   onChange,
 }) => {
-  const typeOptions = SuppressionTypeOptions;
+  const typeOptions = React.useMemo(
+    () => APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
+    []
+  );
   const [message, setMessage] = React.useState("");
 
   const handleChange = React.useCallback(

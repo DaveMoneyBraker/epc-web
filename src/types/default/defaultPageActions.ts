@@ -4,3 +4,7 @@ export type DefaultPageActions =
   | "delete"
   | "submit"
   | "download";
+
+export type DefaultPageActionsMap = {
+  [K in Uppercase<DefaultPageActions>]: Lowercase<K>;
+};

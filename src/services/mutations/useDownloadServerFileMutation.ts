@@ -1,7 +1,7 @@
 import React from "react";
 import AppUtils from "../../utils/0_AppUtils";
 import { useMutation } from "@tanstack/react-query";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 

@@ -5,3 +5,4 @@ export * from "./defaultDialogItemProps";
 export * from "./defaultPageActions";
 export * from "./filters";
 export * from "./defaultPageProps";
+export * from "./defaultPageActions";

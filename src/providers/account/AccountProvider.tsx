@@ -10,7 +10,7 @@ import {
   UserRoles,
 } from "../../types";
 import APP_HOOKS from "../../hooks/0_AppHooks";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 
 export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
   const inApp = APP_HOOKS.useInApp();

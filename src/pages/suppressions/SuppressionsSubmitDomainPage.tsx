@@ -1,6 +1,6 @@
 import React from "react";
 import { SubmitSuppressionsDomain } from "../../components/suppressions";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

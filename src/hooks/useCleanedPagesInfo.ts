@@ -1,7 +1,7 @@
 import React from "react";
 import { AppNav, AppNavCategory, AppNavNode, PageInfo } from "../types";
 import CONTEXT_HOOKS from "../providers/0_ContextHooks";
-import APP_CONSTANTS from "../constants/AppConstants";
+import APP_CONSTANTS from "../constants/0_AppConstants";
 
 export type UseCleanedPagesInfo = () => PageInfo[];
 

@@ -1,5 +1,5 @@
 import React from "react";
-import APP_CONSTANTS from "../../constants/AppConstants";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 import { AppNav, AppNavCategory } from "../../types";
 import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
