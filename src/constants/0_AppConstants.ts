@@ -18,6 +18,7 @@ import { QUEUES, QUEUE_STATUS } from "./QueuesConstant";
 import { PAGES_INFO } from "./Info";
 import { SUPPRESSION_TYPES, SUPPRESSIONS_TYPE_OPTIONS } from "./Suppressions";
 import { PAGE_ACTIONS } from "./PageActions";
+import { QUERY_KEYS } from "./QueryKeys";
 import * as FILTERS from "./Filters";
 import * as DNSBL from "./Dnsbl";
 
@@ -42,6 +43,7 @@ const APP_CONSTANTS = {
   SUPPRESSION_TYPES,
   SUPPRESSIONS_TYPE_OPTIONS,
   PAGE_ACTIONS,
+  QUERY_KEYS,
   ...FILTERS,
   ...DNSBL,
 } as const;

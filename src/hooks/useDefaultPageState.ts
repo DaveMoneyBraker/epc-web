@@ -9,9 +9,7 @@ import CONTEXT_HOOKS from "../providers/0_ContextHooks";
 
 export type UseDefaultPageState = <T>(
   itemName: string,
-  queryKey: string,
   tableCols: string[],
-  apiUrl: string,
   options?: AppQueryOptions<T>
 ) => DefaultPageStateReturnValue<T>;
 
@@ -54,11 +52,18 @@ interface DefaultPageStateReturnValue<T = any> {
 
 export const useDefaultPageState = <T = any>(
   itemName: string,
-  queryKey: string,
   tableCols: string[],
-  apiUrl: string,
   options?: AppQueryOptions<T>
 ): DefaultPageStateReturnValue<T> => {
+  const { currentNavNode } = CONTEXT_HOOKS.useCleanedNavigationContext();
+  const queryKey = React.useMemo(
+    () => currentNavNode?.queryKey || "noQueryKey",
+    [currentNavNode]
+  );
+  const apiUrl = React.useMemo(
+    () => currentNavNode?.apiRoute || "",
+    [currentNavNode]
+  );
   const { loading: axiosLoading } = CONTEXT_HOOKS.useAxiosContext();
   const [selectedItem, setSelectedItem] = React.useState<T | null>(null);
   const [filterValue, setFilterValue] = React.useState<FilterValue[]>([]);

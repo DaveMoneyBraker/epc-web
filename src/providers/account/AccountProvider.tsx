@@ -22,7 +22,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
   );
 
   const { data: user } = useQuery<User>({
-    queryKey: ["accountUser"],
+    queryKey: [APP_CONSTANTS.QUERY_KEYS.USER],
     queryFn: async () => {
       const response = await axios?.get<User>(
         APP_CONSTANTS.API_ROUTES.CURRENT_USER
@@ -37,7 +37,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
   });
 
   const { data: roles } = useQuery<UserRoles[]>({
-    queryKey: ["userRoles"],
+    queryKey: [APP_CONSTANTS.QUERY_KEYS.ROLES],
     queryFn: async () => {
       const response = await axios?.get<{ roles: UserRoles[] }>(
         APP_CONSTANTS.API_ROUTES.CURRENT_USER_ROLES
@@ -55,7 +55,7 @@ export const AccountProvider: React.FC<ChildrenProps> = ({ children }) => {
   });
 
   const { data: permissions } = useQuery<UserPermission[][]>({
-    queryKey: ["accountPermissions"],
+    queryKey: [APP_CONSTANTS.QUERY_KEYS.PERMISSIONS],
     queryFn: async () => {
       const response = await axios?.get<{ permissions: UserPermission[][] }>(
         APP_CONSTANTS.API_ROUTES.CURRENT_USER_PERMISSIONS

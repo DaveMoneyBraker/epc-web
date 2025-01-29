@@ -9,8 +9,6 @@ import { DefaultPageActions } from "./defaultPageActions";
 export interface DefaultPageProps<T = DefaultDialogItem> {
   itemName: string;
   cols: string[];
-  queryKey: string;
-  apiUrl: string;
   filterConfigs: ItemConfiguration[];
   itemConfigs: ItemConfiguration[];
   validators?: ValidatorConfig[];

@@ -32,18 +32,6 @@ export const SuppressionsMx: React.FC = () => {
       },
     ],
   });
-  const queryKey = React.useMemo(() => "SuppressionsMx", []);
-  const apiUrl = React.useMemo(
-    () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_MX,
-    []
-  );
 
-  return (
-    <CommonPage
-      itemName="mx"
-      queryKey={queryKey}
-      apiUrl={apiUrl}
-      {...configs}
-    />
-  );
+  return <CommonPage itemName="mx" {...configs} />;
 };

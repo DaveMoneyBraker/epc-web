@@ -36,7 +36,6 @@ export const GoogleCloudFile: React.FC = () => {
     ],
   });
 
-  const queryKey = React.useMemo(() => "GCloudFiles", []);
   const apiUrl = React.useMemo(() => APP_CONSTANTS.API_ROUTES.GOOGLE_CLOUD, []);
   const mutation = AppMutations.useDownloadServerFileMutation(apiUrl);
 
@@ -66,8 +65,6 @@ export const GoogleCloudFile: React.FC = () => {
     <CommonPage
       itemName="file"
       actions={actions}
-      queryKey={queryKey}
-      apiUrl={apiUrl}
       onEvent={handleEvent}
       {...configs}
     />

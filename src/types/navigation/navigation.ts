@@ -16,6 +16,7 @@ export interface AppNavNode {
   pageTitle: string;
   appRoute: string;
   apiRoute: string;
+  queryKey?: string;
   permissionsRoute: PermissionRoute;
   element: React.ReactNode;
 }

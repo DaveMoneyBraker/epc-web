@@ -59,7 +59,7 @@ export const Queues: React.FC = () => {
     [currentNavNode]
   );
   const [page, setPage] = React.useState(0);
-  const queryKey = React.useMemo(() => "queue", []);
+  const queryKey = React.useMemo(() => APP_CONSTANTS.QUERY_KEYS.QUEUE, []);
   const [status, setStatus] = React.useState<QueueStatus>(
     APP_CONSTANTS.QUEUE_STATUS.LATEST
   );

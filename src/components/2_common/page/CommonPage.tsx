@@ -29,9 +29,7 @@ const Wrapper = styled("div")(() => ({
 export const CommonPage = <T,>({
   itemName,
   actions: propsActions,
-  apiUrl,
   cols,
-  queryKey,
   filterConfigs,
   itemConfigs,
   validators = [],
@@ -55,13 +53,7 @@ export const CommonPage = <T,>({
     filter: { value: filterState, setValue: setFilterState },
     data: { value: items, totalItems, loading },
     cols: defaultStateCols,
-  } = APP_HOOKS.useDefaultPageState(
-    itemName,
-    queryKey,
-    cols,
-    apiUrl,
-    queryOptions
-  );
+  } = APP_HOOKS.useDefaultPageState(itemName, cols, queryOptions);
   const defaultActions = APP_HOOKS.useDefaultPageActions();
   const actions = React.useMemo(
     () => propsActions || defaultActions,

@@ -17,7 +17,10 @@ export const usePaginationQuery = <T = unknown>(props: QueryProps<T>) => {
   const client = useQueryClient();
   const { axios } = CONTEXT_HOOKS.useAxiosContext();
   const axiosResponseValidator = APP_HOOKS.useAxiosResponseValidator();
-  const isEnabled = React.useMemo(() => (enabled ? true : false), [enabled]);
+  const isEnabled = React.useMemo(
+    () => Boolean(queryKey) && Boolean(apiUrl) && enabled,
+    [apiUrl, enabled, queryKey]
+  );
   const [totalItems, setTotalItems] = React.useState(0);
   const [isInitialLoad, setIsInitialLoad] = React.useState(true);
 

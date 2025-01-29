@@ -33,18 +33,5 @@ export const BlacklistDomain: React.FC = () => {
     ],
   });
 
-  const queryKey = React.useMemo(() => "BlacklistDomains", []);
-  const apiUrl = React.useMemo(
-    () => APP_CONSTANTS.API_ROUTES.BLACKLIST_DOMAIN,
-    []
-  );
-
-  return (
-    <CommonPage
-      itemName="domain"
-      queryKey={queryKey}
-      apiUrl={apiUrl}
-      {...configs}
-    />
-  );
+  return <CommonPage itemName="domain" {...configs} />;
 };

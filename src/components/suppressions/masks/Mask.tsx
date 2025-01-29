@@ -28,12 +28,6 @@ export const SuppressionsMask: React.FC = () => {
     ],
   });
 
-  const queryKey = React.useMemo(() => "SuppressionMask", []);
-  const apiUrl = React.useMemo(
-    () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_MASK,
-    []
-  );
-
   const defaultActions = APP_HOOKS.useDefaultPageActions();
   const actions = React.useMemo<DefaultPageActions[]>(
     () =>
@@ -47,8 +41,6 @@ export const SuppressionsMask: React.FC = () => {
     <CommonPage<SuppressionMask>
       itemName="mask"
       actions={actions}
-      queryKey={queryKey}
-      apiUrl={apiUrl}
       itemDialog={SuppressionMaskItemDialog}
       {...configs}
     />

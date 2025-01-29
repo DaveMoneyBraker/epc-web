@@ -27,18 +27,6 @@ export const SuppressionsEmail: React.FC = () => {
       },
     ],
   });
-  const queryKey = React.useMemo(() => "SuppressionsEmails", []);
-  const apiUrl = React.useMemo(
-    () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_EMAIL,
-    []
-  );
 
-  return (
-    <CommonPage
-      itemName="email"
-      queryKey={queryKey}
-      apiUrl={apiUrl}
-      {...configs}
-    />
-  );
+  return <CommonPage itemName="email" {...configs} />;
 };

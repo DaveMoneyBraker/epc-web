@@ -32,11 +32,6 @@ export const SuppressionsDomain: React.FC = () => {
       },
     ],
   });
-  const queryKey = React.useMemo(() => "SuppressionsDomains", []);
-  const apiUrl = React.useMemo(
-    () => APP_CONSTANTS.API_ROUTES.SUPPRESSION_DOMAIN,
-    []
-  );
 
   // EXAMPLE OF QUERY OPTIONS USAGE
   const queryOptions = React.useMemo(
@@ -52,12 +47,6 @@ export const SuppressionsDomain: React.FC = () => {
   );
 
   return (
-    <CommonPage
-      itemName="domain"
-      queryKey={queryKey}
-      apiUrl={apiUrl}
-      queryOptions={queryOptions}
-      {...configs}
-    />
+    <CommonPage itemName="domain" queryOptions={queryOptions} {...configs} />
   );
 };

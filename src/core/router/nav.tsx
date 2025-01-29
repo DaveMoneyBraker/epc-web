@@ -63,6 +63,7 @@ export const useAppNav = (): AppNav[] => {
           apiRoute: `${APP_CONSTANTS.API_ROUTES.QUEUE_JOB}?queueName=${value}`,
           appRoute: `${APP_CONSTANTS.APP_ROUTES.QUEUE}${value}`,
           permissionsRoute: APP_CONSTANTS.PERMISSION_ROUTES.QUEUE,
+          queryKey: APP_CONSTANTS.QUERY_KEYS.QUEUE,
           element: (
             <React.Suspense>
               <QueuesPage />
@@ -88,6 +89,7 @@ export const useAppNav = (): AppNav[] => {
           apiRoute: `${APP_CONSTANTS.API_ROUTES.QUEUE_JOB}?queueName=${value}`,
           appRoute: `${APP_CONSTANTS.APP_ROUTES.QUEUE}${value}`,
           permissionsRoute: APP_CONSTANTS.PERMISSION_ROUTES.QUEUE,
+          queryKey: APP_CONSTANTS.QUERY_KEYS.QUEUE,
           element: (
             <React.Suspense>
               <QueuesPage />
@@ -146,6 +148,7 @@ export const useAppNav = (): AppNav[] => {
                 pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_EMAIL,
                 apiRoute: APP_CONSTANTS.API_ROUTES.SUPPRESSION_EMAIL,
                 appRoute: APP_CONSTANTS.APP_ROUTES.SUPPRESSION_EMAIL,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.SUPPRESSION_EMAIL,
                 permissionsRoute:
                   APP_CONSTANTS.PERMISSION_ROUTES.SUPPRESSION_EMAIL,
                 element: (
@@ -174,6 +177,7 @@ export const useAppNav = (): AppNav[] => {
                 pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_DOMAIN,
                 apiRoute: APP_CONSTANTS.API_ROUTES.SUPPRESSION_DOMAIN,
                 appRoute: APP_CONSTANTS.APP_ROUTES.SUPPRESSION_DOMAIN,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.SUPPRESSION_DOMAIN,
                 permissionsRoute:
                   APP_CONSTANTS.PERMISSION_ROUTES.SUPPRESSION_DOMAIN,
                 element: (
@@ -202,6 +206,7 @@ export const useAppNav = (): AppNav[] => {
                 pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_MX,
                 apiRoute: APP_CONSTANTS.API_ROUTES.SUPPRESSION_MX,
                 appRoute: APP_CONSTANTS.APP_ROUTES.SUPPRESSION_MX,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.SUPPRESSION_MX,
                 permissionsRoute:
                   APP_CONSTANTS.PERMISSION_ROUTES.SUPPRESSION_MX,
                 element: (
@@ -228,6 +233,7 @@ export const useAppNav = (): AppNav[] => {
                 pageTitle: APP_CONSTANTS.PAGE_TITLES.SUPPRESSION_MASK,
                 apiRoute: APP_CONSTANTS.API_ROUTES.SUPPRESSION_MASK,
                 appRoute: APP_CONSTANTS.APP_ROUTES.SUPPRESSION_MASK,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.SUPPRESSION_MASK,
                 permissionsRoute:
                   APP_CONSTANTS.PERMISSION_ROUTES.SUPPRESSION_MASK,
                 element: (
@@ -271,6 +277,7 @@ export const useAppNav = (): AppNav[] => {
                 pageTitle: APP_CONSTANTS.PAGE_TITLES.BLACKLIST_DOMAIN,
                 apiRoute: APP_CONSTANTS.API_ROUTES.BLACKLIST_DOMAIN,
                 appRoute: APP_CONSTANTS.APP_ROUTES.BLACKLIST_DOMAIN,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.BLACKLIST_DOMAIN,
                 permissionsRoute:
                   APP_CONSTANTS.PERMISSION_ROUTES.BLACKLIST_DOMAIN,
                 element: (
@@ -311,6 +318,7 @@ export const useAppNav = (): AppNav[] => {
                 apiRoute: APP_CONSTANTS.API_ROUTES.GOOGLE_CLOUD,
                 appRoute: APP_CONSTANTS.APP_ROUTES.GOOGLE_CLOUD,
                 permissionsRoute: APP_CONSTANTS.PERMISSION_ROUTES.ADMIN,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.G_C_FILE,
                 element: (
                   <React.Suspense>
                     <GoogleCloudFilesPage />
