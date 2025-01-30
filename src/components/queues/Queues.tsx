@@ -13,7 +13,7 @@ import {
   QueueTopBar,
   StatusBar,
 } from "./components";
-import { DialogWrapper } from "../2_common/dialogs";
+import { DialogWrapper } from "../3_shared/dialogs";
 import { AppPagination } from "../3_shared/pagination";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 import APP_CONSTANTS from "../../constants/0_AppConstants";

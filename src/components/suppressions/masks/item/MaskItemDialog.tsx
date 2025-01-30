@@ -1,5 +1,5 @@
 import React from "react";
-import { useStyledDialog as dialogFunction } from "../../../2_common/dialogs";
+import { useStyledDialog as dialogFunction } from "../../../3_shared/dialogs";
 import {
   DefaultDialogItemComponentProps,
   SuppressionMask,

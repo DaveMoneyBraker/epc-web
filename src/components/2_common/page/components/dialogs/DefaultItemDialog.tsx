@@ -5,7 +5,7 @@ import {
   ItemConfiguration,
   ObjectLiteral,
 } from "../../../../../types";
-import { DialogWrapper } from "../../../dialogs";
+import { DialogWrapper } from "../../../../3_shared/dialogs";
 import { EnhancedSelect, EnhancedTextField } from "../../../../1_enhanced";
 import APP_CONSTANTS from "../../../../../constants/0_AppConstants";
 

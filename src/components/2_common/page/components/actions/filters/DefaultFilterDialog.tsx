@@ -3,7 +3,7 @@ import { FilterValue, ItemConfiguration } from "../../../../../../types";
 import { DefaultFilterRow } from "./DefaultFilterRow";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, IconButton } from "@mui/material";
-import { DialogWrapper } from "../../../../dialogs";
+import { DialogWrapper } from "../../../../../3_shared/dialogs";
 import APP_CONSTANTS from "../../../../../../constants/0_AppConstants";
 
 interface Props {

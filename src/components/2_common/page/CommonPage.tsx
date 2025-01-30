@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, styled, Typography } from "@mui/material";
-import { DialogWrapper } from "../dialogs";
+import { DialogWrapper } from "../../3_shared/dialogs";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import {
   DefaultDialogItemComponentProps,
