@@ -7,3 +7,4 @@ export * from "./EnhancedButton";
 export * from "./EnhancedLink";
 export * from "./EnhancedStepper";
 export * from "./EnhancePasswordInput";
+export * from "./EnhancedDataGrid";
