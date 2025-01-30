@@ -2,7 +2,6 @@ import React from "react";
 import {
   Box,
   Typography,
-  IconButton,
   Paper,
   Stack,
   LinearProgress,
@@ -15,6 +14,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ClearIcon from "@mui/icons-material/Clear";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import APP_CONSTANTS from "../../../constants/0_AppConstants";
+import { EnhancedIconButton } from "../../1_enhanced";
 
 interface Props {
   fileSizeLimit: number;
@@ -278,12 +278,11 @@ export const AppDragNDrop: React.FC<Props> = ({
                       },
                     }}
                     secondaryAction={
-                      <IconButton
+                      <EnhancedIconButton
+                        icon={ClearIcon}
                         edge="end"
                         onClick={() => handleFileDelete(index)}
-                      >
-                        <ClearIcon />
-                      </IconButton>
+                      />
                     }
                   >
                     <ListItemText

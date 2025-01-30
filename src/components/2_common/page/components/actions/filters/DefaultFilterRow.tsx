@@ -6,12 +6,13 @@ import {
   ItemConfiguration,
   TitleValueObject,
 } from "../../../../../../types";
-import { Box, IconButton, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AppUtils from "../../../../../../utils/0_AppUtils";
 import {
   EnhancedDatePicker,
   EnhancedDateRangePicker,
+  EnhancedIconButton,
   EnhancedSelect,
   EnhancedTextField,
 } from "../../../../../1_enhanced";
@@ -208,9 +209,11 @@ export const DefaultFilterRow: React.FC<Props> = ({
         />
       )}
 
-      <IconButton color="error" onClick={handleDelete}>
-        <DeleteIcon />
-      </IconButton>
+      <EnhancedIconButton
+        icon={DeleteIcon}
+        color="error"
+        onClick={handleDelete}
+      />
     </Container>
   );
 };

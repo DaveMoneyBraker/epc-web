@@ -3,13 +3,12 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import { useStyledDialog as styledDialog } from "./useStyledDialog";
-import { EnhancedButton } from "../../1_enhanced";
+import { EnhancedButton, EnhancedIconButton } from "../../1_enhanced";
 
 interface Props {
   open: boolean;
@@ -53,9 +52,7 @@ export const DialogWrapper: React.FC<Props> = ({
       <DialogTitle component={"div"} id="alert-dialog-title">
         <Typography variant="h5">{title}</Typography>
         {withCloseIcon && (
-          <IconButton onClick={() => onClose(false)}>
-            <CloseIcon />
-          </IconButton>
+          <EnhancedIconButton icon={CloseIcon} onClick={() => onClose(false)} />
         )}
       </DialogTitle>
       <DialogContent>{children}</DialogContent>

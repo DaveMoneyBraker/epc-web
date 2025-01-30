@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -15,6 +14,7 @@ import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
 import { NoTableDataMessage } from "../../3_shared/noTableDataMessage";
 import { QueueJob, QueueStatus } from "../../../types";
+import { EnhancedIconButton } from "../../1_enhanced";
 
 interface Props {
   status: QueueStatus;
@@ -57,12 +57,11 @@ export const QueueJobsTable: React.FC<Props> = ({
               <TableRow key={`jobRow-${i}`}>
                 {status === "failed" && (
                   <TableCell>
-                    <IconButton
+                    <EnhancedIconButton
+                      icon={ReplayOutlinedIcon}
                       color="primary"
                       onClick={() => handleToggleDialog(job, "retry")}
-                    >
-                      <ReplayOutlinedIcon />
-                    </IconButton>
+                    />
                   </TableCell>
                 )}
                 <TableCell>#{job.id || 0}</TableCell>
@@ -84,20 +83,18 @@ export const QueueJobsTable: React.FC<Props> = ({
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <IconButton
+                  <EnhancedIconButton
+                    icon={DeleteOutlineOutlinedIcon}
                     color="error"
                     onClick={() => handleToggleDialog(job, "delete")}
-                  >
-                    <DeleteOutlineOutlinedIcon />
-                  </IconButton>
+                  />
                 </TableCell>
                 <TableCell>
-                  <IconButton
+                  <EnhancedIconButton
+                    icon={OpenInNewOutlinedIcon}
                     color="primary"
                     onClick={() => handleToggleDialog(job, "show")}
-                  >
-                    <OpenInNewOutlinedIcon />
-                  </IconButton>
+                  />
                 </TableCell>
               </TableRow>
             ))}

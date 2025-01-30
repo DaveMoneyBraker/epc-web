@@ -1,10 +1,11 @@
 import React from "react";
 import { GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
 import { DefaultGridTableProps, DefaultPageActions } from "../../../../types";
-import { IconButton, ListItemText, Menu, MenuItem } from "@mui/material";
+import { ListItemText, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DEFAULT_COLUMN_PROPS } from "../constants";
 import APP_CONSTANTS from "../../../../constants/0_AppConstants";
+import { EnhancedIconButton } from "../../../1_enhanced";
 
 export const useActionsCol = ({
   onEvent,
@@ -49,15 +50,15 @@ export const useActionsCol = ({
       const { id } = params;
       const isOpen = id === openMenuId;
       return (
-        <>
-          <IconButton
+        <React.Fragment>
+          <EnhancedIconButton
+            icon={MoreVertIcon}
             aria-controls={isOpen ? "basic-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={isOpen ? "true" : undefined}
             onClick={(e) => handleClick(id, e)}
-          >
-            <MoreVertIcon />
-          </IconButton>
+          />
+
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -81,7 +82,7 @@ export const useActionsCol = ({
               </MenuItem>
             ))}
           </Menu>
-        </>
+        </React.Fragment>
       );
     },
     [

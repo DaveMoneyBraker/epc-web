@@ -1,8 +1,8 @@
 import React from "react";
 import { useSnackbar, VariantType } from "notistack";
-import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import APP_CONSTANTS from "../constants/0_AppConstants";
+import { EnhancedIconButton } from "../components/1_enhanced";
 
 export type UseNotification = () => (
   message: string,
@@ -20,12 +20,11 @@ export const useNotification: UseNotification = () => {
         variant,
         action: (key) => (
           <React.Fragment>
-            <IconButton
+            <EnhancedIconButton
+              icon={CloseIcon}
               sx={{ color: "white" }}
               onClick={() => closeSnackbar(key)}
-            >
-              <CloseIcon />
-            </IconButton>
+            />
           </React.Fragment>
         ),
       });

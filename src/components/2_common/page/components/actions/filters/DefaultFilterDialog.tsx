@@ -2,9 +2,10 @@ import React from "react";
 import { FilterValue, ItemConfiguration } from "../../../../../../types";
 import { DefaultFilterRow } from "./DefaultFilterRow";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import { DialogWrapper } from "../../../../../3_shared/dialogs";
 import APP_CONSTANTS from "../../../../../../constants/0_AppConstants";
+import { EnhancedIconButton } from "../../../../../1_enhanced";
 
 interface Props {
   open: boolean;
@@ -114,13 +115,12 @@ export const DefaultFilterDialog: React.FC<Props> = ({
             onDelete={handleDeleteRow}
           />
         ))}
-        <IconButton
+        <EnhancedIconButton
+          icon={AddIcon}
           sx={{ alignSelf: "flex-start" }}
           color="primary"
           onClick={handleAddRow}
-        >
-          <AddIcon />
-        </IconButton>
+        />
       </Box>
     </DialogWrapper>
   );

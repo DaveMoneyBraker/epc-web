@@ -1,12 +1,8 @@
-import {
-  IconButton,
-  InputAdornment,
-  TextField,
-  TextFieldProps,
-} from "@mui/material";
+import { InputAdornment, TextField, TextFieldProps } from "@mui/material";
 import React from "react";
 import AppUtils from "../../utils/0_AppUtils";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { EnhancedIconButton } from "./EnhancedIconButton";
 
 type Props = Omit<TextFieldProps, "onChange"> & {
   label?: string;
@@ -43,6 +39,8 @@ export const EnhancePasswordInput: React.FC<Props> = ({
     () => setShow((v) => !v),
     [setShow]
   );
+
+  const icon = React.useMemo(() => (show ? VisibilityOff : Visibility), [show]);
   return (
     <TextField
       fullWidth
@@ -58,15 +56,14 @@ export const EnhancePasswordInput: React.FC<Props> = ({
         input: {
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton
+              <EnhancedIconButton
+                icon={icon}
                 aria-label="toggle password visibility"
                 onClick={handleShowToggle}
                 onMouseDown={handleMouseDownUpPassword}
                 onMouseUp={handleMouseDownUpPassword}
                 edge="end"
-              >
-                {show ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
+              />
             </InputAdornment>
           ),
         },

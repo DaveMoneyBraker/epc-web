@@ -1,16 +1,10 @@
-import {
-  Box,
-  AppBar as Bar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Link,
-} from "@mui/material";
+import { Box, AppBar as Bar, Toolbar, Typography, Link } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBarMenu } from "./AppBarMenu";
 import { AppColorMode } from "./AppColorMode";
 import { EpcLogo } from "../../4_icons/EpcLogo";
+import { EnhancedIconButton } from "../../1_enhanced";
 
 interface Props {
   pageTitle: string;
@@ -24,15 +18,14 @@ export const AppBar: React.FC<Props> = ({ pageTitle, onClick, onLogout }) => {
     <Box sx={{ flexGrow: 1 }}>
       <Bar position="static">
         <Toolbar>
-          <IconButton
+          <EnhancedIconButton
+            icon={MenuIcon}
             edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
             onClick={onClick}
-          >
-            <MenuIcon />
-          </IconButton>
+          />
           <Box
             component="div"
             sx={{
