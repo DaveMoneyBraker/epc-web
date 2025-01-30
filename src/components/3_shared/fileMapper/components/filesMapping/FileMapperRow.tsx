@@ -5,6 +5,7 @@ import { Box, styled, Tooltip, Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 import { EnhancedButton, EnhancedCheckbox } from "../../../../1_enhanced";
 import FileMapperUtils from "../../utils/0_utils";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 interface Props {
   preview: FileMapperPreview;
@@ -89,7 +90,21 @@ export const FileMapperRow: React.FC<Props> = ({
     [fileMapped, fileSkipped]
   );
 
-  const unmappedHeadersMessage = React.useMemo(() => {
+  const fileStatusMessage = React.useMemo(() => {
+    if (fileMapped) {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <CheckCircleIcon color="primary" fontSize="small" />
+          <Typography variant="body2">File mapped!</Typography>
+        </Box>
+      );
+    }
     const mappedHeaders = preview.columns
       .filter((column) => !column.skip && column.header)
       .map((column) => column.header);
@@ -100,7 +115,20 @@ export const FileMapperRow: React.FC<Props> = ({
         )
     );
     if (unmappedRequiredHeaderPairs.length === 0) {
-      return "";
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <CheckCircleIcon color="primary" fontSize="small" />
+          <Typography variant="body2">
+            All required headers are mapped!
+          </Typography>
+        </Box>
+      );
     }
     let value = "";
     unmappedRequiredHeaderPairs.forEach(
@@ -154,6 +182,7 @@ export const FileMapperRow: React.FC<Props> = ({
             <Typography variant="h6">{index + 1}.</Typography>
             <Tooltip title={preview.filename}>
               <Typography
+                color={headerColor}
                 variant="h6"
                 sx={{
                   maxWidth: "250px",
@@ -168,17 +197,21 @@ export const FileMapperRow: React.FC<Props> = ({
             </Tooltip>
             <EnhancedCheckbox
               fullWidth={false}
-              value={preview.containHeaders}
-              label="Contain headers"
-              onChange={handleContainHeadersChange}
-            />
-            <EnhancedCheckbox
-              fullWidth={false}
               value={fileSkipped}
               label="Skip File"
               onChange={handleSkipFileChange}
+              sx={{ ml: 1 }}
             />
-            {!fileSkipped && unmappedHeadersMessage && unmappedHeadersMessage}
+            {!fileSkipped && (
+              <EnhancedCheckbox
+                disabled={fileSkipped}
+                fullWidth={false}
+                value={preview.containHeaders}
+                label="Contain headers"
+                onChange={handleContainHeadersChange}
+              />
+            )}
+            {!fileSkipped && fileStatusMessage}
           </HeaderContainer>
           {!fileSkipped && unmappedItemsCount > 0 && (
             <HeaderContainer>
