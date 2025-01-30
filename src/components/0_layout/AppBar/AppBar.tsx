@@ -5,6 +5,7 @@ import { AppBarMenu } from "./AppBarMenu";
 import { AppColorMode } from "./AppColorMode";
 import { EpcLogo } from "../../4_icons/EpcLogo";
 import { EnhancedIconButton } from "../../1_enhanced";
+import { AppUiSettings } from "./AppUiSettings";
 
 interface Props {
   pageTitle: string;
@@ -63,6 +64,7 @@ export const AppBar: React.FC<Props> = ({ pageTitle, onClick, onLogout }) => {
               justifyContent: "space-between",
             }}
           >
+            <AppUiSettings />
             <AppColorMode />
             <AppBarMenu onLogout={handleLogout} />
           </Box>

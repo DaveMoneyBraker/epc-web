@@ -8,14 +8,14 @@ import {
 import React from "react";
 import { TitleValueObject } from "../../types";
 
-type Props = Omit<SelectProps, "onChange"> & {
-  value: string;
-  options: TitleValueObject[];
+type Props<T = string> = Omit<SelectProps, "onChange"> & {
+  value: T;
+  options: TitleValueObject<T>[];
   label?: string;
   onChange: (v: string) => void;
 };
 
-export const EnhancedSelect: React.FC<Props> = ({
+export const EnhancedSelect = <T,>({
   value,
   options,
   label = "value",
@@ -24,7 +24,7 @@ export const EnhancedSelect: React.FC<Props> = ({
   disabled = false,
   onChange,
   ...props
-}) => {
+}: Props<T>) => {
   const handleChange = React.useCallback(
     (event: any) => {
       const v = event.target.value as string;
@@ -45,7 +45,7 @@ export const EnhancedSelect: React.FC<Props> = ({
       >
         {options &&
           options.map((v, i) => (
-            <MenuItem value={v.value} key={`${v.value}-${i}`}>
+            <MenuItem value={v.value as string} key={`${v.value}-${i}`}>
               {v.title}
             </MenuItem>
           ))}

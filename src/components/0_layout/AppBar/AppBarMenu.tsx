@@ -66,7 +66,6 @@ export const AppBarMenu: React.FC<Props> = ({ onLogout }) => {
           <ListItemText>Logout</ListItemText>
         </MenuItem>
       </Menu>
-      <div></div>
     </React.Fragment>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import APP_CONSTANTS from "../constants/0_AppConstants";
 
 export type UseLocalStorage = <T>() => {
   get: Get<T>;
@@ -24,7 +25,10 @@ export const useLocalStorage: UseLocalStorage = <T = unknown>() => {
     []
   );
 
-  const clear = React.useCallback(() => localStorage.clear, []);
+  const clear = React.useCallback(
+    () => localStorage.removeItem(APP_CONSTANTS.LOCAL_STORAGE.TOKEN),
+    []
+  );
 
   return React.useMemo(() => ({ get, set, clear }), [clear, get, set]);
 };

@@ -10,6 +10,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { ColorModeProvider } from "./colorMode";
 import { NotificationsProvider } from "./notifications";
+import { UiConfigProvider } from "./uiConfig";
 
 export const ConfigureProviders: React.FC = () => {
   return (
@@ -17,28 +18,30 @@ export const ConfigureProviders: React.FC = () => {
     <ColorModeProvider>
       <CssBaseline />
       {/* DATE FORMATS PROVIDER FOR MUI DATE PICKERS */}
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        {/*  NOTISTACK NOTIFICATIONS PROVIDER */}
-        <NotificationsProvider>
-          {/* CUSTOM AXIOS INSTANCE PROVIDER */}
-          <ReactQueryProvider>
-            <AxiosProvider>
-              {/* TANSTACK QUERY PROVIDER */}
+      <UiConfigProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          {/*  NOTISTACK NOTIFICATIONS PROVIDER */}
+          <NotificationsProvider>
+            {/* CUSTOM AXIOS INSTANCE PROVIDER */}
+            <ReactQueryProvider>
+              <AxiosProvider>
+                {/* TANSTACK QUERY PROVIDER */}
 
-              {/* USER DATA - CURRENT USER, PERMISSIONS - PROVIDER */}
-              <AccountProvider>
-                {/* PROVIDER WITH CLEANED BY USER PERMISSIONS NAVIGATION NODES */}
-                <CleanedNavigationProvider>
-                  {/* PROVIDER FOR HANDLING UNWANTED ROUTES VISITING */}
-                  <RoutesGuardProvider>
-                    <Outlet />
-                  </RoutesGuardProvider>
-                </CleanedNavigationProvider>
-              </AccountProvider>
-            </AxiosProvider>
-          </ReactQueryProvider>
-        </NotificationsProvider>
-      </LocalizationProvider>
+                {/* USER DATA - CURRENT USER, PERMISSIONS - PROVIDER */}
+                <AccountProvider>
+                  {/* PROVIDER WITH CLEANED BY USER PERMISSIONS NAVIGATION NODES */}
+                  <CleanedNavigationProvider>
+                    {/* PROVIDER FOR HANDLING UNWANTED ROUTES VISITING */}
+                    <RoutesGuardProvider>
+                      <Outlet />
+                    </RoutesGuardProvider>
+                  </CleanedNavigationProvider>
+                </AccountProvider>
+              </AxiosProvider>
+            </ReactQueryProvider>
+          </NotificationsProvider>
+        </LocalizationProvider>
+      </UiConfigProvider>
     </ColorModeProvider>
   );
 };

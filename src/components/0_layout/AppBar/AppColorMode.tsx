@@ -20,7 +20,7 @@ export const AppColorMode: React.FC = () => {
   return (
     <EnhancedIconButton
       icon={icon}
-      sx={{ ml: 1, color: "white" }}
+      sx={{ mr: 0.5, color: "white" }}
       onClick={colorMode.toggleColorMode}
       color="inherit"
     />

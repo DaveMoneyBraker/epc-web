@@ -8,6 +8,7 @@ import {
   useCleanedNavigationContext,
   UseCleanedNavigationContext,
 } from "./navigation";
+import { useUiConfigContext, UseUiConfigContext } from "./uiConfig";
 
 interface ContextHooks {
   // GET USER ACCOUNT, ROLES AND PERMISSIONS
@@ -18,6 +19,8 @@ interface ContextHooks {
   useColorModeContext: UseColorModeContext;
   // GET CLEANED BY PERMISSIONS NAVIGATION NODES
   useCleanedNavigationContext: UseCleanedNavigationContext;
+  // GET UI CONFIG OBJECT AND UPDATE FUNCTION
+  useUiConfigContext: UseUiConfigContext;
 }
 
 const CONTEXT_HOOKS: ContextHooks = {
@@ -25,6 +28,7 @@ const CONTEXT_HOOKS: ContextHooks = {
   useAxiosContext,
   useColorModeContext,
   useCleanedNavigationContext,
+  useUiConfigContext,
 };
 
 export default CONTEXT_HOOKS;

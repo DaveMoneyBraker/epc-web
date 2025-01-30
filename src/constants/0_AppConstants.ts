@@ -21,6 +21,7 @@ import { PAGE_ACTIONS } from "./PageActions";
 import { QUERY_KEYS } from "./QueryKeys";
 import * as FILTERS from "./Filters";
 import * as DNSBL from "./Dnsbl";
+import * as UI from "./UI";
 
 const APP_CONSTANTS = {
   PAGE_TITLES,
@@ -46,6 +47,7 @@ const APP_CONSTANTS = {
   QUERY_KEYS,
   ...FILTERS,
   ...DNSBL,
+  ...UI,
 } as const;
 
 export default APP_CONSTANTS;
