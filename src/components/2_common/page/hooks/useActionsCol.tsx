@@ -55,9 +55,8 @@ export const useActionsCol = ({
             aria-haspopup="true"
             aria-expanded={isOpen ? "true" : undefined}
             onClick={(e) => handleClick(id, e)}
-            size="small"
           >
-            <MoreVertIcon fontSize="small" />
+            <MoreVertIcon />
           </IconButton>
           <Menu
             id="basic-menu"

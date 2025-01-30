@@ -53,7 +53,6 @@ const NotFound: React.FC = () => {
         </Typography>
 
         <EnhancedButton
-          size="large"
           onClick={handleGoHome}
           sx={{
             borderRadius: 2,

@@ -53,7 +53,7 @@ export const DialogWrapper: React.FC<Props> = ({
       <DialogTitle component={"div"} id="alert-dialog-title">
         <Typography variant="h5">{title}</Typography>
         {withCloseIcon && (
-          <IconButton size="small" onClick={() => onClose(false)}>
+          <IconButton onClick={() => onClose(false)}>
             <CloseIcon />
           </IconButton>
         )}

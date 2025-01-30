@@ -266,6 +266,9 @@ export const AppDragNDrop: React.FC<Props> = ({
                 {selectedFiles.map((file, index) => (
                   <ListItem
                     key={`file-${file.name}-${index}`}
+                    dense
+                    disablePadding
+                    divider
                     sx={{
                       bgcolor: "background.paper",
                       borderRadius: 1,
@@ -278,7 +281,6 @@ export const AppDragNDrop: React.FC<Props> = ({
                       <IconButton
                         edge="end"
                         onClick={() => handleFileDelete(index)}
-                        size="small"
                       >
                         <ClearIcon />
                       </IconButton>

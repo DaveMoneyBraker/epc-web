@@ -22,7 +22,6 @@ export const useNotification: UseNotification = () => {
           <React.Fragment>
             <IconButton
               sx={{ color: "white" }}
-              size="small"
               onClick={() => closeSnackbar(key)}
             >
               <CloseIcon />

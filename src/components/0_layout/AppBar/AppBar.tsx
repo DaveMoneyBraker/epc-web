@@ -25,7 +25,6 @@ export const AppBar: React.FC<Props> = ({ pageTitle, onClick, onLogout }) => {
       <Bar position="static">
         <Toolbar>
           <IconButton
-            size="large"
             edge="start"
             color="inherit"
             aria-label="menu"

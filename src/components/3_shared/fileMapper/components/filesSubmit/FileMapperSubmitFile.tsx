@@ -101,9 +101,7 @@ export const FileMapperSubmitFile: React.FC<Props> = ({
           <EnhancedButton onClick={handleReset}>
             Submit Another File
           </EnhancedButton>
-          <EnhancedButton size="small" onClick={handleExit}>
-            Exit
-          </EnhancedButton>
+          <EnhancedButton onClick={handleExit}>Exit</EnhancedButton>
         </Box>
       )}
     </Wrapper>
