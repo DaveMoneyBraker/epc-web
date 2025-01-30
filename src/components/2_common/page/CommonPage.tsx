@@ -113,7 +113,7 @@ export const CommonPage = <T,>({
   );
 
   return (
-    <>
+    <React.Fragment>
       <Wrapper>
         <DefaultActionsRow
           actions={filteredByPermissionActions}
@@ -158,6 +158,6 @@ export const CommonPage = <T,>({
       {actions.includes(APP_CONSTANTS.PAGE_ACTIONS.CREATE) && (
         <ItemDialog {...itemDialogProps} />
       )}
-    </>
+    </React.Fragment>
   );
 };

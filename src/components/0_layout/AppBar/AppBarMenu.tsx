@@ -26,7 +26,7 @@ export const AppBarMenu: React.FC<Props> = ({ onLogout }) => {
   const handleLogout = () => onLogout();
 
   return (
-    <>
+    <React.Fragment>
       <EnhancedButton
         variant="text"
         sx={{ color: "white" }}
@@ -67,6 +67,6 @@ export const AppBarMenu: React.FC<Props> = ({ onLogout }) => {
         </MenuItem>
       </Menu>
       <div></div>
-    </>
+    </React.Fragment>
   );
 };

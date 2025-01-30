@@ -217,7 +217,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
                 />
               );
             }
-            return <></>;
+            return <React.Fragment />;
           })}
       </Box>
     </DialogWrapper>

@@ -36,7 +36,7 @@ export const NavItem: React.FC<Props> = ({ item, index, open, onClick }) => {
   const handleClick = React.useCallback(() => onClick(index), [index, onClick]);
 
   return (
-    <>
+    <React.Fragment>
       <ListItemButton onClick={handleClick} dense={true}>
         <ListItemIcon sx={{ color: active ? mainColor : "inherit" }}>
           {item.icon}
@@ -62,6 +62,6 @@ export const NavItem: React.FC<Props> = ({ item, index, open, onClick }) => {
           <NavCategoryItem category={category} key={`${category.title}-${i}`} />
         ))}
       </Collapse>
-    </>
+    </React.Fragment>
   );
 };

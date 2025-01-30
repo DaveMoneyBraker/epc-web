@@ -82,5 +82,5 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
   //     console.groupEnd();
   //   }
   // }, [location.pathname, forbiddenRoutes, nav]);
-  return <>{children}</>;
+  return <React.Fragment>{children}</React.Fragment>;
 };

@@ -34,8 +34,8 @@ export const NoTableDataMessage: React.FC<Props> = ({
   const isFirstLoading = APP_HOOKS.useFirstPageLoading();
 
   return (
-    <>
-      {isFirstLoading && <></>}
+    <React.Fragment>
+      {isFirstLoading && <React.Fragment />}
       {!isFirstLoading && (
         <EmptyStateContainer>
           <EmptyStateIcon />
@@ -45,6 +45,6 @@ export const NoTableDataMessage: React.FC<Props> = ({
           </EmptyStateText>
         </EmptyStateContainer>
       )}
-    </>
+    </React.Fragment>
   );
 };

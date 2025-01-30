@@ -28,7 +28,7 @@ export const DefaultFilters: React.FC<Props> = ({
   const badgeContent = React.useMemo(() => filterState.length, [filterState]);
 
   return (
-    <>
+    <React.Fragment>
       <Badge badgeContent={badgeContent} color="primary">
         <EnhancedButton
           variant="outlined"
@@ -44,6 +44,6 @@ export const DefaultFilters: React.FC<Props> = ({
         filterState={filterState}
         onClose={handleDialogClose}
       />
-    </>
+    </React.Fragment>
   );
 };

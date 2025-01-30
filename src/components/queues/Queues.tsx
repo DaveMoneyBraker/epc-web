@@ -192,7 +192,7 @@ export const Queues: React.FC = () => {
   }, [data]);
 
   return (
-    <>
+    <React.Fragment>
       <Wrapper>
         <Box
           sx={{
@@ -290,6 +290,6 @@ export const Queues: React.FC = () => {
         job={selectedJob}
         onClose={handleInfoClose}
       />
-    </>
+    </React.Fragment>
   );
 };

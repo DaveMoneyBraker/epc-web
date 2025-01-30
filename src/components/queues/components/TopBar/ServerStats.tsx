@@ -42,7 +42,7 @@ export const ServerStats: React.FC<Props> = ({ stats }) => {
   );
 
   return (
-    <>
+    <React.Fragment>
       {stats && (
         <Wrapper>
           <Box>
@@ -75,6 +75,6 @@ export const ServerStats: React.FC<Props> = ({ stats }) => {
           </Box>
         </Wrapper>
       )}
-    </>
+    </React.Fragment>
   );
 };

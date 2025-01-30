@@ -46,7 +46,7 @@ export const NavCategoryItem: React.FC<Props> = ({ category }) => {
     [mainColor, navigate]
   );
   return (
-    <>
+    <React.Fragment>
       <List
         component="div"
         subheader={
@@ -70,6 +70,6 @@ export const NavCategoryItem: React.FC<Props> = ({ category }) => {
           return isSubmit ? null : getItem(child, i);
         })}
       </List>
-    </>
+    </React.Fragment>
   );
 };

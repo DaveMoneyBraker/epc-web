@@ -76,7 +76,7 @@ export const QueueJobInfoDialog: React.FC<Props> = ({ open, job, onClose }) => {
 
   const handleClose = React.useCallback(() => onClose(), [onClose]);
   return (
-    <>
+    <React.Fragment>
       {job && (
         <Dialog
           open={open}
@@ -118,6 +118,6 @@ export const QueueJobInfoDialog: React.FC<Props> = ({ open, job, onClose }) => {
           </DialogActions>
         </Dialog>
       )}
-    </>
+    </React.Fragment>
   );
 };
