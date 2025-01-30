@@ -7,6 +7,8 @@ import {
   UiElementSizeMap,
   UiFontSize,
   UiFontSizeMap,
+  UiIconFontSize,
+  UiIconFontSizeMap,
 } from "../types";
 
 export const UI_ELEMENT_SIZE: UiElementSizeMap = {
@@ -27,10 +29,22 @@ export const UI_FONT_SIZE: UiFontSizeMap = {
   LARGE: 20,
 };
 
+export const UI_ICON_FONT_SIZE: UiIconFontSizeMap = {
+  SMALL: 22,
+  MEDIUM: 26,
+  LARGE: 30,
+};
+
 export const UI_FONT_SIZE_OPTIONS: TitleValueObject<UiFontSize>[] = [
   { title: UI_ELEMENT_SIZE.SMALL, value: UI_FONT_SIZE.SMALL },
   { title: UI_ELEMENT_SIZE.MEDIUM, value: UI_FONT_SIZE.MEDIUM },
   { title: UI_ELEMENT_SIZE.LARGE, value: UI_FONT_SIZE.LARGE },
+];
+
+export const UI_ICON_FONT_SIZE_OPTIONS: TitleValueObject<UiIconFontSize>[] = [
+  { title: UI_ELEMENT_SIZE.SMALL, value: UI_ICON_FONT_SIZE.SMALL },
+  { title: UI_ELEMENT_SIZE.MEDIUM, value: UI_ICON_FONT_SIZE.MEDIUM },
+  { title: UI_ELEMENT_SIZE.LARGE, value: UI_ICON_FONT_SIZE.LARGE },
 ];
 
 export const UI_TABLE_DENSITY: UiDataGridDensityMap = {
@@ -47,7 +61,7 @@ export const UI_TABLE_DENSITY_OPTIONS: TitleValueObject<UiDataGridDensity>[] = [
 
 export const DEFAULT_UI_CONFIG: UiConfig = {
   buttonSize: UI_ELEMENT_SIZE.SMALL,
-  iconFontSize: UI_FONT_SIZE.SMALL,
+  iconFontSize: UI_ICON_FONT_SIZE.SMALL,
   tableDensity: UI_TABLE_DENSITY.COMPACT,
   tableFontSize: UI_FONT_SIZE.SMALL,
 };

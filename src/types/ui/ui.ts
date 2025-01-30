@@ -2,6 +2,7 @@ import { GridDensity } from "@mui/x-data-grid";
 
 export type UiElementSize = "small" | "medium" | "large";
 export type UiFontSize = 13 | 16 | 20;
+export type UiIconFontSize = 22 | 26 | 30;
 
 export type UiElementSizeMap = {
   [K in Uppercase<UiElementSize>]: Lowercase<UiElementSize>;
@@ -9,6 +10,10 @@ export type UiElementSizeMap = {
 
 export type UiFontSizeMap = {
   [K in Uppercase<UiElementSize>]: UiFontSize;
+};
+
+export type UiIconFontSizeMap = {
+  [K in Uppercase<UiElementSize>]: UiIconFontSize;
 };
 
 export type UiDataGridDensity = GridDensity;
@@ -22,7 +27,7 @@ export type UiDataGridFontSizeMap = {
 
 export interface UiConfig {
   buttonSize: UiElementSize;
-  iconFontSize: UiFontSize;
+  iconFontSize: UiIconFontSize;
   tableDensity: UiDataGridDensity;
   tableFontSize: UiFontSize;
 }

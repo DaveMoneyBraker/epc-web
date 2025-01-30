@@ -3,6 +3,7 @@ import { DataGrid, DataGridProps, GridPagination } from "@mui/x-data-grid";
 import React from "react";
 import { NoTableDataMessage } from "../3_shared/noTableDataMessage";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 const StyledGridPagination = styled(GridPagination)({
   "&.MuiTablePagination-root": {
@@ -13,6 +14,9 @@ const StyledGridPagination = styled(GridPagination)({
 });
 
 export const EnhancedDataGrid: React.FC<DataGridProps> = (props) => {
+  const {
+    config: { tableDensity, tableFontSize },
+  } = CONTEXT_HOOKS.useUiConfigContext();
   return (
     <DataGrid
       {...props}
@@ -21,7 +25,7 @@ export const EnhancedDataGrid: React.FC<DataGridProps> = (props) => {
       sortingMode="server"
       pageSizeOptions={APP_CONSTANTS.DEFAULT_PAGE_SIZE_OPTIONS}
       disableRowSelectionOnClick
-      density="compact"
+      density={tableDensity}
       disableColumnResize
       // DISABLE CELL AND TITLE OUTLINE ON CLICK
       sx={{
@@ -29,7 +33,7 @@ export const EnhancedDataGrid: React.FC<DataGridProps> = (props) => {
           {
             outline: "none !important",
           },
-        "&.MuiDataGrid-root .MuiDataGrid-cell": { fontSize: "13px" },
+        "&.MuiDataGrid-root .MuiDataGrid-cell": { fontSize: tableFontSize },
         "&.MuiDataGrid-root": {
           overflowX: "auto",
           overflowY: "hidden",

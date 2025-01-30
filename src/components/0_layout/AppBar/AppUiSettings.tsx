@@ -19,6 +19,10 @@ export const AppUiSettings: React.FC = () => {
     () => APP_CONSTANTS.UI_FONT_SIZE_OPTIONS,
     []
   );
+  const iconFontSizeOptions = React.useMemo(
+    () => APP_CONSTANTS.UI_ICON_FONT_SIZE_OPTIONS,
+    []
+  );
   const tableDensityOptions = React.useMemo(
     () => APP_CONSTANTS.UI_TABLE_DENSITY_OPTIONS,
     []
@@ -77,7 +81,7 @@ export const AppUiSettings: React.FC = () => {
             required
             label="Icons Font Size"
             value={state.iconFontSize}
-            options={fontSizeOptions}
+            options={iconFontSizeOptions}
             onChange={(v) => handleChange(v, "iconFontSize")}
           />
           <EnhancedSelect
