@@ -15,15 +15,10 @@ const StyledGridPagination = styled(GridPagination)({
 export const EnhancedDataGrid: React.FC<DataGridProps> = (props) => {
   return (
     <DataGrid
-      //   rows={data}
+      {...props}
       getRowId={(row) => row.id || row.email}
-      //   rowCount={rowCount}
-      //   columns={columns}
       paginationMode="server"
-      //   paginationModel={paginationModel}
-      //   onPaginationModelChange={onPaginationModelChange}
       sortingMode="server"
-      //   onSortModelChange={onSort}
       pageSizeOptions={APP_CONSTANTS.DEFAULT_PAGE_SIZE_OPTIONS}
       disableRowSelectionOnClick
       density="compact"
@@ -56,7 +51,6 @@ export const EnhancedDataGrid: React.FC<DataGridProps> = (props) => {
           <StyledGridPagination showFirstButton={true} showLastButton={true} />
         ),
       }}
-      {...props}
     />
   );
 };
