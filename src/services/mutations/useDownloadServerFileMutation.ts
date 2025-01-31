@@ -1,5 +1,5 @@
 import React from "react";
-import AppUtils from "../../utils/0_AppUtils";
+import APP_UTILS from "../../utils/0_AppUtils";
 import { useMutation } from "@tanstack/react-query";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
 import APP_HOOKS from "../../hooks/0_AppHooks";
@@ -25,7 +25,7 @@ export const useDownloadServerFileMutation = (apiUrl: string) => {
           throw new Error(errorMessage);
         }
 
-        AppUtils.downloadFile(response, filename);
+        APP_UTILS.downloadFile(response, filename);
         return response;
       } catch (error) {
         console.error("useDownloadServerFileMutation query error:", error);

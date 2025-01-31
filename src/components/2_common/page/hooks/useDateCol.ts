@@ -1,5 +1,5 @@
 import React from "react";
-import AppUtils from "../../../../utils/0_AppUtils";
+import APP_UTILS from "../../../../utils/0_AppUtils";
 import { DEFAULT_COLUMN_PROPS } from "../constants";
 
 export const useDateCol = () =>
@@ -8,7 +8,7 @@ export const useDateCol = () =>
       ...DEFAULT_COLUMN_PROPS,
       field: colName,
       headerName: colName,
-      valueFormatter: (value: number) => AppUtils.formatDate(value),
+      valueFormatter: (value: number) => APP_UTILS.formatDate(value),
     }),
     []
   );

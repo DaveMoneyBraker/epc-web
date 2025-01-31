@@ -1,17 +1,17 @@
-export interface AppNav {
+export interface AppNavigationSection {
   title: string;
   icon: React.ReactNode;
   path: string;
-  categories: AppNavCategory[];
+  categories: AppNavigationCategory[];
   freeAccess?: boolean;
 }
 
-export interface AppNavCategory {
+export interface AppNavigationCategory {
   title: string;
-  children: AppNavNode[];
+  children: AppNavigationNode[];
 }
 
-export interface AppNavNode {
+export interface AppNavigationNode {
   title: string;
   pageTitle: string;
   appRoute: string;
@@ -21,9 +21,15 @@ export interface AppNavNode {
   element: React.ReactNode;
 }
 
+export interface CurrentNavigation {
+  section: AppNavigationSection;
+  category: AppNavigationCategory;
+  node: AppNavigationNode;
+}
+
 export interface NavigationState {
-  nav: AppNav[];
-  currentNavNode: AppNavNode | null;
+  navigation: AppNavigationSection[];
+  currentNavigation: CurrentNavigation | null;
   forbiddenRoutes: string[];
 }
 

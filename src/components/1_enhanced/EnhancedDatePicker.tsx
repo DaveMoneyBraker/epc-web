@@ -1,7 +1,7 @@
 import React from "react";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import AppUtils from "../../utils/0_AppUtils";
+import APP_UTILS from "../../utils/0_AppUtils";
 
 interface Props {
   value: string;
@@ -22,7 +22,7 @@ export const EnhancedDatePicker: React.FC<Props> = ({
   // AS SOON WE DON'T - ALL TYPE CHECKS ONLY FOR IDE
   const handleChange = React.useCallback(
     (v: Dayjs | null) => {
-      const formattedValue = AppUtils.setDayjsHours(v as Dayjs);
+      const formattedValue = APP_UTILS.setDayjsHours(v as Dayjs);
       setStart(formattedValue);
       const date = formattedValue?.toDate().toISOString();
       onChange(date || "");

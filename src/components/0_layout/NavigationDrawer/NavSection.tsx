@@ -6,45 +6,50 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { NavCategoryItem } from "./NavCategoryItem";
+import { NavCategory } from "./NavCategory";
 import { useLocation } from "react-router-dom";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import APP_HOOKS from "../../../hooks/0_AppHooks";
-import { AppNav } from "../../../types";
+import { AppNavigationSection } from "../../../types";
 
 interface Props {
-  item: AppNav;
+  section: AppNavigationSection;
   index: number;
   open: boolean;
   onClick: (index: number) => void;
 }
 
-export const NavItem: React.FC<Props> = ({ item, index, open, onClick }) => {
-  const {
-    primary: { main: mainColor },
-  } = APP_HOOKS.useThemePalette();
+export const NavSection: React.FC<Props> = ({
+  section: { title, categories, icon },
+  index,
+  open,
+  onClick,
+}) => {
   const { pathname } = useLocation();
   const active = React.useMemo(
     () =>
-      item.categories.some(({ children }) =>
+      categories.some(({ children }) =>
         children.some(({ appRoute }) => appRoute === pathname)
       ),
-    [pathname, item]
+    [categories, pathname]
   );
 
   const handleClick = React.useCallback(() => onClick(index), [index, onClick]);
 
   return (
     <React.Fragment>
-      <ListItemButton onClick={handleClick} dense={true}>
-        <ListItemIcon sx={{ color: active ? mainColor : "inherit" }}>
-          {item.icon}
+      <ListItemButton onClick={handleClick} dense>
+        <ListItemIcon
+          sx={{
+            color: active ? "primary.main" : "inherit",
+          }}
+        >
+          {icon}
         </ListItemIcon>
         <ListItemText
           primaryTypographyProps={{
             fontSize: "14px",
-            color: active ? mainColor : "inherit",
+            color: active ? "primary.main" : "inherit",
           }}
         >
           <Box
@@ -52,14 +57,14 @@ export const NavItem: React.FC<Props> = ({ item, index, open, onClick }) => {
             justifyContent="space-between"
             alignItems="center"
           >
-            {item.title.toUpperCase()}
+            {title.toUpperCase()}
             {open ? <ExpandLess /> : <ExpandMore />}
           </Box>
         </ListItemText>
       </ListItemButton>
       <Collapse in={open} timeout="auto">
-        {item.categories.map((category, i) => (
-          <NavCategoryItem category={category} key={`${category.title}-${i}`} />
+        {categories.map((category, i) => (
+          <NavCategory category={category} key={`${category.title}-${i}`} />
         ))}
       </Collapse>
     </React.Fragment>

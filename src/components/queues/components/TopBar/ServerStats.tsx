@@ -1,7 +1,7 @@
 import React from "react";
 import { QueueStats as QueueStatsInterface } from "../../../../types";
 import { Box, styled, Typography } from "@mui/material";
-import AppUtils from "../../../../utils/0_AppUtils";
+import APP_UTILS from "../../../../utils/0_AppUtils";
 
 interface Props {
   stats: QueueStatsInterface | null;
@@ -33,11 +33,11 @@ export const ServerStats: React.FC<Props> = ({ stats }) => {
     [stats]
   );
   const totalMemory = React.useMemo(
-    () => (stats ? AppUtils.getFileSize(stats.total_system_memory) : "0mb"),
+    () => (stats ? APP_UTILS.getFileSize(stats.total_system_memory) : "0mb"),
     [stats]
   );
   const usedMemory = React.useMemo(
-    () => (stats ? AppUtils.getFileSize(stats.used_memory) : "0mb"),
+    () => (stats ? APP_UTILS.getFileSize(stats.used_memory) : "0mb"),
     [stats]
   );
 

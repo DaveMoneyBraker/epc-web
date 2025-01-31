@@ -1,6 +1,6 @@
 import { InputAdornment, TextField, TextFieldProps } from "@mui/material";
 import React from "react";
-import AppUtils from "../../utils/0_AppUtils";
+import APP_UTILS from "../../utils/0_AppUtils";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { EnhancedIconButton } from "./EnhancedIconButton";
 
@@ -21,7 +21,7 @@ export const EnhancePasswordInput: React.FC<Props> = ({
 
   const handleValueChange = React.useCallback(
     (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const v = AppUtils.getInputValue(event);
+      const v = APP_UTILS.getInputValue(event);
       setFirstOpen(false);
       onChange(v);
     },

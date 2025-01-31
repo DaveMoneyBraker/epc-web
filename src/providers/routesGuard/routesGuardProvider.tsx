@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AppNav, AppNavNode, ChildrenProps } from "../../types";
+import { AppNavigationNode, ChildrenProps } from "../../types";
 import { useCleanedNavigationContext } from "../navigation";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
@@ -10,15 +10,14 @@ const DEFAULT_ROUTES = ["/", "/pages", "/pages/"];
 export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { forbiddenRoutes, nav }: { forbiddenRoutes: string[]; nav: AppNav[] } =
-    useCleanedNavigationContext();
+  const { forbiddenRoutes, navigation } = useCleanedNavigationContext();
   const initialDataLoaded = APP_HOOKS.useInitialDataLoaded();
 
   // Get a random accessible navigation node
-  const getRandomNavNode = React.useCallback((): AppNavNode | null => {
-    const accessibleNodes: AppNavNode[] = [];
+  const getRandomNavNode = React.useCallback((): AppNavigationNode | null => {
+    const accessibleNodes: AppNavigationNode[] = [];
 
-    nav.forEach((section) => {
+    navigation.forEach((section) => {
       section.categories.forEach((category) => {
         category.children.forEach((node) => {
           if (!forbiddenRoutes.includes(node.appRoute)) {
@@ -34,7 +33,7 @@ export const RoutesGuardProvider: React.FC<ChildrenProps> = ({ children }) => {
 
     const randomIndex = Math.floor(Math.random() * accessibleNodes.length);
     return accessibleNodes[randomIndex];
-  }, [nav, forbiddenRoutes]);
+  }, [navigation, forbiddenRoutes]);
 
   // Handle routing logic
   React.useEffect(() => {

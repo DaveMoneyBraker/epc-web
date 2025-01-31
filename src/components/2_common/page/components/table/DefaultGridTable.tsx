@@ -1,7 +1,7 @@
 import { GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import { DefaultGridTableProps } from "../../../../../types";
-import AppUtils from "../../../../../utils/0_AppUtils";
+import APP_UTILS from "../../../../../utils/0_AppUtils";
 import { DEFAULT_COLUMN_PROPS } from "../../constants";
 import DefaultPageHooks from "../../hooks/0_GridTableHooks";
 import { EnhancedDataGrid } from "../../../../1_enhanced";
@@ -49,7 +49,7 @@ export const DefaultGridTable: React.FC<DefaultGridTableProps> = ({
         if (newColumn) {
           newColumns.push({
             ...newColumn,
-            headerName: AppUtils.camelToTitleCase(col),
+            headerName: APP_UTILS.camelToTitleCase(col),
           });
         }
       });

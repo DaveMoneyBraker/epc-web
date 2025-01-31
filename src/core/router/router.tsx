@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { useAppNav } from "./nav";
-import AppUtils from "../../utils/0_AppUtils";
+import APP_UTILS from "../../utils/0_AppUtils";
 import { ConfigureProviders } from "../../providers/ConfigureProviders";
 import { Layout } from "../../components/0_layout";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
@@ -20,7 +20,7 @@ export const useAppRouter = () => {
   return React.useMemo(
     () =>
       createBrowserRouter(
-        AppUtils.addIndexRedirects([
+        APP_UTILS.addIndexRedirects([
           // MAIN APP
           {
             path: "/",
@@ -38,7 +38,7 @@ export const useAppRouter = () => {
                       children: navNodes
                         .flat(1)
                         .map(({ appRoute, element }) => ({
-                          path: AppUtils.getLastPartOfString(appRoute),
+                          path: APP_UTILS.getLastPartOfString(appRoute),
                           element,
                         })),
                     };

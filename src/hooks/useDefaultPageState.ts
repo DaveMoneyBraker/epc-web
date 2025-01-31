@@ -55,14 +55,14 @@ export const useDefaultPageState = <T = any>(
   tableCols: string[],
   options?: AppQueryOptions<T>
 ): DefaultPageStateReturnValue<T> => {
-  const { currentNavNode } = CONTEXT_HOOKS.useCleanedNavigationContext();
+  const { currentNavigation } = CONTEXT_HOOKS.useCleanedNavigationContext();
   const queryKey = React.useMemo(
-    () => currentNavNode?.queryKey || "noQueryKey",
-    [currentNavNode]
+    () => currentNavigation?.node.queryKey || "noQueryKey",
+    [currentNavigation]
   );
   const apiUrl = React.useMemo(
-    () => currentNavNode?.apiRoute || "",
-    [currentNavNode]
+    () => currentNavigation?.node.apiRoute || "",
+    [currentNavigation]
   );
   const { loading: axiosLoading } = CONTEXT_HOOKS.useAxiosContext();
   const [selectedItem, setSelectedItem] = React.useState<T | null>(null);

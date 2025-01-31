@@ -1,15 +1,15 @@
 import React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import AppMutations from "../../services/mutations/AppMutations";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 import { AppBar } from "./AppBar/AppBar";
 import { LoadingBackdrop, OfflineBackdrop } from "./Backdrops";
-import { AppDrawer } from "./Drawer";
 import { AppSkeleton } from "./Skeleton";
 // STYLES
 import "../../styles/variables.scss";
+import { NavigationDrawer } from "./NavigationDrawer";
 
 const Wrapper = styled("div")({
   height: "100vh",
@@ -41,24 +41,34 @@ const SkeletonWrapper = styled("div")(({ theme }) => ({
 
 export const Layout: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { loading } = CONTEXT_HOOKS.useAxiosContext();
-  const { nav, currentNavNode } = CONTEXT_HOOKS.useCleanedNavigationContext();
+  const { currentNavigation } = CONTEXT_HOOKS.useCleanedNavigationContext();
   const isFirstLoading = APP_HOOKS.useFirstPageLoading();
   const online = APP_HOOKS.useIsOnline();
   const pageTitle = React.useMemo(
     () =>
-      currentNavNode?.pageTitle || (loading ? "Loading..." : "Unknown page :("),
-    [currentNavNode, loading]
+      currentNavigation?.node.pageTitle ||
+      (loading ? "Loading..." : "Unknown page :("),
+    [currentNavigation?.node, loading]
   );
   const { mutation: logoutMutation } = AppMutations.useLogoutMutation();
   const isSubmittingFile = React.useMemo(
-    () => currentNavNode?.appRoute.includes("-submit"),
-    [currentNavNode]
+    () => currentNavigation?.node?.appRoute.includes("-submit"),
+    [currentNavigation?.node]
   );
 
   const [open, setOpen] = React.useState(false);
 
-  const handleDrawerClose = () => setOpen(false);
+  const handleDrawerClose = React.useCallback(
+    (appRoute?: string) => {
+      setOpen(false);
+      if (appRoute) {
+        navigate(appRoute);
+      }
+    },
+    [navigate]
+  );
   const handleLogout = () => logoutMutation.mutate();
 
   // CLOSE MENU ON LOCATION CHANGE
@@ -80,7 +90,7 @@ export const Layout: React.FC = () => {
         onLogout={handleLogout}
       />
       {/* SIDEBAR NAVIGATION */}
-      <AppDrawer nav={nav} open={open} onClose={handleDrawerClose} />
+      <NavigationDrawer open={open} onClose={handleDrawerClose} />
       {/* CONTENT */}
       <Container>
         <ContentWrapper>

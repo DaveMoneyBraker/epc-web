@@ -8,7 +8,7 @@ import {
 } from "../../../../../../types";
 import { Box, styled } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AppUtils from "../../../../../../utils/0_AppUtils";
+import APP_UTILS from "../../../../../../utils/0_AppUtils";
 import {
   EnhancedDatePicker,
   EnhancedDateRangePicker,
@@ -55,7 +55,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
   const keyOptions: TitleValueObject[] = React.useMemo(
     () =>
       configs.map((config) => ({
-        title: AppUtils.camelCaseToString(config.key),
+        title: APP_UTILS.camelCaseToString(config.key),
         value: config.key,
       })),
     [configs]

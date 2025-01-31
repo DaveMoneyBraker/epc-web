@@ -1,17 +1,30 @@
 import React from "react";
 import { Drawer, List } from "@mui/material";
-import { NavItem } from "./NavItem";
+import { NavSection } from "./NavSection";
 import { useLocation } from "react-router-dom";
-import { AppNav } from "../../../types";
+import CONTEXT_HOOKS from "../../../providers/0_ContextHooks";
 
 interface Props {
-  nav: AppNav[];
   open: boolean;
   onClose: () => void;
 }
 
-export const AppDrawer: React.FC<Props> = ({ nav, open, onClose }) => {
+export const NavigationDrawer: React.FC<Props> = ({ open, onClose }) => {
   const { pathname } = useLocation();
+  const { navigation } = CONTEXT_HOOKS.useCleanedNavigationContext();
+  const cleanedNavigation = React.useMemo(
+    () =>
+      navigation.map((nav) => ({
+        ...nav,
+        categories: nav.categories.map((category) => ({
+          ...category,
+          children: category.children.filter(
+            (child) => !child.appRoute.includes("-submit")
+          ),
+        })),
+      })),
+    [navigation]
+  );
   const [statuses, setStatuses] = React.useState<boolean[]>([]);
   const handleClose = React.useCallback(() => onClose(), [onClose]);
 
@@ -22,8 +35,8 @@ export const AppDrawer: React.FC<Props> = ({ nav, open, onClose }) => {
   );
 
   React.useEffect(() => {
-    const newStatuses = new Array(nav.length).fill(false);
-    const actNavItemIndex = nav.findIndex(({ categories }) =>
+    const newStatuses = new Array(cleanedNavigation.length).fill(false);
+    const actNavItemIndex = cleanedNavigation.findIndex(({ categories }) =>
       categories.some(({ children }) =>
         children.some(({ appRoute }) => appRoute === pathname)
       )
@@ -34,7 +47,7 @@ export const AppDrawer: React.FC<Props> = ({ nav, open, onClose }) => {
     }
 
     setStatuses(() => [...newStatuses]);
-  }, [nav, pathname, setStatuses]);
+  }, [cleanedNavigation, pathname, setStatuses]);
 
   return (
     <Drawer
@@ -44,19 +57,19 @@ export const AppDrawer: React.FC<Props> = ({ nav, open, onClose }) => {
     >
       <List
         sx={{
-          width: 260,
-          maxWidth: 260,
+          width: 280,
+          maxWidth: 280,
           height: "100%",
           bgcolor: "background.paper",
         }}
-        component="nav"
+        component="div"
       >
-        {nav.map((navItem, i) => (
-          <NavItem
-            item={navItem}
+        {cleanedNavigation.map((section, i) => (
+          <NavSection
+            section={section}
             open={statuses[i] || false}
             index={i}
-            key={`${navItem.path}-${i}`}
+            key={`${section.path}-${i}`}
             onClick={toggleCategory}
           />
         ))}

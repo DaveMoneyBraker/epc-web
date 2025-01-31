@@ -16,7 +16,7 @@ export const NotificationsProvider: React.FC<ChildrenProps> = ({
     () =>
       styled(MaterialDesignContent)(() => ({
         "&.notistack-MuiContent-success": {
-          backgroundColor: light,
+          // backgroundColor: light,
         },
         "&.notistack-MuiContent-error": {
           backgroundColor: errorMain,

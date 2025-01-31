@@ -7,7 +7,7 @@ import {
   DefaultPageActions,
   DefaultPageProps,
 } from "../../../types";
-import AppUtils from "../../../utils/0_AppUtils";
+import APP_UTILS from "../../../utils/0_AppUtils";
 import {
   DefaultActionsRow,
   DefaultGridTable,
@@ -62,7 +62,7 @@ export const CommonPage = <T,>({
   const filteredByPermissionActions =
     APP_HOOKS.useFilteredByPermissionsActions(actions);
   const dialogTitle = React.useMemo(() => {
-    const titleCaseItemName = AppUtils.toTitleCase(itemName);
+    const titleCaseItemName = APP_UTILS.toTitleCase(itemName);
     return selectedItem
       ? `Edit ${titleCaseItemName}`
       : `Create ${titleCaseItemName}`;

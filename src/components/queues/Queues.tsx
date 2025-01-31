@@ -49,14 +49,14 @@ const mockedCounts: Omit<QueueCounts, "latest"> = {
 };
 
 export const Queues: React.FC = () => {
-  const { currentNavNode } = CONTEXT_HOOKS.useCleanedNavigationContext();
+  const { currentNavigation } = CONTEXT_HOOKS.useCleanedNavigationContext();
   const queueName = React.useMemo(
-    () => currentNavNode?.apiRoute.split("=")[1] || "",
-    [currentNavNode]
+    () => currentNavigation?.node.apiRoute.split("=")[1] || "",
+    [currentNavigation]
   );
   const apiRoute = React.useMemo(
-    () => currentNavNode?.apiRoute || "",
-    [currentNavNode]
+    () => currentNavigation?.node.apiRoute || "",
+    [currentNavigation]
   );
   const [page, setPage] = React.useState(0);
   const queryKey = React.useMemo(() => APP_CONSTANTS.QUERY_KEYS.QUEUE, []);

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, styled } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
-import AppUtils from "../../utils/0_AppUtils";
+import APP_UTILS from "../../utils/0_AppUtils";
 
 interface Props {
   startValue: string;
@@ -30,7 +30,7 @@ export const EnhancedDateRangePicker: React.FC<Props> = ({
   // AS SOON WE DON'T - ALL TYPE CHECKS ONLY FOR IDE
   const handleStartChange = React.useCallback(
     (v: Dayjs | null) => {
-      const formattedValue = AppUtils.setDayjsHours(v as Dayjs);
+      const formattedValue = APP_UTILS.setDayjsHours(v as Dayjs);
       setStart(formattedValue);
       const date = formattedValue?.toDate().toISOString();
       onChange(date || "", "value");
@@ -41,7 +41,7 @@ export const EnhancedDateRangePicker: React.FC<Props> = ({
   // SAME SITUATION AS WITH FUNCTION ABOVE
   const handleEndChange = React.useCallback(
     (v: Dayjs | null) => {
-      const formattedValue = AppUtils.setDayjsHours(v as Dayjs, 24);
+      const formattedValue = APP_UTILS.setDayjsHours(v as Dayjs, 24);
       setEnd(formattedValue);
       const date = formattedValue?.toDate().toISOString();
       onChange(date || "", "endValue");

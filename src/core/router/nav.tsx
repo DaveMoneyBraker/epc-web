@@ -1,6 +1,6 @@
 import React from "react";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
-import { AppNav, AppNavCategory } from "../../types";
+import { AppNavigationSection, AppNavigationCategory } from "../../types";
 import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import QueueIcon from "@mui/icons-material/Queue";
@@ -8,7 +8,7 @@ import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
-export const useAppNav = (): AppNav[] => {
+export const useAppNav = (): AppNavigationSection[] => {
   // SUPPRESSIONS
   const SuppressionsDomainPage = React.lazy(
     () => import("../../pages/suppressions/SuppressionDomainPage")
@@ -53,8 +53,8 @@ export const useAppNav = (): AppNav[] => {
 
   // QUEUES
   const QueuesPage = React.lazy(() => import("../../pages/queues/QueuesPage"));
-  const WorkersQueuesNav: AppNav = React.useMemo(() => {
-    const categories: AppNavCategory[] = APP_CONSTANTS.QUEUES.WORKER.map(
+  const WorkersQueuesNav: AppNavigationSection = React.useMemo(() => {
+    const categories: AppNavigationCategory[] = APP_CONSTANTS.QUEUES.WORKER.map(
       ({ title: categoryTitle, routes }) => ({
         title: categoryTitle,
         children: routes.map(({ title, value }) => ({
@@ -79,9 +79,9 @@ export const useAppNav = (): AppNav[] => {
       categories,
     };
   }, [QueuesPage]);
-  const ConsumerQueuesNav: AppNav = React.useMemo(() => {
-    const categories: AppNavCategory[] = APP_CONSTANTS.QUEUES.CONSUMER.map(
-      ({ title: categoryTitle, routes }) => ({
+  const ConsumerQueuesNav: AppNavigationSection = React.useMemo(() => {
+    const categories: AppNavigationCategory[] =
+      APP_CONSTANTS.QUEUES.CONSUMER.map(({ title: categoryTitle, routes }) => ({
         title: categoryTitle,
         children: routes.map(({ title, value }) => ({
           title,
@@ -96,8 +96,7 @@ export const useAppNav = (): AppNav[] => {
             </React.Suspense>
           ),
         })),
-      })
-    );
+      }));
     return {
       title: "Consumer Queues",
       icon: <QueueOutlinedIcon />,

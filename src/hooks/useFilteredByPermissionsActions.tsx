@@ -10,12 +10,12 @@ export type UseFilteredByPermissionsActions = (
 
 export const useFilteredByPermissionsActions: UseFilteredByPermissionsActions =
   (actions: DefaultPageActions[]) => {
-    const { currentNavNode } = CONTEXT_HOOKS.useCleanedNavigationContext();
+    const { currentNavigation } = CONTEXT_HOOKS.useCleanedNavigationContext();
     const { permissions } = CONTEXT_HOOKS.useAccountContext();
     const isAdmin = APP_HOOKS.useIsAdmin();
     const currentNavNodePermissionRoute = React.useMemo(
-      () => currentNavNode?.permissionsRoute || null,
-      [currentNavNode]
+      () => currentNavigation?.node.permissionsRoute || null,
+      [currentNavigation]
     );
     const requestedRouteUserPermissions = React.useMemo(
       () =>

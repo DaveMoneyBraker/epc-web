@@ -8,7 +8,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import AppUtils from "../../../utils/0_AppUtils";
+import APP_UTILS from "../../../utils/0_AppUtils";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
@@ -34,11 +34,7 @@ export const QueueJobsTable: React.FC<Props> = ({
   );
   return (
     <TableContainer>
-      <Table
-        sx={{ minWidth: "100%", minHeight: "100%" }}
-        size="small"
-        stickyHeader
-      >
+      <Table sx={{ minWidth: "100%" }} size="small" stickyHeader>
         <TableHead>
           <TableRow>
             {status === "failed" && <TableCell>Retry</TableCell>}
@@ -66,13 +62,13 @@ export const QueueJobsTable: React.FC<Props> = ({
                 )}
                 <TableCell>#{job.id || 0}</TableCell>
                 <TableCell>
-                  {job.timestamp && AppUtils.formatDate(job.timestamp)}
+                  {job.timestamp && APP_UTILS.formatDate(job.timestamp)}
                 </TableCell>
                 <TableCell>
-                  {job.processedOn && AppUtils.formatDate(job.processedOn)}
+                  {job.processedOn && APP_UTILS.formatDate(job.processedOn)}
                 </TableCell>
                 <TableCell>
-                  {job.finishedOn && AppUtils.formatDate(job.finishedOn)}
+                  {job.finishedOn && APP_UTILS.formatDate(job.finishedOn)}
                 </TableCell>
                 <TableCell>
                   <Typography

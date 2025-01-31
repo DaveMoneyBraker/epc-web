@@ -10,8 +10,9 @@ import { getFileSize } from "./getFileSize";
 import { formatDate } from "./formatDate";
 import { downloadFile } from "./downloadFile";
 import { addIndexRedirects } from "./addIndexRedirects";
+import { getUniqueId } from "./getUniqueId";
 
-const AppUtils = {
+const APP_UTILS = {
   getInputValue,
   checks,
   getErrorMessage,
@@ -24,6 +25,7 @@ const AppUtils = {
   formatDate,
   downloadFile,
   addIndexRedirects,
+  getUniqueId,
 } as const;
 
-export default AppUtils;
+export default APP_UTILS;
