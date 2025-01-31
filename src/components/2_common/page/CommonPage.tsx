@@ -20,7 +20,7 @@ const Wrapper = styled("div")(() => ({
   maxHeight: "var(--content-height)",
   minHeight: "var(--content-height)",
   background: "var(--test)",
-  padding: "7px 15px 0px 15px",
+  // padding: "7px 15px 0px 15px",
   display: "flex",
   flexDirection: "column",
   overflow: "hidden",

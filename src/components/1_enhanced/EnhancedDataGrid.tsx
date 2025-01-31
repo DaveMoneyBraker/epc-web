@@ -28,7 +28,13 @@ export const EnhancedDataGrid: React.FC<DataGridProps> = (props) => {
       density={tableDensity}
       disableColumnResize
       // DISABLE CELL AND TITLE OUTLINE ON CLICK
-      sx={{
+      sx={(theme) => ({
+        border: "none",
+        p: 1,
+        "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+          background: theme.palette.divider, // Light gray background
+          borderBottom: "none",
+        },
         "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within, &.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within":
           {
             outline: "none !important",
@@ -44,7 +50,7 @@ export const EnhancedDataGrid: React.FC<DataGridProps> = (props) => {
           maxHeight: "70px",
           overflow: "hidden",
         },
-      }}
+      })}
       slots={{
         noRowsOverlay: () => (
           <Stack height="100%" alignItems="center" justifyContent="center">

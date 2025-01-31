@@ -18,7 +18,7 @@ const Wrapper = styled("div")(() => ({
   flexWrap: "wrap",
   flexDirection: "row",
   justifyContent: "space-between",
-  padding: "5px 0",
+  // padding: "15px",
   gap: "15px",
 }));
 
@@ -93,7 +93,7 @@ export const DefaultActionsRow: React.FC<Props> = ({
   );
 
   return (
-    <Wrapper>
+    <Wrapper sx={{ pt: 2, pb: 2, pl: 1, pr: 1 }}>
       <ElWrapper>
         {create && (
           <EnhancedButton onClick={handleCreateBtnClicked}>
