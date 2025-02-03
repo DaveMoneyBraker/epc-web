@@ -50,6 +50,7 @@ import {
   UseDefaultItemConfigDialogState,
 } from "./useDefaultItemConfigDialogState";
 import { useItemValidation, UseItemValidation } from "./useItemValidation";
+import { useItemDialogState, UseItemDialogState } from "./useItemDialogState";
 
 interface AppHooksInterface {
   // LOADING API URL FROM ASSETS FOLDER
@@ -96,9 +97,12 @@ interface AppHooksInterface {
   useDefaultItemConfigDialogState: UseDefaultItemConfigDialogState;
   // DEFAULT DIALOG ITEM VALIDATION HOOK - RETURN ERROR STATE AND VALIDATE FUNCTION
   useItemValidation: UseItemValidation;
+  // CREATE DEFAULT DIALOG ITEM STATE - STATE, ERROR_STATE, BODY, INPUT_CHANGE_HANDLER, VALIDATE_FN
+  useItemDialogState: UseItemDialogState;
 }
 
 const APP_HOOKS: AppHooksInterface = {
+  useItemDialogState,
   useNotification,
   useLocalStorage,
   useApiUrlLoader,
