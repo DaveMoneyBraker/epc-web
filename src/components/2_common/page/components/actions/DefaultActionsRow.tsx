@@ -8,8 +8,8 @@ import {
 } from "../../../../../types";
 import { EnhancedButton } from "../../../../1_enhanced";
 import { DebounceSearch } from "../../../../3_shared/debounceSearch";
-import { DefaultFilters } from "./filters";
 import APP_CONSTANTS from "../../../../../constants/0_AppConstants";
+import { DefaultFilters } from "../../../../3_shared/filters";
 
 const Wrapper = styled("div")(() => ({
   width: "100%",

@@ -5,18 +5,18 @@ import {
   FilterValue,
   ItemConfiguration,
   TitleValueObject,
-} from "../../../../../../types";
+} from "../../../types";
 import { Box, styled } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import APP_UTILS from "../../../../../../utils/0_AppUtils";
+import APP_UTILS from "../../../utils/0_AppUtils";
 import {
   EnhancedDatePicker,
   EnhancedDateRangePicker,
   EnhancedIconButton,
   EnhancedSelect,
   EnhancedTextField,
-} from "../../../../../1_enhanced";
-import APP_CONSTANTS from "../../../../../../constants/0_AppConstants";
+} from "../../1_enhanced";
+import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 interface Props {
   filter: FilterValue;
