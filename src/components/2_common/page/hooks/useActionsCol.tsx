@@ -1,5 +1,5 @@
 import React from "react";
-import { GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
 import { DefaultGridTableProps, DefaultPageActions } from "../../../../types";
 import { ListItemText, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -7,10 +7,12 @@ import { DEFAULT_COLUMN_PROPS } from "../constants";
 import APP_CONSTANTS from "../../../../constants/0_AppConstants";
 import { EnhancedIconButton } from "../../../1_enhanced";
 
+type UseActionsColValue = () => GridColDef;
+
 export const useActionsCol = ({
   onEvent,
   actions = [],
-}: Pick<DefaultGridTableProps, "onEvent" | "actions">) => {
+}: Pick<DefaultGridTableProps, "onEvent" | "actions">): UseActionsColValue => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openMenuId, setOpenMenuId] = React.useState<GridRowId | null>(null);
   const filteredActions = React.useMemo(
@@ -103,6 +105,7 @@ export const useActionsCol = ({
       sortable: false,
       flex: 0.1,
       minWidth: 100,
+      align: "right",
       renderCell: renderActionCol,
     }),
     [renderActionCol]
