@@ -19,7 +19,7 @@ export const EnhancedTextField: React.FC<Props> = ({
   required = true,
   disabled = false,
   error = false,
-  helperText = "",
+  helperText: propsHelperText = "",
   onChange,
   ...props
 }) => {
@@ -36,6 +36,12 @@ export const EnhancedTextField: React.FC<Props> = ({
     () => !firstOpen && required && !value,
     [firstOpen, required, value]
   );
+
+  const helperText = React.useMemo(() => {
+    if (propsHelperText && error) return propsHelperText;
+    if (requiredError) return "This field is required";
+    return "";
+  }, [error, propsHelperText, requiredError]);
 
   return (
     <TextField

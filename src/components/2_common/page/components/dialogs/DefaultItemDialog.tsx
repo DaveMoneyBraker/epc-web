@@ -2,20 +2,20 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import {
   DefaultDialogItemComponentProps,
+  ErrorState,
   ItemConfiguration,
   ObjectLiteral,
 } from "../../../../../types";
 import { DialogWrapper } from "../../../../3_shared/dialogs";
-import { EnhancedSelect, EnhancedTextField } from "../../../../1_enhanced";
+import {
+  EnhancedSelect,
+  EnhancedTextField,
+  EnhancedTextFieldWithErrors,
+} from "../../../../1_enhanced";
 import APP_CONSTANTS from "../../../../../constants/0_AppConstants";
 
 interface DialogState extends ItemConfiguration {
   value: unknown;
-}
-
-interface ErrorState {
-  key: string;
-  errorMessages: string[];
 }
 
 export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
@@ -173,37 +173,18 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
                 itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.STRING ||
                 itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.NUMBER
               ) {
+                const err = errorState.find((e) => e.key === key);
                 return (
-                  <div key={`${key}-${itemType}-${i}`}>
-                    <EnhancedTextField
-                      label={key}
-                      value={value as string}
-                      onChange={(v) => handleInputChanges(v, i)}
-                      fullWidth
-                      type={itemType}
-                      required={required}
-                    />
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "1px",
-                      }}
-                    >
-                      {errorState
-                        .filter((err) => err.key === key)
-                        .map(({ errorMessages }) =>
-                          errorMessages.map((errorMessage, errorI) => (
-                            <Typography
-                              variant="inputError"
-                              key={`inputError-${errorI}-${i}`}
-                            >
-                              {errorMessage}
-                            </Typography>
-                          ))
-                        )}
-                    </Box>
-                  </div>
+                  <EnhancedTextFieldWithErrors
+                    key={`${key}-${itemType}-${i}`}
+                    label={key}
+                    value={value as string}
+                    onChange={(v) => handleInputChanges(v, i)}
+                    fullWidth
+                    type={itemType}
+                    required={required}
+                    errorState={err}
+                  />
                 );
               }
               // FOR ENUM TYPE WE USE SELECT_INPUT ELEMENT
