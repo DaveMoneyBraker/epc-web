@@ -15,7 +15,9 @@ export const useDefaultItemConfigDialogState: UseDefaultItemConfigDialogState =
           value: selectedItem
             ? selectedItem[config.key as keyof T]
             : config.selectOptions
-            ? config.selectOptions[0].value
+            ? config.selectOptions.length
+              ? config.selectOptions[0].value
+              : ""
             : "",
         })),
       ],

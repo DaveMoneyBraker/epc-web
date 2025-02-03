@@ -1,16 +1,16 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { PaginationResponse, QueryProps } from "../../types";
+import { QueryProps } from "../../types";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
-import AppResponseValidators from "../../validators/response/0_ResponseValidators";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
-export const useArrayQuery = <T = unknown>(props: QueryProps<T>) => {
+export const useArrayQuery = <T = unknown>(
+  props: Omit<QueryProps<T>, "query">
+) => {
   const {
     queryKey,
     apiUrl,
-    query,
     enabled = true,
     options: { transform, onSuccess, onError } = {},
   } = props;
@@ -21,7 +21,6 @@ export const useArrayQuery = <T = unknown>(props: QueryProps<T>) => {
     () => Boolean(queryKey) && Boolean(apiUrl) && enabled,
     [apiUrl, enabled, queryKey]
   );
-  const [totalItems, setTotalItems] = React.useState(0);
   const [isInitialLoad, setIsInitialLoad] = React.useState(true);
 
   const queryFn = React.useCallback(async () => {
@@ -29,26 +28,21 @@ export const useArrayQuery = <T = unknown>(props: QueryProps<T>) => {
       throw new Error(APP_CONSTANTS.APP_ERRORS.NO_AXIOS_INSTANCE);
     }
     try {
-      const response = await axios?.get<PaginationResponse<T>>(apiUrl + query);
-      const errorMessage = axiosResponseValidator(response, [
-        AppResponseValidators.validatePaginationResponse,
-      ]);
+      const response = await axios?.get<T[]>(apiUrl);
+      const errorMessage = axiosResponseValidator(response);
 
       if (errorMessage) {
         throw new Error(errorMessage);
       }
 
-      const { items, totalItems: total } = response?.data;
-
-      setTotalItems(total);
-      onSuccess && onSuccess(items);
-      return items;
+      onSuccess && onSuccess(response?.data);
+      return response?.data;
     } catch (error: any) {
-      console.error("Pagination query error:", error);
+      console.error("Array query error:", error);
       onError && onError(error);
       throw error;
     }
-  }, [axios, apiUrl, query, axiosResponseValidator, onSuccess, onError]);
+  }, [axios, apiUrl, axiosResponseValidator, onSuccess, onError]);
 
   const data = useQuery<T[]>({
     queryKey: [queryKey],
@@ -75,7 +69,7 @@ export const useArrayQuery = <T = unknown>(props: QueryProps<T>) => {
     }, 0);
 
     return () => clearTimeout(timeoutId);
-  }, [query, queryKey, client]);
+  }, [queryKey, client]);
 
-  return { ...data, totalItems, isInitialLoad };
+  return { ...data, isInitialLoad };
 };

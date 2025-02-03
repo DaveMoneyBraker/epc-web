@@ -8,6 +8,7 @@ import {
 } from "../types";
 import { useDefaultItemConfigDialogState } from "./useDefaultItemConfigDialogState";
 import { useItemValidation } from "./useItemValidation";
+import APP_CONSTANTS from "../constants/0_AppConstants";
 
 interface UseItemDialogStateReturnValue<T> {
   state: ItemDialogValue[];
@@ -41,7 +42,10 @@ export const useItemDialogState: UseItemDialogState = <T extends ObjectLiteral>(
 
     state.forEach((v) => {
       if (keys.includes(v.key)) {
-        value[v.key as keyof T] = v.value as T[keyof T];
+        value[v.key as keyof T] =
+          v.itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.NUMBER
+            ? (Number(v.value) as T[keyof T])
+            : (v.value as T[keyof T]);
       }
     });
 
