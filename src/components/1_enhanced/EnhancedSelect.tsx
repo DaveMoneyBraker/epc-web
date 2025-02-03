@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { TitleValueObject } from "../../types";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 type Props<T = string> = Omit<SelectProps, "onChange"> & {
   value: T;
@@ -25,6 +26,9 @@ export const EnhancedSelect = <T,>({
   onChange,
   ...props
 }: Props<T>) => {
+  const {
+    config: { inputSize },
+  } = CONTEXT_HOOKS.useUiConfigContext();
   const handleChange = React.useCallback(
     (event: any) => {
       const v = event.target.value as string;
@@ -42,6 +46,7 @@ export const EnhancedSelect = <T,>({
         label={label}
         {...props}
         onChange={handleChange}
+        size={inputSize}
       >
         {options &&
           options.map((v, i) => (

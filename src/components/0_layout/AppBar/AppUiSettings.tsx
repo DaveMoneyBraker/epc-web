@@ -27,6 +27,10 @@ export const AppUiSettings: React.FC = () => {
     () => APP_CONSTANTS.UI_TABLE_DENSITY_OPTIONS,
     []
   );
+  const inputSizeOption = React.useMemo(
+    () => APP_CONSTANTS.UI_INPUT_SIZE_OPTIONS,
+    []
+  );
   const toggleOpen = React.useCallback(() => setOpen((prev) => !prev), []);
   const handleClose = React.useCallback(
     (confirm: boolean) => {
@@ -76,6 +80,13 @@ export const AppUiSettings: React.FC = () => {
             value={state.buttonSize}
             options={elementSizeOptions}
             onChange={(v) => handleChange(v, "buttonSize")}
+          />
+          <EnhancedSelect
+            required
+            label="Inputs Size"
+            value={state.inputSize}
+            options={inputSizeOption}
+            onChange={(v) => handleChange(v, "inputSize")}
           />
           <EnhancedSelect<number>
             required

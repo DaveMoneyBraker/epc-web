@@ -2,6 +2,7 @@ import React from "react";
 import { TextField, TextFieldProps } from "@mui/material";
 import APP_HOOKS from "../../hooks/0_AppHooks";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 type Props = Omit<TextFieldProps, "onChange"> & {
   width?: string;
@@ -22,6 +23,9 @@ export const EnhancedTextField: React.FC<Props> = ({
   onChange,
   ...props
 }) => {
+  const {
+    config: { inputSize },
+  } = CONTEXT_HOOKS.useUiConfigContext();
   const [firstOpen, setFirstOpen] = React.useState(true);
   const handler = APP_HOOKS.useInputChangeHandler(onChange);
   const handleInputChange = React.useCallback(
@@ -56,6 +60,7 @@ export const EnhancedTextField: React.FC<Props> = ({
       fullWidth={fullWidth}
       disabled={disabled}
       type={type}
+      size={inputSize}
       {...props}
     />
   );

@@ -28,6 +28,7 @@ export const UiConfigProvider: React.FC<ChildrenProps> = ({ children }) => {
         APP_CONSTANTS.DEFAULT_UI_CONFIG
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const value = React.useMemo<UiConfigContextValue>(

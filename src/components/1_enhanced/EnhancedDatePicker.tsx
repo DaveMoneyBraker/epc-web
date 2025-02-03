@@ -2,6 +2,7 @@ import React from "react";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import APP_UTILS from "../../utils/0_AppUtils";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 interface Props {
   value: string;
@@ -14,6 +15,9 @@ export const EnhancedDatePicker: React.FC<Props> = ({
   label = "Date",
   onChange,
 }) => {
+  const {
+    config: { inputSize },
+  } = CONTEXT_HOOKS.useUiConfigContext();
   const [start, setStart] = React.useState<Dayjs | null>(
     dayjs(new Date(value))
   );
@@ -36,6 +40,11 @@ export const EnhancedDatePicker: React.FC<Props> = ({
       value={start}
       onChange={handleChange}
       sx={{ width: "100%" }}
+      slotProps={{
+        textField: {
+          size: inputSize,
+        },
+      }}
     />
   );
 };

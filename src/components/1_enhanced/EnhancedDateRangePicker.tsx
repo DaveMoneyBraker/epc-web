@@ -3,6 +3,7 @@ import { Box, styled } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import APP_UTILS from "../../utils/0_AppUtils";
+import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 interface Props {
   startValue: string;
@@ -23,6 +24,9 @@ export const EnhancedDateRangePicker: React.FC<Props> = ({
   endValue,
   onChange,
 }) => {
+  const {
+    config: { inputSize },
+  } = CONTEXT_HOOKS.useUiConfigContext();
   const [start, setStart] = React.useState<Dayjs>(dayjs(new Date(startValue)));
   const [end, setEnd] = React.useState<Dayjs>(dayjs(new Date(endValue)));
 
@@ -56,12 +60,22 @@ export const EnhancedDateRangePicker: React.FC<Props> = ({
         value={start}
         onChange={handleStartChange}
         maxDate={end}
+        slotProps={{
+          textField: {
+            size: inputSize,
+          },
+        }}
       />
       <DatePicker
         label="End"
         value={end}
         onChange={handleEndChange}
         minDate={start}
+        slotProps={{
+          textField: {
+            size: inputSize,
+          },
+        }}
       />
     </Wrapper>
   );

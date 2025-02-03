@@ -9,6 +9,8 @@ import {
   UiFontSizeMap,
   UiIconFontSize,
   UiIconFontSizeMap,
+  UiInputSize,
+  UiInputSizeMap,
 } from "../types";
 
 export const UI_ELEMENT_SIZE: UiElementSizeMap = {
@@ -17,10 +19,20 @@ export const UI_ELEMENT_SIZE: UiElementSizeMap = {
   LARGE: "large",
 };
 
+export const UI_INPUT_SIZE: UiInputSizeMap = {
+  SMALL: "small",
+  MEDIUM: "medium",
+};
+
 export const UI_ELEMENT_SIZE_OPTIONS: TitleValueObject<UiElementSize>[] = [
   { title: UI_ELEMENT_SIZE.SMALL, value: UI_ELEMENT_SIZE.SMALL },
   { title: UI_ELEMENT_SIZE.MEDIUM, value: UI_ELEMENT_SIZE.MEDIUM },
   { title: UI_ELEMENT_SIZE.LARGE, value: UI_ELEMENT_SIZE.LARGE },
+];
+
+export const UI_INPUT_SIZE_OPTIONS: TitleValueObject<UiInputSize>[] = [
+  { title: UI_INPUT_SIZE.SMALL, value: UI_INPUT_SIZE.SMALL },
+  { title: UI_INPUT_SIZE.MEDIUM, value: UI_INPUT_SIZE.MEDIUM },
 ];
 
 export const UI_FONT_SIZE: UiFontSizeMap = {
@@ -64,4 +76,5 @@ export const DEFAULT_UI_CONFIG: UiConfig = {
   iconFontSize: UI_ICON_FONT_SIZE.SMALL,
   tableDensity: UI_TABLE_DENSITY.COMPACT,
   tableFontSize: UI_FONT_SIZE.SMALL,
+  inputSize: UI_INPUT_SIZE.MEDIUM,
 };
