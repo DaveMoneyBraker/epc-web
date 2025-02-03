@@ -1,7 +1,8 @@
 import React from "react";
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
+import { EnhancedTextField } from "../../1_enhanced";
 
 interface Props {
   onChange: (value: string) => void;
@@ -15,15 +16,14 @@ export const DebounceSearch: React.FC<Props> = ({
   const [value, setValue] = React.useState<string>("");
   APP_HOOKS.useDebounce<string>(onChange, value);
 
-  const handleChange = APP_HOOKS.useInputChangeHandler(setValue);
-
   return (
-    <TextField
+    <EnhancedTextField
       variant="standard"
       value={value}
+      required={false}
       id="debounce_search_input"
       placeholder={itemName}
-      onChange={handleChange}
+      onChange={setValue}
       slotProps={{
         input: {
           startAdornment: (

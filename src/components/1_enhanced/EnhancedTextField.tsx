@@ -4,7 +4,6 @@ import APP_HOOKS from "../../hooks/0_AppHooks";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
 
 type Props = Omit<TextFieldProps, "onChange"> & {
-  label?: string;
   width?: string;
   onChange: (v: string) => void;
 };
@@ -12,7 +11,6 @@ type Props = Omit<TextFieldProps, "onChange"> & {
 export const EnhancedTextField: React.FC<Props> = ({
   value,
   placeholder = "value",
-  label = "Value",
   type = "string",
   fullWidth = true,
   width = fullWidth ? "100%" : "250px",
@@ -51,9 +49,8 @@ export const EnhancedTextField: React.FC<Props> = ({
       required={required}
       helperText={helperText}
       sx={{ width }}
-      id={`select-input-id-${label.trim()}`}
+      id={`select-input-id-${placeholder.trim()}`}
       value={value}
-      label={label}
       placeholder={placeholder}
       onChange={handleInputChange}
       fullWidth={fullWidth}
