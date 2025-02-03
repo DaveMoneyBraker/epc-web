@@ -15,6 +15,11 @@ export const API_ROUTES = {
   SUPPRESSION_MX: "suppression/mx",
   SUPPRESSION_MASK: "suppression/mask",
   SUPPRESSION_PROD_FILES: "suppression/email-without-esp/file",
+
+  //PARTNERS
+  MAILER_PARTNER: "mailer-partner",
+  MAILER_PARTNER_PROXY: "mailer-partner-proxy",
+
   // QUEUES
   QUEUE_JOB: "queue/job",
   QUEUE: "queue",

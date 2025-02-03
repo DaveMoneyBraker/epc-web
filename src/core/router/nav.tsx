@@ -7,6 +7,7 @@ import QueueIcon from "@mui/icons-material/Queue";
 import QueueOutlinedIcon from "@mui/icons-material/QueueOutlined";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import GroupIcon from "@mui/icons-material/Group";
 
 export const useAppNav = (): AppNavigationSection[] => {
   // SUPPRESSIONS
@@ -104,6 +105,14 @@ export const useAppNav = (): AppNavigationSection[] => {
       categories,
     };
   }, [QueuesPage]);
+
+  // PARTNERS
+  const MailerPartnersPage = React.lazy(
+    () => import("../../pages/partners/MailerPartnersPage")
+  );
+  const MailerPartnersProxyPage = React.lazy(
+    () => import("../../pages/partners/MailerPartnerProxy")
+  );
 
   return React.useMemo(
     () => [
@@ -262,6 +271,47 @@ export const useAppNav = (): AppNavigationSection[] => {
           },
         ],
       },
+      // PARTNERS
+      {
+        title: "PARTNERS",
+        icon: <GroupIcon />,
+        path: "partners",
+        categories: [
+          {
+            title: "MAIN",
+            children: [
+              {
+                title: APP_CONSTANTS.PAGE_TITLES.MAILER_PARTNERS,
+                pageTitle: APP_CONSTANTS.PAGE_TITLES.MAILER_PARTNERS,
+                apiRoute: APP_CONSTANTS.API_ROUTES.MAILER_PARTNER,
+                appRoute: APP_CONSTANTS.APP_ROUTES.MAILER_PARTNER,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.MAILER_PARTNER,
+                permissionsRoute:
+                  APP_CONSTANTS.PERMISSION_ROUTES.MAILER_PARTNER,
+                element: (
+                  <React.Suspense>
+                    <MailerPartnersPage />
+                  </React.Suspense>
+                ),
+              },
+              {
+                title: APP_CONSTANTS.PAGE_TITLES.MAILER_PARTNER_PROXY,
+                pageTitle: APP_CONSTANTS.PAGE_TITLES.MAILER_PARTNER_PROXY,
+                apiRoute: APP_CONSTANTS.API_ROUTES.MAILER_PARTNER_PROXY,
+                appRoute: APP_CONSTANTS.APP_ROUTES.MAILER_PARTNER_PROXY,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.MAILER_PARTNER_PROXY,
+                permissionsRoute:
+                  APP_CONSTANTS.PERMISSION_ROUTES.MAILER_PARTNER_PROXY,
+                element: (
+                  <React.Suspense>
+                    <MailerPartnersProxyPage />
+                  </React.Suspense>
+                ),
+              },
+            ],
+          },
+        ],
+      },
       // DNSBL
       {
         title: "DOMAIN LOOKUP",
@@ -337,6 +387,8 @@ export const useAppNav = (): AppNavigationSection[] => {
       ConsumerQueuesNav,
       GoogleCloudFilesPage,
       InfoPage,
+      MailerPartnersPage,
+      MailerPartnersProxyPage,
       SubmitBlacklistDomainsPage,
       SuppressionMaskPage,
       SuppressionSubmitProdFilesPage,

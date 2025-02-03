@@ -15,6 +15,10 @@ export const APP_ROUTES = {
   // DNSBL
   BLACKLIST_DOMAIN: "/pages/dnsbl/blacklist-domain",
 
+  //PARTNERS
+  MAILER_PARTNER: "/pages/partners/mailer-partner",
+  MAILER_PARTNER_PROXY: "/pages/partners/mailer-partner-proxy",
+
   // QUEUE
   QUEUE: "/pages/queue/",
 

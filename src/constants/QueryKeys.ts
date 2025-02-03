@@ -10,8 +10,11 @@ export const QUERY_KEYS = {
   SUPPRESSION_MASK: "suppressionMask",
   // DNSBL
   BLACKLIST_DOMAIN: "dnsblBlacklistDomain",
+  //PARTNERS
+  MAILER_PARTNER: "mailerPartner",
+  MAILER_PARTNER_PROXY: "mailerPartnerProxy",
   // FILES
   G_C_FILE: "filesGCFile",
   // QUEUES
   QUEUE: "queue",
-};
+} as const;

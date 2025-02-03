@@ -9,6 +9,14 @@ export const PERMISSION_ROUTES: { [key: string]: PermissionRoute } = {
   ALLOW_ALL: {
     default: "allow-all",
   },
+  // PARTNERS
+  MAILER_PARTNER: {
+    default: "email-validation:mailer-partner",
+    file: "email-validation:mailer-partner:file",
+  },
+  MAILER_PARTNER_PROXY: {
+    default: "email-validation:mailer-partner:proxy",
+  },
   // SUPPRESSIONS
   SUPPRESSION_EMAIL: {
     default: "email-validation:suppression-email",

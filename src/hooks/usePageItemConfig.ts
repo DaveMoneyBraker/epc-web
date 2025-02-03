@@ -23,12 +23,12 @@ export const usePageItemConfig: UsePageItemConfig = ({
     () => [
       ...columnConfigs,
       {
-        key: "createdAt",
-        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.DATE,
-      },
-      {
         key: "updatedAt",
         skipFilter: true,
+      },
+      {
+        key: "createdAt",
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.DATE,
       },
     ],
     [columnConfigs]

@@ -8,6 +8,9 @@ export const PAGE_TITLES = {
   SUPPRESSION_DOMAIN: "Suppression Domains",
   SUPPRESSION_MX: "Suppression Mx",
   SUPPRESSION_MASK: "Suppression Mask",
+  // PARTNERS
+  MAILER_PARTNERS: "Mailer Partners",
+  MAILER_PARTNER_PROXY: "Mailer Partners Proxy",
   // DNSBL
   BLACKLIST_DOMAIN: "Black List Domains",
   // FILES

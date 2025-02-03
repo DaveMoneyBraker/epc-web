@@ -23,6 +23,7 @@ import { ITEM_VALIDATION_ERRORS } from "./ItemValidationErrors";
 import * as FILTERS from "./Filters";
 import * as DNSBL from "./Dnsbl";
 import * as UI from "./UI";
+import * as SSL_PROTOCOL from "./SslProtocol";
 
 const APP_CONSTANTS = {
   PAGE_TITLES,
@@ -50,6 +51,7 @@ const APP_CONSTANTS = {
   ...FILTERS,
   ...DNSBL,
   ...UI,
+  ...SSL_PROTOCOL,
 } as const;
 
 export default APP_CONSTANTS;
