@@ -21,12 +21,12 @@ export const SuppressionsMx: React.FC = () => {
       {
         keys: ["mx"],
         validatorFn: AppInputValidators.validateSimpleDomain,
-        errorMessage: "Must be valid domain name (domain.com)",
+        errorMessage: APP_CONSTANTS.ITEM_VALIDATION_ERRORS.SIMPLE_DOMAIN,
       },
       {
         keys: ["mx"],
         validatorFn: AppInputValidators.validateDefaultISPDomain,
-        errorMessage: "Can not be default isp (e.g. gmail, yahoo etc.)",
+        errorMessage: APP_CONSTANTS.ITEM_VALIDATION_ERRORS.DEFAULT_ISP_DOMAIN,
       },
     ],
   });

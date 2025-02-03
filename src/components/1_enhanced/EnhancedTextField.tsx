@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField, TextFieldProps } from "@mui/material";
 import APP_HOOKS from "../../hooks/0_AppHooks";
+import APP_CONSTANTS from "../../constants/0_AppConstants";
 
 type Props = Omit<TextFieldProps, "onChange"> & {
   label?: string;
@@ -39,7 +40,7 @@ export const EnhancedTextField: React.FC<Props> = ({
 
   const helperText = React.useMemo(() => {
     if (propsHelperText && error) return propsHelperText;
-    if (requiredError) return "This field is required";
+    if (requiredError) return APP_CONSTANTS.ITEM_VALIDATION_ERRORS.REQUIRED;
     return "";
   }, [error, propsHelperText, requiredError]);
 

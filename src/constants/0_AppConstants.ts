@@ -19,6 +19,7 @@ import { PAGES_INFO } from "./Info";
 import { SUPPRESSION_TYPES, SUPPRESSIONS_TYPE_OPTIONS } from "./Suppressions";
 import { PAGE_ACTIONS } from "./PageActions";
 import { QUERY_KEYS } from "./QueryKeys";
+import { ITEM_VALIDATION_ERRORS } from "./ItemValidationErrors";
 import * as FILTERS from "./Filters";
 import * as DNSBL from "./Dnsbl";
 import * as UI from "./UI";
@@ -45,6 +46,7 @@ const APP_CONSTANTS = {
   SUPPRESSIONS_TYPE_OPTIONS,
   PAGE_ACTIONS,
   QUERY_KEYS,
+  ITEM_VALIDATION_ERRORS,
   ...FILTERS,
   ...DNSBL,
   ...UI,
