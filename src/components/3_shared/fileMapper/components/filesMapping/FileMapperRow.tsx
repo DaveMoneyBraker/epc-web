@@ -39,7 +39,7 @@ const HeaderWrapper = styled(Box)(() => ({
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "5px",
+  padding: "5px 0",
 }));
 
 const HeaderContainer = styled(Box)(() => ({
@@ -53,7 +53,7 @@ const HeaderContainer = styled(Box)(() => ({
 const ColumnsWrapper = styled(Box)(() => ({
   display: "flex",
   flexDirection: "row",
-  overflowX: "scroll",
+  overflowX: "auto",
 }));
 
 export const FileMapperRow: React.FC<Props> = ({
@@ -145,7 +145,7 @@ export const FileMapperRow: React.FC<Props> = ({
         </Typography>
       </Box>
     );
-  }, [preview, requiredHeaders]);
+  }, [fileMapped, preview.columns, requiredHeaders]);
 
   const handleColumnHeaderChange = React.useCallback(
     (value: string, columnIndex: number) =>

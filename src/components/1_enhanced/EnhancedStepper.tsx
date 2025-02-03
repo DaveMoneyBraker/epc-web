@@ -51,14 +51,15 @@ export const EnhancedStepper: React.FC<Props> = ({ configs, ...props }) => {
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          overflowY: "hidden",
+          overflow: "hidden",
         }}
       >
         <Box
           sx={{
             display: "flex",
             flex: 1,
-            overflowY: "scroll",
+            overflowY: "auto",
+            overflowX: "hidden",
           }}
         >
           {steps[activeStep].element}

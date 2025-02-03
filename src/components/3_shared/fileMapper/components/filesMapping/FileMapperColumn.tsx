@@ -96,7 +96,7 @@ export const FileMapperColumn: React.FC<Props> = ({
         />
         <List
           disablePadding
-          sx={{ height: "140px", maxHeight: "140px", overflowY: "scroll" }}
+          sx={{ height: "140px", maxHeight: "140px", overflowY: "auto" }}
         >
           {data &&
             data.map((row, i) => (

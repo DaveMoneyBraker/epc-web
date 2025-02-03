@@ -18,10 +18,12 @@ const Wrapper = styled(Box)(() => ({
   flexDirection: "column",
 }));
 
-const InputsWrapper = styled(Box)(() => ({
+const InputsWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: "10px",
+  padding: "0 0 10px 0",
+  borderBottom: `1px solid ${theme.palette.divider}`,
 }));
 
 const RowsWrapper = styled(Box)(() => ({
