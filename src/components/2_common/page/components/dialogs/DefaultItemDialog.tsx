@@ -1,22 +1,18 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import {
   DefaultDialogItemComponentProps,
   ErrorState,
-  ItemConfiguration,
+  ItemDialogState,
   ObjectLiteral,
 } from "../../../../../types";
 import { DialogWrapper } from "../../../../3_shared/dialogs";
 import {
   EnhancedSelect,
-  EnhancedTextField,
   EnhancedTextFieldWithErrors,
 } from "../../../../1_enhanced";
 import APP_CONSTANTS from "../../../../../constants/0_AppConstants";
-
-interface DialogState extends ItemConfiguration {
-  value: unknown;
-}
+import APP_HOOKS from "../../../../../hooks/0_AppHooks";
 
 export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
   open,
@@ -26,7 +22,11 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
   validators,
   onClose,
 }) => {
-  const [state, setState] = React.useState<DialogState[]>([
+  const defaultState = APP_HOOKS.useDefaultItemConfigDialogState(
+    itemConfigs,
+    selectedItem
+  );
+  const [state, setState] = React.useState<ItemDialogState[]>([
     ...itemConfigs.map((config) => ({
       ...config,
       value: config.selectOptions ? config.selectOptions[0].value : "",
@@ -42,7 +42,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
 
   const isValidationFunctionsPassed = React.useCallback((): boolean => {
     let isPassed = true;
-    state.forEach(({ value, key }, currentStateIndex) => {
+    state.forEach(({ value, key }) => {
       if (validators && validators.length > 0) {
         const relatedValidators = validators.filter((validator) =>
           validator.keys.includes(key)
@@ -94,29 +94,9 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
     [keys, state, selectedItem, isValidationFunctionsPassed, onClose]
   );
 
-  const defaultConfigMapped = React.useCallback(
-    (passedConfigs: ItemConfiguration[]): DialogState[] => [
-      ...passedConfigs.map((config) => ({
-        ...config,
-        value: config.selectOptions ? config.selectOptions[0].value : "",
-      })),
-    ],
-    []
-  );
-
-  const proceedStateChanges = React.useCallback(
-    (isOpen: boolean) => {
-      const defaultState = defaultConfigMapped(itemConfigs);
-      if (isOpen && selectedItem) {
-        return setState(() =>
-          defaultState.map((v) => ({ ...v, value: selectedItem[v.key] }))
-        );
-      }
-      // TIMEOUT IS FOR PREVENTING UI GLITCHES ON DIALOG CLOSE
-      setTimeout(() => setState(defaultState), 100);
-    },
-    [itemConfigs, selectedItem, defaultConfigMapped, setState]
-  );
+  React.useEffect(() => {
+    console.log("change");
+  }, [state]);
 
   // ON INPUT CHANGE - REMOVE ALL ERROR MESSAGES
   const handleInputChanges = React.useCallback(
@@ -139,8 +119,9 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
   );
 
   React.useEffect(() => {
-    proceedStateChanges(open);
-  }, [open, selectedItem, proceedStateChanges]);
+    // TIMEOUT IS FOR PREVENTING UI GLITCHES ON DIALOG CLOSE
+    setTimeout(() => setState(defaultState), 100);
+  }, [open, selectedItem, defaultState]);
 
   const disabled = React.useMemo(
     () =>
@@ -156,6 +137,7 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
       open={open}
       onClose={handleDialogClose}
       disabled={disabled}
+      withCloseIcon={false}
     >
       <Box
         sx={{
