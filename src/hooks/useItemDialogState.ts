@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  ErrorState,
+  ItemErrorValue,
   ItemConfiguration,
   ItemDialogValue,
   ObjectLiteral,
@@ -11,7 +11,7 @@ import { useItemValidation } from "./useItemValidation";
 
 interface UseItemDialogStateReturnValue<T> {
   state: ItemDialogValue[];
-  errorState: ErrorState[];
+  errorState: ItemErrorValue[];
   body: T;
   validate: () => boolean;
   handleInputChange: (value: unknown, i: number) => void;

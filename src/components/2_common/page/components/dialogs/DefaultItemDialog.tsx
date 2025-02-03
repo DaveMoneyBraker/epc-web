@@ -2,12 +2,8 @@ import React from "react";
 import { Box } from "@mui/material";
 import { DefaultDialogItemComponentProps } from "../../../../../types";
 import { DialogWrapper } from "../../../../3_shared/dialogs";
-import {
-  EnhancedSelect,
-  EnhancedTextFieldWithErrors,
-} from "../../../../1_enhanced";
-import APP_CONSTANTS from "../../../../../constants/0_AppConstants";
 import APP_HOOKS from "../../../../../hooks/0_AppHooks";
+import { CommonItemForm } from "../../../../3_shared/itemForm";
 
 export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
   open,
@@ -59,45 +55,11 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
           gap: "15px",
         }}
       >
-        {state &&
-          state.map(
-            ({ key, itemType, value, selectOptions, required = true }, i) => {
-              if (
-                itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.STRING ||
-                itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.NUMBER
-              ) {
-                const err = errorState.find((e) => e.key === key);
-                return (
-                  <EnhancedTextFieldWithErrors
-                    key={`${key}-${itemType}-${i}`}
-                    label={key}
-                    value={value as string}
-                    onChange={(v) => handleInputChange(v, i)}
-                    fullWidth
-                    type={itemType}
-                    required={required}
-                    errorState={err}
-                  />
-                );
-              }
-              // FOR ENUM TYPE WE USE SELECT_INPUT ELEMENT
-              // SO THERE IS NO POSSIBILITY FOR USER TO MAKE ERROR
-              if (itemType === "enum" && selectOptions) {
-                return (
-                  <EnhancedSelect
-                    label={key}
-                    value={value as string}
-                    options={selectOptions}
-                    onChange={(v) => handleInputChange(v, i)}
-                    fullWidth
-                    required={required}
-                    key={`${key}-${itemType}-${i}`}
-                  />
-                );
-              }
-              return <React.Fragment />;
-            }
-          )}
+        <CommonItemForm
+          state={state}
+          errorState={errorState}
+          onChange={handleInputChange}
+        />
       </Box>
     </DialogWrapper>
   );

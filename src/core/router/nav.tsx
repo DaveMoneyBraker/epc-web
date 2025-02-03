@@ -111,7 +111,7 @@ export const useAppNav = (): AppNavigationSection[] => {
     () => import("../../pages/partners/MailerPartnersPage")
   );
   const MailerPartnersProxyPage = React.lazy(
-    () => import("../../pages/partners/MailerPartnerProxy")
+    () => import("../../pages/partners/MailerPartnerProxyPage")
   );
 
   return React.useMemo(

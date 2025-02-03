@@ -1,4 +1,4 @@
-export interface ErrorState {
+export interface ItemErrorValue {
   key: string;
   errorMessages: string[];
 }

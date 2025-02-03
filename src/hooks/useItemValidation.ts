@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  ErrorState,
+  ItemErrorValue,
   ItemConfiguration,
   ItemDialogValue,
   ValidatorConfig,
@@ -9,7 +9,7 @@ import {
 type ValidateFn = () => boolean;
 
 interface UseItemValidationReturnValue {
-  errorState: ErrorState[];
+  errorState: ItemErrorValue[];
   validate: ValidateFn;
 }
 
@@ -24,7 +24,7 @@ export const useItemValidation: UseItemValidation = (
   configs: ItemConfiguration[],
   state: ItemDialogValue[]
 ) => {
-  const [errorState, setErrorState] = React.useState<ErrorState[]>([
+  const [errorState, setErrorState] = React.useState<ItemErrorValue[]>([
     ...configs.map((config) => ({ key: config.key, errorMessages: [] })),
   ]);
 

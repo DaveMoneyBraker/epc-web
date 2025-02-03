@@ -2,6 +2,7 @@ import React from "react";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import APP_CONSTANTS from "../../../constants/0_AppConstants";
+import { MailerPartnerProxy as MailerPartnerProxyI } from "../../../types";
 
 export const MailerPartnerProxy: React.FC = () => {
   const configs = APP_HOOKS.usePageItemConfig({
@@ -33,10 +34,6 @@ export const MailerPartnerProxy: React.FC = () => {
         skipFilter: true,
       },
       {
-        key: "password",
-        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
-      },
-      {
         key: "mailerPartnerId",
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
         skipFilter: true,
@@ -44,5 +41,5 @@ export const MailerPartnerProxy: React.FC = () => {
     ],
   });
 
-  return <CommonPage itemName="name" {...configs} />;
+  return <CommonPage<MailerPartnerProxyI> itemName="name" {...configs} />;
 };

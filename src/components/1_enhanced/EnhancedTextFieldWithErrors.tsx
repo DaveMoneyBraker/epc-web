@@ -1,13 +1,13 @@
 import React from "react";
 import { EnhancedTextField } from "./EnhancedTextField";
 import { TextFieldProps } from "@mui/material";
-import { ErrorState } from "../../types";
+import { ItemErrorValue } from "../../types";
 
 type Props = Omit<TextFieldProps, "onChange"> & {
   label?: string;
   width?: string;
   onChange: (v: string) => void;
-  errorState?: ErrorState;
+  errorState?: ItemErrorValue;
 };
 
 export const EnhancedTextFieldWithErrors: React.FC<Props> = ({
