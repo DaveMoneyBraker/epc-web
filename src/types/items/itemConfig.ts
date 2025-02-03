@@ -1,6 +1,6 @@
 import { TitleValueObject } from "../default";
 import { FilterConfig, FilterItemType } from "../filters";
-import { ValidatorConfig, ValidatorConfigWithNoError } from "./validatorConfig";
+import { ValidatorConfig } from "./validatorConfig";
 
 export interface ItemConfig extends FilterConfig {
   required: boolean;
@@ -13,12 +13,12 @@ export interface ItemConfiguration {
   required?: boolean;
   itemType?: FilterItemType;
   selectOptions?: TitleValueObject[];
-  excludeFilter?: boolean;
+  skipFilter?: boolean;
 }
 
 export interface PageItemConfigOptions {
   itemConfigs: ItemConfiguration[];
-  validators?: ValidatorConfigWithNoError[];
+  validators?: ValidatorConfig[];
   additionalActions?: boolean;
 }
 
@@ -26,7 +26,7 @@ export interface PageColumnConfig {
   key: string;
   filterType?: FilterItemType;
   selectOptions?: TitleValueObject[];
-  validators?: ValidatorConfigWithNoError[];
+  validators?: ValidatorConfig[];
 }
 
 export interface PageItemConfig {

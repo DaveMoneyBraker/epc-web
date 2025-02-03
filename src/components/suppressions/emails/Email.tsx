@@ -10,13 +10,11 @@ export const SuppressionsEmail: React.FC = () => {
       {
         key: "email",
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
-        required: true,
       },
       {
         key: "type",
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
         selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
-        required: true,
       },
     ],
     validators: [

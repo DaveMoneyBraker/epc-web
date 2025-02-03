@@ -10,13 +10,11 @@ export const BlacklistDomain: React.FC = () => {
       {
         key: "domain",
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
-        required: true,
       },
       {
         key: "based",
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
         selectOptions: APP_CONSTANTS.BLACKLIST_DOMAIN_BASED_OPTIONS,
-        required: true,
       },
     ],
     validators: [

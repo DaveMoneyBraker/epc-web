@@ -2,7 +2,6 @@ import React from "react";
 import {
   PageItemConfigOptions,
   PageItemConfig,
-  ValidatorConfig,
   ItemConfiguration,
 } from "../types";
 import APP_CONSTANTS from "../constants/0_AppConstants";
@@ -29,7 +28,7 @@ export const usePageItemConfig: UsePageItemConfig = ({
       },
       {
         key: "updatedAt",
-        excludeFilter: true,
+        skipFilter: true,
       },
     ],
     [columnConfigs]
@@ -46,14 +45,8 @@ export const usePageItemConfig: UsePageItemConfig = ({
 
   // Create filter configurations based on column configs
   const filterConfigs = React.useMemo<ItemConfiguration[]>(
-    () => configs.filter((config) => !config.excludeFilter),
+    () => configs.filter((config) => !config.skipFilter),
     [configs]
-  );
-
-  // Combine all validators from column configs
-  const validatorsWithErrorState = React.useMemo<ValidatorConfig[]>(
-    () => [...validators.map((validator) => ({ ...validator, error: false }))],
-    [validators]
   );
 
   // Create item configs by combining filters and validators
@@ -67,8 +60,8 @@ export const usePageItemConfig: UsePageItemConfig = ({
       cols: tableColumns,
       itemConfigs,
       filterConfigs,
-      validators: validatorsWithErrorState,
+      validators,
     }),
-    [filterConfigs, itemConfigs, tableColumns, validatorsWithErrorState]
+    [filterConfigs, itemConfigs, tableColumns, validators]
   );
 };

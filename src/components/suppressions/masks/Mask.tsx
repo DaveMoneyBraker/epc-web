@@ -11,19 +11,16 @@ export const SuppressionsMask: React.FC = () => {
       {
         key: "name",
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
-        required: true,
       },
       {
         key: "mask",
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.STRING,
-        required: true,
-        excludeFilter: true,
+        skipFilter: true,
       },
       {
         key: "type",
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
         selectOptions: APP_CONSTANTS.SUPPRESSIONS_TYPE_OPTIONS,
-        required: true,
       },
     ],
   });

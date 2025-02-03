@@ -143,7 +143,10 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
   }, [open, selectedItem, proceedStateChanges]);
 
   const disabled = React.useMemo(
-    () => state.some((v) => v.required && !v.value),
+    () =>
+      // REQUIRED ITEMS ARE MUCH MORE THEN NOT REQUIRED
+      // SO TO NOT USE EACH TIME THIS PROPERTY - UNDEFINED MEANS IT REQUIRED
+      state.some((v) => (v.required === undefined || v.required) && !v.value),
     [state]
   );
 
@@ -164,61 +167,63 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
         }}
       >
         {state &&
-          state.map(({ key, itemType, value, selectOptions, required }, i) => {
-            if (
-              itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.STRING ||
-              itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.NUMBER
-            ) {
-              return (
-                <div key={`${key}-${itemType}-${i}`}>
-                  <EnhancedTextField
+          state.map(
+            ({ key, itemType, value, selectOptions, required = true }, i) => {
+              if (
+                itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.STRING ||
+                itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.NUMBER
+              ) {
+                return (
+                  <div key={`${key}-${itemType}-${i}`}>
+                    <EnhancedTextField
+                      label={key}
+                      value={value as string}
+                      onChange={(v) => handleInputChanges(v, i)}
+                      fullWidth
+                      type={itemType}
+                      required={required}
+                    />
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "1px",
+                      }}
+                    >
+                      {errorState
+                        .filter((err) => err.key === key)
+                        .map(({ errorMessages }) =>
+                          errorMessages.map((errorMessage, errorI) => (
+                            <Typography
+                              variant="inputError"
+                              key={`inputError-${errorI}-${i}`}
+                            >
+                              {errorMessage}
+                            </Typography>
+                          ))
+                        )}
+                    </Box>
+                  </div>
+                );
+              }
+              // FOR ENUM TYPE WE USE SELECT_INPUT ELEMENT
+              // SO THERE IS NO POSSIBILITY FOR USER TO MAKE ERROR
+              if (itemType === "enum" && selectOptions) {
+                return (
+                  <EnhancedSelect
                     label={key}
                     value={value as string}
+                    options={selectOptions}
                     onChange={(v) => handleInputChanges(v, i)}
                     fullWidth
-                    type={itemType}
                     required={required}
+                    key={`${key}-${itemType}-${i}`}
                   />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "1px",
-                    }}
-                  >
-                    {errorState
-                      .filter((err) => err.key === key)
-                      .map(({ errorMessages }) =>
-                        errorMessages.map((errorMessage, errorI) => (
-                          <Typography
-                            variant="inputError"
-                            key={`inputError-${errorI}-${i}`}
-                          >
-                            {errorMessage}
-                          </Typography>
-                        ))
-                      )}
-                  </Box>
-                </div>
-              );
+                );
+              }
+              return <React.Fragment />;
             }
-            // FOR ENUM TYPE WE USE SELECT_INPUT ELEMENT
-            // SO THERE IS NO POSSIBILITY FOR USER TO MAKE ERROR
-            if (itemType === "enum" && selectOptions) {
-              return (
-                <EnhancedSelect
-                  label={key}
-                  value={value as string}
-                  options={selectOptions}
-                  onChange={(v) => handleInputChanges(v, i)}
-                  fullWidth
-                  required={required}
-                  key={`${key}-${itemType}-${i}`}
-                />
-              );
-            }
-            return <React.Fragment />;
-          })}
+          )}
       </Box>
     </DialogWrapper>
   );

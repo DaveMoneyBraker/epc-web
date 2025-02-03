@@ -15,19 +15,19 @@ export const GoogleCloudFile: React.FC = () => {
       },
       {
         key: "bucket",
-        excludeFilter: true,
+        skipFilter: true,
       },
       {
         key: "assignment",
-        excludeFilter: true,
+        skipFilter: true,
       },
       {
         key: "contentType",
-        excludeFilter: true,
+        skipFilter: true,
       },
       {
         key: "size",
-        excludeFilter: true,
+        skipFilter: true,
       },
       {
         key: "gcloudId",
