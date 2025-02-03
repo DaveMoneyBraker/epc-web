@@ -1,12 +1,6 @@
 import { TitleValueObject } from "../default";
-import { FilterConfig, FilterItemType } from "../filters";
+import { FilterItemType } from "../filters";
 import { ValidatorConfig } from "./validatorConfig";
-
-export interface ItemConfig extends FilterConfig {
-  required: boolean;
-  validators: ValidatorConfig[];
-  selectOptions?: TitleValueObject[];
-}
 
 export interface ItemConfiguration {
   key: string;

@@ -2,8 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import {
   DefaultDialogItemComponentProps,
-  ErrorState,
-  ItemDialogState,
+  ItemDialogValue,
   ObjectLiteral,
 } from "../../../../../types";
 import { DialogWrapper } from "../../../../3_shared/dialogs";
@@ -26,55 +25,21 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
     itemConfigs,
     selectedItem
   );
-  const [state, setState] = React.useState<ItemDialogState[]>([
-    ...itemConfigs.map((config) => ({
-      ...config,
-      value: config.selectOptions ? config.selectOptions[0].value : "",
-    })),
-  ]);
-  const [errorState, setErrorState] = React.useState<ErrorState[]>([
-    ...itemConfigs.map((config) => ({ key: config.key, errorMessages: [] })),
-  ]);
+  const [state, setState] = React.useState<ItemDialogValue[]>([]);
+  const { errorState, validate } = APP_HOOKS.useItemValidation(
+    validators,
+    itemConfigs,
+    state
+  );
   const keys = React.useMemo(
     () => itemConfigs.map(({ key }) => key),
     [itemConfigs]
   );
 
-  const isValidationFunctionsPassed = React.useCallback((): boolean => {
-    let isPassed = true;
-    state.forEach(({ value, key }) => {
-      if (validators && validators.length > 0) {
-        const relatedValidators = validators.filter((validator) =>
-          validator.keys.includes(key)
-        );
-        relatedValidators.forEach(({ validatorFn, keys, errorMessage }) => {
-          if (!validatorFn(value)) {
-            isPassed = false;
-            setErrorState((prev) =>
-              prev.map((prevErr) => {
-                if (keys.includes(key)) {
-                  return prevErr.errorMessages.includes(errorMessage)
-                    ? prevErr
-                    : {
-                        ...prevErr,
-                        errorMessages: [...prevErr.errorMessages, errorMessage],
-                      };
-                }
-                return prevErr;
-              })
-            );
-          }
-        });
-      }
-    });
-
-    return isPassed;
-  }, [state, validators]);
-
   const handleDialogClose = React.useCallback(
     (confirm: boolean) => {
       if (confirm) {
-        if (!isValidationFunctionsPassed()) {
+        if (!validate()) {
           return;
         }
         const body = selectedItem
@@ -91,12 +56,8 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
       }
       onClose(confirm);
     },
-    [keys, state, selectedItem, isValidationFunctionsPassed, onClose]
+    [onClose, validate, selectedItem, keys, state]
   );
-
-  React.useEffect(() => {
-    console.log("change");
-  }, [state]);
 
   // ON INPUT CHANGE - REMOVE ALL ERROR MESSAGES
   const handleInputChanges = React.useCallback(
@@ -110,9 +71,6 @@ export const DefaultItemDialog: React.FC<DefaultDialogItemComponentProps> = ({
               }
             : p
         )
-      );
-      setErrorState((prev) =>
-        prev.map((err) => ({ ...err, errorMessages: [] }))
       );
     },
     [setState]

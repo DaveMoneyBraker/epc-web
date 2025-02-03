@@ -1,13 +1,13 @@
 import React from "react";
-import { ItemConfiguration, ItemDialogState, ObjectLiteral } from "../types";
+import { ItemConfiguration, ItemDialogValue, ObjectLiteral } from "../types";
 
 export type UseDefaultItemConfigDialogState = <T = ObjectLiteral>(
   configs: ItemConfiguration[],
   selectedItem?: T
-) => ItemDialogState[];
+) => ItemDialogValue[];
 
 export const useDefaultItemConfigDialogState: UseDefaultItemConfigDialogState =
-  <T>(configs: ItemConfiguration[], selectedItem?: T): ItemDialogState[] =>
+  <T>(configs: ItemConfiguration[], selectedItem?: T): ItemDialogValue[] =>
     React.useMemo(
       () => [
         ...configs.map((config) => ({
