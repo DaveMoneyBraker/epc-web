@@ -404,6 +404,7 @@ export const useAppNav = (): AppNavigationSection[] => {
       ConsumerQueuesNav,
       GoogleCloudFilesPage,
       InfoPage,
+      MailerPartnersAccessPage,
       MailerPartnersPage,
       MailerPartnersProxyPage,
       SubmitBlacklistDomainsPage,
