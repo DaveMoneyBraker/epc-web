@@ -8,6 +8,7 @@ export interface ItemConfiguration {
   itemType?: FilterItemType;
   selectOptions?: TitleValueObject[];
   skipFilter?: boolean;
+  skipTable?: boolean;
 }
 
 export interface PageItemConfigOptions {

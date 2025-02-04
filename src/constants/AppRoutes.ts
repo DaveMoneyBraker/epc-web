@@ -18,6 +18,7 @@ export const APP_ROUTES = {
   //PARTNERS
   MAILER_PARTNER: "/pages/partners/mailer-partner",
   MAILER_PARTNER_PROXY: "/pages/partners/mailer-partner-proxy",
+  MAILER_PARTNERS_ACCESS: "/pages/partners/mailer-partner-access",
 
   // QUEUE
   QUEUE: "/pages/queue/",

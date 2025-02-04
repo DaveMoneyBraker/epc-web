@@ -28,6 +28,7 @@ const Wrapper = styled("div")(() => ({
 
 export const CommonPage = <T,>({
   itemName,
+  dialogItemName = itemName,
   actions: propsActions,
   cols,
   filterConfigs,
@@ -62,11 +63,11 @@ export const CommonPage = <T,>({
   const filteredByPermissionActions =
     APP_HOOKS.useFilteredByPermissionsActions(actions);
   const dialogTitle = React.useMemo(() => {
-    const titleCaseItemName = APP_UTILS.toTitleCase(itemName);
+    const titleCaseItemName = APP_UTILS.toTitleCase(dialogItemName);
     return selectedItem
       ? `Edit ${titleCaseItemName}`
       : `Create ${titleCaseItemName}`;
-  }, [selectedItem, itemName]);
+  }, [selectedItem, dialogItemName]);
   const itemDialogProps = React.useMemo<DefaultDialogItemComponentProps>(
     () => ({
       open: itemDialogOpen,

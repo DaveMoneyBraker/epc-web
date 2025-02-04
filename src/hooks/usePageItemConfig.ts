@@ -36,7 +36,11 @@ export const usePageItemConfig: UsePageItemConfig = ({
 
   // Extract just the column keys for display
   const tableColumns = React.useMemo(() => {
-    const cols = [...configs.map((config) => config.key)];
+    const cols = [
+      ...configs
+        .filter((config) => !config.skipTable)
+        .map((config) => config.key),
+    ];
     if (additionalActions) {
       cols.push("actions");
     }

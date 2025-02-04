@@ -3,28 +3,12 @@ import APP_HOOKS from "../../../hooks/0_AppHooks";
 import { CommonPage } from "../../2_common/page";
 import APP_CONSTANTS from "../../../constants/0_AppConstants";
 import {
-  MailerPartner,
+  DefaultPageActions,
   MailerPartnerProxy as MailerPartnerProxyI,
-  TitleValueObject,
 } from "../../../types";
-import AppQueries from "../../../services/queries/AppQueries";
 
 export const MailerPartnerProxy: React.FC = () => {
-  const partnerApiUrl = APP_CONSTANTS.API_ROUTES.MAILER_PARTNER;
-  const queryKey = APP_CONSTANTS.QUERY_KEYS.MAILER_PARTNER;
-  const { data: mailerPartners } = AppQueries.useArrayQuery<MailerPartner>({
-    apiUrl: partnerApiUrl,
-    queryKey,
-  });
-  const mailerPartnersOptions = React.useMemo<TitleValueObject[]>(
-    () =>
-      mailerPartners.map((partner) => ({
-        title: partner.name,
-        value: partner.id,
-      })),
-    [mailerPartners]
-  );
-
+  const mailerPartnersOptions = APP_HOOKS.useMailerPartnerOptions();
   const configs = APP_HOOKS.usePageItemConfig({
     itemConfigs: [
       {
@@ -58,9 +42,26 @@ export const MailerPartnerProxy: React.FC = () => {
         itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
         selectOptions: mailerPartnersOptions,
         skipFilter: true,
+        skipTable: true,
       },
     ],
   });
 
-  return <CommonPage<MailerPartnerProxyI> itemName="name" {...configs} />;
+  const defaultActions = APP_HOOKS.useDefaultPageActions();
+  const actions = React.useMemo<DefaultPageActions[]>(
+    () =>
+      defaultActions.filter(
+        (action) => action !== APP_CONSTANTS.PAGE_ACTIONS.SUBMIT
+      ),
+    [defaultActions]
+  );
+
+  return (
+    <CommonPage<MailerPartnerProxyI>
+      itemName="name"
+      dialogItemName="partner proxy"
+      actions={actions}
+      {...configs}
+    />
+  );
 };

@@ -17,7 +17,7 @@ import { DialogWrapper } from "../3_shared/dialogs";
 import { AppPagination } from "../3_shared/pagination";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 import APP_CONSTANTS from "../../constants/0_AppConstants";
-import AppQueries from "../../services/queries/AppQueries";
+import APP_QUERIES from "../../services/queries/AppQueries";
 import AppMutations from "../../services/mutations/AppMutations";
 
 type Action = "retry" | "delete" | "refresh";
@@ -63,7 +63,7 @@ export const Queues: React.FC = () => {
   const [status, setStatus] = React.useState<QueueStatus>(
     APP_CONSTANTS.QUEUE_STATUS.LATEST
   );
-  const { data, client } = AppQueries.useQueueQuery(
+  const { data, client } = APP_QUERIES.useQueueQuery(
     apiRoute,
     status,
     page,

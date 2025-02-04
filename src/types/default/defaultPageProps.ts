@@ -8,6 +8,7 @@ import { DefaultPageActions } from "./defaultPageActions";
 
 export interface DefaultPageProps<T = DefaultDialogItem> {
   itemName: string;
+  dialogItemName?: string;
   cols: string[];
   filterConfigs: ItemConfiguration[];
   itemConfigs: ItemConfiguration[];

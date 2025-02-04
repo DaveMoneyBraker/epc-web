@@ -51,6 +51,10 @@ import {
 } from "./useDefaultItemConfigDialogState";
 import { useItemValidation, UseItemValidation } from "./useItemValidation";
 import { useItemDialogState, UseItemDialogState } from "./useItemDialogState";
+import {
+  useMailerPartnerOptions,
+  UseMailerPartnerOptions,
+} from "./useMailerPartnerOptions";
 
 interface AppHooksInterface {
   // LOADING API URL FROM ASSETS FOLDER
@@ -99,6 +103,8 @@ interface AppHooksInterface {
   useItemValidation: UseItemValidation;
   // CREATE DEFAULT DIALOG ITEM STATE - STATE, ERROR_STATE, BODY, INPUT_CHANGE_HANDLER, VALIDATE_FN
   useItemDialogState: UseItemDialogState;
+  // USE ARRAY OF TITLE_VALUE OBJECTS FROM MAILER PARTNERS QUERY
+  useMailerPartnerOptions: UseMailerPartnerOptions;
 }
 
 const APP_HOOKS: AppHooksInterface = {
@@ -125,6 +131,7 @@ const APP_HOOKS: AppHooksInterface = {
   usePageItemConfig,
   useDefaultItemConfigDialogState,
   useItemValidation,
+  useMailerPartnerOptions,
 } as const;
 
 export default APP_HOOKS;

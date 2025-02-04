@@ -19,6 +19,7 @@ export const API_ROUTES = {
   //PARTNERS
   MAILER_PARTNER: "mailer-partner",
   MAILER_PARTNER_PROXY: "mailer-partner-proxy",
+  MAILER_PARTNERS_ACCESS: "mailer-partner-access",
 
   // QUEUES
   QUEUE_JOB: "queue/job",

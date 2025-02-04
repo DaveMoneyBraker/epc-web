@@ -113,6 +113,9 @@ export const useAppNav = (): AppNavigationSection[] => {
   const MailerPartnersProxyPage = React.lazy(
     () => import("../../pages/partners/MailerPartnerProxyPage")
   );
+  const MailerPartnersAccessPage = React.lazy(
+    () => import("../../pages/partners/MailerPartnerAccessPage")
+  );
 
   return React.useMemo(
     () => [
@@ -305,6 +308,20 @@ export const useAppNav = (): AppNavigationSection[] => {
                 element: (
                   <React.Suspense>
                     <MailerPartnersProxyPage />
+                  </React.Suspense>
+                ),
+              },
+              {
+                title: APP_CONSTANTS.PAGE_TITLES.MAILER_PARTNERS_ACCESS,
+                pageTitle: APP_CONSTANTS.PAGE_TITLES.MAILER_PARTNERS_ACCESS,
+                apiRoute: APP_CONSTANTS.API_ROUTES.MAILER_PARTNERS_ACCESS,
+                appRoute: APP_CONSTANTS.APP_ROUTES.MAILER_PARTNERS_ACCESS,
+                queryKey: APP_CONSTANTS.QUERY_KEYS.MAILER_PARTNERS_ACCESS,
+                permissionsRoute:
+                  APP_CONSTANTS.PERMISSION_ROUTES.MAILER_PARTNER_PROXY,
+                element: (
+                  <React.Suspense>
+                    <MailerPartnersAccessPage />
                   </React.Suspense>
                 ),
               },

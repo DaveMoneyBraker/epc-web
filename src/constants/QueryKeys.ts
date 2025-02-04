@@ -13,6 +13,7 @@ export const QUERY_KEYS = {
   //PARTNERS
   MAILER_PARTNER: "mailerPartner",
   MAILER_PARTNER_PROXY: "mailerPartnerProxy",
+  MAILER_PARTNERS_ACCESS: "mailerPartnerAccess",
   // FILES
   G_C_FILE: "filesGCFile",
   // QUEUES

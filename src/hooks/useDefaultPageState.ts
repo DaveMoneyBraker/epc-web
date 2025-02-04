@@ -3,7 +3,7 @@ import { GridSortModel } from "@mui/x-data-grid";
 import { useRestQuery } from "./useRestQuery";
 import { isSyntheticEvent } from "../typeGuards";
 import { AppQueryOptions, FilterValue } from "../types";
-import AppQueries from "../services/queries/AppQueries";
+import APP_QUERIES from "../services/queries/AppQueries";
 import AppMutations from "../services/mutations/AppMutations";
 import CONTEXT_HOOKS from "../providers/0_ContextHooks";
 
@@ -86,7 +86,7 @@ export const useDefaultPageState = <T = any>(
     data: items,
     totalItems,
     isPending,
-  } = AppQueries.usePaginationQuery<T>({
+  } = APP_QUERIES.usePaginationQuery<T>({
     queryKey,
     apiUrl,
     query,
