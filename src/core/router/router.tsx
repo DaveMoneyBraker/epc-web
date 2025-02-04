@@ -70,7 +70,6 @@ export const useAppRouter = () => {
                 ],
               },
               // NOT FOUND
-
               {
                 path: "*",
                 element: <Navigate to={APP_CONSTANTS.APP_ROUTES.NOT_FOUND} />,
