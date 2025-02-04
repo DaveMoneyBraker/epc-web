@@ -28,7 +28,7 @@ export const useAuth: UseAuth = () => {
           .post(APP_CONSTANTS.API_ROUTES.LOGIN, { username, password })
           .then(({ data }: AxiosResponse<AuthToken>) => {
             set(APP_CONSTANTS.LOCAL_STORAGE.TOKEN, data);
-            navigate(APP_CONSTANTS.APP_ROUTES.PAGES);
+            navigate(APP_CONSTANTS.APP_ROUTES.INFO);
           })
           .catch(() => {
             setError(true);
