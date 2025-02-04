@@ -8,7 +8,7 @@ const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
   const handleGoHome = React.useCallback(() => {
-    navigate(APP_CONSTANTS.APP_ROUTES.PAGES);
+    navigate(APP_CONSTANTS.APP_ROUTES.INFO);
   }, [navigate]);
 
   return (
