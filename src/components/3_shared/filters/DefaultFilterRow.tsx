@@ -4,7 +4,7 @@ import {
   FilterItemType,
   FilterValue,
   ItemConfiguration,
-  TitleValueObject,
+  SelectOption,
 } from "../../../types";
 import { Box, styled } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -52,7 +52,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
       "string",
     [configs, filter.itemName]
   );
-  const keyOptions: TitleValueObject[] = React.useMemo(
+  const keyOptions: SelectOption[] = React.useMemo(
     () =>
       configs.map((config) => ({
         title: APP_UTILS.camelCaseToString(config.key),
@@ -60,7 +60,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
       })),
     [configs]
   );
-  const itemSelectOptions: TitleValueObject[] = React.useMemo(
+  const itemSelectOptions: SelectOption[] = React.useMemo(
     () =>
       configs.find((config) => config.key === filter.itemName)?.selectOptions ||
       [],
@@ -78,7 +78,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
   );
 
   const getComparisonOperators = React.useCallback(
-    (type: string): TitleValueObject<ComparisonOperator>[] => {
+    (type: string): SelectOption<ComparisonOperator>[] => {
       if (type === "string") {
         return APP_CONSTANTS.DEFAULT_COMPARISON_OPERATORS;
       } else if (type === "date") {
@@ -93,7 +93,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
     []
   );
   const [comparisonOperatorOptions, setComparisonOperatorOptions] =
-    React.useState<TitleValueObject<ComparisonOperator>[]>(() =>
+    React.useState<SelectOption<ComparisonOperator>[]>(() =>
       getComparisonOperators(
         configs.find((config) => config.key === filter.itemName)?.itemType ||
           "string"

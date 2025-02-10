@@ -1,7 +1,7 @@
 import {
   BlacklistDomainBasedMap,
   BlacklistDomainBasedType,
-  TitleValueObject,
+  SelectOption,
 } from "../types";
 
 export const BLACKLIST_DOMAIN_BASED_TYPE: BlacklistDomainBasedMap = {
@@ -9,7 +9,7 @@ export const BLACKLIST_DOMAIN_BASED_TYPE: BlacklistDomainBasedMap = {
   DOMAIN_BASED: "DOMAIN_BASED",
 };
 
-export const BLACKLIST_DOMAIN_BASED_OPTIONS: TitleValueObject<BlacklistDomainBasedType>[] =
+export const BLACKLIST_DOMAIN_BASED_OPTIONS: SelectOption<BlacklistDomainBasedType>[] =
   [
     {
       title: BLACKLIST_DOMAIN_BASED_TYPE.IP_BASED,

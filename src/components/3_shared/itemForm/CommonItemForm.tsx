@@ -2,6 +2,7 @@ import React from "react";
 import { ItemErrorValue, ItemDialogValue } from "../../../types";
 import APP_CONSTANTS from "../../../constants/0_AppConstants";
 import { EnhancedSelect, EnhancedTextFieldWithErrors } from "../../1_enhanced";
+import { EnhancedAutocomplete } from "../../1_enhanced/EnhancedAutocomplete";
 
 interface Props {
   state: ItemDialogValue[];
@@ -15,7 +16,10 @@ export const CommonItemForm: React.FC<Props> = ({
   onChange,
 }) => {
   const handleInputChange = React.useCallback(
-    (value: unknown, i: number) => onChange(value, i),
+    (value: unknown, i: number) => {
+      console.log({ value });
+      onChange(value, i);
+    },
     [onChange]
   );
   return (
@@ -55,6 +59,21 @@ export const CommonItemForm: React.FC<Props> = ({
                   onChange={(v) => handleInputChange(v, i)}
                   fullWidth
                   required={required}
+                  key={`${key}-${itemType}-${i}`}
+                />
+              );
+            }
+            if (
+              itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.AUTOCOMPLETE &&
+              selectOptions
+            ) {
+              return (
+                <EnhancedAutocomplete
+                  label={key}
+                  value={value as string}
+                  options={selectOptions}
+                  required={required}
+                  onChange={(v) => handleInputChange(v, i)}
                   key={`${key}-${itemType}-${i}`}
                 />
               );

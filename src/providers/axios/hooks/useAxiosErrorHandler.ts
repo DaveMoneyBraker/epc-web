@@ -1,10 +1,11 @@
 import React from "react";
 import APP_HOOKS from "../../../hooks/0_AppHooks";
 import axios from "axios";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import APP_CONSTANTS from "../../../constants/0_AppConstants";
 
 export const useAxiosErrorHandler = (refreshToken: () => Promise<any>) => {
+  const navigate = useNavigate();
   const showNotification = APP_HOOKS.useNotification();
 
   return React.useCallback(
@@ -22,13 +23,14 @@ export const useAxiosErrorHandler = (refreshToken: () => Promise<any>) => {
         "An unexpected error occurred";
 
       const statusCode = error.response?.status;
-
+      console.log({ statusCode });
       switch (statusCode) {
         case 401:
           refreshToken();
           break;
         case 403:
-          redirect(APP_CONSTANTS.APP_ROUTES.LOGIN);
+          console.log("is we here?");
+          navigate(APP_CONSTANTS.APP_ROUTES.LOGIN);
           break;
         case 404:
           showNotification(
@@ -49,6 +51,6 @@ export const useAxiosErrorHandler = (refreshToken: () => Promise<any>) => {
           );
       }
     },
-    [showNotification, refreshToken]
+    [refreshToken, navigate, showNotification]
   );
 };

@@ -21,7 +21,7 @@ export const MailerPartnerAccess: React.FC = () => {
       },
       {
         key: "mailerPartnerId",
-        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM,
+        itemType: APP_CONSTANTS.FILTER_ITEM_TYPE.AUTOCOMPLETE,
         selectOptions: mailerPartnersOptions,
         skipFilter: true,
         skipTable: true,

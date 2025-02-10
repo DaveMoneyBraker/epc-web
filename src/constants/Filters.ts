@@ -3,7 +3,7 @@ import {
   ConditionOperator,
   ConditionOperatorMap,
   FilterItemTypeMap,
-  TitleValueObject,
+  SelectOption,
 } from "../types";
 
 export const CONDITIONS_OPERATORS: ConditionOperatorMap = {
@@ -11,17 +11,17 @@ export const CONDITIONS_OPERATORS: ConditionOperatorMap = {
   OR: "OR",
 };
 
-export const CONDITIONS_OPERATOR_VALUES: TitleValueObject<ConditionOperator>[] =
-  [
-    { title: "AND", value: "AND" },
-    { title: "OR", value: "OR" },
-  ];
+export const CONDITIONS_OPERATOR_VALUES: SelectOption<ConditionOperator>[] = [
+  { title: "AND", value: "AND" },
+  { title: "OR", value: "OR" },
+];
 
 export const FILTER_ITEM_TYPE: FilterItemTypeMap = {
   STRING: "string",
   DATE: "date",
   NUMBER: "number",
   ENUM: "enum",
+  AUTOCOMPLETE: "autocomplete",
 };
 
 export const COMPARISON_OPERATORS = {

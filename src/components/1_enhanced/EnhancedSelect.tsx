@@ -6,12 +6,12 @@ import {
   SelectProps,
 } from "@mui/material";
 import React from "react";
-import { TitleValueObject } from "../../types";
+import { SelectOption } from "../../types";
 import CONTEXT_HOOKS from "../../providers/0_ContextHooks";
 
 type Props<T = string> = Omit<SelectProps, "onChange"> & {
   value: T;
-  options: TitleValueObject<T>[];
+  options: SelectOption<T>[];
   label?: string;
   onChange: (v: string) => void;
 };

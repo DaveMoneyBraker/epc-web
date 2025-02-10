@@ -1,8 +1,4 @@
-import {
-  SuppressionType,
-  SuppressionTypeMap,
-  TitleValueObject,
-} from "../types";
+import { SuppressionType, SuppressionTypeMap, SelectOption } from "../types";
 
 export const SUPPRESSION_TYPES: SuppressionTypeMap = {
   MANUAL: "MANUAL",
@@ -12,7 +8,7 @@ export const SUPPRESSION_TYPES: SuppressionTypeMap = {
   UNRECOGNIZED: "UNRECOGNIZED",
 };
 
-export const SUPPRESSIONS_TYPE_OPTIONS: TitleValueObject<SuppressionType>[] = [
+export const SUPPRESSIONS_TYPE_OPTIONS: SelectOption<SuppressionType>[] = [
   { title: SUPPRESSION_TYPES.MANUAL, value: SUPPRESSION_TYPES.MANUAL },
   { title: SUPPRESSION_TYPES.ABUSE, value: SUPPRESSION_TYPES.ABUSE },
   { title: SUPPRESSION_TYPES.DISPOSABLE, value: SUPPRESSION_TYPES.DISPOSABLE },

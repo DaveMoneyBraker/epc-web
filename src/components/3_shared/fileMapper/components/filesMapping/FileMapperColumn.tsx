@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  FileMapperPreviewColumn,
-  TitleValueObject,
-} from "../../../../../types";
+import { FileMapperPreviewColumn, SelectOption } from "../../../../../types";
 import {
   Box,
   List,
@@ -51,7 +48,7 @@ export const FileMapperColumn: React.FC<Props> = ({
   const [colHeader, setColHeader] = React.useState("");
 
   const headerSelectValues = React.useMemo(
-    (): TitleValueObject[] =>
+    (): SelectOption[] =>
       availableHeaders.map((v) => ({ value: v, title: v.toUpperCase() })),
     [availableHeaders]
   );

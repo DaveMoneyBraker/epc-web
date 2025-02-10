@@ -1,4 +1,4 @@
-import { TitleValueObject } from "../default";
+import { SelectOption } from "../default";
 
 export type ConditionOperator = "AND" | "OR";
 
@@ -39,7 +39,12 @@ export interface ComparisonOperatorOption {
   value: ComparisonOperator;
 }
 
-export type FilterItemType = "string" | "date" | "number" | "enum";
+export type FilterItemType =
+  | "string"
+  | "date"
+  | "number"
+  | "enum"
+  | "autocomplete";
 
 export type FilterItemTypeMap = {
   [K in Uppercase<FilterItemType>]: Lowercase<FilterItemType>;
@@ -48,7 +53,7 @@ export type FilterItemTypeMap = {
 export interface FilterConfig {
   itemType: FilterItemType;
   key: string;
-  selectOptions?: TitleValueObject[];
+  selectOptions?: SelectOption[];
 }
 
 export interface FilterValue<T = string> {

@@ -1,4 +1,4 @@
-import { TitleValueObject } from "../default";
+import { SelectOption } from "../default";
 import { FilterItemType } from "../filters";
 import { ValidatorConfig } from "./validatorConfig";
 
@@ -6,7 +6,7 @@ export interface ItemConfiguration {
   key: string;
   required?: boolean;
   itemType?: FilterItemType;
-  selectOptions?: TitleValueObject[];
+  selectOptions?: SelectOption[];
   skipFilter?: boolean;
   skipTable?: boolean;
 }
@@ -20,7 +20,7 @@ export interface PageItemConfigOptions {
 export interface PageColumnConfig {
   key: string;
   filterType?: FilterItemType;
-  selectOptions?: TitleValueObject[];
+  selectOptions?: SelectOption[];
   validators?: ValidatorConfig[];
 }
 
