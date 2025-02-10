@@ -15,6 +15,7 @@ type Props = Omit<
 > & {
   value: string;
   required?: boolean;
+  maxOptions?: number;
   label?: string;
   options: SelectOption[];
   onChange: (value: string) => void;
@@ -23,6 +24,7 @@ type Props = Omit<
 export const EnhancedAutocomplete: React.FC<Props> = ({
   value: propValue,
   label = "value",
+  maxOptions = 3,
   fullWidth = true,
   required = true,
   options,
@@ -49,9 +51,14 @@ export const EnhancedAutocomplete: React.FC<Props> = ({
     (event: any, newValue: string | null) => setInputValue(newValue || ""),
     []
   );
-  const filterOptions = createFilterOptions({
-    stringify: (option: SelectOption) => option.title,
-  });
+  const filterOptions = React.useMemo(
+    () =>
+      createFilterOptions({
+        limit: maxOptions,
+        stringify: (option: SelectOption) => option.title,
+      }),
+    [maxOptions]
+  );
 
   React.useEffect(() => {
     setInputValue(selectedOption?.title || "");
@@ -77,6 +84,16 @@ export const EnhancedAutocomplete: React.FC<Props> = ({
         renderInput={(params) => (
           <TextField {...params} size={inputSize} label={label} />
         )}
+        ListboxProps={{
+          style: { maxHeight: "100px" },
+        }}
+        slotProps={{
+          popper: {
+            sx: {
+              zIndex: 2000,
+            },
+          },
+        }}
       />
     </FormControl>
   );
