@@ -10,3 +10,4 @@ export * from "./EnhancePasswordInput";
 export * from "./EnhancedDataGrid";
 export * from "./EnhancedIconButton";
 export * from "./EnhancedTextFieldWithErrors";
+export * from "./EnhancedAutocomplete";

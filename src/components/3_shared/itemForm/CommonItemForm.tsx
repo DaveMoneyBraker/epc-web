@@ -1,8 +1,11 @@
 import React from "react";
 import { ItemErrorValue, ItemDialogValue } from "../../../types";
 import APP_CONSTANTS from "../../../constants/0_AppConstants";
-import { EnhancedSelect, EnhancedTextFieldWithErrors } from "../../1_enhanced";
-import { EnhancedAutocomplete } from "../../1_enhanced/EnhancedAutocomplete";
+import {
+  EnhancedSelect,
+  EnhancedTextFieldWithErrors,
+  EnhancedAutocomplete,
+} from "../../1_enhanced";
 
 interface Props {
   state: ItemDialogValue[];

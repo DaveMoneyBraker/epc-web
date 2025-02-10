@@ -10,6 +10,7 @@ import { Box, styled } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import APP_UTILS from "../../../utils/0_AppUtils";
 import {
+  EnhancedAutocomplete,
   EnhancedDatePicker,
   EnhancedDateRangePicker,
   EnhancedIconButton,
@@ -79,13 +80,16 @@ export const DefaultFilterRow: React.FC<Props> = ({
 
   const getComparisonOperators = React.useCallback(
     (type: string): SelectOption<ComparisonOperator>[] => {
-      if (type === "string") {
+      if (type === APP_CONSTANTS.FILTER_ITEM_TYPE.STRING) {
         return APP_CONSTANTS.DEFAULT_COMPARISON_OPERATORS;
-      } else if (type === "date") {
+      } else if (type === APP_CONSTANTS.FILTER_ITEM_TYPE.DATE) {
         return APP_CONSTANTS.DATE_COMPARISON_OPERATORS;
-      } else if (type === "enum") {
+      } else if (
+        type === APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM ||
+        type === APP_CONSTANTS.FILTER_ITEM_TYPE.AUTOCOMPLETE
+      ) {
         return APP_CONSTANTS.ENUM_COMPARISON_OPERATORS;
-      } else if (type === "number") {
+      } else if (type === APP_CONSTANTS.FILTER_ITEM_TYPE.NUMBER) {
         return APP_CONSTANTS.NUMBER_COMPARISON_OPERATORS;
       }
       return APP_CONSTANTS.DEFAULT_COMPARISON_OPERATORS;
@@ -172,7 +176,8 @@ export const DefaultFilterRow: React.FC<Props> = ({
         onChange={(v) => handleFilterChange(v, "comparison")}
       />
 
-      {(itemType === "string" || itemType === "number") && (
+      {(itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.STRING ||
+        itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.NUMBER) && (
         <EnhancedTextField
           value={filter.value}
           onChange={(v) => handleFilterChange(v, "value")}
@@ -182,18 +187,31 @@ export const DefaultFilterRow: React.FC<Props> = ({
         />
       )}
 
-      {itemType === "enum" && itemSelectOptions && (
-        <EnhancedSelect
-          required
-          label="Value"
-          value={filter.value}
-          options={itemSelectOptions}
-          onChange={(v) => handleFilterChange(v, "value")}
-          disabled={inputDisabled}
-        />
-      )}
+      {itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.ENUM &&
+        itemSelectOptions && (
+          <EnhancedSelect
+            required
+            label="Value"
+            value={filter.value}
+            options={itemSelectOptions}
+            onChange={(v) => handleFilterChange(v, "value")}
+            disabled={inputDisabled}
+          />
+        )}
 
-      {itemType === "date" &&
+      {itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.AUTOCOMPLETE &&
+        itemSelectOptions && (
+          <EnhancedAutocomplete
+            required
+            label={filter.itemName}
+            value={filter.value}
+            options={itemSelectOptions}
+            onChange={(v) => handleFilterChange(v, "value")}
+            disabled={inputDisabled}
+          />
+        )}
+
+      {itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.DATE &&
         filter.comparison !== APP_CONSTANTS.COMPARISON_OPERATORS.BETWEEN && (
           <EnhancedDatePicker
             value={filter.value}
@@ -201,7 +219,7 @@ export const DefaultFilterRow: React.FC<Props> = ({
           />
         )}
 
-      {itemType === "date" && isRange && (
+      {itemType === APP_CONSTANTS.FILTER_ITEM_TYPE.DATE && isRange && (
         <EnhancedDateRangePicker
           startValue={filter.value}
           endValue={filter.endValue}
